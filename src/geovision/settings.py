@@ -1,4 +1,4 @@
-# enconding= utf-8
+# encoding= utf-8
 # Django settings for geovision project.
 import sys
 import os
@@ -22,7 +22,7 @@ pw = pwfile.readline().strip()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'tkt_gvis',                      # Or path to database file if using sqlite3.
         'USER': 'tkt_gvis',                      # Not used with sqlite3.
         'PASSWORD': pw,                  # Not used with sqlite3.
