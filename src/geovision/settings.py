@@ -1,3 +1,4 @@
+# enconding= utf-8
 # Django settings for geovision project.
 import sys
 import os
