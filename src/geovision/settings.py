@@ -16,20 +16,34 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+DATABASES = None
 
-pwfile = open(os.environ['HOME'] + '/.psql_password')
-pw = pwfile.readline().strip()
+if os.environ['USER'] == 'tkt_gvis': # tietokanta-asetukset usersin postgresille
+	pwfile = open(os.environ['HOME'] + '/.psql_password') # Luetaan salasana wanna-postgresin luomasta salasanatiedostosta, jotta se ei ole repossa kaiken kansan nähtävillä.
+	pw = pwfile.readline().strip()
+	pwfile.close()
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.postgresql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+			'NAME': 'tkt_gvis',                      # Or path to database file if using sqlite3.
+			'USER': 'tkt_gvis',                      # Not used with sqlite3.
+			'PASSWORD': pw,                  # Not used with sqlite3.
+			'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+			'PORT': ''                      # Set to empty string for default. Not used with sqlite3.
+		}
+	}
+else: # sqlite-tietokanta lokaalia testausta varten
+		DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+			'NAME': PROJECTROOT + '/testdb.sqlite',                      # Or path to database file if using sqlite3.
+			'USER': '',                      # Not used with sqlite3.
+			'PASSWORD': '',                  # Not used with sqlite3.
+			'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+			'PORT': ''                      # Set to empty string for default. Not used with sqlite3.
+		}
+	}
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'tkt_gvis',                      # Or path to database file if using sqlite3.
-        'USER': 'tkt_gvis',                      # Not used with sqlite3.
-        'PASSWORD': pw,                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': ''                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -120,6 +134,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+	'viz',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
