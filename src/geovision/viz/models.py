@@ -1,7 +1,8 @@
 from django.db import models
+from userdb.models import Sample
 
 class Read(models.Model):
-	source_file = models.CharField(max_length=32)
+	sample = models.ForeignKey(Sample)
 	read_id = models.CharField(max_length=64)
 	description = models.CharField(max_length=128)
 	data = models.TextField()
