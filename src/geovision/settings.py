@@ -1,22 +1,32 @@
 # Django settings for geovision project.
+import sys
+import os
+
+PROJECTROOT = sys.path[0]
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+	('Tuomas Tynkkynen', 'tuomas.tynkkynen@helsinki.fi'),
+	('Lasse Tyrväinen', 'lasse.tyrvainen@helsinki.fi'),
+	('Janne Laukkanen', 'jjlaukka@cs.helsinki.fi'),
+	('Aurora Tulilaulu', 'tulilaulu@gmail.com')
 )
 
 MANAGERS = ADMINS
 
+pwfile = open(os.environ['HOME'] + '/.psql_password')
+pw = pwfile.readline().strip()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'tkt_gvis',                      # Or path to database file if using sqlite3.
+        'USER': 'tkt_gvis',                      # Not used with sqlite3.
+        'PASSWORD': pw,                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': ''                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -27,7 +37,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Helsinki'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
