@@ -135,6 +135,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
 	'viz',
+	'userdb',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
