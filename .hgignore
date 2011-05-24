@@ -5,3 +5,4 @@
 \.conflict\~$
 \.pyc$
 \.fasta$
+\.sqlite$
