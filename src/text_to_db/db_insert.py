@@ -5,13 +5,23 @@ __author__="sundo"
 __date__ ="$May 24, 2011 3:33:22 PM$"
 
 import psycopg2
+import os
 
-class DbInserter:
+class DbInsert:
+	def __init__(self, db_name = os.getlogin(), user_name = os.getlogin(), password = None):
+		self.database_name = db_name
+		self.username = user_name
+		if self.username is 'tkt_gvis':
+			passwordfile = open(os.environ['HOME'] + '/.psql_password')
+			self.password = passwordfile.readline().strip()
+
+
 	def initiate_db_connection(self):
-		database_name = "tkt_gvis"
-		username = "tkt_gvis"
-		passwordfile = open(os.environ['HOME'] + '/.psql_password')
-		password = passwordfile.readline().strip()
+		if os.getlogin() is 'tkt_gvis':
+			self.database_name = 'tkt_gvis'
+			username = 'tkt_gvis'
+			passwordfile = open(os.environ['HOME'] + '/.psql_password')
+			
 
 		connection_information = ("dbname=" + database_name
 			+ "user=" + username
