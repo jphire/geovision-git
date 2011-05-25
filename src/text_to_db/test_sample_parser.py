@@ -4,7 +4,7 @@
 import unittest
 import sample_parser
 
-class  Test_sample_parserTestCase(unittest.TestCase):
+class Test_sample_parserTestCase(unittest.TestCase):
 	#def setUp(self):
     #    self.foo = Test_sample_parser()
     #
