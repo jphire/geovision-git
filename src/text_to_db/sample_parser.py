@@ -3,6 +3,7 @@
 
 __author__ = "lassetyr"
 __date__ = "$23.5.2011 15:12:48$"
+import db_connection
 
 
 class SampleRead:
@@ -18,11 +19,7 @@ class SampleRead:
 
 class SamplefileParser:
 	def __init__(self, source_file):
-		try:
-			self.textfile = open(source_file, 'r')
-		except:
-			print "fail"
-			# TODO: fix
+		self.textfile = open(source_file, 'r')
 		self.nextline = self.textfile.readline()
 		self.dnadata = ''
 		self.infoline = []
@@ -41,3 +38,22 @@ class SamplefileParser:
 			if len(self.nextline) is 0:
 				break
 		return SampleRead(self.infoline[0], self.infoline[1], self.dnadata)
+
+class DbWriter:
+	def __init__(self, filename='test.txt'):
+		self.db_conn = db_connection.initiate_connection()
+		self.filename = filename
+
+
+	def read_samples_to_dbtable(self):
+		db_cursor = self.db_conn.cursor()
+		source_file = self.filename
+		try:
+			text_parser = SamplefileParser(source_file)
+		except IOError:
+			print 'Unable to open file ' + self.filename
+			raise
+		read_to_insert = text_parser.next_read()
+		while read_to_insert is not None:
+			db_cursor.execute("INSERT INTO viz_read (source_file, read_id, description, data) VALUES (%s, %s, %s, %s)",
+				(source_file, read_to_insert.readid, read_to_insert.description, read_to_insert.data))
