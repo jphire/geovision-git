@@ -1,7 +1,7 @@
 # encoding= utf-8
 # Django settings for geovision project.
-import sys
 import os
+import sys
 
 PROJECTROOT = sys.path[0]
 
@@ -9,11 +9,11 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-	('Tuomas Tynkkynen', 'tuomas.tynkkynen@helsinki.fi'),
-	('Lasse Tyrväinen', 'lasse.tyrvainen@helsinki.fi'),
-	('Janne Laukkanen', 'jjlaukka@cs.helsinki.fi'),
-	('Aurora Tulilaulu', 'tulilaulu@gmail.com')
-)
+		  ('Tuomas Tynkkynen', 'tuomas.tynkkynen@helsinki.fi'),
+		  ('Lasse Tyrväinen', 'lasse.tyrvainen@helsinki.fi'),
+		  ('Janne Laukkanen', 'jjlaukka@cs.helsinki.fi'),
+		  ('Aurora Tulilaulu', 'tulilaulu@gmail.com')
+		 )
 
 MANAGERS = ADMINS
 DATABASES = None
@@ -25,24 +25,24 @@ if os.environ['USER'] == 'tkt_gvis': # tietokanta-asetukset usersin postgresille
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.postgresql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-			'NAME': 'tkt_gvis',                      # Or path to database file if using sqlite3.
-			'USER': 'tkt_gvis',                      # Not used with sqlite3.
-			'PASSWORD': pw,                  # Not used with sqlite3.
-			'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+			'NAME': 'tkt_gvis', # Or path to database file if using sqlite3.
+			'USER': 'tkt_gvis', # Not used with sqlite3.
+			'PASSWORD': pw, # Not used with sqlite3.
+			'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
 			'PORT': ''                      # Set to empty string for default. Not used with sqlite3.
 		}
 	}
 else: # sqlite-tietokanta lokaalia testausta varten
-		DATABASES = {
-		'default': {
-			'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-			'NAME': PROJECTROOT + '/testdb.sqlite',                      # Or path to database file if using sqlite3.
-			'USER': '',                      # Not used with sqlite3.
-			'PASSWORD': '',                  # Not used with sqlite3.
-			'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-			'PORT': ''                      # Set to empty string for default. Not used with sqlite3.
-		}
+	DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+		'NAME': PROJECTROOT + '/testdb.sqlite', # Or path to database file if using sqlite3.
+		'USER': '', # Not used with sqlite3.
+		'PASSWORD': '', # Not used with sqlite3.
+		'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
+		'PORT': ''                      # Set to empty string for default. Not used with sqlite3.
 	}
+}
 
 
 # Local time zone for this installation. Choices can be found here:
@@ -94,60 +94,61 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+					# Put strings here, like "/home/html/static" or "C:/www/django/static".
+					# Always use forward slashes, even on Windows.
+					# Don't forget to use absolute paths, not relative paths.
+					)
 
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
+					   'django.contrib.staticfiles.finders.FileSystemFinder',
+					   'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+					   #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+					   )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '&-tl4g_69(uvd3dwz-k9ud5$#w4ev(g5bw8%g)7nvtgqh$cfev'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
+					'django.template.loaders.filesystem.Loader',
+					'django.template.loaders.app_directories.Loader',
+					#     'django.template.loaders.eggs.Loader',
+					)
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-)
+					  'django.middleware.common.CommonMiddleware',
+					  'django.contrib.sessions.middleware.SessionMiddleware',
+					  'django.middleware.csrf.CsrfViewMiddleware',
+					  'django.contrib.auth.middleware.AuthenticationMiddleware',
+					  'django.contrib.messages.middleware.MessageMiddleware',
+					  )
 
 ROOT_URLCONF = 'geovision.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+				 # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+				 # Always use forward slashes, even on Windows.
+				 # Don't forget to use absolute paths, not relative paths.
+				 )
 
 INSTALLED_APPS = (
-	'viz',
-	'userdb',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-)
-
+				  'viz',
+				  'userdb',
+				  'django.contrib.auth',
+				  'django.contrib.contenttypes',
+				  'django.contrib.sessions',
+				  'django.contrib.sites',
+				  'django.contrib.messages',
+				  'django.contrib.staticfiles',
+				  'django_nose',
+				  # Uncomment the next line to enable the admin:
+				  # 'django.contrib.admin',
+				  # Uncomment the next line to enable admin documentation:
+				  # 'django.contrib.admindocs',
+				  )
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.
