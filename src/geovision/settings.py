@@ -24,7 +24,7 @@ if os.environ['USER'] == 'tkt_gvis': # tietokanta-asetukset usersin postgresille
 	pwfile.close()
 	DATABASES = {
 		'default': {
-			'ENGINE': 'django.db.backends.postgresql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+			'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 			'NAME': 'tkt_gvis', # Or path to database file if using sqlite3.
 			'USER': 'tkt_gvis', # Not used with sqlite3.
 			'PASSWORD': pw, # Not used with sqlite3.
