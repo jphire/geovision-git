@@ -25,7 +25,7 @@ class DbInsert:
 		db_connection = psycopg2.connect(connection_information)
 		return db_connection
 
-	def text_to_dbtable():
+	def text_to_dbtable(self):
 		db_connection = initiate_db_connection()
 		db_cursor = db_connection.cursor()
 		source_file = "test.txt" # TODO: take parameter
