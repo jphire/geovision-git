@@ -28,7 +28,7 @@ class SamplefileParser:
 		self.infoline = []
 
 	def next_read(self):
-		if self.nextline is '':
+		if len(self.nextline) is 0:
 			return None
 		self.dnadata = ""
 		self.infoline = self.nextline.strip('>').split(None, 1)

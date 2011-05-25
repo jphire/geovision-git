@@ -28,6 +28,13 @@ class  Test_sample_parserTestCase(unittest.TestCase):
 		self.assertEqual(read.description, 'sulisuli')
 		self.assertEqual(read.data, 'ASGEAGSGASEGAG')
 
+	def test_sample_parse_past_the_end(self):
+		parser = sample_parser.SamplefileParser("test.txt")
+		parser.next_read()
+		parser.next_read()
+		read = parser.next_read()
+		self.assertEqual(read, None)
+
 if __name__ == '__main__':
 	unittest.main()
 
