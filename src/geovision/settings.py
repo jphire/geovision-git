@@ -9,14 +9,14 @@ PROJECTROOT = sys.path[0]
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
+MANAGERS = (
 		  ('Tuomas Tynkkynen', 'tuomas.tynkkynen@helsinki.fi'),
 		  ('Lasse Tyrväinen', 'lasse.tyrvainen@helsinki.fi'),
 		  ('Janne Laukkanen', 'jjlaukka@cs.helsinki.fi'),
 		  ('Aurora Tulilaulu', 'tulilaulu@gmail.com')
 		 )
 
-MANAGERS = ADMINS
+ADMINS = ()
 DATABASES = None
 
 login_user = os.environ['USER']
