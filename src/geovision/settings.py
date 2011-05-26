@@ -2,6 +2,7 @@
 # Django settings for geovision project.
 import os
 import sys
+from socket import gethostname
 
 PROJECTROOT = sys.path[0]
 
@@ -18,21 +19,23 @@ ADMINS = (
 MANAGERS = ADMINS
 DATABASES = None
 
-if os.environ['USER'] == 'tkt_gvis': # tietokanta-asetukset usersin postgresille
-	pwfile = open(os.environ['HOME'] + '/.psql_password') # Luetaan salasana wanna-postgresin luomasta salasanatiedostosta, jotta se ei ole repossa kaiken kansan nähtävillä.
+login_user = os.environ['USER']
+if gethostname() == 'users' and login_user in ('tkt_gvis', 'tmtynkky'): # Postgres settings if running on users.cs, the user/database tmtynkky is used for tests
+	pwfile = open(os.environ['HOME'] + '/.psql_password') # Read the password from the file created by wanna-postgres
 	pw = pwfile.readline().strip()
 	pwfile.close()
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-			'NAME': 'tkt_gvis', # Or path to database file if using sqlite3.
-			'USER': 'tkt_gvis', # Not used with sqlite3.
+			'NAME': login_user, # Or path to database file if using sqlite3.
+			'TEST_NAME': login_user, # Or path to database file if using sqlite3.
+			'USER': login_user, # Not used with sqlite3.
 			'PASSWORD': pw, # Not used with sqlite3.
-			'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
+			'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
 			'PORT': ''                      # Set to empty string for default. Not used with sqlite3.
 		}
 	}
-else: # sqlite-tietokanta lokaalia testausta varten
+else: # Use a local SQLite database if not on users
 	DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
