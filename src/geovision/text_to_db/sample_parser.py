@@ -20,7 +20,7 @@ class SamplefileParser:
 		if len(self.nextline) is 0:
 			return None
 		self.dnadata = ""
-		self.infoline = self.nextline.strip('>').split(None, 1)
+		self.infoline = self.nextline.strip().strip('>').split(None, 1)
 		if len(self.infoline) < 2:
 			self.infoline.append('')
 		self.nextline = self.textfile.readline()
