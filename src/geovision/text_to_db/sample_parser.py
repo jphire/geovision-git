@@ -5,7 +5,7 @@
 __author__ = "lassetyr"
 __date__ = "$23.5.2011 15:12:48$"
 
-import geovision.viz.models.Read as ReadModel
+from geovision.viz.models import Read as ReadModel
 # TODO: muuta käyttämään djangon ORBia
 
 class SamplefileParser:
