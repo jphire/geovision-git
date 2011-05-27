@@ -2,7 +2,7 @@ from django.db import models
 from userdb.models import Sample
 
 class Read(models.Model):
-	sample = models.ForeignKey(Sample)
+	sample = models.CharField(max_length=32)
 	read_id = models.CharField(max_length=64)
 	description = models.CharField(max_length=128)
 	data = models.TextField()
