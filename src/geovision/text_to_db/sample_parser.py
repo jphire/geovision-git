@@ -1,9 +1,9 @@
+#coding: UTF-8
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
 __author__ = "lassetyr"
 __date__ = "$23.5.2011 15:12:48$"
-import db_connection
 
 # TODO: muuta käyttämään djangon ORBia
 
