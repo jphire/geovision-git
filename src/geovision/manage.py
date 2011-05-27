@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#herpderp
 from django.core.management import execute_manager
 import imp
 try:
