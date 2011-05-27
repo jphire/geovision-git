@@ -5,22 +5,13 @@
 __author__ = "lassetyr"
 __date__ = "$23.5.2011 15:12:48$"
 
+import geovision.viz.models.Read as ReadModel
 # TODO: muuta käyttämään djangon ORBia
-
-class SampleRead:
-	def __init__(self, readid, description, data):
-		self.readid = readid.strip('\n')
-		self.description = description.strip('\n')
-		self.data = data
-
-	def __str__(self):
-		return str("Read id: " + self.readid + "\n" \
-				   + "Description: " + self.description + "\n" \
-				   + "Data: " + self.data + "\n")
 
 class SamplefileParser:
 	def __init__(self, source_file):
-		self.textfile = open(source_file, 'r')
+		self.filename = source_file
+		self.textfile = open(self.filename, 'r')
 		self.nextline = self.textfile.readline()
 		self.dnadata = ''
 		self.infoline = []
@@ -38,7 +29,8 @@ class SamplefileParser:
 			self.nextline = self.textfile.readline()
 			if len(self.nextline) is 0:
 				break
-		return SampleRead(self.infoline[0], self.infoline[1], self.dnadata)
+		return ReadModel.objects.create(sample = self.filename, read_id = self.infoline[0], description = self.infoline[1], data = self.dnadata)
+
 #
 #class DbWriter:
 #	def __init__(self, filename='test.txt'):
