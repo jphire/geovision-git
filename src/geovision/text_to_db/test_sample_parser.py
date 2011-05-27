@@ -17,7 +17,7 @@ class Test_sample_parserTestCase(unittest.TestCase):
 	def test_sample_parse_first(self):
 		parser = sample_parser.SamplefileParser("test.txt")
 		read = parser.next_read()
-		self.assertEqual(read.readid, 'ensimmainen')
+		self.assertEqual(read.read_id, 'ensimmainen')
 		self.assertEqual(read.description, 'seliseli')
 		self.assertEqual(read.data, 'ASDFASEGAASGEASGASG')
 
@@ -25,7 +25,7 @@ class Test_sample_parserTestCase(unittest.TestCase):
 		parser = sample_parser.SamplefileParser("test.txt")
 		parser.next_read()
 		read = parser.next_read()
-		self.assertEqual(read.readid, 'toinen')
+		self.assertEqual(read.read_id, 'toinen')
 		self.assertEqual(read.description, 'sulisuli')
 		self.assertEqual(read.data, 'ASGEAGSGASEGAG')
 
