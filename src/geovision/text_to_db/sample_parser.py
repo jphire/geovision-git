@@ -11,16 +11,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 
 from geovision.viz.models import Read as ReadModel
 
-if __name__ == "__main__":
-	try:
-		parser = SamplefileParser(argv[1])
-	except IOError:
-		print "Unable to open file", argv[1]
-		sys.exit(1);
-	db_read_entry = parser.next_read()
-	while db_read_entry is not None:
-		db_read_entry.save()
-
 class SamplefileParser:
 	def __init__(self, source_file):
 		self.filename = source_file
