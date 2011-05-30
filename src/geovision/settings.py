@@ -4,7 +4,7 @@ import os
 import sys
 from socket import gethostname
 
-PROJECTROOT = sys.path[0]
+PROJECTROOT = os.path.dirname(__file__)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
