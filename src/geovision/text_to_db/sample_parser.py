@@ -6,7 +6,6 @@ __author__ = "lassetyr"
 __date__ = "$23.5.2011 15:12:48$"
 
 import os
-import sys
 os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 
 from geovision.viz.models import Read as ReadModel
