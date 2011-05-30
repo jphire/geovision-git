@@ -1,5 +1,5 @@
 from django.db import models
-from userdb.models import Sample
+from geovision.userdb.models import Sample
 
 class Read(models.Model):
 	sample = models.CharField(max_length=32)

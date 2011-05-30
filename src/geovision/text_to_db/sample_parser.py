@@ -5,8 +5,21 @@
 __author__ = "lassetyr"
 __date__ = "$23.5.2011 15:12:48$"
 
+import os
+import sys
+os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
+
 from geovision.viz.models import Read as ReadModel
-# TODO: muuta käyttämään djangon ORBia
+
+if __name__ == "__main__":
+	try:
+		parser = SamplefileParser(argv[1])
+	except IOError:
+		print "Unable to open file", argv[1]
+		sys.exit(1);
+	db_read_entry = parser.next_read()
+	while db_read_entry is not None:
+		db_read_entry.save()
 
 class SamplefileParser:
 	def __init__(self, source_file):
@@ -32,23 +45,3 @@ class SamplefileParser:
 			if len(self.nextline) is 0:
 				break
 		return ReadModel.objects.create(sample = self.filename, read_id = self.infoline[0], description = self.infoline[1], data = self.dnadata)
-
-#
-#class DbWriter:
-#	def __init__(self, filename='test.txt'):
-#		self.db_conn = db_connection.initiate_connection()
-#		self.filename = filename
-#
-#
-#	def read_samples_to_dbtable(self):
-#		db_cursor = self.db_conn.cursor()
-#		source_file = self.filename
-#		try:
-#			text_parser = SamplefileParser(source_file)
-#		except IOError:
-#			print 'Unable to open file ' + self.filename
-#			raise
-#		read_to_insert = text_parser.next_read()
-#		while read_to_insert is not None:
-#			db_cursor.execute("INSERT INTO viz_read (source_file, read_id, description, data) VALUES (%s, %s, %s, %s)",
-#				(source_file, read_to_insert.readid, read_to_insert.description, read_to_insert.data))
