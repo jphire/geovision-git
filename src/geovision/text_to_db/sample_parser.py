@@ -14,6 +14,7 @@ class SamplefileParser:
 	def __init__(self, source_file):
 		self.filename = source_file
 		self.textfile = open(self.filename, 'r')
+		self.sample = self.filename[self.filename.rfind('/')+1:]
 		self.nextline = self.textfile.readline()
 		self.dnadata = ''
 		self.infoline = []
@@ -33,4 +34,4 @@ class SamplefileParser:
 			self.nextline = self.textfile.readline()
 			if len(self.nextline) is 0:
 				break
-		return ReadModel.objects.create(sample = self.filename, read_id = self.infoline[0], description = self.infoline[1], data = self.dnadata)
+		return ReadModel.objects.create(sample = self.sample, read_id = self.infoline[0], description = self.infoline[1], data = self.dnadata)
