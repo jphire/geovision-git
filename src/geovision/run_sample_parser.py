@@ -18,6 +18,5 @@ if __name__ == "__main__":
 		sys.exit(1);
 	db_read_entry = parser.next_read()
 	while db_read_entry is not None:
-		print db_read_entry.read_id
 		db_read_entry.save()
 		db_read_entry = parser.next_read()
