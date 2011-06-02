@@ -11,38 +11,72 @@ from geovision.viz.models import Blast, Read, DbEntry, Result
 results = ""
 depth_limit = 4
 
-def get_Results(ecnumber):
-    objects = Result.objects.filter(ec_number = ecnumber)
-    return objects
+def get_ec_results(ecnumber, limit):
+    return Result.objects.filter(ec_number = ecnumber, bitscore__gt = limit)
 
-def create_json(ecnumber):
-    zero_nodes = get_Results(ecnumber)
+def get_db_results(db_entry_id):
+    #THE DOUBLE UNDERSCORE CAN BE INEFFICIENT BECAUSE OF JOINS IN THE BACKGROUND!!!
+    return Result.objects.filter(db_entry__read_id = db_entry_id)
+
+def get_rd_result(read_id):
+    return Result.objects.filter()
+
+def create_json(ecnumber, limit):
+    zero_nodes = get_ec_results(ecnumber, limit)
+    get_children.depth_counter = 0
+    
     json_file = open("/home/jjlaukka/Opiskelu/ohtuprojekti/Jit/Examples/RGraph/json_file.json", 'w')
 
     json_file.write("{\n")
 
     json_file.write("id: \"" + ecnumber + "\",\n")
     json_file.write("name: \"" + ecnumber + "\",\n")
-    json_file.write("children: [" + getChildren(zero_nodes) + "]\n")
+    json_file.write("children: [" + getChildren(zero_nodes, "ec") + "]\n")
 
     json_file.write("}")
 
-def get_children(ec_nodes):
-    
+def get_children(nodes, caller_id):
+
     get_children.depth_counter += 1
 
-    for obj in ec_nodes:
-        result = result + "\t{\n\tid: \"" + obj.db_entry.read_id + "\",\n"
-        result = result + "\tname: \"" + obj.db_entry.read_id + "\",\n"
-        result = result + "\tdata: {\n\t\trelation: \"<h4>relations here..</h4>\"\n\t},\n"
+    for obj in nodes:
+        if caller_id == "ec":
+            result = result + "\t{\n\tid: \"" + obj.db_entry.read_id + "\",\n"
+            result = result + "\tname: \"" + obj.db_entry.read_id + "\",\n"
+            result = result + "\tdata: {\n\t\trelation: \"<h4>relations here..</h4>\"\n\t},\n"
 
-        if get_children.depth_counter < depth_limit:
-            read_children = Result.objects.filter(db_entry=obj.db_entry)
-        else:
-            results = results + "\tchildren: []\n\t}"
-            get_children.depth_counter -= 1
-            return children;
+            if get_children.depth_counter < depth_limit:
+                results = results + "\tchildren: ["
+                children = get_db_result(obj.db_entry.read_id)
+                results = results + get_children(children, "db")
+                #if obj.__class__.__name__== 'Result':
+
+
+            else:
+                results = results + "\tchildren: []\n\t}"
+                get_children.depth_counter -= 1
+                return results
+
+        elif caller_id == "db":
+            result = result + "\t{\n\tid: \"" + obj.read.read_id + "\",\n"
+            result = result + "\tname: \"" + obj.read.read_id + "\",\n"
+            result = result + "\tdata: {\n\t\trelation: \"<h4>relations here..</h4>\"\n\t},\n"
+
+            if get_children.depth_counter < depth_limit:
+                results = results + "\tchildren: ["
+                children = get_rd_result(obj.read.read_id)
+                results = results + get_children(children, "rd")
+                #if obj.__class__.__name__== 'Result':
+
+            else:
+                results = results + "\tchildren: []\n\t}"
+                get_children.depth_counter -= 1
+                return results
+
+    results = results +"]}\n"
+    get_children.depth_counter -= 1
+    return results
 
 
 if __name__ == "__main__":
-    create_json("1.2.3.22")
+    create_json("1.2.3.22", 40)
