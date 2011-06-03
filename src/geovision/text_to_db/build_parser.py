@@ -1,4 +1,5 @@
 from geovision.viz.models import Result, Read, DbEntry
+from geovision.text_to_db.bulk_inserter import BulkInserter
 
 def parseBuilds(sample_name, db_name, filehandle):
 	"""Parse build data from a .build file and store it to the db.
@@ -6,16 +7,19 @@ def parseBuilds(sample_name, db_name, filehandle):
 		db_name: name of the database (eg. frnadb)
 		filehandle: file handle of the data file
 	"""
+	inserter = BulkInserter(Result)
 	for line in filehandle:
-		(read_id, db_seq_id, evident_type, ec_number, error_value, bitscore) = line.split("\t")
+		(read_id, db_seq_id, evident_type, ec_number, error_value, bitscore) = line.strip().split("\t")
 		db_entry = DbEntry.objects.get(read_id=db_seq_id, source_file=db_name)
 		read = Read.objects.get(read_id=read_id, sample=sample_name)
 
-		Result.objects.create(read=read, db_entry=db_entry, evident_type=evident_type, ec_number=ec_number,
-			error_value=error_value, bitscore=bitscore)
+		inserter.save(Result(read=read, db_entry=db_entry, evident_type=evident_type, ec_number=ec_number,
+			error_value=error_value, bitscore=bitscore))
+	inserter.close()
 
 if __name__ == '__main__':
 	import sys
 	filename = sys.argv[1]
-	(sample_name, db_name) = filename.split('.')
-	parse_blast(sample_name, db_name, open(filename, 'r'))
+	(sample_name, db_name, rest) = filename.split('.')
+	parseBuilds(sample_name, db_name, open(filename, 'r'))
+	

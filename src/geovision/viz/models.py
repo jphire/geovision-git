@@ -4,13 +4,13 @@ from geovision.userdb.models import Sample
 class Read(models.Model):
 	sample = models.CharField(max_length=32)
 	read_id = models.CharField(max_length=64)
-	description = models.CharField(max_length=128)
+	description = models.TextField()
 	data = models.TextField()
 
 class DbEntry(models.Model):
 	source_file = models.CharField(max_length=32)
 	read_id = models.CharField(max_length=64)
-	description = models.CharField(max_length=128)
+	description = models.TextField()
 	data = models.TextField()
 
 

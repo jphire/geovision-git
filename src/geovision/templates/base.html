@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ STATIC_URL }}styles.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}reset.css" type="text/css"/>
+    {% block additional_head %}{% endblock %}
+    <title>Geovision - data visualisation system {% block additional_title %}{% endblock %}</title>
+</head>
+<body>
+    {% block allcontent %}{% endblock %}
+</body>
+</html>
