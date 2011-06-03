@@ -80,15 +80,11 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = ''
 
-PROJECT_PATH = os.path.dirname(os.path.abspath(__file__)) #hoping this fix works...
-
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_PATH, 'static-tmp')
-
-
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -101,7 +97,6 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-                    os.path.join(PROJECT_PATH, 'static'),
 					# Put strings here, like "/home/html/static" or "C:/www/django/static".
 					# Always use forward slashes, even on Windows.
 					# Don't forget to use absolute paths, not relative paths.
@@ -136,7 +131,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'geovision.urls'
 
 TEMPLATE_DIRS = (
-                os.path.join(PROJECT_PATH, 'templates'),
 				 # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
 				 # Always use forward slashes, even on Windows.
 				 # Don't forget to use absolute paths, not relative paths.
