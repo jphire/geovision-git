@@ -1,0 +1,106 @@
+A:link {color:#003300; text-decoration:none;}
+A:visited {color:#003300; text-decoration:none;}
+A:active {color:#003300; text-decoration:none;}
+A:hover {color:#003300; text-decoration:underline;}
+div.greenbox{
+    position:relative;
+    background-color:#ACC2B3;
+    border: solid 3px #265434;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:60px;
+    padding:25px;
+    font-color:#0C1F02;
+    font-family:Arial;
+    text-align:center;
+}
+div#login{
+    width:230px;
+    height:100px;
+}
+div#register{
+    width:400px;
+}
+#register p{
+    margin:5px;
+}
+#login h2{
+    font-size:20px;
+    margin-bottom:5px;
+}
+a#register{
+    position:absolute;
+    top:126px;
+    left:10px;
+}
+table#registerform{
+    margin:auto;
+}
+input#register{
+    margin-top: 10px;
+}
+a#back{
+    float:left;
+}
+a#about{
+    position:absolute;
+    top:126px;
+    left:226px;
+}
+p.error{
+    font-weight: bold;
+    font-color:red;
+}
+
+/*UPPER NAVIGATION*/
+
+/* Easy Clearing on - http://www.positioniseverything.net/easyclearing.html */
+    .clearafter:after {
+      content: '[DO NOT LEAVE IT IS NOT REAL]';
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+    }
+    /*\*/
+    * html .clearafter {
+      height: 1%;
+    }
+    /* */
+    /* Easy Clearing off */
+A:link {color:#003300; text-decoration:none;}
+A:visited {color:#003300; text-decoration:none;}
+A:active {color:#003300; text-decoration:none;}
+A:hover {color:#003300; text-decoration:underline;}
+div#staticnavi{
+    width:100%;
+    background-color:#99FF99;
+    margin:0px;
+    padding:0px;
+}
+#staticnavi ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+#staticnavi li{
+    float: left;
+    padding: 3px;
+    background-color:#CCFFCC;
+    border: 2px solid #dcdce9;
+    margin-right:4px;
+}
+#staticnavi li a {i
+/*    background: url(background.gif) #fff bottom left repeat-x;*/
+    height: 18px;
+    line-height: 18px;
+    float: left;
+    width: 50px;
+    display: block;
+    color: #0d2474;
+    text-decoration: none;
+    text-align: center;
+}
+li#last{
+    float:right;
+}
