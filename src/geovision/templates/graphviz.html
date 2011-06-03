@@ -2,19 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>RGraph - Tree Animation</title>
+<title>geovision - graph animation</title>
 
 <!-- CSS Files -->
-<link type="text/css" href="../css/base.css" rel="stylesheet" />
-<link type="text/css" href="../css/RGraph.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ STATIC_URL }}styles.css" type="text/css"/>
+<link rel="stylesheet" href="{{ STATIC_URL }}reset.css" type="text/css"/>
 
 <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
 
 <!-- JIT Library File -->
-<script language="javascript" type="text/javascript" src="../../jit.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}RGraph.js"></script>
 
 <!-- Example File -->
-<script language="javascript" type="text/javascript" src="test.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
 </head>
 
 <body onload="init();">
@@ -26,14 +26,11 @@
 
 <div class="text">
 <h4>
-Tree Animation    
-</h4> 
+Graph animation
 
-            A static JSON Tree structure is used as input for this visualization.<br /><br />
-            <b>Click</b> on a node to move the tree and center that node.<br /><br />
-            The centered node's children are displayed in a relations list in the right column.<br /><br />
-            <b>Use the mouse wheel</b> to zoom and <b>drag and drop the canvas</b> to pan.
-            
+
+</h4> 
+    This is a test data visualization. Data is constructed of real django models.
 </div>
 
 <div id="id-list"></div>
