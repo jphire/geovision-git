@@ -1,22 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>geovision - graph animation</title>
+{% extends "sitebase.html" %}
 
-<!-- CSS Files -->
-<link rel="stylesheet" href="{{ STATIC_URL }}styles.css" type="text/css"/>
-<link rel="stylesheet" href="{{ STATIC_URL }}reset.css" type="text/css"/>
-
-<!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+{% block additional_head %}
 
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}RGraph.js"></script>
 
 <!-- Example File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
-</head>
+{% endblock %}
 
+{% block additional_title %} graph {% endblock %}
+<!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+
+{% block content %}
 <body onload="init();">
 <div id="container">
 
@@ -36,7 +32,7 @@ Graph animation
 <div id="id-list"></div>
 
 
-<div style="text-align:center;"><a href="test.js">See the Example Code</a></div>            
+<div style="text-align:center;"><a href="{{ STATIC_URL }}graphviz.js">See the Example Code</a></div>            
 </div>
 
 <div id="center-container">
@@ -52,4 +48,5 @@ Graph animation
 <div id="log"></div>
 </div>
 </body>
-</html>
+{% endblock %}
+
