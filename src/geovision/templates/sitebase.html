@@ -1,11 +1,4 @@
     {% extends "base.html" %}
-    {% if not user.is_authenticated %}
-        {% block allcontent %}
-        <p class="error">Not logged in!<br/>
-            <a href="login">Go here</a>
-        </p>
-        {% endblock %}
-    {% else %}
     {% block allcontent %}
     {% block additional_head %}{% endblock %}
     {% block additional_title %}{% endblock %}
@@ -22,4 +15,4 @@
         {% endblock %}
     {% block sidenavi %}{% endblock %}
     {% block content %}{% endblock %}
-    {% endif %}
+    {% endblock %}
