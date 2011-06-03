@@ -1,23 +1,25 @@
     {% extends "base.html" %}
+    {% if not user.is_authenticated %}
+        {% block allcontent %}
+        <p class="error">Not logged in!<br/>
+            <a href="login">Go here</a>
+        </p>
+        {% endblock %}
+    {% else %}
+    {% block allcontent %}
     {% block additional_head %}{% endblock %}
     {% block additional_title %}{% endblock %}
-    {% block allcontent %}
-    {% block topnavi %}
-    {% if user.is_authenticated %}
-    <div id="staticnavi" class="clearafter">
-        <ul>
-            <li><a href="">Index</a></li>
-            <li><a href="testgraph">Testgraph</a></li>
-            <li><a href="">Derp</a></li>
-            <li><a href="">Derp</a></li>
-            <li id="last"><a href="">Logout</a></li>
-        </ul>
-    </div>
-    {% endblock %}
+        {% block topnavi %}
+            <div id="staticnavi" class="clearafter">
+                <ul>
+                    <li><a href="">Index</a></li>
+                    <li><a href="testgraph">Testgraph</a></li>
+                    <li><a href="">Derp</a></li>
+                    <li><a href="">Derp</a></li>
+                    <li id="last"><a href="">Logout</a></li>
+                </ul>
+            </div>
+        {% endblock %}
     {% block sidenavi %}{% endblock %}
     {% block content %}{% endblock %}
-    {% else %}
-    <p class="error">Not logged in!<br/>
-        <a href="login">Go here</a>
-    </p>
-    {% endblock %}
+    {% endif %}

@@ -7,8 +7,8 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'geovision.views.home', name='home'),
     # url(r'^geovision/', include('geovision.foo.urls')),
-    (r'^$', 'userdb.views.login'), 
-    (r'^login$', 'userdb.views.login'),
+    (r'^$', 'userdb.views.loginpage'),
+    (r'^login$', 'userdb.views.loginpage'),
     (r'^register$', 'userdb.views.register'),
     (r'^registering$', 'userdb.views.registering'),
     (r'^logging_in$', 'userdb.views.logging_in'),
@@ -20,5 +20,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    (r'', 'userdb.views.login'), #everything else regirects to login for now
+    (r'', 'userdb.views.loginpage'), #everything else regirects to login for now
 )

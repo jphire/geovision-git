@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
-def login(request):
+def loginpage(request):
     return render_to_response("login.html", { }, context_instance=RequestContext(request) )
 def register(request):
     return render_to_response("register.html", { }, context_instance=RequestContext(request) )
@@ -29,7 +29,7 @@ def logging_in(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            return render_to_response("testgraph", { }, context_instance=RequestContext(request) )
+            return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
         else:
             return render_to_response('login.html', {
                     'error_message': "Account is not active.",
