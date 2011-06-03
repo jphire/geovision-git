@@ -95,6 +95,8 @@ STATIC_URL = '/static/'
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
+PROJECT_PATH = os.path.dirname(os.path.abspath(file))
+
 # Additional locations of static files
 STATICFILES_DIRS = (
 					# Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -131,6 +133,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'geovision.urls'
 
 TEMPLATE_DIRS = (
+                                 os.path.join(PROJECT_PATH, 'templates'),
 				 # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
 				 # Always use forward slashes, even on Windows.
 				 # Don't forget to use absolute paths, not relative paths.

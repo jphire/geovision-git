@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     (r'^login$', 'userdb.views.login'),
     (r'^register$', 'userdb.views.register'),
     (r'^registering$', 'userdb.views.registering'),
+    (r'^logging_in$', 'userdb.views.logging_in'),
+    (r'^testgraph$', 'viz.views.testgraph'),
     #(r'^polls/(?P<poll_id>\d+)/vote/$', 'polls.views.vote'),
     
     # Uncomment the admin/doc line below to enable admin documentation:
