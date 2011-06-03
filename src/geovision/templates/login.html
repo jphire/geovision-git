@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+    {% block additional_title %}- Login{% endblock %}
+    {% block allcontent %}
+    <div  class="greenbox" id="login">
+        <h2>Geovision</h2>
+        <form id="login" action="" method="post">
+        {% csrf_token %}
+        <label>Email: </label> <input size="10" type="text" name="email" /><br/>
+
+        <label>Password: </label><input size="10" type="text" name="password" /><br/>
+    <input type="submit" value="Login" /></form><br/>
+    <a href="register" id="register">Register</a>
+    <a href="about" id="about">About</a>
+    </div>
+    {% endblock %}
+
+
