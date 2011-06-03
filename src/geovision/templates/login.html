@@ -4,7 +4,7 @@
     <div  class="greenbox" id="login">
         {% if error_message %}<p class="error">{{ error_message }}</p>{% endif %}
         <h2>Geovision</h2>
-        <form id="login" action="" method="post">
+        <form id="login" action="logging_in" method="post">
         {% csrf_token %}
         <label>Email: </label> <input size="10" type="text" name="email" /><br/>
 
