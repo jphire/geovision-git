@@ -10,7 +10,11 @@ def parseBuilds(sample_name, db_name, filehandle):
 	inserter = BulkInserter(Result)
 	for line in filehandle:
 		(read_id, db_seq_id, evident_type, ec_number, error_value, bitscore) = line.strip().split("\t")
-		db_entry = DbEntry.objects.get(read_id=db_seq_id, source_file=db_name)
+		db_entry = None		
+		try:
+			db_entry = DbEntry.objects.get(read_id__startswith=('sp|' + db_seq_id), source_file=db_name)
+		except Exception as e:
+			print (db_seq_id, db_name)
 		read = Read.objects.get(read_id=read_id, sample=sample_name)
 
 		inserter.save(Result(read=read, db_entry=db_entry, evident_type=evident_type, ec_number=ec_number,
