@@ -34,4 +34,4 @@ class SamplefileParser:
 			self.nextline = self.textfile.readline()
 			if len(self.nextline) is 0:
 				break
-		return ReadModel.objects.create(sample = self.sample, read_id = self.infoline[0], description = self.infoline[1], data = self.dnadata)
+		return ReadModel(sample = self.sample, read_id = self.infoline[0], description = self.infoline[1], data = self.dnadata)

@@ -28,7 +28,7 @@ class BulkInserter():
 		self.use_postgres = self.db_is_postgres() and use_postgres_if_possible
 		if self.use_postgres:
 			self.next_id = self.db_get_pk_nextval()
-			self.psql_popen = Popen(self.get_psql_argv(), shell=False, stdin=PIPE)
+			self.psql_popen = Popen(self.get_psql_argv(), shell=False, stdin=PIPE, bufsize=65536)
 			self.check_psql_status()
 		else:
 			self.next_id = 1
