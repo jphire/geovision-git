@@ -7,6 +7,7 @@ __date__ ="$Jun 1, 2011 1:56:40 PM$"
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 from geovision.viz.models import Blast, Read, DbEntry, Result
+from geovision.settings import PROJECTROOT
 
 result = ""
 depth_limit = 3
@@ -27,7 +28,7 @@ def create_json(ecnumber, limit):
     zero_nodes = get_ec_results(ecnumber, limit)
     get_children.depth_counter = 0
     
-    json_file = open("/home/jjlaukka/Opiskelu/ohtuprojekti/Jit/Examples/RGraph/json_file.json", 'w')
+    json_file = open(PROJECTROOT + "/static/json_file.json", 'w')
 
     json_file.write("{\n")
 

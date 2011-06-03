@@ -8,8 +8,8 @@ class BuildParserTestsTestCase(TestCase):
 	@classmethod
 	def setUpClass(cls):
 		cls.read = Read.objects.create(sample="SMPL", read_id="R001", description="baz", data='ASD')
-		cls.dbe1 = DbEntry.objects.create(source_file="FOODB", read_id="DB002", description="quux", data='ASD')
-		cls.dbe2 = DbEntry.objects.create(source_file="FOODB", read_id="DB042", description="biff", data='AOE')
+		cls.dbe1 = DbEntry.objects.create(source_file="FOODB", read_id="sp|DB002", description="quux", data='ASD')
+		cls.dbe2 = DbEntry.objects.create(source_file="FOODB", read_id="sp|DB042", description="biff", data='AOE')
 
 	def testSuccesfulBuilds(self):
 
