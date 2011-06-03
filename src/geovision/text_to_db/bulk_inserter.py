@@ -10,18 +10,18 @@ class BulkInserter():
 
 	def db_get_pk_nextval(self):
 		cursor = connection.cursor()
-		cursor.execute("SELECT nextval('%s_id_seq');" % self.model_class.db_table)
+		cursor.execute("SELECT nextval('%s_id_seq');" % self.model_class._meta.db_table)
 		return cursor.fetchone()[0]
 
 	def db_set_pk_nextval(self, value):
 		connection.cursor().execute(
-			"SELECT setval('%s_id_seq', %%s);" % self.model_class.db_table,
+			"SELECT setval('%s_id_seq', %%s);" % self.model_class._meta.db_table,
 			[value])
 
 	def get_psql_argv(self):
 		return ('psql', '-c',
-			"COPY TO %s FROM STDIN WITH CSV DELIMITER '%s' ESCAPE '%s';" %
-				(model_class.db_table,  self.CSV_DELIMITER, self.CSV_DELIMITER))
+			"COPY %s FROM STDIN DELIMITER '%s';" %
+				(self.model_class._meta.db_table, self.CSV_DELIMITER))
 
 	def __init__(self, model_class, use_postgres_if_possible=True):
 		self.model_class = model_class
@@ -52,7 +52,10 @@ class BulkInserter():
 		if not self.use_postgres:
 			modelobj.save()
 		else:
-			self.write_to_psql(self.obj_to_csv(modelobj, self.get_next_id()))
+			id = self.get_next_id()
+			self.write_to_psql(self.obj_to_csv(modelobj, id))
+			modelobj.id = id
+			
 
 	def field_to_csv(self, modelobj, field, id):
 		if field.name == 'id':
@@ -72,6 +75,7 @@ class BulkInserter():
 
 	def close(self):
 		if self.use_postgres:
+			self.write_to_psql("\\.")
 			self.db_set_pk_nextval(self.next_id)
 			self.psql_popen.stdin.close()
 			self.check_psql_status(True)
