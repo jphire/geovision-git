@@ -2,10 +2,16 @@
     {% block additional_title %}- Register{% endblock %}
     {% block allcontent %}
     <div class="greenbox" id="register">
+        {% if error_message %}<p class="error">{{ error_message }}</p>{% endif %}
         <h2>Geovision</h2>
         <p>Please fill all these fields to register an account:</p>
-        <form id="login" action="" method="post">
+        <form id="login" action="registering" method="post">
+            {% csrf_token %}
             <table id="registerform">
+                <tr>
+                    <td><p>Username: </p></td>
+                    <td><input size="10" type="text" name="username" /></td>
+                </tr>
                 <tr>
                     <td><p>Email: </p></td>
                     <td><input size="10" type="text" name="email" /></td>

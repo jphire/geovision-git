@@ -2,6 +2,7 @@
     {% block additional_title %}- Login{% endblock %}
     {% block allcontent %}
     <div  class="greenbox" id="login">
+        {% if error_message %}<p class="error">{{ error_message }}</p>{% endif %}
         <h2>Geovision</h2>
         <form id="login" action="" method="post">
         {% csrf_token %}
