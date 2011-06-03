@@ -52,14 +52,14 @@ class Test_blast_parserTestCase(unittest.TestCase):
     def test_blast_to_json(self):
         print "foo"
 
-        
-    @raises(Read.DoesNotExist)
-    def testNonexistentRead(self):
-            create_blast('SMPL', 'FOODB', "test_blast.txt")
-
-    @raises(DbEntry.DoesNotExist)
-    def testNonexistentDbEntry(self):
-            create_blast('SMPL', 'FOODB', "test_blast.txt")
+#
+#    @raises(Read.DoesNotExist)
+#    def testNonexistentRead(self):
+#            create_blast('SMPL', 'FOODB', "test_blast.txt")
+#
+#    @raises(DbEntry.DoesNotExist)
+#    def testNonexistentDbEntry(self):
+#            create_blast('SMPL', 'FOODB', "test_blast.txt")
 
 if __name__ == '__main__':
     unittest.main()
