@@ -15,19 +15,21 @@ depth_limit = 3
 #THE DOUBLE UNDERSCORE CAN BE INEFFICIENT BECAUSE OF JOINS IN THE BACKGROUND: MAYBE HAVE TO BE CHANGED
 #IN THE FUTURE!!!
 
-def get_ec_results(ecnumber, limit):
-    return Result.objects.filter(ec_number = ecnumber, bitscore__gt = limit)
+def get_ec_results(ecnumber, bitscorelimit):
+    return Result.objects.filter(ec_number = ecnumber, bitscore__gt = bitscorelimit)
 
-def get_db_results(db_entry_id, limit):
-    return Result.objects.filter(db_entry__read_id = db_entry_id, bitscore__gt = limit)
+def get_db_results(db_entry_id, bitscorelimit):
+    return Result.objects.filter(db_entry__read_id = db_entry_id, bitscore__gt = bitscorelimit)
 
-def get_rd_results(read_id, limit):
-    return Result.objects.filter(read__read_id = read_id, bitscore__gt = limit)
+def get_rd_results(read_id, bitsorelimit):
+    return Result.objects.filter(read__read_id = read_id, bitscore__gt = bitsorelimit)
 
-def create_json(ecnumber, limit):
-    zero_nodes = get_ec_results(ecnumber, limit)
+def create_json(ecnumber, bitscorelimit, depthlimit):
+    zero_nodes = get_ec_results(ecnumber, bitscorelimit)
     get_children.depth_counter = 0
-    
+    global depth_limit
+    depth_limit = depthlimit
+
     json_file = open(PROJECTROOT + "/static/json_file.json", 'w')
 
     json_file.write("{\n")
@@ -36,13 +38,13 @@ def create_json(ecnumber, limit):
     json_file.write("name: \"" + ecnumber + "\",\n")
     json_file.write("children: [")
     for obj in zero_nodes:
-        result = get_children(obj, "ec", limit)
+        result = get_children(obj, "ec", bitscorelimit)
     json_file.write(result)
     json_file.write("]\n")
     json_file.write("}")
     json_file.close()
 
-def get_children(node, caller_id, limit):
+def get_children(node, caller_id, bitscorelimit):
 
     get_children.depth_counter += 1
     global result
@@ -54,9 +56,9 @@ def get_children(node, caller_id, limit):
 
         if get_children.depth_counter < depth_limit:
             result = result + "\tchildren: ["
-            children = get_db_results(node.db_entry.read_id, limit)
+            children = get_db_results(node.db_entry.read_id, bitscorelimit)
             for obj in children:
-                result = get_children(obj, "db", limit)
+                result = get_children(obj, "db", bitscorelimit)
 
         else:
             result = result + "\tchildren: []\n\t},"
@@ -91,4 +93,4 @@ def get_children(node, caller_id, limit):
 
 
 if __name__ == "__main__":
-    create_json("1.2.3.22", 40)
+    create_json("1.2.3.22", 40, 3)
