@@ -3,7 +3,7 @@
     {% block additional_title %}{% endblock %}
     {% block allcontent %}
     {% block topnavi %}
-    <!--TODO: Add login check--->
+    {% if user.is_authenticated %}
     <div id="staticnavi" class="clearafter">
         <ul>
             <li><a href="">Index</a></li>
@@ -16,4 +16,8 @@
     {% endblock %}
     {% block sidenavi %}{% endblock %}
     {% block content %}{% endblock %}
+    {% else %}
+    <p class="error">Not logged in!<br/>
+        <a href="login">Go here</a>
+    </p>
     {% endblock %}

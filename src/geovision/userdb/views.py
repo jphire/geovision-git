@@ -9,7 +9,7 @@ def login(request):
     return render_to_response("login.html", { }, context_instance=RequestContext(request) )
 def register(request):
     return render_to_response("register.html", { }, context_instance=RequestContext(request) )
-def registering(request, email, firstname, lastname, password1, password2):
+def registering(request):
     if (cmp(request.POST['password1'], request.POST['password2']) != 0 ):
         return render_to_response('register.html', {
             'error_message': "Error: Passwords did not match.",
