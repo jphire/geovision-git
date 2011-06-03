@@ -54,7 +54,7 @@ class BulkInserter():
 		else:
 			id = self.get_next_id()
 			self.write_to_psql(self.obj_to_csv(modelobj, id))
-			#modelobj.id = id
+			modelobj.id = id
 			
 
 	def field_to_csv(self, modelobj, field, id):
