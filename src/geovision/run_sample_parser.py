@@ -14,7 +14,7 @@ from geovision.viz.models import Read
 
 if __name__ == "__main__":
 	try:
-		parser = geovision.text_to_db.sample_parser.SamplefileParser(sys.argv[1])
+		parser = geovision.text_to_db.sample_parser.SamplefileParser(sys.argv[1], sys.argv[2] == 'db')
 	except IOError:
 		print "Unable to open file", argv[1]
 		sys.exit(1);

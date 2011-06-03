@@ -54,20 +54,22 @@ class BulkInserter():
 		else:
 			id = self.get_next_id()
 			self.write_to_psql(self.obj_to_csv(modelobj, id))
-			modelobj.id = id
+			#modelobj.id = id
 			
 
 	def field_to_csv(self, modelobj, field, id):
 		if field.name == 'id':
 			return str(id)
+		is_dict = isinstance(modelobj, dict)
+		obj_dict = modelobj if is_dict else modelobj.__dict__
 		if isinstance(field, ForeignKey):
-			return str(modelobj.__dict__[field.column])
-		field_value = modelobj.__dict__[field.name]
+			return str(obj_dict[field.name].id if is_dict else obj_dict[field.column])
+		field_value = obj_dict[field.name]
 		return self.escape_csv(str(field_value))
 
 	def obj_to_csv(self, modelobj, id):
 		return self.CSV_DELIMITER.join(
-			(self.field_to_csv(modelobj, f, id) for f in modelobj._meta.fields))
+			(self.field_to_csv(modelobj, f, id) for f in self.model_class._meta.fields))
 
 	@classmethod
 	def escape_csv(cls, data):
