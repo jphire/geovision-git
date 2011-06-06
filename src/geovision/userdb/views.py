@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 def loginpage(request):
     return render_to_response("login.html", { }, context_instance=RequestContext(request) )
@@ -39,6 +40,10 @@ def logging_in(request):
         return render_to_response('login.html', {
             'error_message': "The username or password was incorrect.",
         }, context_instance=RequestContext(request))
+
+def logging_out(request):
+    logout(request)
+    return render_to_response("login.html", {'error_message': "You have been logged out.", }, context_instance=RequestContext(request) )
 
 #Add '@login_required' to all after these!
 #also might be good to put these in viz.views at some point
