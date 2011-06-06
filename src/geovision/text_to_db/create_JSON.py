@@ -21,10 +21,11 @@ def get_ec_results(ecnumber, bitscorelimit):
 def get_db_results(db_entry_id, bitscorelimit):
     return Result.objects.filter(db_entry__read_id = db_entry_id, bitscore__gt = bitscorelimit)
 
-def get_rd_results(read_id, bitsorelimit):
-    return Result.objects.filter(read__read_id = read_id, bitscore__gt = bitsorelimit)
+def get_rd_results(read_id, bitscorelimit):
+    return Result.objects.filter(read__read_id = read_id, bitscore__gt = bitscorelimit)
 
 def create_json(ecnumber, bitscorelimit, depthlimit):
+
     zero_nodes = get_ec_results(ecnumber, bitscorelimit)
     get_children.depth_counter = 0
     global depth_limit
@@ -44,7 +45,7 @@ def create_json(ecnumber, bitscorelimit, depthlimit):
     json_file.write("}")
     json_file.close()
 
-def get_children(node, caller_id, bitscorelimit):
+def get_children(node, caller_class, caller_id, bitscorelimit):
 
     get_children.depth_counter += 1
     global result
@@ -52,13 +53,13 @@ def get_children(node, caller_id, bitscorelimit):
     if caller_id == "ec":
         result = result + "\t{\n\tid: \"" + node.db_entry.read_id + "\",\n"
         result = result + "\tname: \"" + node.db_entry.read_id + "\",\n"
-        result = result + "\tdata: {\n\t\trelation: \"<h4>relations here..</h4>\"\n\t},\n"
+        result = result + "\tdata: {\n\t\tparent: \"" + caller_id + "<h4>relations here..</h4>\"\n\t},\n"
 
         if get_children.depth_counter < depth_limit:
             result = result + "\tchildren: ["
             children = get_db_results(node.db_entry.read_id, bitscorelimit)
             for obj in children:
-                result = get_children(obj, "db", bitscorelimit)
+                result = get_children(obj, "db", node.ec_number, bitscorelimit)
 
         else:
             result = result + "\tchildren: []\n\t},"
@@ -75,7 +76,6 @@ def get_children(node, caller_id, bitscorelimit):
         return result
 
     
-
 #FOR NOW, LATER MAYBE EXTENDED TO ALLOW DEEPER GRAPHS..
 #            if get_children.depth_counter < depth_limit:
 #                result = result + "\tchildren: ["
@@ -90,7 +90,6 @@ def get_children(node, caller_id, bitscorelimit):
     result = result +"]},\n"
     get_children.depth_counter -= 1
     return result
-
 
 if __name__ == "__main__":
     create_json("1.2.3.22", 40, 3)
