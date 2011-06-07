@@ -47,9 +47,15 @@ a#about{
     top:126px;
     left:226px;
 }
-p.error{
+div.error{
+    font-family: Arial;
+    margin-top:10px;
     font-weight: bold;
-    font-color:red;
+    color:red;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+    width: 400px;
 }
 
 /*UPPER NAVIGATION*/
