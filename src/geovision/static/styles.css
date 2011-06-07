@@ -79,6 +79,7 @@ A:active {color:#0C1F02; text-decoration:none;}
 A:hover {color:#08C444; text-decoration:underline;}
 
 div#staticnavi{
+    z-index: 1;
     width:100%;
     background-color:#ACC2B3;
     margin:0px;
@@ -109,4 +110,8 @@ div#staticnavi{
 }
 li#last{
     float:right;
+}
+div#graphnavi{
+    /*KeSKEN*/
+    z-index: 10;
 }
