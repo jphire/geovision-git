@@ -1,5 +1,6 @@
-body {
+body, html {
     background-color: #E6F2EA;
+    height: 100%;
 }
 div.greenbox{
     position:relative;
@@ -9,7 +10,7 @@ div.greenbox{
     margin-right:auto;
     margin-top:60px;
     padding:25px;
-    font-color:#0C1F02;
+    color:#0C1F02;
     font-family:Arial;
     text-align:center;
 }
@@ -81,8 +82,8 @@ A:hover {color:#08C444; text-decoration:underline;}
 div#staticnavi{
     z-index: 1;
     width:100%;
-    background-color:#ACC2B3;
-    margin:0px;
+    /*background-color:#ACC2B3;*/
+    margin:0px 0px 0px 10px;
     padding:0px;
 }
 #staticnavi ul{
@@ -97,8 +98,8 @@ div#staticnavi{
     border: 2px solid #265434;
     margin-right:4px;
 }
-#staticnavi li a {i
-/*    background: url(background.gif) #fff bottom left repeat-x;*/
+#staticnavi li a {
+/*background: url(background.gif) #fff bottom left repeat-x;*/
     height: 18px;
     line-height: 18px;
     float: left;
@@ -111,6 +112,25 @@ li#last{
     float:right;
 }
 div#graphnavi{
-    /*KeSKEN*/
+    position: fixed;
+    top: 0px;
+    left: 0px;
     z-index: 10;
+    width:7px;
+    height:100%;
+    background-image: url(images/navitausta.png);
+}
+div#graphnavi *{
+    display: none;
+}
+div#graphnavi #optiontag {
+    position: fixed;
+    top: 30px;
+    left: 7px;
+    display: block;
+}
+div#close{
+    float:right;
+    font-size:20px;
+    cursor: pointer;
 }
