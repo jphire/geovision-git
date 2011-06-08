@@ -13,6 +13,13 @@
                 </ul>
             </div>
         {% endblock %}
-    {% block sidenavi %}{% endblock %}
+    {% block sidenavi %}
+        <div id="graphnavi" class="transparent">
+            <div id="close"><img src="{{ STATIC_URL }}images/ruksi.png" alt="close"/></div>
+            <img id="optiontag" src="{{ STATIC_URL }}images/options.png" alt="display options"/>
+            {% block sidenavi_content %}
+            {% endblock %}
+        </div>
+    {% endblock %}
     {% block content %}{% endblock %}
     {% endblock %}

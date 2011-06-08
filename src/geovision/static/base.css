@@ -21,7 +21,7 @@ h4 {
     color:#23A4FF;
 }
 
-a {
+#container a {
     color:#23A4FF;
 }
 
@@ -38,7 +38,7 @@ a {
 #center-container {
     height:600px;
     position:absolute;
-    top:10px;
+    top:0px;
 }
 
 #left-container, #right-container {

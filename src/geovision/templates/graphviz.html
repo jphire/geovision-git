@@ -16,7 +16,39 @@
 
 {% block additional_title %}- graph {% endblock %}
 <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+{% block sidenavi_content %}
 
+<p>TESTDATA!!!</p>
+<table id="registerform">
+                <tr>
+                    <td><p>Username: </p></td>
+                    <td><input size="10" type="text" name="username" /></td>
+                </tr>
+                <tr>
+                    <td><p>Email: </p></td>
+                    <td><input size="10" type="text" name="email" /></td>
+                </tr>
+                <tr>
+                    <td><p>First name: </p></td>
+                    <td><input size="10" type="text" name="firstname" /></td>
+                </tr>
+                <tr>
+                    <td><p>Last name: </p></td>
+                    <td><input size="10" type="text" name="lastname" /></td>
+                </tr>
+                <tr>
+                    <td><p>Password: </p></td>
+                    <td><input size="10" type="password" name="password1" /></td>
+                </tr>
+                <tr>
+                    <td><p>Password again: </p></td>
+                    <td><input size="10" type="password" name="password2" /></td>
+                </tr>
+            </table>
+            <input id="register" type="submit" value="Register" size="10"/><br/>
+
+
+{% endblock %}
 {% block content %}
 <body onload="init();">
 <div id="container">
