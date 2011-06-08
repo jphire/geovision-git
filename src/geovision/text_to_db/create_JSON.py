@@ -31,18 +31,23 @@ def create_json(ecnumber, bitscorelimit, depthlimit):
     global depth_limit
     depth_limit = depthlimit
 
-    json_file = open(PROJECTROOT + "/static/json_file.json", 'w')
+    json_file = open(PROJECTROOT + "/static/json_file.js", 'w')
 
-    json_file.write("{\n")
+    json_file.write("var json_data = {\n")
 
     json_file.write("id: \"" + ecnumber + "\",\n")
     json_file.write("name: \"" + ecnumber + "\",\n")
+
+    json_file.write("data: [")
+    for child in zero_nodes:
+        json_file.write("{" + child.db_entry.read_id + ":\"" + child.db_entry.read_id + "\"}, ")
+    json_file.write("],\n")
+
     json_file.write("children: [")
     for obj in zero_nodes:
-        result = get_children(obj, "ec", bitscorelimit)
+        result = get_children(obj, "ec", ecnumber, bitscorelimit)
     json_file.write(result)
-    json_file.write("]\n")
-    json_file.write("}")
+    json_file.write("]\n};")
     json_file.close()
 
 def get_children(node, caller_class, caller_id, bitscorelimit):
@@ -50,32 +55,38 @@ def get_children(node, caller_class, caller_id, bitscorelimit):
     get_children.depth_counter += 1
     global result
 
-    if caller_id == "ec":
+    if caller_class == "ec":
         result = result + "\t{\n\tid: \"" + node.db_entry.read_id + "\",\n"
         result = result + "\tname: \"" + node.db_entry.read_id + "\",\n"
-        result = result + "\tdata: {\n\t\tparent: \"" + caller_id + "<h4>relations here..</h4>\"\n\t},\n"
+        children = get_db_results(node.db_entry.read_id, bitscorelimit)
+
+        result = result + "\tdata: [{parent: \"" + caller_id + "\"}, "
+        for child in children:
+            result = result + "{" + child.read.read_id + ":\"" + child.read.read_id + "\"},"
+        #lose the last , ...
+        result = result[:-1]
+        result = result + "],\n"
 
         if get_children.depth_counter < depth_limit:
             result = result + "\tchildren: ["
-            children = get_db_results(node.db_entry.read_id, bitscorelimit)
+            
             for obj in children:
-                result = get_children(obj, "db", node.ec_number, bitscorelimit)
+                result = get_children(obj, "db", node.db_entry.read_id, bitscorelimit)
 
         else:
             result = result + "\tchildren: []\n\t},"
             get_children.depth_counter -= 1
             return result
 
-    elif caller_id == "db":
+    elif caller_class == "db":
         result = result + "\t{\n\tid: \"" + node.read.read_id + "\",\n"
         result = result + "\tname: \"" + node.read.read_id + "\",\n"
-        result = result + "\tdata: {\n\t\trelation: \"<h4>relations here..</h4>\"\n\t},\n"
+        result = result + "\tdata: {\n\t\tparent: \"" + caller_id + "\"\n\t},\n"
         result = result + "\tchildren: []\n\t}"
         result = result + ",\n"
         get_children.depth_counter -= 1
         return result
 
-    
 #FOR NOW, LATER MAYBE EXTENDED TO ALLOW DEEPER GRAPHS..
 #            if get_children.depth_counter < depth_limit:
 #                result = result + "\tchildren: ["
