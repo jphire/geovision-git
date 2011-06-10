@@ -1,4 +1,6 @@
 jQuery(function($) {
+/*! Function to open the graph-option-navigation with a nice animation.
+ */
     var opened = false;
     var closed = true;
     $('#graphnavi').mouseenter(function() {
@@ -12,7 +14,7 @@ jQuery(function($) {
     });
     $('#close').click(function() {
         if (opened){
-            $('#graphnavi').find('*').hide();
+            $('#graphnavi').find('*').hide();/*!Hide all elements*/
             $('#graphnavi').animate({width: "7px"}, {complete: function() {
                        $(this).find('#optiontag').fadeIn();
                        opened = false;
