@@ -15,18 +15,18 @@ depth_limit = 3
 #THE DOUBLE UNDERSCORE CAN BE INEFFICIENT BECAUSE OF JOINS IN THE BACKGROUND: MAYBE HAVE TO BE CHANGED
 #IN THE FUTURE!!!
 
-def get_ec_results(ecnumber, bitscorelimit):
-    return Result.objects.filter(ec_number = ecnumber, bitscore__gt = bitscorelimit)
+def get_ec_results(ecnumber, bitscorelimit, max_amount):
+    return Result.objects.filter(ec_number = ecnumber, bitscore__gt = bitscorelimit).order_by('bitscore').reverse()[:max_amount]
 
-def get_db_results(db_entry_id, bitscorelimit):
-    return Result.objects.filter(db_entry__read_id = db_entry_id, bitscore__gt = bitscorelimit)
+def get_db_results(db_entry_id, bitscorelimit, max_amount):
+    return Result.objects.filter(db_entry__read_id = db_entry_id, bitscore__gt = bitscorelimit).order_by('bitscore').reverse()[:max_amount]
 
-def get_rd_results(read_id, bitscorelimit):
-    return Result.objects.filter(read__read_id = read_id, bitscore__gt = bitscorelimit)
+def get_rd_results(read_id, bitscorelimit, max_amount):
+    return Result.objects.filter(read__read_id = read_id, bitscore__gt = bitscorelimit).order_by('bitscore').reverse()[:max_amount]
 
-def create_json(ecnumber, bitscorelimit, depthlimit):
+def create_json(ecnumber, bitscorelimit, depthlimit, max_amount):
 
-    zero_nodes = get_ec_results(ecnumber, bitscorelimit)
+    zero_nodes = get_ec_results(ecnumber, bitscorelimit, max_amount)
     get_children.depth_counter = 0
     global depth_limit
     depth_limit = depthlimit
@@ -45,12 +45,12 @@ def create_json(ecnumber, bitscorelimit, depthlimit):
 
     json_file.write("children: [")
     for obj in zero_nodes:
-        result = get_children(obj, "ec", ecnumber, bitscorelimit)
+        result = get_children(obj, "ec", ecnumber, bitscorelimit, max_amount)
     json_file.write(result)
     json_file.write("]\n};")
     json_file.close()
 
-def get_children(node, caller_class, caller_id, bitscorelimit):
+def get_children(node, caller_class, caller_id, bitscorelimit, max_amount):
 
     get_children.depth_counter += 1
     global result
@@ -58,7 +58,7 @@ def get_children(node, caller_class, caller_id, bitscorelimit):
     if caller_class == "ec":
         result = result + "\t{\n\tid: \"" + node.db_entry.read_id + "\",\n"
         result = result + "\tname: \"" + node.db_entry.read_id + "\",\n"
-        children = get_db_results(node.db_entry.read_id, bitscorelimit)
+        children = get_db_results(node.db_entry.read_id, bitscorelimit, max_amount)
 
         result = result + "\tdata: [{parent: \"" + caller_id + "\"}, "
         for child in children:
@@ -71,7 +71,7 @@ def get_children(node, caller_class, caller_id, bitscorelimit):
             result = result + "\tchildren: ["
             
             for obj in children:
-                result = get_children(obj, "db", node.db_entry.read_id, bitscorelimit)
+                result = get_children(obj, "db", node.db_entry.read_id, bitscorelimit, max_amount)
 
         else:
             result = result + "\tchildren: []\n\t},"
@@ -103,4 +103,4 @@ def get_children(node, caller_class, caller_id, bitscorelimit):
     return result
 
 if __name__ == "__main__":
-    create_json("1.2.3.22", 40, 3)
+    create_json("1.2.3.22", 40, 3, 200)
