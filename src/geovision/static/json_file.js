@@ -9,19 +9,43 @@ children: [	{
 	children: [	{
 	id: "R001",
 	name: "R001",
-	data: {
-		parent: "DB1"
-	},
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
+	children: [	{
+	id: "DB1",
+	name: "DB1",
+	data: [{parent: "R001"}, {R001:"R001"},{R002:"R002"}],
+	children: [	{
+	id: "R001",
+	name: "R001",
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
 	children: []
-	},
+	},	{
+	id: "R002",
+	name: "R002",
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
+	children: []
+	},]},
+]},
 	{
 	id: "R002",
 	name: "R002",
-	data: {
-		parent: "DB1"
-	},
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
+	children: [	{
+	id: "DB1",
+	name: "DB1",
+	data: [{parent: "R002"}, {R001:"R001"},{R002:"R002"}],
+	children: [	{
+	id: "R001",
+	name: "R001",
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
 	children: []
-	},
+	},	{
+	id: "R002",
+	name: "R002",
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
+	children: []
+	},]},
+]},
 ]},
 	{
 	id: "DB2",
@@ -30,11 +54,18 @@ children: [	{
 	children: [	{
 	id: "R003",
 	name: "R003",
-	data: {
-		parent: "DB2"
-	},
+	data: [{parent: "DB2"}, {DB2:"DB2"}],
+	children: [	{
+	id: "DB2",
+	name: "DB2",
+	data: [{parent: "R003"}, {R003:"R003"}],
+	children: [	{
+	id: "R003",
+	name: "R003",
+	data: [{parent: "DB2"}, {DB2:"DB2"}],
 	children: []
-	},
+	},]},
+]},
 ]},
 	{
 	id: "DB6",
@@ -43,11 +74,18 @@ children: [	{
 	children: [	{
 	id: "R004",
 	name: "R004",
-	data: {
-		parent: "DB6"
-	},
+	data: [{parent: "DB6"}, {DB6:"DB6"}],
+	children: [	{
+	id: "DB6",
+	name: "DB6",
+	data: [{parent: "R004"}, {R004:"R004"}],
+	children: [	{
+	id: "R004",
+	name: "R004",
+	data: [{parent: "DB6"}, {DB6:"DB6"}],
 	children: []
-	},
+	},]},
+]},
 ]},
 	{
 	id: "DB1",
@@ -56,19 +94,43 @@ children: [	{
 	children: [	{
 	id: "R001",
 	name: "R001",
-	data: {
-		parent: "DB1"
-	},
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
+	children: [	{
+	id: "DB1",
+	name: "DB1",
+	data: [{parent: "R001"}, {R001:"R001"},{R002:"R002"}],
+	children: [	{
+	id: "R001",
+	name: "R001",
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
 	children: []
-	},
+	},	{
+	id: "R002",
+	name: "R002",
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
+	children: []
+	},]},
+]},
 	{
 	id: "R002",
 	name: "R002",
-	data: {
-		parent: "DB1"
-	},
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
+	children: [	{
+	id: "DB1",
+	name: "DB1",
+	data: [{parent: "R002"}, {R001:"R001"},{R002:"R002"}],
+	children: [	{
+	id: "R001",
+	name: "R001",
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
 	children: []
-	},
+	},	{
+	id: "R002",
+	name: "R002",
+	data: [{parent: "DB1"}, {DB1:"DB1"}],
+	children: []
+	},]},
+]},
 ]},
 	{
 	id: "DB4",
@@ -77,11 +139,18 @@ children: [	{
 	children: [	{
 	id: "R005",
 	name: "R005",
-	data: {
-		parent: "DB4"
-	},
+	data: [{parent: "DB4"}, {DB4:"DB4"}],
+	children: [	{
+	id: "DB4",
+	name: "DB4",
+	data: [{parent: "R005"}, {R005:"R005"}],
+	children: [	{
+	id: "R005",
+	name: "R005",
+	data: [{parent: "DB4"}, {DB4:"DB4"}],
 	children: []
-	},
+	},]},
+]},
 ]},
 ]
 };
