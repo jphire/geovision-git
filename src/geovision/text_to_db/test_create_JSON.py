@@ -44,9 +44,17 @@ class  Test_create_JSONTestCase(unittest.TestCase):
 			error_value=0.002, bitscore=30)
         Result.objects.create(read=read3, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.22",
 			error_value=0.002, bitscore=50)
-        Result.objects.create(read=read5, db_entry=db_entry4, evident_type="l", ec_number="1.1.2.22",
+        Result.objects.create(read=read5, db_entry=db_entry4, evident_type="l", ec_number="1.1.2.24",
 			error_value=0.002, bitscore=30)
         Result.objects.create(read=read4, db_entry=db_entry6, evident_type="l", ec_number="1.1.2.22",
+			error_value=0.002, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.22",
+			error_value=0.002, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.24",
+			error_value=0.002, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry3, evident_type="l", ec_number="1.1.2.23",
+			error_value=0.002, bitscore=50)
+        Result.objects.create(read=read2, db_entry=db_entry4, evident_type="l", ec_number="1.1.2.24",
 			error_value=0.002, bitscore=50)
 
     #def tearDown(self):
@@ -60,7 +68,7 @@ class  Test_create_JSONTestCase(unittest.TestCase):
         print Blast.objects.all().count()
         print Result.objects.all().count()
 
-        create_json("1.1.2.22", 20, 4, 10)
+        create_json("1.1.2.22", 0, 20, 7, 10)
 
         assert 1==1
         #assert x != y;
