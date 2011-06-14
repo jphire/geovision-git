@@ -60,7 +60,9 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, depthlimit, max_a
     # database entry query
     elif ecnumber == 0 and read_id == 0:
         db_query = True
+        # two query sets are needed to get both enzyme- and read result nodes for a db node
         root_nodes = get_db_results(db_entry_id, bitscorelimit, max_amount, 'ec')
+        root_nodes_2 = get_db_results(db_entry_id, bitscorelimit, max_amount, 'rd')
     # no valid query arguments given
     else:
         return 'error'
@@ -73,15 +75,15 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, depthlimit, max_a
     json_file = open(PROJECTROOT + "/static/json_file.js", 'w')
     json_file.write("var json_data = {\n")
 
-    if ecnumber == 0 and db_entry_id == 0:
+    if read_query:
         json_file.write("id: \"" + read_id + "\",\n")
         json_file.write("name: \"" + read_id + "\",\n")
 
-    elif read_id == 0 and db_entry_id == 0:
+    elif enzyme_query:
         json_file.write("id: \"" + ecnumber + "\",\n")
         json_file.write("name: \"" + ecnumber + "\",\n")
 
-    elif ecnumber == 0 and read_id == 0:
+    elif db_query:
         json_file.write("id: \"" + db_entry_id + "\",\n")
         json_file.write("name: \"" + db_entry_id + "\",\n")
 
@@ -89,42 +91,53 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, depthlimit, max_a
     # dict is used to cut off multiple result lines that have the same db_entry
     dict = {}
 
-    if ecnumber != 0 or read_id != 0:
+    if enzyme_query or read_query:
         # can be used to both entzyme- and read query:
         for node in root_nodes:
             if node.db_entry.read_id not in dict:
-                dict[node.db_entry.read_id] = 'node.db_entry.read_id';
+                dict[node.db_entry.read_id] = 'db_entry';
                 json_file.write("{" + node.db_entry.read_id + ":\"" + node.db_entry.read_id + "\"}, ")
-    else:
+    elif db_query:
         for node in root_nodes:
             if node.read.read_id not in dict:
-                dict[node.read.read_id] = 'node.read.read_id';
+                dict[node.read.read_id] = 'read';
                 json_file.write("{" + node.read.read_id + ":\"" + node.read.read_id + "\"}, ")
+
+        for node in root_nodes_2:
+            if node.ec_number not in dict:
+                dict[node.ec_number] = 'ec';
+                json_file.write("{\"" + node.ec_number + "\":\"" + node.ec_number + "\"}, ")
 
     json_file.write("],\n")
     json_file.write("children: [")
 
     dict = {}
-    if ecnumber == 0 and db_entry_id == 0:
+    if read_query:
         rd_list.append(read_id)
         for node in root_nodes:
             if node.db_entry.read_id not in dict:
                 dict[node.db_entry.read_id] = 'node.db_entry.read_id';
                 result = get_children(node, "rd", read_id, bitscorelimit, max_amount, 'ec')
 
-    elif read_id == 0 and db_entry_id == 0:
+    elif enzyme_query:
         ec_list.append(ecnumber)
         for node in root_nodes:
             if node.db_entry.read_id not in dict:
                 dict[node.db_entry.read_id] = 'node.db_entry.read_id';
                 result = get_children(node, "ec", ecnumber, bitscorelimit, max_amount, 'rd')
 
-    elif ecnumber == 0 and read_id == 0:
+    elif db_query:
         db_list.append(db_entry_id)
         for node in root_nodes:
             if node.read.read_id not in dict:
                 dict[node.read.read_id] = 'node.read.read_id';
                 result = get_children(node, "db", db_entry_id, bitscorelimit, max_amount, 'rd')
+        
+        for node in root_nodes_2:
+            if node.ec_number not in dict:
+                dict[node.ec_number] = 'ec';
+                result = get_children(node, "db", db_entry_id, bitscorelimit, max_amount, 'ec')
+
 
     json_file.write(result)
     json_file.write("]\n};")
@@ -132,8 +145,8 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, depthlimit, max_a
     json_file.close()
 
 # get_children is used to retrieve a node's adjancies to other nodes. node is the calling node,
-# caller_class is the calling node's type(ec, db or rd), caller_id is the calling node's name or id,
-# bitscorelimit and max_amount: see create_JSON(), db_child_type is used to get knowledge on which
+# caller_class is the calling node's type('ec' means enzyme, 'db' database and 'rd' read), caller_id is the calling node's name or id,
+# bitscorelimit and max_amount: see create_JSON() comments, db_child_type is used to get knowledge on which
 # type of adjancies to a database node are requested(i.e. did we 'come' to database node from
 # enzyme node or read node)
 def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, db_child_type):

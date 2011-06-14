@@ -1,7 +1,7 @@
 var json_data = {
 id: "DB1",
 name: "DB1",
-data: [{R001:"R001"}, {R002:"R002"}, ],
+data: [{R001:"R001"}, {R002:"R002"}, {"1.1.2.22":"1.1.2.22"}, ],
 children: [	{
 	id: "R001",
 	name: "R001",
@@ -70,6 +70,11 @@ children: [	{
 	{
 	id: "R002",
 	name: "R002",
+	data: [{parent: "DB1"},],
+	children: []},
+	{
+	id: "1.1.2.22",
+	name: "1.1.2.22",
 	data: [{parent: "DB1"},],
 	children: []},
 ]
