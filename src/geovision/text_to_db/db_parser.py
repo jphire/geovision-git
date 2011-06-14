@@ -27,17 +27,26 @@ class DbfileParser:
 		self.other_info = ''
 		self.uniprot = self.source.find("uniprot")
 
-	def next_read(self):
+	def next_db_entry(self):
+		"""
+		Function for reading database fasta file entries one at a time.
+
+		"""
 		if len(self.nextline) is 0:
 			return None
 		self.dnadata = ''
 		self.infoline = self.nextline.strip().strip('>').split(None, 1)
 		self.id = self.infoline[0]
-		self.infoline = self.infoline[1].split('OS=')
-		self.description = self.infoline[0]
-		next_pattern_start = re.search(FIELD_PATTERN, self.infoline[1]).start()
-		self.os_field = self.infoline[1][:next_pattern_start-1]
-		self.other_info = self.infoline[1][next_pattern_start:]
+		if (self.uniprot > -1):
+			self.infoline = self.infoline[1].split('OS=')
+			self.description = self.infoline[0]
+			next_pattern_start = re.search(FIELD_PATTERN, self.infoline[1]).start()
+			self.os_field = self.infoline[1][:next_pattern_start-1]
+			self.other_info = self.infoline[1][next_pattern_start:]
+		else:
+			self.description = self.infoline[1]
+			self.os_field = ''
+			self.other_info = ''
 		self.nextline = self.textfile.readline()
 		while (self.nextline[0] is not '>'):
 			self.dnadata += self.nextline.strip()
