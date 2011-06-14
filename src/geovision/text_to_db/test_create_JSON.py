@@ -80,7 +80,7 @@ class  Test_create_JSONTestCase(unittest.TestCase):
         print Blast.objects.all().count()
         print Result.objects.all().count()
 
-        create_json(0, 0, "DB1", 20, 7, 10)
+        create_json(0, 0, "DB1", 20, 20, 10)
 
         assert 1==1
         #assert x != y;

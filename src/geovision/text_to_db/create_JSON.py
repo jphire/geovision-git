@@ -87,7 +87,7 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, depthlimit, max_a
         json_file.write("id: \"" + db_entry_id + "\",\n")
         json_file.write("name: \"" + db_entry_id + "\",\n")
 
-    json_file.write("data: [")
+    json_file.write("data: { adjancies:\"")
     # dict is used to cut off multiple result lines that have the same db_entry
     dict = {}
 
@@ -96,19 +96,19 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, depthlimit, max_a
         for node in root_nodes:
             if node.db_entry.read_id not in dict:
                 dict[node.db_entry.read_id] = 'db_entry';
-                json_file.write("{" + node.db_entry.read_id + ":\"" + node.db_entry.read_id + "\"}, ")
+                json_file.write(node.db_entry.read_id + ":</br>" + node.db_entry.description + "</br>")
     elif db_query:
         for node in root_nodes:
             if node.read.read_id not in dict:
                 dict[node.read.read_id] = 'read';
-                json_file.write("{" + node.read.read_id + ":\"" + node.read.read_id + "\"}, ")
+                json_file.write(node.read.read_id + ": " + node.read.description + ", bitscore: " + str(node.bitscore) + "</br>")
 
         for node in root_nodes_2:
             if node.ec_number not in dict:
                 dict[node.ec_number] = 'ec';
-                json_file.write("{\"" + node.ec_number + "\":\"" + node.ec_number + "\"}, ")
+                json_file.write(node.ec_number + "</br>")
 
-    json_file.write("],\n")
+    json_file.write("\"},\n")
     json_file.write("children: [")
 
     dict = {}
@@ -160,25 +160,20 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, db_ch
         result = result + "\t{\n\tid: \"" + node.db_entry.read_id + "\",\n"
         result = result + "\tname: \"" + node.db_entry.read_id + "\",\n"
 
-        if caller_class == 'ec':
-            children = get_db_results(node.db_entry.read_id, bitscorelimit, max_amount, 'ec')
-
-        elif caller_class == 'rd':
-            children = get_db_results(node.db_entry.read_id, bitscorelimit, max_amount, 'rd')
+        children_1 = get_db_results(node.db_entry.read_id, bitscorelimit, max_amount, 'ec')
+        children_2 = get_db_results(node.db_entry.read_id, bitscorelimit, max_amount, 'rd')
 
         result = result + "\tdata: [{parent: \"" + caller_id + "\"}, "
         dict = {}
-        if caller_class == 'ec':
-            for child in children:
-                if child.read.read_id not in dict:
-                    dict[child.read.read_id] = 'child.read.read_id'
-                    result = result + "{" + child.read.read_id + ":\"" + child.read.read_id + "\"},"
+        for child in children_1:
+            if child.read.read_id not in dict:
+                dict[child.read.read_id] = 'child.read.read_id'
+                result = result + "{" + child.read.read_id + ":\"" + child.read.read_id + "\"},"
 
-        elif caller_class == 'rd':
-            for child in children:
-                if child.ec_number not in dict:
-                    dict[child.ec_number] = 'child.ec_number'
-                    result = result + "{\"" + child.ec_number + "\":\"" + child.ec_number + "\"},"
+        for child in children_2:
+            if child.ec_number not in dict:
+                dict[child.ec_number] = 'child.ec_number'
+                result = result + "{\"" + child.ec_number + "\":\"" + child.ec_number + "\"},"
                     
         # drop the last ','
         result = result[:-1]
@@ -188,17 +183,15 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, db_ch
             dict = {}
             result = result + "\tchildren: ["
 
-            if caller_class == 'ec':
-                for child in children:
-                    if child.read.read_id not in dict:
-                        dict[child.read.read_id] = 'child.read.read_id'
-                        result = get_children(child, "db", node.db_entry.read_id, bitscorelimit, max_amount, 'rd')
+            for child in children_1:
+                if child.read.read_id not in dict:
+                    dict[child.read.read_id] = 'child.read.read_id'
+                    result = get_children(child, "db", node.db_entry.read_id, bitscorelimit, max_amount, 'rd')
 
-            elif caller_class == 'rd':
-                for child in children:
-                    if child.ec_number not in dict:
-                        dict[child.ec_number] = 'child.ec_number'
-                        result = get_children(child, "db", node.db_entry.read_id, bitscorelimit, max_amount, 'ec')
+            for child in children_2:
+                if child.ec_number not in dict:
+                    dict[child.ec_number] = 'child.ec_number'
+                    result = get_children(child, "db", node.db_entry.read_id, bitscorelimit, max_amount, 'ec')
                             
         else:
             result = result + "\tchildren: []\n\t},"
