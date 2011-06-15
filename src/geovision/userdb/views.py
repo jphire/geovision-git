@@ -45,8 +45,4 @@ def logging_out(request):
     logout(request)
     return render_to_response("login.html", {'error_message': "You have been logged out.", }, context_instance=RequestContext(request) )
 
-#Add '@login_required' to all after these!
-#also might be good to put these in viz.views at some point
-@login_required
-def testgraph(request):
-    return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
+#graphviews moved to viz.views

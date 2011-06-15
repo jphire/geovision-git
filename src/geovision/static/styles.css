@@ -115,6 +115,7 @@ div#graphnavi{
     position: fixed;
     top: 0px;
     left: 0px;
+    padding-top: 20px;
     z-index: 10;
     width:7px;
     height:100%;
