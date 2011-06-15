@@ -24,24 +24,32 @@ class DbfileParser:
 		self.description = ''
 		self.os_field = ''
 		self.other_info = ''
-		self.uniprot = self.source.find("uniprot")
+		self.dbname = ''
+		if self.source.find("uniprot") != -1:
+			self.dbname = "uniprot"
+		elif self.source.find("frnadb") != -1:
+			self.dbname = "frnadb"
 
 	def next_db_entry(self):
 		"""
 		Function for reading database fasta file entries one at a time.
-
+		Parsing is slightly different for different databases.
+		Uniprot: OS= field is parsed separately
+		Frnadb: lcl| prefix in ID fields is removed
 		"""
 		if len(self.nextline) is 0:
 			return None
 		self.dnadata = ''
 		self.infoline = self.nextline.strip().strip('>').split(None, 1)
 		self.id = self.infoline[0]
-		if (self.uniprot > -1):
+		if self.dbname is "uniprot":
 			self.infoline = self.infoline[1].split('OS=')
 			self.description = self.infoline[0].strip()
 			next_pattern_start = re.search(re.compile('[A-Z]{2}='), self.infoline[1]).start()
 			self.os_field = self.infoline[1][:next_pattern_start-1]
 			self.other_info = self.infoline[1][next_pattern_start:]
+		elif self.dbname is "frnadb":
+			self.id = self.id.split('|')[1]
 		else:
 			self.description = self.infoline[1]
 			self.os_field = ''
@@ -49,7 +57,6 @@ class DbfileParser:
 		self.nextline = self.textfile.readline()
 		while (self.nextline[0] is not '>'):
 			self.dnadata += self.nextline.strip()
-#       For the files that have whitespace in the data, uncomment the next line:
 			self.dnadata = string.translate(self.dnadata, None, string.whitespace)
 			self.nextline = self.textfile.readline()
 			if len(self.nextline) is 0:
