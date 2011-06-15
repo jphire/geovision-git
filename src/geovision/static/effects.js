@@ -1,22 +1,22 @@
 jQuery(function($) {
-/*! Function to open the graph-option-navigation with a nice slide.
+/*! Function to open the graph-option-navigation with a nice animation.
  */
     var opened = false;
     var closed = true;
-    $('#graphnavi').mouseenter(function() { /*if mouse enters right edge.. */
-        if (!opened){ /*if open, do nothing*/
+    $('#graphnavi').mouseenter(function() {
+        if (!opened){
             opened = true;
             $(this).find('#optiontag').hide();
-            $(this).animate({width: "40%"}, {complete: /*otherwise slide menu open and after that fill in content*/
+            $(this).animate({width: "40%"}, {complete:
               function() { $(this).find('*').not('#optiontag').fadeIn();  }
             });
         }
     });
-    $('#close').click(function() {/*if user clicks close-button..*/
-        if (opened){ /*if not open, do nothing*/
-            $('#graphnavi').find('*').hide();/*Hide all elements inside*/
+    $('#close').click(function() {
+        if (opened){
+            $('#graphnavi').find('*').hide();/*!Hide all elements*/
             $('#graphnavi').animate({width: "7px"}, {complete: function() {
-                       $(this).find('#optiontag').fadeIn();/*close navi and show optiontag*/
+                       $(this).find('#optiontag').fadeIn();
                        opened = false;
             }});
             

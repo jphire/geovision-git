@@ -1,4 +1,4 @@
-# Create your views here. Views handle the rendering of the actual pages by calling templates and requestcontects
+# Create your views here.
 from django.http import HttpResponse
 from django.template import Context, loader
 from django.shortcuts import render_to_response
@@ -8,13 +8,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
-def loginpage(request):#login. Cannot be named that because of namespace
+def loginpage(request):
     return render_to_response("login.html", { }, context_instance=RequestContext(request) )
 def register(request):
     return render_to_response("register.html", { }, context_instance=RequestContext(request) )
-def about(request):
-    return render_to_response("about.html", { }, context_instance=RequestContext(request) )
-def registering(request):#submitted registering form handeled here
+def registering(request):
     if (cmp(request.POST['password1'], request.POST['password2']) != 0 ):
         return render_to_response('register.html', {
             'error_message': "Error: Passwords did not match.",
@@ -26,25 +24,25 @@ def registering(request):#submitted registering form handeled here
     return render_to_response('login.html', {
             'error_message': "Account succesfully created.",
         }, context_instance=RequestContext(request)) 
-def logging_in(request):#log user in after its submitted info
+def logging_in(request):
     username = request.POST['username']
     password = request.POST['password']
-    user = authenticate(username=username, password=password) #django method, returns user
+    user = authenticate(username=username, password=password)
     if user is not None:
-        if user.is_active: #dunno if users can be not active in this, but better to be safe than sorry
+        if user.is_active:
             login(request, user)
             return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
         else:
             return render_to_response('login.html', {
                     'error_message': "Account is not active.",
                     }, context_instance=RequestContext(request))
-    else:#if user was none, the info was wrong
+    else:
         return render_to_response('login.html', {
             'error_message': "The username or password was incorrect.",
         }, context_instance=RequestContext(request))
 
 def logging_out(request):
-    logout(request) #django logs user out
+    logout(request)
     return render_to_response("login.html", {'error_message': "You have been logged out.", }, context_instance=RequestContext(request) )
 
 #Add '@login_required' to all after these!
