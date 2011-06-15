@@ -20,7 +20,7 @@
 
 {% block sidenavi_content %}
 
-<form id="graphrefresh" action="graphrefresh" method="post">
+<form id="graphrefresh" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <label>Bitscore</label>
     <input size="10" type="text" name="bitscore" /><br/>
     <label>E-value</label>

@@ -6,7 +6,7 @@
         <h2>Geovision</h2>
         <p>Please fill all these fields to register an account:</p>
         <form id="login" action="registering" method="post">
-            {% csrf_token %}
+            {% csrf_token %}<!--protects from cross site request forgery-->
             <table id="registerform">
                 <tr>
                     <td><p>Username: </p></td>

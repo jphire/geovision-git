@@ -5,7 +5,7 @@
     <div  class="greenbox" id="login">
         <h2>Geovision</h2>
         <form id="login" action="logging_in" method="post">
-        {% csrf_token %}
+        {% csrf_token %}<!--protects from cross site request forgery-->
         <label>Username: </label> <input size="10" type="text" name="username" /><br/>
 
         <label>Password: </label><input size="10" type="password" name="password" /><br/>
