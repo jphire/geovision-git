@@ -9,7 +9,7 @@ result = ""
 # the graph's depth limit from root node, defaults 3
 depth_limit = 3
 
-#to keep track of 'visited' nodes:
+# to keep track of 'visited' nodes:
 ec_list = []
 db_list = []
 rd_list = []
