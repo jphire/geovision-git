@@ -42,9 +42,15 @@ var json = json_data;
             strokeStyle: '#555'
           }
         },
+
         //set distance for nodes on different levels
 	levelDistance: 100,
-	
+
+        //set transformation speed
+        duration: 500,
+        fps: 40,
+        transition: $jit.Trans.Bounce,
+
         //Add navigation capabilities:
         //zooming by scrolling and panning.
         Navigation: {
@@ -55,22 +61,43 @@ var json = json_data;
         
         //Set Node and Edge styles.
         Node: {
-            span: 100,
-            angularWidth:100,
-            color: '#ffeeff'
+            color: '#ccb',
+            alpha: 1,
+            dim: 3,
+            height: 20,
+            width: 90,
+            autoHeight: false,
+            autoWidth: false,
+            lineWidth: 1,
+            transform: true,
+            align: "center",
+            angularWidth:1,
+            span:1,
+            alpha: 1,
+            type: 'circle',
+            dim: 4,
+            CanvasStyles: {}
         },
         
         Edge: {
-          color: '#Cdffff',
-          lineWidth:1.0,
+          color: '#068481',
+          lineWidth:1.2,
           dim: 50
         },
 
+        //Set tooltip configuration
+        Tips: {
+            enable: true,
+            onShow: function(tip, node) {
+                tip.innerHTML = node.data.adjancies;
+            }
+        },
+        
         onBeforeCompute: function(node){
             Log.write("centering " + node.name + "...");
             //Add the relation list in the right column.
             //This list is taken from the data property of each JSON node.
-            $jit.id('inner-details').innerHTML = node.data.relation;
+            $jit.id('inner-details').innerHTML = node.data.adjancies;
         },
         
         onAfterCompute: function(){
@@ -93,11 +120,11 @@ var json = json_data;
             style.cursor = 'pointer';
 
             if (node._depth <= 1) {
-                style.fontSize = "0.8em";
+                style.fontSize = "1.1em";
                 style.color = "#ccc";
             
             } else if(node._depth == 2){
-                style.fontSize = "0.7em";
+                style.fontSize = "1.1em";
                 style.color = "#494949";
             
             } else {
@@ -126,5 +153,5 @@ var json = json_data;
   
     //end
     //append information about the root relations in the right column
-    $jit.id('inner-details').innerHTML = rgraph.graph.getNode(rgraph.root).data.relation;
+    $jit.id('inner-details').innerHTML = rgraph.graph.getNode(rgraph.root).data.adjancies;
 }
