@@ -1,13 +1,12 @@
+#redirects all urls to the files which handle them (using regex)
+
 from django.conf.urls.defaults import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'geovision.views.home', name='home'),
-    # url(r'^geovision/', include('geovision.foo.urls')),
-    (r'^$', 'userdb.views.loginpage'),
+    (r'^$', 'userdb.views.loginpage'), #only baseurl -> to login
     (r'^login$', 'userdb.views.loginpage'),
     (r'^register$', 'userdb.views.register'),
     (r'^registering$', 'userdb.views.registering'),
