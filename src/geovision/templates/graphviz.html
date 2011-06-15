@@ -12,12 +12,10 @@
 
 <!-- Example File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
-
-<!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
 {% endblock %}
 
 {% block additional_title %}- graph {% endblock %}
-
+<!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
 {% block sidenavi_content %}
 
 <form id="graphrefresh" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
@@ -59,7 +57,6 @@ Graph animation
 </div>
 -->
 
-<!--graph stuff-->
 <div id="center-container">
     <div id="infovis"></div>    
 </div>

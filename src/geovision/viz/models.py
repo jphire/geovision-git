@@ -9,10 +9,8 @@ class Read(models.Model):
 
 class DbEntry(models.Model):
 	source_file = models.CharField(max_length=32)
-	db_id = models.CharField(max_length=64)
+	read_id = models.CharField(max_length=64)
 	description = models.TextField()
-	os_field = models.CharField(max_length=128)
-	other_info = models.TextField()
 	data = models.TextField()
 
 
