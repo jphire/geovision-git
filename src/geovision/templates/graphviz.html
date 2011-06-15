@@ -20,11 +20,17 @@
 
 {% block sidenavi_content %}
 
-<p>TESTDATA!!!</p>
-<h1>Some option-stuff here</h1>
-<h2>option-stuff here</h2>
-<h3>More option-stuff here</h3>
-<input id="register" type="submit" value="Refresh" size="10"/><br/>
+<form id="graphrefresh" action="graphrefresh" method="post">
+    <label>Bitscore</label>
+    <input size="10" type="text" name="bitscore" /><br/>
+    <label>E-value</label>
+    <input size="10" type="text" name="e-value" /><br/>
+    <label>Depth</label>
+    <input size="10" type="text" name="depth" /><br/>
+    <label>Hits</label>
+    <input size="10" type="text" name="hits" /><br/>
+    <input id="graphrefresh" type="submit" value="Refresh page" size="10"/><br/>
+</form>
 
 
 {% endblock %}
