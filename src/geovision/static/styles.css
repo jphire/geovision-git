@@ -1,10 +1,7 @@
-/*basic styles for most pages*/
 body, html {
     background-color: #E6F2EA;
     height: 100%;
-    font-family: Arial;
 }
-/*style for the green boxes in login, about and register*/
 div.greenbox{
     position:relative;
     background-color:#ACC2B3;
@@ -60,7 +57,9 @@ div.error{
     text-align: center;
     width: 400px;
 }
-/*this should be used anywhere there is trouble with floats*/
+
+/*UPPER NAVIGATION*/
+
 /* Easy Clearing on - http://www.positioniseverything.net/easyclearing.html */
     .clearafter:after {
       content: '[DO NOT LEAVE IT IS NOT REAL]';
@@ -75,8 +74,6 @@ div.error{
     }
     /* */
     /* Easy Clearing off */
-
-/*UPPER NAVIGATION*/
 A:link {color:#0C1F02; text-decoration:none;}
 A:visited {color:#0C1F02; text-decoration:none;}
 A:active {color:#0C1F02; text-decoration:none;}
@@ -114,13 +111,11 @@ div#staticnavi{
 li#last{
     float:right;
 }
-
-/*GRAPH/SIDE NAVIGATION*/
-
 div#graphnavi{
     position: fixed;
     top: 0px;
     left: 0px;
+    padding-top: 20px;
     z-index: 10;
     width:7px;
     height:100%;
@@ -140,6 +135,3 @@ div#close{
     font-size:20px;
     cursor: pointer;
 }
-
-
-/*OTHERS*/
