@@ -1,4 +1,4 @@
-var json_data = {
+ ss00DB1200.0062010var json_data = {
 id: "DB1",
 name: "DB1",
 data: { adjancies:"R001: baz, bitscore: 50.0</br>R002: baz, bitscore: 30.0</br>1.1.2.22</br>"},

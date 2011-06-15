@@ -8,7 +8,7 @@ result = ""
 
 # the graph's depth limit from root node, defaults 3
 depth_limit = 3
-
+json_file = open(PROJECTROOT + "/static/json_file.js", 'w')
 # to keep track of 'visited' nodes:
 ec_list = []
 db_list = []
@@ -48,7 +48,9 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     read_query = False
     enzyme_query = False
     db_query = False
+    global json_file
 
+    json_file.write(" ss" + str(ecnumber) + str(read_id) + str(db_entry_id) + str(bitscorelimit) + str(e_value_limit) + str(depthlimit) + str(max_amount))
     # read query
     if ecnumber == 0 and db_entry_id == 0:
         read_query = True
@@ -72,7 +74,8 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     global ec_list, rd_list, db_list
     depth_limit = depthlimit
 
-    json_file = open(PROJECTROOT + "/static/json_file.js", 'w')
+    
+
     json_file.write("var json_data = {\n")
 
     if read_query:
