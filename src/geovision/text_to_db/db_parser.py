@@ -11,7 +11,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 from geovision.viz.models import DbEntry as DbEntryModel
 import re
 
-FIELD_PATTERN = re.compile('[A-Z]{2}=')
 
 class DbfileParser:
 	def __init__(self, source_file, source=None):
@@ -39,8 +38,8 @@ class DbfileParser:
 		self.id = self.infoline[0]
 		if (self.uniprot > -1):
 			self.infoline = self.infoline[1].split('OS=')
-			self.description = self.infoline[0]
-			next_pattern_start = re.search(FIELD_PATTERN, self.infoline[1]).start()
+			self.description = self.infoline[0].strip()
+			next_pattern_start = re.search(re.compile('[A-Z]{2}='), self.infoline[1]).start()
 			self.os_field = self.infoline[1][:next_pattern_start-1]
 			self.other_info = self.infoline[1][next_pattern_start:]
 		else:
