@@ -50,7 +50,7 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     db_query = False
     global json_file
 
-    json_file.write(" ss" + str(ecnumber) + str(read_id) + str(db_entry_id) + str(bitscorelimit) + str(e_value_limit) + str(depthlimit) + str(max_amount))
+    #json_file.write(" ss" + str(ecnumber) + str(read_id) + str(db_entry_id) + str(bitscorelimit) + str(e_value_limit) + str(depthlimit) + str(max_amount))
     # read query
     if ecnumber == 0 and db_entry_id == 0:
         read_query = True
@@ -250,3 +250,65 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
 
 if __name__ == "__main__":
     create_json(0, 0, "DB1", 20, 0.001, 3, 200)
+
+def setupderp():
+        Read.objects.create(sample="SMPL1", read_id="R001", description="baz", data='ASD')
+        Read.objects.create(sample="SMPL2", read_id="R002", description="baz", data='ASD')
+        Read.objects.create(sample="SMPL3", read_id="R003", description="baz", data='ASD')
+        Read.objects.create(sample="SMPL4", read_id="R004", description="baz", data='ASD')
+        Read.objects.create(sample="SMPL3", read_id="R005", description="baz", data='ASD')
+        Read.objects.create(sample="SMPL2", read_id="R006", description="baz", data='ASD')
+
+        DbEntry.objects.create(source_file = "uniprot", read_id = "DB1", description="quux", data='ASD')
+        DbEntry.objects.create(source_file = "uniprot", read_id = "DB2", description="quux", data='ASD')
+        DbEntry.objects.create(source_file = "uniprot", read_id = "DB3", description="quux", data='ASD')
+        DbEntry.objects.create(source_file = "uniprot", read_id = "DB4", description="quux", data='ASD')
+        DbEntry.objects.create(source_file = "uniprot", read_id = "DB5", description="quux", data='ASD')
+        DbEntry.objects.create(source_file = "uniprot", read_id = "DB6", description="quux", data='ASD')
+        DbEntry.objects.create(source_file = "uniprot", read_id = "DB7", description="quux", data='ASD')
+
+        read1 = Read.objects.get(read_id="R001")
+        read2 = Read.objects.get(read_id="R002")
+        read3 = Read.objects.get(read_id="R003")
+        read4 = Read.objects.get(read_id="R004")
+        read5 = Read.objects.get(read_id="R005")
+        read6 = Read.objects.get(read_id="R006")
+
+        db_entry1= DbEntry.objects.get(read_id="DB1")
+        db_entry2= DbEntry.objects.get(read_id="DB2")
+        db_entry3= DbEntry.objects.get(read_id="DB3")
+        db_entry4= DbEntry.objects.get(read_id="DB4")
+        db_entry5= DbEntry.objects.get(read_id="DB5")
+        db_entry6= DbEntry.objects.get(read_id="DB6")
+        db_entry7= DbEntry.objects.get(read_id="DB7")
+
+        Result.objects.create(read=read1, db_entry=db_entry1, evident_type="l", ec_number="1.1.2.22",
+                        error_value=0.005, bitscore=50)
+        Result.objects.create(read=read2, db_entry=db_entry1, evident_type="l", ec_number="1.1.2.22",
+                        error_value=0.002, bitscore=30)
+        Result.objects.create(read=read3, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.22",
+                        error_value=0.005, bitscore=50)
+        Result.objects.create(read=read5, db_entry=db_entry4, evident_type="l", ec_number="1.1.2.24",
+                        error_value=0.002, bitscore=30)
+        Result.objects.create(read=read4, db_entry=db_entry6, evident_type="l", ec_number="1.1.2.22",
+                        error_value=0.002, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.22",
+                        error_value=0.002, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.24",
+                        error_value=0.004, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry3, evident_type="l", ec_number="1.1.2.23",
+                        error_value=0.002, bitscore=50)
+        Result.objects.create(read=read2, db_entry=db_entry5, evident_type="l", ec_number="1.1.2.24",
+                        error_value=0.001, bitscore=50)
+
+
+        Result.objects.create(read=read4, db_entry=db_entry6, evident_type="l", ec_number="1.1.2.22",
+                        error_value=0.002, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.22",
+                        error_value=0.003, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.24",
+                        error_value=0.002, bitscore=50)
+        Result.objects.create(read=read1, db_entry=db_entry3, evident_type="l", ec_number="1.1.2.23",
+                        error_value=0.003, bitscore=50)
+        Result.objects.create(read=read2, db_entry=db_entry4, evident_type="l", ec_number="1.1.2.24",
+                        error_value=0.002, bitscore=50)

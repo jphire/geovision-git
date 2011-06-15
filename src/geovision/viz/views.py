@@ -1,5 +1,6 @@
 # Create your views here.
 from geovision.text_to_db.create_JSON import create_json
+from geovision.text_to_db.create_JSON import setupderp #TEMP
 from django.http import HttpResponse
 from django.template import Context, loader
 from django.shortcuts import render_to_response
@@ -32,5 +33,6 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
         hits = float(request.POST['hits'])
     else :
         hits = 10          #hits default
+    setupderp()
     create_json(0, 0, "DB1", bitscore, evalue, depth, hits)
     return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
