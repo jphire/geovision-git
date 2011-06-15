@@ -16,21 +16,21 @@ def testgraph(request):
     return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
 @login_required
 def graphrefresh(request): #make a new JSon, set defaults if needed
-    if request.POST['bitscore'] is not None:
-        bitscore = request.POST['bitscore']
+    if request.POST['bitscore'] != '':
+        bitscore = float(request.POST['bitscore'])
     else :
         bitscore = 20      #bitscore default
-    if request.POST['e-value'] is not None:
-        evalue = request.POST['e-value']
+    if request.POST['e-value'] != '':
+        evalue = float(request.POST['e-value'])
     else :
-        evalue = 20        #e-value default
-    if request.POST['depth'] is not None:
-        depth = request.POST['depth']
+        evalue = 0.005        #e-value default
+    if request.POST['depth'] != '':
+        depth = float(request.POST['depth'])
     else :
         depth = 20         #depth default
-    if request.POST['hits'] is not None:
-        hits = request.POST['hits']
+    if request.POST['hits'] != '':
+        hits = float(request.POST['hits'])
     else :
         hits = 10          #hits default
-    create_json(0, 0, "DB1", bitscore, depth, hits)
+    create_json(0, 0, "DB1", bitscore, evalue, depth, hits)
     return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )

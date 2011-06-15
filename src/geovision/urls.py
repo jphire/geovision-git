@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     (r'^logging_in$', 'userdb.views.logging_in'),
     (r'^logging_out$', 'userdb.views.logging_out'),
     (r'^testgraph$', 'viz.views.testgraph'),
+    (r'^graphrefresh$', 'viz.views.graphrefresh'),
     (r'^about$', 'userdb.views.about'),
     #(r'^polls/(?P<poll_id>\d+)/vote/$', 'polls.views.vote'),
     
