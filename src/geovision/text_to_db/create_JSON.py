@@ -8,7 +8,7 @@ result = ""
 
 # the graph's depth limit from root node, defaults 3
 depth_limit = 3
-json_file = open(PROJECTROOT + "/static/json_file.js", 'w')
+
 # to keep track of 'visited' nodes:
 ec_list = []
 db_list = []
@@ -48,7 +48,8 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     read_query = False
     enzyme_query = False
     db_query = False
-    global json_file
+    json_file = open(PROJECTROOT + "/static/json_file.js", 'w')
+
     # read query
     if ecnumber == 0 and db_entry_id == 0:
         read_query = True
@@ -71,8 +72,6 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     global depth_limit
     global ec_list, rd_list, db_list
     depth_limit = depthlimit
-
-    
 
     json_file.write("var json_data = {\n")
 
@@ -139,7 +138,6 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
                 dict[node.ec_number] = 'ec';
                 result = get_children(node, "db", db_entry_id, bitscorelimit, max_amount, e_value_limit, 'ec')
 
-
     json_file.write(result)
     json_file.write("]\n};")
     
@@ -166,6 +164,7 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
 
         result = result + "\tdata: [{parent: \"" + caller_id + "\"}, "
         dict = {}
+        # two sets of children for both read and enzyme adjancies
         for child in children_1:
             if child.read.read_id not in dict:
                 dict[child.read.read_id] = 'child.read.read_id'
