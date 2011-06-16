@@ -21,9 +21,10 @@ class DbEntry(models.Model):
 	other_info = models.TextField(blank=True)
 
 class DbUniprotEcs(models.Model):
-	db_id = models.ForeignKey(DbEntry)
+#	db_id = models.ForeignKey(DbEntry)
+	db_id = models.CharField(max_length=32, primary_key=True)
 	protein_existence_type = models.CharField(max_length=4)
-	ecs = models.CharField(max_length=32)
+	ecs = models.CharField(max_length=128)
 
 class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
 	read = models.CharField(max_length=64)
