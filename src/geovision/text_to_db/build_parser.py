@@ -13,7 +13,12 @@ def parseBuilds(sample_name, db_name, filehandle):
 	"""
 	inserter = BulkInserter(Result)
 	for line in filehandle:
-		(read_id, db_seq_id, evident_type, ec_number, error_value, bitscore) = line.strip().split("\t")
+		try:
+			(read_id, db_seq_id, evident_type, ec_number, error_value, bitscore) = line.strip().split("\t")
+		except ValueError:
+			print('Warning: incorrectly formatted line: {0}' % line)
+			continue
+
 #		db_entry = DbEntry.objects.get(db_id__startswith=('sp|' + db_seq_id), source_file=db_name)
 #		read = Read.objects.get(read_id=read_id, sample=sample_name)
 		if DEBUG:
