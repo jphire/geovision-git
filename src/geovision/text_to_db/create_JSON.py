@@ -17,27 +17,28 @@ rd_list = []
 # THE DOUBLE UNDERSCORE CAN BE INEFFICIENT BECAUSE OF JOINS IN THE BACKGROUND: MAYBE HAVE TO BE CHANGED
 # IN THE FUTURE!!
 
+
 # returns Result objects that match the query arguments, used to get adjancies to an entzyme class
 # excludes nodes that are already visited
 def get_ec_results(ecnumber, bitscorelimit, max_amount, e_value_limit):
     global db_list
-    return Result.objects.filter(ec_number = ecnumber, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(db_entry__read_id__in = db_list).order_by('bitscore').reverse()[:max_amount]
+    return Result.objects.filter(ec_number = ecnumber, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(db_entry__db_id__in = db_list).order_by('bitscore').reverse()[:max_amount]
 
 # returns Result objects that match the query arguments, used to get adjancies to a database entry
 # excludes nodes that are already visited and below bitscorelimit. Return at most max_amount nodes
 def get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, caller_type):
     global ec_list, rd_list
     if caller_type == 'rd':
-        return Result.objects.filter(db_entry__read_id = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(ec_number__in = ec_list).order_by('bitscore').reverse()[:max_amount]
+        return Result.objects.filter(db_entry__db_id = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(ec_number__in = ec_list).order_by('bitscore').reverse()[:max_amount]
 
     elif caller_type == 'ec':
-        return Result.objects.filter(db_entry__read_id = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(read__read_id__in = rd_list).order_by('bitscore').reverse()[:max_amount]
+        return Result.objects.filter(db_entry__db_id = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(read__read_id__in = rd_list).order_by('bitscore').reverse()[:max_amount]
 
 # returns Result objects that match the query arguments, used to get adjancies to a read
 # excludes nodes that are already visited
 def get_rd_results(read_id, bitscorelimit, max_amount, e_value_limit):
     global db_list
-    return Result.objects.filter(read__read_id = read_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(db_entry__read_id__in = db_list).order_by('bitscore').reverse()[:max_amount].distinct()
+    return Result.objects.filter(read__read_id = read_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(db_entry__db_id__in = db_list).order_by('bitscore').reverse()[:max_amount]
 
 # the main function that is called to create the json_file. If ecnumber is not 0, a query is made
 # based on the given ecnumber. If ecnumber is 0, a query is made based on the read_id. bitscorelimit
@@ -94,9 +95,9 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     if enzyme_query or read_query:
         # can be used to both entzyme- and read query:
         for node in root_nodes:
-            if node.db_entry.read_id not in dict:
-                dict[node.db_entry.read_id] = 'db_entry';
-                json_file.write(node.db_entry.read_id + ":</br>" + node.db_entry.description + "</br>")
+            if node.db_entry.db_id not in dict:
+                dict[node.db_entry.db_id] = 'db_entry';
+                json_file.write(node.db_entry.db_id + ":</br>" + node.db_entry.description + "</br>")
     elif db_query:
         for node in root_nodes:
             if node.read.read_id not in dict:
@@ -115,15 +116,15 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     if read_query:
         rd_list.append(read_id)
         for node in root_nodes:
-            if node.db_entry.read_id not in dict:
-                dict[node.db_entry.read_id] = 'node.db_entry.read_id';
+            if node.db_entry.db_id not in dict:
+                dict[node.db_entry.db_id] = 'node.db_entry.db_id';
                 result = get_children(node, "rd", read_id, bitscorelimit, max_amount, e_value_limit, 'ec')
 
     elif enzyme_query:
         ec_list.append(ecnumber)
         for node in root_nodes:
-            if node.db_entry.read_id not in dict:
-                dict[node.db_entry.read_id] = 'node.db_entry.read_id';
+            if node.db_entry.db_id not in dict:
+                dict[node.db_entry.db_id] = 'node.db_entry.db_id';
                 result = get_children(node, "ec", ecnumber, bitscorelimit, max_amount, e_value_limit, 'rd')
 
     elif db_query:
@@ -155,12 +156,12 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
 
     if caller_class == "ec" or caller_class == "rd":
         # add this node to visited nodes db_list:
-        db_list.append(node.db_entry.read_id)
-        result = result + "\t{\n\tid: \"" + node.db_entry.read_id + "\",\n"
-        result = result + "\tname: \"" + node.db_entry.read_id + "\",\n"
+        db_list.append(node.db_entry.db_id)
+        result = result + "\t{\n\tid: \"" + node.db_entry.db_id + "\",\n"
+        result = result + "\tname: \"" + node.db_entry.db_id + "\",\n"
 
-        children_1 = get_db_results(node.db_entry.read_id, bitscorelimit, max_amount, e_value_limit, 'ec')
-        children_2 = get_db_results(node.db_entry.read_id, bitscorelimit, max_amount, e_value_limit, 'rd')
+        children_1 = get_db_results(node.db_entry.db_id, bitscorelimit, max_amount, e_value_limit, 'ec')
+        children_2 = get_db_results(node.db_entry.db_id, bitscorelimit, max_amount, e_value_limit, 'rd')
 
         result = result + "\tdata: [{parent: \"" + caller_id + "\"}, "
         dict = {}
@@ -186,12 +187,12 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             for child in children_1:
                 if child.read.read_id not in dict:
                     dict[child.read.read_id] = 'child.read.read_id'
-                    result = get_children(child, "db", node.db_entry.read_id, bitscorelimit, max_amount, e_value_limit, 'rd')
+                    result = get_children(child, "db", node.db_entry.db_id, bitscorelimit, max_amount, e_value_limit, 'rd')
 
             for child in children_2:
                 if child.ec_number not in dict:
                     dict[child.ec_number] = 'child.ec_number'
-                    result = get_children(child, "db", node.db_entry.read_id, bitscorelimit, max_amount, e_value_limit, 'ec')
+                    result = get_children(child, "db", node.db_entry.db_id, bitscorelimit, max_amount, e_value_limit, 'ec')
                             
         else:
             result = result + "\tchildren: []\n\t},"
@@ -215,9 +216,9 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         result = result + "\tdata: [{parent: \"" + caller_id + "\"}, "
         dict = {}
         for child in children:
-            if child.db_entry.read_id not in dict:
-                dict[child.db_entry.read_id] = 'child.db_entry.read_id'
-                result = result + "{" + child.db_entry.read_id + ":\"" + child.db_entry.read_id + "\"},"
+            if child.db_entry.db_id not in dict:
+                dict[child.db_entry.db_id] = 'child.db_entry.db_id'
+                result = result + "{" + child.db_entry.db_id + ":\"" + child.db_entry.db_id + "\"},"
         #loose the last , ...
         result = result[:-1]
         result = result + "],\n"
@@ -227,13 +228,13 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             dict = {}
             if db_child_type == 'rd':
                 for child in children:
-                    if child.db_entry.read_id not in dict:
-                        dict[child.db_entry.read_id] = 'child.db_entry.read_id'
+                    if child.db_entry.db_id not in dict:
+                        dict[child.db_entry.db_id] = 'child.db_entry.db_id'
                         result = get_children(child, "rd", node.read.read_id, bitscorelimit, max_amount, e_value_limit, 'ec')
             else:
                 for child in children:
-                    if child.db_entry.read_id not in dict:
-                        dict[child.db_entry.read_id] = 'child.db_entry.read_id'
+                    if child.db_entry.db_id not in dict:
+                        dict[child.db_entry.db_id] = 'child.db_entry.db_id'
                         result = get_children(child, "ec", node.ec_number, bitscorelimit, max_amount, e_value_limit, 'rd')
 
         else:
@@ -258,13 +259,13 @@ def setupderp():
     Read.objects.create(sample="SMPL3", read_id="R005", description="baz", data='ASD')
     Read.objects.create(sample="SMPL2", read_id="R006", description="baz", data='ASD')
 
-    DbEntry.objects.create(source_file = "uniprot", read_id = "DB1", description="quux", data='ASD')
-    DbEntry.objects.create(source_file = "uniprot", read_id = "DB2", description="quux", data='ASD')
-    DbEntry.objects.create(source_file = "uniprot", read_id = "DB3", description="quux", data='ASD')
-    DbEntry.objects.create(source_file = "uniprot", read_id = "DB4", description="quux", data='ASD')
-    DbEntry.objects.create(source_file = "uniprot", read_id = "DB5", description="quux", data='ASD')
-    DbEntry.objects.create(source_file = "uniprot", read_id = "DB6", description="quux", data='ASD')
-    DbEntry.objects.create(source_file = "uniprot", read_id = "DB7", description="quux", data='ASD')
+    DbEntry.objects.create(source_file = "uniprot", db_id = "DB1", description="quux", data='ASD')
+    DbEntry.objects.create(source_file = "uniprot", db_id = "DB2", description="quux", data='ASD')
+    DbEntry.objects.create(source_file = "uniprot", db_id = "DB3", description="quux", data='ASD')
+    DbEntry.objects.create(source_file = "uniprot", db_id = "DB4", description="quux", data='ASD')
+    DbEntry.objects.create(source_file = "uniprot", db_id = "DB5", description="quux", data='ASD')
+    DbEntry.objects.create(source_file = "uniprot", db_id = "DB6", description="quux", data='ASD')
+    DbEntry.objects.create(source_file = "uniprot", db_id = "DB7", description="quux", data='ASD')
 
     read1 = Read.objects.get(read_id="R001")
     read2 = Read.objects.get(read_id="R002")
@@ -273,13 +274,13 @@ def setupderp():
     read5 = Read.objects.get(read_id="R005")
     read6 = Read.objects.get(read_id="R006")
 
-    db_entry1= DbEntry.objects.get(read_id="DB1")
-    db_entry2= DbEntry.objects.get(read_id="DB2")
-    db_entry3= DbEntry.objects.get(read_id="DB3")
-    db_entry4= DbEntry.objects.get(read_id="DB4")
-    db_entry5= DbEntry.objects.get(read_id="DB5")
-    db_entry6= DbEntry.objects.get(read_id="DB6")
-    db_entry7= DbEntry.objects.get(read_id="DB7")
+    db_entry1= DbEntry.objects.get(db_id="DB1")
+    db_entry2= DbEntry.objects.get(db_id="DB2")
+    db_entry3= DbEntry.objects.get(db_id="DB3")
+    db_entry4= DbEntry.objects.get(db_id="DB4")
+    db_entry5= DbEntry.objects.get(db_id="DB5")
+    db_entry6= DbEntry.objects.get(db_id="DB6")
+    db_entry7= DbEntry.objects.get(db_id="DB7")
 
     Result.objects.create(read=read1, db_entry=db_entry1, evident_type="l", ec_number="1.1.2.22",
                     error_value=0.005, bitscore=50)
