@@ -19,38 +19,33 @@ class Test_blast_parserTestCase(unittest.TestCase):
         
         cls.read = Read.objects.create(sample="ABLU", read_id="gi|185682811|gb|ABLU01132423.1|", description="baz", data='ASD')
 
-        cls.strings=[]
+        cls.strings = []
         #creating db_entrys for all lines in test file
         for line in file:
             cls.str = line.split(None)
             cls.strings.append(cls.str)
-            DbEntry.objects.create(source_file = "uniprot", read_id = cls.str[1], description="quux", data='ASD')
+            DbEntry.objects.create(source_file="uniprot", db_id=cls.str[1], description="quux", data='ASD')
 
         cls.dbe = DbEntry.objects.all()
         create_blast(cls.dbe[0].source_file, cls.read.sample, "test_blast.txt")
 
     def test_parse_blast(self):
-        
-        results = Blast.objects.all()
-        print self.strings[1]
-
-        for i in range(len(results)):
-            self.assertEqual(results[i].read.read_id, self.read.read_id)
-            self.assertEqual(results[i].database_name, self.dbe[i].source_file)
-            self.assertEqual(results[i].db_entry.read_id, self.dbe[i].read_id)
-            self.assertEqual(results[i].pident, Decimal(self.strings[i][2]))
-            self.assertEqual(results[i].length, Decimal(self.strings[i][3]))
-            self.assertEqual(results[i].mismatch, Decimal(self.strings[i][4]))
-            self.assertEqual(results[i].gapopen, Decimal(self.strings[i][5]))
-            self.assertEqual(results[i].qstart, Decimal(self.strings[i][6]))
-            self.assertEqual(results[i].qend, Decimal(self.strings[i][7]))
-            self.assertEqual(results[i].sstart, Decimal(self.strings[i][8]))
-            self.assertEqual(results[i].send, Decimal(self.strings[i][9]))
-            self.assertEqual(str(results[i].error_value), self.strings[i][10])
-            self.assertEqual(results[i].bitscore, float(self.strings[i][11]))
-
-    def test_blast_to_json(self):
-        print "foo"
+#        print self.strings[1]
+	results = Blast.objects.all()
+	for i in range(len(results)):
+		self.assertEqual(results[i].read, self.read.read_id)
+		self.assertEqual(results[i].database_name, self.dbe[i].source_file)
+		self.assertEqual(results[i].db_entry.db_id, self.dbe[i].db_id)
+		self.assertEqual(results[i].pident, Decimal(self.strings[i][2]))
+		self.assertEqual(results[i].length, Decimal(self.strings[i][3]))
+		self.assertEqual(results[i].mismatch, Decimal(self.strings[i][4]))
+		self.assertEqual(results[i].gapopen, Decimal(self.strings[i][5]))
+		self.assertEqual(results[i].qstart, Decimal(self.strings[i][6]))
+		self.assertEqual(results[i].qend, Decimal(self.strings[i][7]))
+		self.assertEqual(results[i].sstart, Decimal(self.strings[i][8]))
+		self.assertEqual(results[i].send, Decimal(self.strings[i][9]))
+		self.assertEqual(str(results[i].error_value), self.strings[i][10])
+		self.assertEqual(results[i].bitscore, float(self.strings[i][11]))
 
 #
 #    @raises(Read.DoesNotExist)

@@ -18,9 +18,9 @@ def create_blast(db_name, sample_name, filename):
 
     for line in filehandle:
             (read_id, db_seq_id, pident, length, mismatch, gapopen, qstart, qend, sstart, send, error_value, bitscore) = line.split(None)
-            read = Read.objects.get(read_id = read_id, sample = sample_name)
-            db_entry = DbEntry.objects.get(read_id = db_seq_id, source_file = db_name)
-            inserter.save(Blast(read = read,  database_name = db_name, db_entry = db_entry, pident = pident,
+#            read = Read.objects.get(read_id = read_id, sample = sample_name)
+            db_entry = DbEntry.objects.get(db_id = db_seq_id, source_file = db_name)
+            inserter.save(Blast(read = read_id,  database_name = db_name, db_entry = db_entry, pident = pident,
                 length = length, mismatch = mismatch, gapopen = gapopen, qstart = qstart,
                 qend = qend, sstart = sstart, send = send, error_value = error_value, bitscore = bitscore))
     inserter.close()
