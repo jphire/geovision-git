@@ -14,7 +14,8 @@ def loginpage(request):
 def register(request):
     return render_to_response("register.html", { }, context_instance=RequestContext(request) )
 def registering(request):
-    for data in (request.POST):
+    datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
+    for data in datatable:
         if (len(data) < 1):
             return render_to_response('register.html', {
             'error_message': "Error: All fields must be filled.",
@@ -23,12 +24,14 @@ def registering(request):
         return render_to_response('register.html', {
             'error_message': "Error: Passwords did not match.",
         }, context_instance=RequestContext(request)) #error for entering two different passwords!
-    user, new = User.objects.get_or_create(username = request.POST['username'], email = request.POST['email'], password = request.POST['password2'])
-    if (new == false):
+    user, new = User.objects.get_or_create(username = request.POST['username'])
+    if (new == False):
         return render_to_response('register.html', {
             'error_message': "Error: User already exists.",
         }, context_instance=RequestContext(request)) #error trying the same username two times!
     else:
+        user.set_password(request.POST['password2'])
+        user.email = request.POST['email']
         user.is_staff = False
         user.save()
         return render_to_response('login.html', {
