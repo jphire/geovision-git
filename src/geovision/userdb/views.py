@@ -23,7 +23,7 @@ def registering(request):
         return render_to_response('register.html', {
             'error_message': "Error: Passwords did not match.",
         }, context_instance=RequestContext(request)) #error for entering two different passwords!
-    user, new = User.objects.get_or_create(request.POST['username'], request.POST['email'], request.POST['password2'])
+    user, new = User.objects.get_or_create(username = request.POST['username'], email = request.POST['email'], password = request.POST['password2'])
     if (new == false):
         return render_to_response('register.html', {
             'error_message': "Error: User already exists.",
