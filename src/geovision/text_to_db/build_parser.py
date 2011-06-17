@@ -14,13 +14,13 @@ def parseBuilds(sample_name, db_name, filehandle):
 	inserter = BulkInserter(Result)
 	for line in filehandle:
 		(read_id, db_seq_id, evident_type, ec_number, error_value, bitscore) = line.strip().split("\t")
-		db_entry = DbEntry.objects.get(db_id__startswith=('sp|' + db_seq_id), source_file=db_name)
-		read = Read.objects.get(read_id=read_id, sample=sample_name)
+#		db_entry = DbEntry.objects.get(db_id__startswith=('sp|' + db_seq_id), source_file=db_name)
+#		read = Read.objects.get(read_id=read_id, sample=sample_name)
 		if DEBUG:
 			from django.db import connection
 			for q in connection.queries:
 				print q['sql']
-		inserter.save(Result(read=read, db_entry=db_entry, evident_type=evident_type, ec_number=ec_number,
+		inserter.save(Result(read=read_id, db_entry=db_seq_id, evident_type=evident_type, ec_number=ec_number,
 			error_value=error_value, bitscore=bitscore))
 	inserter.close()
 

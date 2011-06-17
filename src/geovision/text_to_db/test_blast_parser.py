@@ -24,7 +24,7 @@ class Test_blast_parserTestCase(unittest.TestCase):
         for line in file:
             cls.str = line.split(None)
             cls.strings.append(cls.str)
-            DbEntry.objects.create(source_file="uniprot", db_id=cls.str[1], description="quux", data='ASD')
+            DbEntry.objects.create(source_file="uniprot", db_id=cls.str[1].split('|')[1], description="quux", data='ASD')
 
         cls.dbe = DbEntry.objects.all()
         create_blast(cls.dbe[0].source_file, cls.read.sample, "test_blast.txt")
@@ -35,7 +35,7 @@ class Test_blast_parserTestCase(unittest.TestCase):
 	for i in range(len(results)):
 		self.assertEqual(results[i].read, self.read.read_id)
 		self.assertEqual(results[i].database_name, self.dbe[i].source_file)
-		self.assertEqual(results[i].db_entry.db_id, self.dbe[i].db_id)
+		self.assertEqual(results[i].db_entry, self.dbe[i].db_id)
 		self.assertEqual(results[i].pident, Decimal(self.strings[i][2]))
 		self.assertEqual(results[i].length, Decimal(self.strings[i][3]))
 		self.assertEqual(results[i].mismatch, Decimal(self.strings[i][4]))

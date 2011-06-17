@@ -29,10 +29,10 @@ def get_ec_results(ecnumber, bitscorelimit, max_amount, e_value_limit):
 def get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, caller_type):
     global ec_list, rd_list
     if caller_type == 'rd':
-        return Result.objects.filter(db_entry__db_id = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(ec_number__in = ec_list).order_by('bitscore').reverse()[:max_amount]
+        return Result.objects.filter(db_entry = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(ec_number__in = ec_list).order_by('bitscore').reverse()[:max_amount]
 
     elif caller_type == 'ec':
-        return Result.objects.filter(db_entry__db_id = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(read__read_id__in = rd_list).order_by('bitscore').reverse()[:max_amount]
+        return Result.objects.filter(db_entry = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(read__in = rd_list).order_by('bitscore').reverse()[:max_amount]
 
 # returns Result objects that match the query arguments, used to get adjancies to a read
 # excludes nodes that are already visited
