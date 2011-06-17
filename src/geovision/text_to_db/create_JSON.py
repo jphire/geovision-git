@@ -46,6 +46,7 @@ def get_rd_results(read_id, bitscorelimit, max_amount, e_value_limit):
 # the depth of the graph. max_amount is upper limit for node's child amount.
 def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, depthlimit, max_amount):
 
+    result =""
     read_query = False
     enzyme_query = False
     db_query = False
