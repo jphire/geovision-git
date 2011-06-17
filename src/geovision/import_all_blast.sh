@@ -1,10 +1,8 @@
 #!/bin/bash
-BASE=/home/group/urenzyme/geoviz/blast/result
+BASE=/home/group/urenzyme/geoviz/blast/results
 
-for f in *.*
+for f in $BASE/*.*
 do
-	FILE=$BASE$f/*.fasta
-	NAME=${f/'/'/'-'}
-	echo $FILE $NAME
-	time ./run.sh run_sample_parser.py $FILE db $NAME
+	echo $f
+	time ./run.sh text_to_db/blast_parser.py $f
 done

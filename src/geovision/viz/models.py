@@ -29,7 +29,7 @@ class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart
 	read = models.CharField(max_length=64)
 	database_name = models.CharField(max_length=16)
 	db_entry = models.CharField(max_length=32)
-	pident = models.DecimalField(max_digits=4,decimal_places=2)
+	pident = models.FloatField()
 	length = models.IntegerField()
 	mismatch = models.IntegerField()
 	gapopen = models.IntegerField()
