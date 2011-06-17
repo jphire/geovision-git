@@ -8,7 +8,7 @@ import os
 import string
 os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 
-from geovision.viz.models import DbEntry as DbEntryModel
+from geovision.viz.models import DbEntry
 import re
 
 
@@ -77,6 +77,6 @@ class DbfileParser:
 			if len(self.nextline) is 0:
 				break
 
-		return DbEntryModel(source_file = self.source, db_id = self.id,
+		return DbEntry(source_file = self.source, db_id = self.id,
 				description = self.description, sub_db = self.sub_db, entry_name = self.entry_name,
 				os_field = self.os_field, other_info = self.other_info, data = self.dnadata)
