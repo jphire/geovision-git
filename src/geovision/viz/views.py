@@ -33,6 +33,6 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
         hits = float(request.POST['hits'])
     else :
         hits = 10          #hits default
-    #setupderp()
+    setupderp()
     create_json(0, 0, "DB1", bitscore, evalue, depth, hits)
     return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
