@@ -16,7 +16,7 @@ def parseBuilds(sample_name, db_name, filehandle):
 		try:
 			(read_id, db_seq_id, evident_type, ec_number, error_value, bitscore) = line.strip().split("\t")
 		except ValueError:
-			print('Warning: incorrectly formatted line: {0}' % line)
+			print('Warning: incorrectly formatted line: {0}' % (line,))
 			continue
 
 #		db_entry = DbEntry.objects.get(db_id__startswith=('sp|' + db_seq_id), source_file=db_name)
