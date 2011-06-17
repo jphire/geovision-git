@@ -21,15 +21,14 @@ class DbEntry(models.Model):
 	other_info = models.TextField(blank=True)
 
 class DbUniprotEcs(models.Model):
-#	db_id = models.ForeignKey(DbEntry)
-	db_id = models.CharField(max_length=32, primary_key=True)
+	db_id = models.CharField(max_length=32)
 	protein_existence_type = models.CharField(max_length=4)
 	ecs = models.CharField(max_length=128)
 
 class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
 	read = models.CharField(max_length=64)
 	database_name = models.CharField(max_length=16)
-	db_entry = models.ForeignKey(DbEntry)
+	db_entry = models.CharField(max_length=32)
 	pident = models.DecimalField(max_digits=4,decimal_places=2)
 	length = models.IntegerField()
 	mismatch = models.IntegerField()
@@ -43,7 +42,7 @@ class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart
 
 class Result(models.Model): # Query_seq_id    Target_seq_id   Evident_type    E.C._number     p_value Bit_score
 	read = models.ForeignKey(Read)
-	db_entry = models.ForeignKey(DbEntry)
+	db_entry = models.CharField(max_length=32)
 	evident_type = models.CharField(max_length = 2)
 	ec_number = models.CharField(max_length = 32)
 	error_value = models.FloatField()
