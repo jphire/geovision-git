@@ -160,6 +160,9 @@ INSTALLED_APPS = (
 				  'django.contrib.admin',
 				  # Uncomment the next line to enable admin documentation:
 				  # 'django.contrib.admindocs',
+
+				  # Uncomment this to enable Testmaker (http://ericholscher.com/blog/2008/jul/26/testmaker-002-even-easier-automated-testing-django/)
+				  # 'test_utils',
 				  )
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 # A sample logging configuration. The only tangible logging
