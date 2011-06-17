@@ -5,9 +5,13 @@
 import unittest
 import db_parser
 
+from geovision.settings import PROJECT_PATH
+
+TEST_FILE_PATH = PROJECT_PATH + '/text_to_db/testfiles/'
+
 class Test_Db_parserTestCase(unittest.TestCase):
 	def test_db_parse_first_uniprot(self):
-		parser = db_parser.DbfileParser("db_test_uniprot.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_uniprot.fasta")
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'Q197F8')
 		self.assertEqual(entry.sub_db, 'sp')
@@ -25,7 +29,7 @@ GEEDSSDEDDPTWAPDSDDSDWETETEEEPSVAARILEKGKLTITNLMKSLGFKPKPKKI\
 QSIDRYFCSLDSNYNSEDEDFEYDSDSEDDDSDSEDDC")
 
 	def test_db_parse_second_uniprot(self):
-		parser = db_parser.DbfileParser("db_test_uniprot.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_uniprot.fasta")
 		parser.next_db_entry()
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'Q197F7')
@@ -39,7 +43,7 @@ PSLTTCTPPSLAACTPPTSLGMVDSPPHINPPRRIGTLCFDFGSAKSPQRCECVASDRPS\
 TTSNTAPDTYRLLITNSKTRKNNYGTCRLEPLTYGI")
 
 	def test_db_parse_past_the_end_uniprot(self):
-		parser = db_parser.DbfileParser("db_test_uniprot.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_uniprot.fasta")
 		for i in xrange(0,10):
 			parser.next_db_entry()
 		entry = parser.next_db_entry()
@@ -47,7 +51,7 @@ TTSNTAPDTYRLLITNSKTRKNNYGTCRLEPLTYGI")
 
 
 	def test_db_parse_first_silva_ssu(self):
-		parser = db_parser.DbfileParser("db_test_silva_ssu.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_silva_ssu.fasta")
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'A93610.1.1301')
 		self.assertEqual(entry.description, 'Archaea;Euryarchaeota;Thermococci;Thermococcales;Thermococcaceae;Thermococcus;unidentified')
@@ -69,7 +73,7 @@ CGCUACAAUGGGCGGGACAAUGGGAUCCGACCCCGAAAGGGGAAGGUAAUCCCCUAAACCCGCCCUCAGUUCGGAUCGCG
 AAGCUGGAAUCCCUAGUACCCGCGUGUCAUCAUCGCGCGG")
 
 	def test_db_parse_second_silva_ssu(self):
-		parser = db_parser.DbfileParser("db_test_silva_ssu.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_silva_ssu.fasta")
 		parser.next_db_entry()
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'AAAA02014925.13286.14671')
@@ -93,14 +97,14 @@ UGGAAUUGCAUUUCAUGAAUAAUUUAAAUUGAAAAAGGUUUUUUAAAAGUCUCUUUGGCUUUGGGCCGAAAGUCGGCCCA
 CUCGGCCCAAGUCAGCCCAAGUCAAGCCGAGCCGCGCGCGCGCUCGCUGCUGUUGAC")
 
 	def test_db_parse_past_the_end_silva_ssu(self):
-		parser = db_parser.DbfileParser("db_test_silva_ssu.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_silva_ssu.fasta")
 		for i in xrange(0,3):
 			parser.next_db_entry()
 		entry = parser.next_db_entry()
 		self.assertEqual(entry, None)
 
 	def test_db_parse_first_frnadb(self):
-		parser = db_parser.DbfileParser("db_test_frnadb.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_frnadb.fasta")
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'FR000001')
 		self.assertEqual(entry.description, 'AB027356;Group II intron')
@@ -109,7 +113,7 @@ CUCGGCCCAAGUCAGCCCAAGUCAAGCCGAGCCGCGCGCGCGCUCGCUGCUGUUGAC")
 		self.assertEqual(entry.data, "TTGAGCCGTATGCGATGAAAGTTGCACGTACGGTTCTTTAAGGGGGAAAGTTTGAGAGGACCTACCTATCTTAAC")
 
 	def test_db_parse_second_frnadb(self):
-		parser = db_parser.DbfileParser("db_test_frnadb.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_frnadb.fasta")
 		parser.next_db_entry()
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'FR000002')
@@ -120,7 +124,7 @@ CUCGGCCCAAGUCAGCCCAAGUCAAGCCGAGCCGCGCGCGCGCUCGCUGCUGUUGAC")
 ATTGCAGACACATTGAGCACTAAAAATTCGAACGTACATTGCGCCATCGGGTTCATTCCCGTTGGCACGTCTGGCTGAGGGTTG")
 
 	def test_db_parse_past_the_end_frnadb(self):
-		parser = db_parser.DbfileParser("db_test_frnadb.fasta")
+		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_frnadb.fasta")
 		for i in xrange(0,3):
 			parser.next_db_entry()
 		entry = parser.next_db_entry()
