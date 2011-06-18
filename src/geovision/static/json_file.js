@@ -47,8 +47,18 @@ children: [	{
 	id: "DB5",
 	name: "DB5",
 	data: [{parent: "1.1.2.24"}, {R2:"R2"}],
-	children: []
-	},]},
+	children: [	{
+	id: "R2",
+	name: "R2",
+	data: [{parent: "DB5"}, {DB1:"DB1"}],
+	children: [	{
+	id: "DB1",
+	name: "DB1",
+	data: [{parent: "R2"},],
+	children: []},
+]},
+]},
+]},
 ]},
 ]},
 	{
@@ -60,12 +70,7 @@ children: [	{
 	{
 	id: "DB1",
 	name: "DB1",
-	data: [{parent: "1.1.2.22"}, {R2:"R2"}],
-	children: [	{
-	id: "R2",
-	name: "R2",
-	data: [{parent: "DB1"},],
+	data: [{parent: "1.1.2.22"},],
 	children: []},
-]},
 ]
 };

@@ -20,7 +20,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
     if request.POST['bitscore'] != '':
         bitscore = float(request.POST['bitscore'])
     else :
-        bitscore = 20      #bitscore default
+        bitscore = 30      #bitscore default
     if request.POST['e-value'] != '':
         evalue = float(request.POST['e-value'])
     else :
@@ -28,7 +28,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
     if request.POST['depth'] != '':
         depth = float(request.POST['depth'])
     else :
-        depth = 20         #depth default
+        depth = 1         #depth default
     if request.POST['hits'] != '':
         hits = float(request.POST['hits'])
     else :
