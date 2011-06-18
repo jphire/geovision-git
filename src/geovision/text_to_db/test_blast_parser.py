@@ -36,7 +36,7 @@ class Test_blast_parserTestCase(unittest.TestCase):
 		self.assertEqual(results[i].read, self.read.read_id)
 		self.assertEqual(results[i].database_name, self.dbe[i].source_file)
 		self.assertEqual(results[i].db_entry, self.dbe[i].db_id)
-		self.assertEqual(results[i].pident, Decimal(self.strings[i][2]))
+		self.assertEqual(results[i].pident, float(self.strings[i][2]))
 		self.assertEqual(results[i].length, Decimal(self.strings[i][3]))
 		self.assertEqual(results[i].mismatch, Decimal(self.strings[i][4]))
 		self.assertEqual(results[i].gapopen, Decimal(self.strings[i][5]))
