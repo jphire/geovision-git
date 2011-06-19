@@ -34,5 +34,5 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
     else :
         hits = 10          #hits default
     # setupderp()
-    create_json("1.1.2.22", 0, 0, bitscore, evalue, depth, hits)
+    create_json(0, 0, 'Q57DS4', bitscore, evalue, depth, hits)
     return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
