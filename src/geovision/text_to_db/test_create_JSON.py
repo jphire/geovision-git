@@ -38,35 +38,35 @@ class  Test_create_JSONTestCase(unittest.TestCase):
         db_entry6= DbEntry.objects.get(db_id="DB6")
         db_entry7= DbEntry.objects.get(db_id="DB7")
 
-        Result.objects.create(read=read1, db_entry=db_entry1, evident_type="l", ec_number="1.1.2.22",
+        Result.objects.create(read="R1", db_entry="DB1", evident_type="l", ec_number="1.1.2.22",
 			error_value=0.005, bitscore=50)
-        Result.objects.create(read=read2, db_entry=db_entry1, evident_type="l", ec_number="1.1.2.22",
+        Result.objects.create(read="R2", db_entry="DB1", evident_type="l", ec_number="1.1.2.22",
 			error_value=0.002, bitscore=30)
-        Result.objects.create(read=read3, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.22",
+        Result.objects.create(read="R3", db_entry="DB2", evident_type="l", ec_number="1.1.2.22",
 			error_value=0.005, bitscore=50)
-        Result.objects.create(read=read5, db_entry=db_entry4, evident_type="l", ec_number="1.1.2.24",
+        Result.objects.create(read="R5", db_entry="DB4", evident_type="l", ec_number="1.1.2.24",
 			error_value=0.002, bitscore=30)
-        Result.objects.create(read=read4, db_entry=db_entry6, evident_type="l", ec_number="1.1.2.22",
+        Result.objects.create(read="R4", db_entry="DB6", evident_type="l", ec_number="1.1.2.22",
 			error_value=0.002, bitscore=50)
-        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.22",
+        Result.objects.create(read="R1", db_entry="DB2", evident_type="l", ec_number="1.1.2.22",
 			error_value=0.002, bitscore=50)
-        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.24",
+        Result.objects.create(read="R1", db_entry="DB2", evident_type="l", ec_number="1.1.2.24",
 			error_value=0.004, bitscore=50)
-        Result.objects.create(read=read1, db_entry=db_entry3, evident_type="l", ec_number="1.1.2.23",
+        Result.objects.create(read="R1", db_entry="DB3", evident_type="l", ec_number="1.1.2.23",
 			error_value=0.002, bitscore=50)
-        Result.objects.create(read=read2, db_entry=db_entry5, evident_type="l", ec_number="1.1.2.24",
+        Result.objects.create(read="R2", db_entry="DB5", evident_type="l", ec_number="1.1.2.24",
 			error_value=0.001, bitscore=50)
 
 
-        Result.objects.create(read=read4, db_entry=db_entry6, evident_type="l", ec_number="1.1.2.22",
+        Result.objects.create(read="R4", db_entry="DB6", evident_type="l", ec_number="1.1.2.22",
 			error_value=0.002, bitscore=50)
-        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.22",
+        Result.objects.create(read="R1", db_entry="DB2", evident_type="l", ec_number="1.1.2.22",
 			error_value=0.003, bitscore=50)
-        Result.objects.create(read=read1, db_entry=db_entry2, evident_type="l", ec_number="1.1.2.24",
+        Result.objects.create(read="R1", db_entry="DB2", evident_type="l", ec_number="1.1.2.24",
 			error_value=0.002, bitscore=50)
-        Result.objects.create(read=read1, db_entry=db_entry3, evident_type="l", ec_number="1.1.2.23",
+        Result.objects.create(read="R1", db_entry="DB3", evident_type="l", ec_number="1.1.2.23",
 			error_value=0.003, bitscore=50)
-        Result.objects.create(read=read2, db_entry=db_entry4, evident_type="l", ec_number="1.1.2.24",
+        Result.objects.create(read="R1", db_entry="DB4", evident_type="l", ec_number="1.1.2.24",
 			error_value=0.002, bitscore=50)
 
     #def tearDown(self):
@@ -80,7 +80,7 @@ class  Test_create_JSONTestCase(unittest.TestCase):
         print Blast.objects.all().count()
         print Result.objects.all().count()
 
-        create_json(0, 0, "DB1", 20, 0.006, 20, 10)
+        create_json('1.1.2.22', 0, 0, 20, 0.006, 20, 10)
 
         assert 1==1
         #assert x != y;

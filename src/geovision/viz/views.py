@@ -20,7 +20,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
     if request.POST['bitscore'] != '':
         bitscore = float(request.POST['bitscore'])
     else :
-        bitscore = 20      #bitscore default
+        bitscore = 30      #bitscore default
     if request.POST['e-value'] != '':
         evalue = float(request.POST['e-value'])
     else :
@@ -28,11 +28,11 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
     if request.POST['depth'] != '':
         depth = float(request.POST['depth'])
     else :
-        depth = 20         #depth default
+        depth = 1         #depth default
     if request.POST['hits'] != '':
         hits = float(request.POST['hits'])
     else :
         hits = 10          #hits default
-    #setupderp()
-    create_json(0, 0, "DB1", bitscore, evalue, depth, hits)
+    # setupderp()
+    create_json("1.1.2.22", 0, 0, bitscore, evalue, depth, hits)
     return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
