@@ -9,14 +9,19 @@ class BulkInserter():
 		return connection.vendor == 'postgresql'
 
 	def db_get_pk_nextval(self):
-		cursor = connection.cursor()
-		cursor.execute("SELECT nextval('%s_id_seq');" % self.model_class._meta.db_table)
-		return cursor.fetchone()[0]
+		try:
+			cursor = connection.cursor()
+			cursor.execute("SELECT nextval('%s_id_seq');" % self.model_class._meta.db_table)
+			return cursor.fetchone()[0]
+		except Exception:
+			self.has_seq = False
+			return 0
 
 	def db_set_pk_nextval(self, value):
-		connection.cursor().execute(
-			"SELECT setval('%s_id_seq', %%s);" % self.model_class._meta.db_table,
-			[value])
+		if self.has_seq:
+			connection.cursor().execute(
+				"SELECT setval('%s_id_seq', %%s);" % self.model_class._meta.db_table,
+				[value])
 
 	def get_psql_argv(self):
 		return ('psql', '-c',
@@ -24,6 +29,7 @@ class BulkInserter():
 				(self.model_class._meta.db_table, self.CSV_DELIMITER))
 
 	def __init__(self, model_class, use_postgres_if_possible=True):
+		self.has_seq = True
 		self.model_class = model_class
 		self.use_postgres = self.db_is_postgres() and use_postgres_if_possible
 		if self.use_postgres:

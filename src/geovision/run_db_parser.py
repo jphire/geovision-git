@@ -5,7 +5,7 @@ __author__="lassetyr"
 __date__ ="$17.6.2011 14:15:47$"
 
 import sys
-import geovision.text_to_db.sample_parser
+import geovision.text_to_db.db_parser
 from geovision.text_to_db.bulk_inserter import BulkInserter
 from geovision.viz.models import DbEntry
 

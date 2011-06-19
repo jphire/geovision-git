@@ -6,5 +6,5 @@ do
 	FILE=$BASE$f/*.fasta
 	NAME=${f/'/'/'-'}
 	echo $FILE $NAME
-	time ./run.sh run_sample_parser.py $FILE db $NAME
+	time ./run.sh run_db_parser.py $FILE "$NAME"
 done
