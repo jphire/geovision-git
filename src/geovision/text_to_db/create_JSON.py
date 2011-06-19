@@ -18,13 +18,13 @@ rd_list = []
 # IN THE FUTURE!!
 
 
-# returns Result objects that match the query arguments, used to get adjancies to an entzyme class
+# returns Result objects that match the query arguments, used to get adjacencies to an entzyme class
 # excludes nodes that are already visited
 def get_ec_results(ecnumber, bitscorelimit, max_amount, e_value_limit):
     global db_list
     return Result.objects.filter(ec_number = ecnumber, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(db_entry__in = db_list).order_by('bitscore').reverse()[:max_amount]
 
-# returns Result objects that match the query arguments, used to get adjancies to a database entry
+# returns Result objects that match the query arguments, used to get adjacencies to a database entry
 # excludes nodes that are already visited and below bitscorelimit. Return at most max_amount nodes
 def get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, caller_type):
     global ec_list, rd_list
@@ -34,7 +34,7 @@ def get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, caller
     elif caller_type == 'ec':
         return Result.objects.filter(db_entry = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(read__in = rd_list).order_by('bitscore').reverse()[:max_amount]
 
-# returns Result objects that match the query arguments, used to get adjancies to a read
+# returns Result objects that match the query arguments, used to get adjacencies to a read
 # excludes nodes that are already visited
 def get_rd_results(read_id, bitscorelimit, max_amount, e_value_limit):
     global db_list
@@ -42,7 +42,7 @@ def get_rd_results(read_id, bitscorelimit, max_amount, e_value_limit):
 
 # the main function that is called to create the json_file. If ecnumber is not 0, a query is made
 # based on the given ecnumber. If ecnumber is 0, a query is made based on the read_id. bitscorelimit
-# is used to cut off adjancies between nodes that are below this limit. depthlimit is used limit
+# is used to cut off adjacencies between nodes that are below this limit. depthlimit is used limit
 # the depth of the graph. max_amount is upper limit for node's child amount.
 def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, depthlimit, max_amount):
 
@@ -93,7 +93,7 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
         json_file.write("id: \"" + db_entry_id + "\",\n")
         json_file.write("name: \"" + db_entry_id + "\",\n")
 
-    json_file.write("data: { adjancies:\"")
+    json_file.write("data: { adjacencies:\"")
     # dict is used to cut off multiple result lines that have the same db_entry
     dict = {}
 
@@ -102,17 +102,17 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
         for node in root_nodes:
             if node.db_entry not in dict:
                 dict[node.db_entry] = 'db_entry';
-                json_file.write(node.db_entry + ":</br>" + node.db_entry + "</br>")# TODO: db_entry's description
+                json_file.write("DB entry: " + node.db_entry + "</br>")# TODO: db_entry's description
     elif db_query:
         for node in root_nodes:
             if node.read not in dict:
                 dict[node.read] = 'read';
-                json_file.write(node.read + ": " + node.read + ", bitscore: " + str(node.bitscore) + "</br>")
+                json_file.write("Read: " + node.read + ", bitscore: " + str(node.bitscore) + "</br>")
 
         for node in root_nodes_2:
             if node.ec_number not in dict:
                 dict[node.ec_number] = 'ec';
-                json_file.write(node.ec_number + "</br>")
+                json_file.write("Enzyme: " + node.ec_number + "</br>")
 
     json_file.write("\"},\n")
     json_file.write("children: [")
@@ -149,10 +149,10 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     
     json_file.close()
 
-# get_children is used to retrieve a node's adjancies to other nodes. node is the calling node,
+# get_children is used to retrieve a node's adjacencies to other nodes. node is the calling node,
 # caller_class is the calling node's type('ec' means enzyme, 'db' database and 'rd' read), caller_id is the calling node's name or id,
 # bitscorelimit and max_amount: see create_JSON() comments, db_child_type is used to get knowledge on which
-# type of adjancies to a database node are requested(i.e. did we 'come' to database node from
+# type of adjacencies to a database node are requested(i.e. did we 'come' to database node from
 # enzyme node or read node)
 def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_value_limit, db_child_type):
 
@@ -167,23 +167,29 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
 
         children_1 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
         children_2 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'rd')
-
-        result = result + "\tdata: [{parent: \"" + caller_id + "\"}, "
+        if caller_class == "ec":
+            result = result + "\tdata: {parent: \"Enzyme: " + caller_id + "</br>\", "
+        elif caller_class == "rd":
+            result = result + "\tdata: {parent: \"Read: " + caller_id + "</br>\", "
         dict = {}
-        # two sets of children for both read and enzyme adjancies
+        # two sets of children for both read and enzyme adjacencies
+        result = result + "reads: \""
         for child in children_1:
             if child.read not in dict:
                 dict[child.read] = 'child.read'
-                result = result + "{" + child.read + ":\"" + child.read + "\"},"
+                result = result + "Read: " + child.read + "</br>"
+
+        result = result + "\", enzymes: \""
 
         for child in children_2:
             if child.ec_number not in dict:
                 dict[child.ec_number] = 'child.ec_number'
-                result = result + "{\"" + child.ec_number + "\":\"" + child.ec_number + "\"},"
-                    
+                result = result + "Enzyme: " + child.ec_number + "<br>"
+
+        result = result + "\"}"
         # drop the last ','
-        result = result[:-1]
-        result = result + "],\n"
+        # result = result[:-1]
+        result = result + ",\n"
 
         if get_children.depth_counter < depth_limit:
             dict = {}
@@ -218,15 +224,16 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             result = result + "\tname: \"" + node.ec_number + "\",\n"
             children = get_ec_results(node.ec_number, bitscorelimit, max_amount, e_value_limit)
 
-        result = result + "\tdata: [{parent: \"" + caller_id + "\"}, "
+        result = result + "\tdata: {parent: \"DB entry: " + caller_id + "</br>\", dbentrys: \""
         dict = {}
         for child in children:
             if child.db_entry not in dict:
                 dict[child.db_entry] = 'child.db_entry'
-                result = result + "{" + child.db_entry + ":\"" + child.db_entry + "\"},"
+                result = result + "DB entry: " + child.db_entry + "</br>"
         #loose the last , ...
-        result = result[:-1]
-        result = result + "],\n"
+        result = result + "\"}"
+        # result = result[:-1]
+        result = result + ",\n"
 
         if get_children.depth_counter < depth_limit:
             result = result + "\tchildren: ["

@@ -47,8 +47,9 @@ var json = json_data;
 	levelDistance: 100,
 
         //set transformation speed
-        duration: 500,
+        duration: 1000,
         fps: 40,
+        //set transformation style
         transition: $jit.Trans.Bounce,
 
         //Add navigation capabilities:
@@ -89,7 +90,17 @@ var json = json_data;
         Tips: {
             enable: true,
             onShow: function(tip, node) {
-                tip.innerHTML = node.data.adjancies;
+                tip.innerHTML = "";
+                if(node.data.parent != undefined)
+                    tip.innerHTML += node.data.parent;
+                if(node.data.adjacencies != undefined)
+                    tip.innerHTML += node.data.adjacencies;
+                if(node.data.reads != undefined)
+                    tip.innerHTML += node.data.reads;
+                if(node.data.enzymes != undefined)
+                    tip.innerHTML += node.data.enzymes;
+                if(node.data.dbentrys != undefined)
+                    tip.innerHTML += node.data.dbentrys;
             }
         },
         
@@ -97,7 +108,23 @@ var json = json_data;
             Log.write("centering " + node.name + "...");
             //Add the relation list in the right column.
             //This list is taken from the data property of each JSON node.
-            $jit.id('inner-details').innerHTML = node.data.adjancies;
+//            var adj = node.adjacencies;
+//            $jit.id('inner-details').innerHTML = ""
+//            for(var edge in adj){
+//                var i = edge.nodeTo.id;
+//                $jit.id('inner-details').innerHTML = i + "a</br>";
+//            }
+            $jit.id('inner-details').innerHTML = ""
+            if(node.data.parent != undefined)
+                $jit.id('inner-details').innerHTML += node.data.parent;
+            if(node.data.adjacencies != undefined)
+                $jit.id('inner-details').innerHTML += node.data.adjacencies;
+            if(node.data.reads != undefined)
+                $jit.id('inner-details').innerHTML += node.data.reads;
+            if(node.data.enzymes != undefined)
+                $jit.id('inner-details').innerHTML += node.data.enzymes;
+            if(node.data.dbentrys != undefined)
+                $jit.id('inner-details').innerHTML += node.data.dbentrys;
         },
         
         onAfterCompute: function(){
@@ -153,5 +180,7 @@ var json = json_data;
   
     //end
     //append information about the root relations in the right column
-    $jit.id('inner-details').innerHTML = rgraph.graph.getNode(rgraph.root).data.adjancies;
+    //$jit.id('inner-details').innerHTML = rgraph.graph.getNode(rgraph.root).data.adjacencies;
+    $jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.adjacencies;
+
 }
