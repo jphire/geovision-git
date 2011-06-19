@@ -5,7 +5,7 @@ data: { adjacencies:"Read: 'R1', bitscore: 50.0</br>Read: 'R2', bitscore: 30.0</
 children: [	{
 	id: "R1",
 	name: "R1",
-	data: {parent: "DB entry: 'DB1'</br>", dbentrys: "DB entry: 'DB2'</br>DB entry: 'DB3'</br>DB entry: 'DB4'</br>"},
+	data: {parent: "DB enntry: 'DB1'</br>", dbentrys: "DB entry: 'DB2'</br>DB entry: 'DB3'</br>DB entry: 'DB4'</br>"},
 	children: [	{
 	id: "DB2",
 	name: "DB2",
