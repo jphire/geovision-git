@@ -22,23 +22,23 @@ rd_list = []
 # excludes nodes that are already visited
 def get_ec_results(ecnumber, bitscorelimit, max_amount, e_value_limit):
     global db_list
-    return Result.objects.filter(ec_number = ecnumber, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(db_entry__in = db_list).order_by('bitscore').reverse()[:max_amount]
+    return Result.objects.filter(ec_number = ecnumber).exclude(db_entry__in = db_list).order_by('bitscore')[:max_amount].reverse()
 
 # returns Result objects that match the query arguments, used to get adjacencies to a database entry
 # excludes nodes that are already visited and below bitscorelimit. Return at most max_amount nodes
 def get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, caller_type):
     global ec_list, rd_list
     if caller_type == 'rd':
-        return Result.objects.filter(db_entry = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(ec_number__in = ec_list).order_by('bitscore').reverse()[:max_amount]
+        return Result.objects.filter(db_entry = db_entry_id).exclude(ec_number__in = ec_list).order_by('bitscore')[:max_amount].reverse()
 
     elif caller_type == 'ec':
-        return Result.objects.filter(db_entry = db_entry_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(read__in = rd_list).order_by('bitscore').reverse()[:max_amount]
+        return Result.objects.filter(db_entry = db_entry_id).exclude(read__in = rd_list).order_by('bitscore')[:max_amount].reverse()
 
 # returns Result objects that match the query arguments, used to get adjacencies to a read
 # excludes nodes that are already visited
 def get_rd_results(read_id, bitscorelimit, max_amount, e_value_limit):
     global db_list
-    return Result.objects.filter(read = read_id, bitscore__gt = bitscorelimit, error_value__lt = e_value_limit).exclude(db_entry__in = db_list).order_by('bitscore').reverse()[:max_amount]
+    return Result.objects.filter(read = read_id).exclude(db_entry__in = db_list).order_by('bitscore')[:max_amount].reverse()
 
 # the main function that is called to create the json_file. If ecnumber is not 0, a query is made
 # based on the given ecnumber. If ecnumber is 0, a query is made based on the read_id. bitscorelimit
