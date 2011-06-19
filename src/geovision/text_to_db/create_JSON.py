@@ -102,17 +102,17 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
         for node in root_nodes:
             if node.db_entry not in dict:
                 dict[node.db_entry] = 'db_entry';
-                json_file.write("DB entry: " + node.db_entry + "</br>")# TODO: db_entry's description
+                json_file.write("DB entry: '" + node.db_entry + "'</br>")# TODO: db_entry's description
     elif db_query:
         for node in root_nodes:
             if node.read not in dict:
                 dict[node.read] = 'read';
-                json_file.write("Read: " + node.read + ", bitscore: " + str(node.bitscore) + "</br>")
+                json_file.write("Read: '" + node.read + "', bitscore: " + str(node.bitscore) + "</br>")
 
         for node in root_nodes_2:
             if node.ec_number not in dict:
                 dict[node.ec_number] = 'ec';
-                json_file.write("Enzyme: " + node.ec_number + "</br>")
+                json_file.write("Enzyme: '" + node.ec_number + "'</br>")
 
     json_file.write("\"},\n")
     json_file.write("children: [")
@@ -168,23 +168,23 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         children_1 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
         children_2 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'rd')
         if caller_class == "ec":
-            result = result + "\tdata: {parent: \"Enzyme: " + caller_id + "</br>\", "
+            result = result + "\tdata: {parent: \"Enzyme: '" + caller_id + "'</br>\", "
         elif caller_class == "rd":
-            result = result + "\tdata: {parent: \"Read: " + caller_id + "</br>\", "
+            result = result + "\tdata: {parent: \"Read: '" + caller_id + "'</br>\", "
         dict = {}
         # two sets of children for both read and enzyme adjacencies
         result = result + "reads: \""
         for child in children_1:
             if child.read not in dict:
                 dict[child.read] = 'child.read'
-                result = result + "Read: " + child.read + "</br>"
+                result = result + "Read: '" + child.read + "'</br>"
 
         result = result + "\", enzymes: \""
 
         for child in children_2:
             if child.ec_number not in dict:
                 dict[child.ec_number] = 'child.ec_number'
-                result = result + "Enzyme: " + child.ec_number + "<br>"
+                result = result + "Enzyme: '" + child.ec_number + "'<br>"
 
         result = result + "\"}"
         # drop the last ','
@@ -224,12 +224,12 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             result = result + "\tname: \"" + node.ec_number + "\",\n"
             children = get_ec_results(node.ec_number, bitscorelimit, max_amount, e_value_limit)
 
-        result = result + "\tdata: {parent: \"DB entry: " + caller_id + "</br>\", dbentrys: \""
+        result = result + "\tdata: {parent: \"DB entry: '" + caller_id + "'</br>\", dbentrys: \""
         dict = {}
         for child in children:
             if child.db_entry not in dict:
                 dict[child.db_entry] = 'child.db_entry'
-                result = result + "DB entry: " + child.db_entry + "</br>"
+                result = result + "DB entry: '" + child.db_entry + "'</br>"
         #loose the last , ...
         result = result + "\"}"
         # result = result[:-1]
