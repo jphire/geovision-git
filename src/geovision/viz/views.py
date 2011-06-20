@@ -33,14 +33,19 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
         hits = float(request.POST['hits'])
     else :
         hits = 10          #hits default
+    error = ''
     if (request.POST['ecnumber']=='' and request.POST['read']=='' and request.POST['dbentry']!=''):
-        create_json(0, 0, request.POST['dbentry'], bitscore, evalue, depth, hits)
+        error = create_json(0, 0, request.POST['dbentry'], bitscore, evalue, depth, hits)
     elif (request.POST['ecnumber']!='' and request.POST['read']=='' and request.POST['dbentry']==''):
-        create_json(request.POST['ecnumber'], 0, 0, bitscore, evalue, depth, hits)
+        error = create_json(request.POST['ecnumber'], 0, 0, bitscore, evalue, depth, hits)
     elif (request.POST['ecnumber']=='' and request.POST['read']!='' and request.POST['dbentry']==''):
-        create_json(0, request.POST['read'], 0, bitscore, evalue, depth, hits)
+        error = create_json(0, request.POST['read'], 0, bitscore, evalue, depth, hits)
     else:
         return render_to_response('graphviz.html', {
             'error_message': "Error: You can only enter one of the following: ECnumber, DB entry id, Read id.",
+        }, context_instance=RequestContext(request))
+    if (error == 'error_no_children'):
+        return render_to_response('graphviz.html', {
+            'error_message': "Error: No data found, input different values.",
         }, context_instance=RequestContext(request))
     return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
