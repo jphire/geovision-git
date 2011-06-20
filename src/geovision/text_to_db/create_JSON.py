@@ -167,7 +167,7 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         result = result + "\t{\n\tid: \"" + node.db_entry + "\",\n"
         result = result + "\tname: \"" + node.db_entry + "\",\n"
 
-        if get_children.depthcounter < depth_limit:
+        if get_children.depth_counter < depth_limit:
             children_1 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
             children_2 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'rd')
         else:
@@ -223,7 +223,8 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             rd_list.append(node.read)
             result = result + "\t{\n\tid: \"" + node.read + "\",\n"
             result = result + "\tname: \"" + node.read + "\",\n"
-            if get_children.depthcounter < depth_limit:
+
+            if get_children.depth_counter < depth_limit:
                 children = get_rd_results(node.read, bitscorelimit, max_amount, e_value_limit)
             else:
                 children = []
