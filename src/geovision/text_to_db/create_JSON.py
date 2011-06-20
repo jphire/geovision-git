@@ -78,7 +78,7 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
         # two query sets are needed to get both enzyme- and read result nodes for a db node
         root_nodes = get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, 'ec')
         root_nodes_2 = get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, 'rd')
-        if root_nodes == [] or rootnodes_2 == []:
+        if root_nodes == [] or root_nodes_2 == []:
             return 'error_no_children'
 
     # no valid query arguments given
