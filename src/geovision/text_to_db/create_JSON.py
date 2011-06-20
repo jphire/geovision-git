@@ -59,26 +59,6 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     db_query = False
     json_file = open(PROJECTROOT + "/static/json_file.js", 'w')
 
-    # read query
-    if ecnumber == 0 and db_entry_id == 0:
-        read_query = True
-        root_nodes = get_rd_results(read_id, bitscorelimit, max_amount, e_value_limit)
-    # entzyme query
-    elif read_id == 0 and db_entry_id == 0:
-        enzyme_query = True
-        root_nodes = get_ec_results(ecnumber, bitscorelimit, max_amount, e_value_limit)
-    # database entry query
-    elif ecnumber == 0 and read_id == 0:
-        db_query = True
-        # two query sets are needed to get both enzyme- and read result nodes for a db node
-        root_nodes = get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, 'ec')
-        root_nodes_2 = get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, 'rd')
-    # no valid query arguments given
-    else:
-        return 'error'
-
-    get_children.depth_counter = 0
-
     json_file.write("var json_data = {\n")
 
     if read_query:
@@ -94,6 +74,28 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
         json_file.write("name: \"" + db_entry_id + "\",\n")
 
     json_file.write("data: { adjacencies:\"")
+
+    if depth_limit > 0:
+        # read query
+        if ecnumber == 0 and db_entry_id == 0:
+            read_query = True
+            root_nodes = get_rd_results(read_id, bitscorelimit, max_amount, e_value_limit)
+        # entzyme query
+        elif read_id == 0 and db_entry_id == 0:
+            enzyme_query = True
+            root_nodes = get_ec_results(ecnumber, bitscorelimit, max_amount, e_value_limit)
+        # database entry query
+        elif ecnumber == 0 and read_id == 0:
+            db_query = True
+            # two query sets are needed to get both enzyme- and read result nodes for a db node
+            root_nodes = get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, 'ec')
+            root_nodes_2 = get_db_results(db_entry_id, bitscorelimit, max_amount, e_value_limit, 'rd')
+        # no valid query arguments given
+        else:
+            return 'error'
+
+    get_children.depth_counter = 0
+
     # dict is used to cut off multiple result lines that have the same db_entry
     dict = {}
 
@@ -165,8 +167,13 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         result = result + "\t{\n\tid: \"" + node.db_entry + "\",\n"
         result = result + "\tname: \"" + node.db_entry + "\",\n"
 
-        children_1 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
-        children_2 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'rd')
+        if get_children.depthcounter < depth_limit:
+            children_1 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
+            children_2 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'rd')
+        else:
+            children_1 = []
+            children_2 = []
+
         if caller_class == "ec":
             result = result + "\tdata: {parent: \"Enzyme: '" + caller_id + "'</br>\", "
         elif caller_class == "rd":
@@ -216,7 +223,10 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             rd_list.append(node.read)
             result = result + "\t{\n\tid: \"" + node.read + "\",\n"
             result = result + "\tname: \"" + node.read + "\",\n"
-            children = get_rd_results(node.read, bitscorelimit, max_amount, e_value_limit)
+            if get_children.depthcounter < depth_limit:
+                children = get_rd_results(node.read, bitscorelimit, max_amount, e_value_limit)
+            else:
+                children = []
         else:
             # we 'are' in enzyme node, so add it to the visited list
             ec_list.append(node.ec_number)
