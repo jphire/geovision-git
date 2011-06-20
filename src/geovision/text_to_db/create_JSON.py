@@ -195,7 +195,7 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         for child in children_1:
             if child.read not in dict:
                 dict[child.read] = 'child.read'
-                result = result + "Read: '" + child.read + "', bitscore: " + str(node.bitscore) + "</br>"
+                result = result + "Read: '" + child.read + "', bitscore: " + str(child.bitscore) + "</br>"
 
         result = result + "\", enzymes: \""
 
@@ -253,7 +253,7 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         for child in children:
             if child.db_entry not in dict:
                 dict[child.db_entry] = 'child.db_entry'
-                result = result + "DB entry: '" + child.db_entry + "'</br>"
+                result = result + "DB entry: '" + child.db_entry + "', bitscore: " + str(child.bitscore) + "</br>"
         #loose the last , ...
         result = result + "\"}"
         # result = result[:-1]
