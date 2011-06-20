@@ -19,14 +19,21 @@
 {% block sidenavi_content %}
 
 <form id="graphrefresh" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
+    <p>Input only one of the three following:</p>
+    <label>ECnumber</label>
+    <input size="10" type="text" name="ecnumber" /><br/><br/>
+    <label>Read id</label>
+    <input size="10" type="text" name="read" /><br/><br/>
+    <label>DB entry id</label>
+    <input size="10" type="text" name="dbentry" /><br/><br/>
     <label>Bitscore</label>
-    <input size="10" type="text" name="bitscore" /><br/>
+    <input size="10" type="text" name="bitscore" /><br/><br/>
     <label>E-value</label>
-    <input size="10" type="text" name="e-value" /><br/>
+    <input size="10" type="text" name="e-value" /><br/><br/>
     <label>Depth</label>
-    <input size="10" type="text" name="depth" /><br/>
+    <input size="10" type="text" name="depth" /><br/><br/>
     <label>Hits</label>
-    <input size="10" type="text" name="hits" /><br/>
+    <input size="10" type="text" name="hits" /><br/><br/>
     <input id="graphrefresh" type="submit" value="Refresh page" size="10"/><br/>
 </form>
 
@@ -56,6 +63,7 @@ Graph animation
 <div style="text-align:center;"><a href="{{ STATIC_URL }}graphviz.js">See the Example Code</a></div>            
 </div>
 -->
+{% if error_message %}<div class="error">{{ error_message }}</div>{% endif %}
 
 <div id="center-container">
     <div id="infovis"></div>    
