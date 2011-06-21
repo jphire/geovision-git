@@ -6,5 +6,5 @@ do
 #	BASENAME=`basename $f`
 #	NAME=${BASENAME/.fasta/}
 	echo $f
-	time ./run.sh run_sample_parser.py $f
+	time -p ./run.sh run_sample_parser.py $f
 done
