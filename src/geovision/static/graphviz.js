@@ -129,7 +129,7 @@ var json = json_data;
         //and a click handler to move the graph.
         //This method is called once, on label creation.
         onCreateLabel: function(domElement, node){
-            domElement.innerHTML = node.name.substr(0,4);
+            domElement.innerHTML = node.name.substr(0,10);
             domElement.onclick = function(){
                 rgraph.onClick(node.id);
             };
