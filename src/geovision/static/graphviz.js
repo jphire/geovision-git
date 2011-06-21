@@ -35,6 +35,10 @@ var json = json_data;
     var rgraph = new $jit.RGraph({
         //Where to append the visualization
         injectInto: 'infovis',
+        //set canvas size
+        width: 600,
+        height: 600,
+
         //Optional: create a background canvas that plots
         //concentric circles.
         background: {
@@ -47,21 +51,23 @@ var json = json_data;
 	levelDistance: 100,
 
         //set transformation speed
-        duration: 1000,
+        duration: 500,
         fps: 40,
+
         //set transformation style
-        transition: $jit.Trans.Bounce,
+        transition: $jit.Trans.Circ,
 
         //Add navigation capabilities:
         //zooming by scrolling and panning.
         Navigation: {
           enable: true,
           panning: true,
-          zooming: 10
+          zooming: 25
         },
         
         //Set Node and Edge styles.
         Node: {
+            overridable: true,
             color: '#ccb',
             alpha: 1,
             dim: 3,
@@ -74,13 +80,12 @@ var json = json_data;
             align: "center",
             angularWidth:1,
             span:1,
-            alpha: 1,
             type: 'circle',
-            dim: 4,
             CanvasStyles: {}
         },
         
         Edge: {
+          overridable: true,
           color: '#068481',
           lineWidth:1.2,
           dim: 50
@@ -89,18 +94,14 @@ var json = json_data;
         //Set tooltip configuration
         Tips: {
             enable: true,
+            width: 30,
+            align: 'left',
             onShow: function(tip, node) {
-                tip.innerHTML = "";
-                if(node.data.parent != undefined)
-                    tip.innerHTML += node.data.parent;
+                tip.innerHTML = ""
+                if(node.data.description != undefined)
+                    tip.innerHTML += node.data.description;
                 if(node.data.adjacencies != undefined)
                     tip.innerHTML += node.data.adjacencies;
-                if(node.data.reads != undefined)
-                    tip.innerHTML += node.data.reads;
-                if(node.data.enzymes != undefined)
-                    tip.innerHTML += node.data.enzymes;
-                if(node.data.dbentrys != undefined)
-                    tip.innerHTML += node.data.dbentrys;
             }
         },
         
@@ -115,16 +116,10 @@ var json = json_data;
 //                $jit.id('inner-details').innerHTML = i + "a</br>";
 //            }
             $jit.id('inner-details').innerHTML = ""
-            if(node.data.parent != undefined)
-                $jit.id('inner-details').innerHTML += node.data.parent;
+            if(node.data.description != undefined)
+                $jit.id('inner-details').innerHTML += node.data.description;
             if(node.data.adjacencies != undefined)
                 $jit.id('inner-details').innerHTML += node.data.adjacencies;
-            if(node.data.reads != undefined)
-                $jit.id('inner-details').innerHTML += node.data.reads;
-            if(node.data.enzymes != undefined)
-                $jit.id('inner-details').innerHTML += node.data.enzymes;
-            if(node.data.dbentrys != undefined)
-                $jit.id('inner-details').innerHTML += node.data.dbentrys;
         },
         
         onAfterCompute: function(){
@@ -134,7 +129,7 @@ var json = json_data;
         //and a click handler to move the graph.
         //This method is called once, on label creation.
         onCreateLabel: function(domElement, node){
-            domElement.innerHTML = node.name;
+            domElement.innerHTML = node.name.substr(0,4);
             domElement.onclick = function(){
                 rgraph.onClick(node.id);
             };
@@ -146,11 +141,11 @@ var json = json_data;
             style.display = '';
             style.cursor = 'pointer';
 
-            if (node._depth <= 1) {
+            if (node._depth <= 2) {
                 style.fontSize = "1.1em";
                 style.color = "#ccc";
             
-            } else if(node._depth == 2){
+            } else if(node._depth == 3){
                 style.fontSize = "1.1em";
                 style.color = "#494949";
             
@@ -166,6 +161,7 @@ var json = json_data;
 
     //load JSON data
     rgraph.loadJSON(json);
+    
     //trigger small animation
     rgraph.graph.eachNode(function(n) {
       var pos = n.getPos();
@@ -180,7 +176,7 @@ var json = json_data;
   
     //end
     //append information about the root relations in the right column
-    //$jit.id('inner-details').innerHTML = rgraph.graph.getNode(rgraph.root).data.adjacencies;
+    $jit.id('inner-details').innerHTML = rgraph.graph.getNode(rgraph.root).data.description;
     $jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.adjacencies;
 
 }
