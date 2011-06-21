@@ -273,10 +273,10 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             rd_list.append(node.read)
             result = result + "\t{\n\tid: \"" + node.read + "\",\n"
             result = result + "\tname: \"" + node.read + "\",\n"
+            adjacents = get_rd_adjacents(node.read, bitscorelimit, max_amount, e_value_limit)
 
             if get_children.depth_counter < depth_limit:
-                # adjacents is used to get all neighboring nodes
-                adjacents = get_rd_adjacents(node.read, bitscorelimit, max_amount, e_value_limit)
+                # adjacents is used to get all neighboring nodes    
                 children = get_rd_results(node.read, bitscorelimit, max_amount, e_value_limit)
             else:
                 children = []
