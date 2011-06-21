@@ -90,6 +90,7 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
         enzyme_query = True
         root_adjacents = get_ec_adjacents(ecnumber, bitscorelimit, max_amount, e_value_limit)
         root_nodes = get_ec_results(ecnumber, bitscorelimit, max_amount, e_value_limit)
+
     # database entry query
     elif ecnumber == 0 and read_id == 0:
         node_type = 'db'
@@ -215,9 +216,9 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         db_list.append(node.db_entry)
         result = result + "\t{\n\tid: \"" + node.db_entry + "\",\n"
         result = result + "\tname: \"" + node.db_entry + "\",\n"
+        adjacents = get_db_adjacents(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
 
         if get_children.depth_counter < depth_limit:
-            adjacents = get_db_adjacents(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
             children_1 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
             children_2 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'rd')
         else:
