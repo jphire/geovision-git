@@ -166,8 +166,7 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
                 dict[node.ec_number] = 'ec';
                 json_file.write("'" + node.ec_number + "'</br>")
 
-    json_file.write("\"},\n")
-    json_file.write("children: [")
+    json_file.write("\"},\nchildren: [")
 
     dict = {}
     if read_query:
@@ -216,12 +215,13 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         db_list.append(node.db_entry)
         result = result + "\t{\n\tid: \"" + node.db_entry + "\",\n"
         result = result + "\tname: \"" + node.db_entry + "\",\n"
-        adjacents = get_db_adjacents(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
 
         if get_children.depth_counter < depth_limit:
+            adjacents = get_db_adjacents(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
             children_1 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'ec')
             children_2 = get_db_results(node.db_entry, bitscorelimit, max_amount, e_value_limit, 'rd')
         else:
+            adjacents = []
             children_1 = []
             children_2 = []
         dict = {}
@@ -230,24 +230,25 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
         # add node description..
         db = DbEntry.objects.get(db_id = node.db_entry)
         description = db.description
-        result = result + "description: \"<b>" + node.db_entry + ":</b></br>" + description + "</br></br>\", "
+        result = result + "description: \"<b>" + node.db_entry + ":</b></br>" + description + "</br></br>\""
 
-        result = result + "adjacencies: \"<b>Adjacencies:</b></br>Reads: </br>"
-        # two sets of children for both read and enzyme adjacencies
-        for child in adjacents:
-            if child.read not in dict:
-                dict[child.read] = 'child.read'
-                result = result + "'" + child.read + "', bitscore: " + str(child.bitscore) + "</br>"
+        # if not a leaf node:
+        if get_children.depth_counter < depth_limit:
+            result = result + ", adjacencies: \"<b>Adjacent nodes:</b></br>Reads: </br>"
+            # two sets of children for both read and enzyme adjacencies
+            for child in adjacents:
+                if child.read not in dict:
+                    dict[child.read] = 'child.read'
+                    result = result + "'" + child.read + "', bitscore: " + str(child.bitscore) + "</br>"
 
-        result = result + "</br>Enzymes: </br>"
+            result = result + "</br>Enzymes: </br>"
 
-        for child in adjacents:
-            if child.ec_number not in dict:
-                dict[child.ec_number] = 'child.ec_number'
-                result = result + "'" + child.ec_number + "'<br>"
+            for child in adjacents:
+                if child.ec_number not in dict:
+                    dict[child.ec_number] = 'child.ec_number'
+                    result = result + "'" + child.ec_number + "'<br>"
 
-        result = result + "\"}"
-        result = result + ",\n"
+        result = result + "\"},\n"
 
         if get_children.depth_counter < depth_limit:
             dict = {}
@@ -274,12 +275,13 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             rd_list.append(node.read)
             result = result + "\t{\n\tid: \"" + node.read + "\",\n"
             result = result + "\tname: \"" + node.read + "\",\n"
-            adjacents = get_rd_adjacents(node.read, bitscorelimit, max_amount, e_value_limit)
 
             if get_children.depth_counter < depth_limit:
-                # adjacents is used to get all neighboring nodes    
+                # adjacents is used to get all neighboring nodes
+                adjacents = get_rd_adjacents(node.read, bitscorelimit, max_amount, e_value_limit)
                 children = get_rd_results(node.read, bitscorelimit, max_amount, e_value_limit)
             else:
+                adjacents = []
                 children = []
         else:
             # we 'are' in enzyme node, so add it to the visited list
@@ -290,30 +292,29 @@ def get_children(node, caller_class, caller_id, bitscorelimit, max_amount, e_val
             children = get_ec_results(node.ec_number, bitscorelimit, max_amount, e_value_limit)
 
         result = result + "\tdata: {"
-        if db_child_type == 'rd':
-            read = Read.objects.get(read_id = node.read)
-            description = read.description
-            result = result + "description: \"<b>" + node.read + ":</b></br>" + description + "</br></br>\", "
+        
+        if get_children.depth_counter < depth_limit:
+            if db_child_type == 'rd':
+                read = Read.objects.get(read_id = node.read)
+                description = read.description
+                result = result + "description: \"<b>" + node.read + ":</b></br>" + description + "</br></br>\""
 
-        elif db_child_type == 'ec':
-            description = ""
-            result = result + "description: \"<b>" + node.ec_number + ":</b></br>" + description + "</br></br>\", "
+            elif db_child_type == 'ec':
+                description = ""
+                result = result + "description: \"<b>" + node.ec_number + ":</b></br>" + description + "</br></br>\""
 
-        result = result + "adjacencies: \"<b>Adjacencies:</b></br>DB entries: </br>"
+            result = result + ", adjacencies: \"<b>Adjacent nodes:</b></br>DB entries: </br>"
 
-        dict = {}
-        for child in adjacents:
-            if child.db_entry not in dict:
-                dict[child.db_entry] = 'child.db_entry'
-                if db_child_type == 'ec':
-                    result = result + "'" + child.db_entry + "'</br>"
-                elif db_child_type == 'rd':
-                    result = result + "'" + child.db_entry + "', bitscore: " + str(child.bitscore) + "</br>"
+            dict = {}
+            for child in adjacents:
+                if child.db_entry not in dict:
+                    dict[child.db_entry] = 'child.db_entry'
+                    if db_child_type == 'ec':
+                        result = result + "'" + child.db_entry + "'</br>"
+                    elif db_child_type == 'rd':
+                        result = result + "'" + child.db_entry + "', bitscore: " + str(child.bitscore) + "</br>"
 
-        #loose the last , ...
-        result = result + "\"}"
-        # result = result[:-1]
-        result = result + ",\n"
+        result = result + "\"},\n"
 
         if get_children.depth_counter < depth_limit:
             result = result + "\tchildren: ["
