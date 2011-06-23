@@ -27,9 +27,8 @@ def graph_JSON(query_type, query_value, bitscorelimit, e_value_limit, depthlimit
 #    adjacents = simplejson.dumps([(simplejson.dumps({'nodeTo':node.db_entry, })) for node in root_nodes])
     # s = simplejson.dumps({'name':root_nodes.read, 'id':root_nodes.read, 'description':node.description, 'adjacents':adjacents})
 
-    adjacents = simplejson.dumps([(simplejson.dumps({'nodeTo':obj.db_entry, 'data':simplejson.dumps({'$color':bitscore_to_hex(obj.bitscore)})})) for obj in root_nodes])
-
-    simplejson.dump({'name': "R1", 'id':"R1", 'description':node.description, 'adjacents':adjacents}, json_file)
+    adjacents = [({'nodeTo':obj.db_entry, 'data':{'$color':bitscore_to_hex(obj.bitscore)}}) for obj in root_nodes]
+    simplejson.dump({'name': "R1", 'id':"R12", 'description':node.description, 'adjacents':adjacents}, json_file)
     json_file.close()
 
     
