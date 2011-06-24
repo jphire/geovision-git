@@ -27,6 +27,7 @@ var Log = {
 
 function init(){
     //init data
+    jQuery('#loader').fadeOut();
 
 //this references data in json_file.js
 var json = json_data;
