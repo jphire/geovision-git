@@ -148,3 +148,6 @@ div#close{
     font-size:20px;
     cursor: pointer;
 }
+.submitForm{
+	cursor: pointer;
+}
