@@ -26,7 +26,7 @@ jQuery(function($) {
 		$('#loader').fadeIn(); //loader in
     });
 	$('.submitForm').live('click', function() {
-		$('#ec').replaceWith('<input size="10" type="text" name="ecnumber" id="ec" value="(this).name"/>');
+		$('#ec').replaceWith('<input size="10" type="text" name="ecnumber" id="ec" value="'+$(this).name+'"/>');
 		$(this).parents('form').submit();
 	})
 });
