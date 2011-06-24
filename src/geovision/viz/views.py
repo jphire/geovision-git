@@ -30,9 +30,12 @@ def testgraph(request):
 @login_required
 def graphrefresh(request): #make a new JSon, set defaults if needed
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10 }
-	for k in condition_dict.keys():
-		if request.POST[k] != '':
-			condition_dict[k] = request.POST[k]
+	for k in condition_dict.keys() + ['ecnumber', 'read', 'dbentry']:
+		try:
+			if request.POST[k] != '':
+				condition_dict[k] = request.POST[k]
+		except KeyError:
+			pass
 	bitscore = float(condition_dict['bitscore'])
 	evalue = float(condition_dict['evalue'])
 	depth = int(condition_dict['depth'])
