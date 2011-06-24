@@ -22,6 +22,12 @@
     <p>Input only one of the three following:</p>
     <label>Enzyme</label>
     <input size="10" type="text" name="ecnumber" value="{{ ecnumber }}"/><br/><br/>
+	{% if enzyme_list %}
+	Multiple enzymes matched, pick one:
+	{% for e in enzyme_list %}
+		{{ e.enzyme_name }} ({{ e.ec_number }}) <br /><br />
+	{% endfor %}
+	{% endif %}
     <label>Read id</label>
     <input size="10" type="text" name="read" value="{{ read }}"/><br/><br/>
     <label>DB entry id</label>
