@@ -20,7 +20,7 @@
 
 <form id="graphrefresh" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <p>Input only one of the three following:</p>
-    <label>ECnumber</label>
+    <label>Enzyme</label>
     <input size="10" type="text" name="ecnumber" value="{{ ecnumber }}"/><br/><br/>
     <label>Read id</label>
     <input size="10" type="text" name="read" value="{{ read }}"/><br/><br/>

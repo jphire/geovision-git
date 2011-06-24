@@ -10,6 +10,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.context_processors import csrf
+from django.db.models import Q
+from geovision.viz.models import EnzymeName
+
+# TODO: move somewhere else
+def render(request, template, dict={}):
+	return render_to_response(template, context_instance=RequestContext(request, dict))
+
 
 #Add '@login_required' to all these!
 @login_required
@@ -37,16 +44,20 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
     if (request.POST['ecnumber']=='' and request.POST['read']=='' and request.POST['dbentry']!=''):
         error = create_json(0, 0, request.POST['dbentry'], bitscore, evalue, depth, hits)
     elif (request.POST['ecnumber']!='' and request.POST['read']=='' and request.POST['dbentry']==''):
+		try:
+			ec_numbers = EnzymeName.objects.filter(Q(enzyme_name__icontains=request.POST['ecnumber']) | Q(ec_number=request.POST['ecnumber']))
+		except EnzymeName.DoesNotExist:
+				return render(request, 'graphviz.html', {'error_message': 'Enzyme not found'})
         error = create_json(request.POST['ecnumber'], 0, 0, bitscore, evalue, depth, hits)
     elif (request.POST['ecnumber']=='' and request.POST['read']!='' and request.POST['dbentry']==''):
         error = create_json(0, request.POST['read'], 0, bitscore, evalue, depth, hits)
     else:
-        return render_to_response('graphviz.html', {
-            'error_message': "Error: You can only enter one of the following: ECnumber, DB entry id, Read id.",
-        }, context_instance=RequestContext(request))
+        return render(request, 'graphviz.html', {
+            'error_message': "Error: You can only enter one of the following: Enzyme, DB entry id, Read id.",
+        })
     if (error == 'error_no_children'):
-        return render_to_response('graphviz.html', {
+        return render(request, 'graphviz.html', {
             'error_message': "Error: No data found, input different values.",
-        }, context_instance=RequestContext(request))
+        })
     #c = Context ({ecnumber:request.POST['ecnumber'], read:request.POST['read'], dbentry:request.POST['dbentry'], bitscore:request.POST['bitscore'], evalue:request.POST['e-value'], depth:request.POST['depth'], hits:request.POST['hits']})
-    return render_to_response("graphviz.html", {'ecnumber':request.POST['ecnumber'], 'read':request.POST['read'], 'dbentry':request.POST['dbentry'], 'bitscore':request.POST['bitscore'], 'evalue':request.POST['e-value'], 'depth':request.POST['depth'], 'hits':request.POST['hits']}, context_instance=RequestContext(request) )
+    return render(request, "graphviz.html", {'ecnumber':request.POST['ecnumber'], 'read':request.POST['read'], 'dbentry':request.POST['dbentry'], 'bitscore':request.POST['bitscore'], 'evalue':request.POST['e-value'], 'depth':request.POST['depth'], 'hits':request.POST['hits']})
