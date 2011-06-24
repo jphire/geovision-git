@@ -50,4 +50,4 @@ class Result(models.Model): # Query_seq_id    Target_seq_id   Evident_type    E.
 
 class EnzymeName(models.Model):
 	ec_number = models.CharField(max_length=12)
-	enzyme_name = models.CharField(max_length=64)
+	enzyme_name = models.CharField(max_length=128)

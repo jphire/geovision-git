@@ -386,4 +386,4 @@ def setupderp():
 
 
 if __name__ == "__main__":
-    create_json(0, 0, "DB1", 20, 0.001, 3, 200)
+    create_json("1.1.1.1", 0, 0, 30, 0.05, 3, 20)
