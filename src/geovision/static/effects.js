@@ -23,6 +23,6 @@ jQuery(function($) {
         }
     });
     $('#graphrefresh').click(function(){
-	$('#loader').fadeIn();
+	$('#loader').fadeIn(); //loader in
     });
 });
