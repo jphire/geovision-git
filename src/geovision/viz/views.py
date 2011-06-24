@@ -34,19 +34,19 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	elif (request.POST['ecnumber']!='' and request.POST['read']=='' and request.POST['dbentry']==''):
 			ec_numbers = EnzymeName.objects.filter(Q(enzyme_name__icontains=request.POST['ecnumber']) | Q(ec_number=request.POST['ecnumber']))
 			num_results = len(ec_numbers)
-			if num_results == 0: return render(request, 'graphviz.html', condition_dict + {'error_message': 'Enzyme not found'})
+			if num_results == 0: return render(request, 'graphviz.html', {'error_message': 'Enzyme not found'}.update(condition_dict))
 			elif num_results == 1: error = create_json(ec_numbers[0].ec_number, 0, 0, bitscore, evalue, depth, hits)
-			else: return render(request, graphviz.html, condition_dict + {'enzyme_list': ec_numbers})
+			else: return render(request, graphviz.html, {'enzyme_list': ec_numbers}.update(condition_dict))
 
 	elif (request.POST['ecnumber']=='' and request.POST['read']!='' and request.POST['dbentry']==''):
 		error = create_json(0, request.POST['read'], 0, bitscore, evalue, depth, hits)
 	else:
-		return render(request, 'graphviz.html', condition_dict + {
+		return render(request, 'graphviz.html', {
 			'error_message': "Error: You can only enter one of the following: Enzyme, DB entry id, Read id.",
-		})
+		}.update(condition_dict))
 	if (error == 'error_no_children'):
-		return render(request, 'graphviz.html', condition_dict + {
+		return render(request, 'graphviz.html', {
 			'error_message': "Error: No data found, input different values.",
-		})
+		}.update(condition_dict))
 	#c = Context ({ecnumber:request.POST['ecnumber'], read:request.POST['read'], dbentry:request.POST['dbentry'], bitscore:request.POST['bitscore'], evalue:request.POST['e-value'], depth:request.POST['depth'], hits:request.POST['hits']})
 	return render(request, "graphviz.html", condition_dict)
