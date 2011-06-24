@@ -18,7 +18,7 @@
 <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
 {% block sidenavi_content %}
 
-<form id="graphrefresh" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
+<form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <p>Input only one of the three following:</p>
     <label>ECnumber</label>
     <input size="10" type="text" name="ecnumber" value="{{ ecnumber }}"/><br/><br/>
