@@ -67,6 +67,8 @@ div.error{
     margin-right:auto;
     text-align: center;
     width: 400px;
+    z-index:20;
+    position:relative;
 }
 
 /*UPPER NAVIGATION*/
@@ -145,4 +147,7 @@ div#close{
     float:right;
     font-size:20px;
     cursor: pointer;
+}
+.submitForm{
+	cursor: pointer;
 }

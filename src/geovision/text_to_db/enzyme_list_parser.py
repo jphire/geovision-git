@@ -29,7 +29,8 @@ class enzyme_parser:
 		return None
 
 if __name__ == '__main__':
-	ep = enzyme_parser(open('enzyme', 'r'), ['ENTRY', 'NAME'])
+	import sys
+	ep = enzyme_parser(open(sys.argv[1], 'r'), ['ENTRY', 'NAME'])
 	inserter = BulkInserter(EnzymeName)
 
 	while True:

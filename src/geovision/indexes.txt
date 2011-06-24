@@ -1,0 +1,4 @@
+CREATE INDEX viz_result__db_entry ON viz_result USING hash (db_entry);
+CREATE INDEX viz_result__ec_number ON viz_result USING btree (ec_number);
+CREATE INDEX viz_result__read ON viz_result USING btree (read);
+CREATE INDEX viz_result__bitscore ON viz_result USING btree (bitscore);

@@ -133,8 +133,9 @@ MIDDLEWARE_CLASSES = (
 					  'django.middleware.csrf.CsrfViewMiddleware',
 					  'django.contrib.auth.middleware.AuthenticationMiddleware',
 					  'django.contrib.messages.middleware.MessageMiddleware',
+					  'debug_toolbar.middleware.DebugToolbarMiddleware',
 					  )
-
+INTERNAL_IPS = ('127.0.0.1',)
 ROOT_URLCONF = 'geovision.urls'
 
 TEMPLATE_DIRS = (
@@ -163,6 +164,8 @@ INSTALLED_APPS = (
 
 				  # Uncomment this to enable Testmaker (http://ericholscher.com/blog/2008/jul/26/testmaker-002-even-easier-automated-testing-django/)
 				  # 'test_utils',
+				  # Uncomment this to enable debug toolbar
+				    'debug_toolbar'
 				  )
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 # A sample logging configuration. The only tangible logging
@@ -187,3 +190,25 @@ LOGGING = {
         },
     }
 }
+
+DEBUG_TOOLBAR_PANELS = (
+#    'debug_toolbar.panels.version.VersionDebugPanel',
+    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+    'debug_toolbar.panels.headers.HeaderDebugPanel',
+    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+    'debug_toolbar.panels.template.TemplateDebugPanel',
+    'debug_toolbar.panels.sql.SQLDebugPanel',
+#    'debug_toolbar.panels.signals.SignalDebugPanel',
+#    'debug_toolbar.panels.logger.LoggingPanel',
+)
+
+def custom_show_toolbar(request):
+    return True # Always show toolbar, for example purposes only.
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': True,
+    'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
+    'HIDE_DJANGO_SQL': True,
+}
+
