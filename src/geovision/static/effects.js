@@ -22,4 +22,7 @@ jQuery(function($) {
             
         }
     });
+    $('#graphrefresh').click(function(){
+	$('#loader').fadeIn();
+    });
 });
