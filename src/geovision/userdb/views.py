@@ -1,7 +1,7 @@
 # Create your views here.
 from django.http import HttpResponse
 from django.template import Context, loader
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -10,7 +10,10 @@ from django.contrib.auth import logout
 from django.core.context_processors import csrf
 
 def loginpage(request):
-    return render_to_response("login.html", { }, context_instance=RequestContext(request) )
+	if request.user.is_authenticated():
+		return redirect('/graphrefresh')
+	else:
+	    return render_to_response("login.html", { }, context_instance=RequestContext(request) )
 def register(request):
     return render_to_response("register.html", { }, context_instance=RequestContext(request) )
 def registering(request):
@@ -44,7 +47,7 @@ def logging_in(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            return render_to_response("graphviz.html", { }, context_instance=RequestContext(request) )
+            return redirect('/graphrefresh')
         else:
             return render_to_response('login.html', {
                     'error_message': "Account is not active.",
