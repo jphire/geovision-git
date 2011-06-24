@@ -29,7 +29,21 @@ class EcsFileParser:
 		split_line = self.nextline.strip().split("\t")
 		self.db_id = split_line[0]
 		self.pext = split_line[1]
-		self.ecs = split_line[2]
+		self.ecs = split_line[2].split(',')
 		self.nextline = self.textfile.readline()
 		
-		return EcsEntry(db_id = self.db_id, protein_existence_type = self.pext, ecs = self.ecs)
+		return (EcsEntry(db_id = self.db_id, protein_existence_type = self.pext, ec = ec) for ec in self.ecs)
+
+if __name__ == '__main__':
+	import sys
+	parser = EcsFileParser(sys.argv[1])
+
+	from geovision.text_to_db.bulk_inserter import BulkInserter
+	inserter = BulkInserter(EcsEntry)
+
+	while True:
+		entries = parser.next_ecs_entry()
+		if not entries: break
+		for entry in entries:
+			inserter.save(entry)
+	inserter.close()
