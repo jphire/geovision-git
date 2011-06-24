@@ -23,10 +23,11 @@
     <label>Enzyme</label>
     <input size="10" type="text" name="ecnumber" value="{{ ecnumber }}"/><br/><br/>
 	{% if enzyme_list %}
-	Multiple enzymes matched, pick one:
+	Multiple enzymes matched, pick one: <br/>
 	{% for e in enzyme_list %}
-		{{ e.enzyme_name }} ({{ e.ec_number }}) <br /><br />
+		<a href="">{{ e.enzyme_name }} ({{ e.ec_number }})</a><br />
 	{% endfor %}
+	<br />
 	{% endif %}
     <label>Read id</label>
     <input size="10" type="text" name="read" value="{{ read }}"/><br/><br/>
@@ -35,7 +36,7 @@
     <label>Bitscore</label>
     <input size="10" type="text" name="bitscore" value="{{ bitscore }}"/><br/><br/>
     <label>E-value</label>
-    <input size="10" type="text" name="e-value" value="{{ evalue }}"/><br/><br/>
+    <input size="10" type="text" name="evalue" value="{{ evalue }}"/><br/><br/>
     <label>Depth</label>
     <input size="10" type="text" name="depth" value="{{ depth }}"/><br/><br/>
     <label>Hits</label>
