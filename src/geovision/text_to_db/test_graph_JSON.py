@@ -83,7 +83,7 @@ class  Test_graph_JSONTestCase(unittest.TestCase):
         print Blast.objects.all().count()
         print Result.objects.all().count()
 
-        graph_JSON('read', 'R1', 20, 0.006, 2, 5)
+        graph_JSON('read', 'R1', 20, 0.006, 3, 5)
 
         assert 1==1
         #assert x != y;
