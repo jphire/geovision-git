@@ -1,5 +1,4 @@
 import json
-from usbcreator.remtimest import max_age
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 from geovision.viz.models import *
@@ -17,13 +16,13 @@ class QueryToJSON:
 	unique row from the table, this approach may cause problems later.
 	"""
 	def __init__(self, ec_number=None, db_entry=None, read=None,
-				e_value_limit=None, bitscore_limit=None, depth_limit=2,
+				e_value_limit=1, bitscore_limit=0, depth_limit=2,
 				max_amount=5):
 		self.ec_number = ec_number
 		self.db_entry = db_entry
 		self.read = read
-		self.e_value_limit = 1 if e_value_limit is None else e_value_limit
-		self.bitscore_limit = 0 if bitscore_limit is None else bitscore_limit
+		self.e_value_limit = e_value_limit
+		self.bitscore_limit = bitscore_limit
 		self.depth_limit = depth_limit
 		self.max_amount = max_amount
 		self.nodes = {}
