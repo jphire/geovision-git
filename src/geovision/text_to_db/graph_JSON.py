@@ -9,8 +9,12 @@ class QueryToJSON:
 	"""
 	Makes a query according to the parameters and generates graph JSON file
 	from the fetched data.
-	Nodes are kept in a dictionary, edges are added to sets which are linked to
-	nodes.
+	Nodes and edges are kept in a dictionary with node_ids as keys.
+	Dictionary format is:
+	self.nodes[node_id] = [node, set(tuple(edge_to, Blast), tuple(edge_to, Blast), ...)]
+
+	Currently assumes that both Read.read_id and DbEntry.db_id can identify
+	unique row from the table, this approach may cause problems later.
 	"""
 	def __init__(self, ec_number=None, db_entry=None, read=None,
 				e_value_limit=None, bitscore_limit=None, depth_limit=2,
@@ -23,44 +27,90 @@ class QueryToJSON:
 		self.depth_limit = depth_limit
 		self.max_amount = max_amount
 		self.nodes = {}
-		self.startpoint = db_entry if db_entry is not None else read
+		if db_entry is None:
+			if read is None:
+				raise Exception("Either db_entry or read parameter must be supplied")
+			else:
+				self.startpoint = (read, "read")
+		else:
+			self.startpoint = (db_entry, "db_entry")
+		self.startnode = self.get_node(self.startpoint)
 
-	def make_blast_query(self, db_entry_param = self.db_entry, read_param = self.read):
+	def make_blast_queryset(self, param = None):
+		"""
+		Function for making the blast table QuerySet. Takes only one parameter,
+		an instance of DbEntry or Read object. Other query parameters are
+		carried over as class parameters.
+
+		Makes a QuerySet by stacking filters to an initial unfiltered QuerySet
+		object. Returns an unevaluated QuerySet object, thus the actual db query
+		is not made in this function.
+		"""
 		query = Blast.objects.all()
 #		if self.ec_number is not None:
 #			query = query.filter(ec_number = self.ec_number)
-		if db_entry_param is not None:
-			query = query.filter(db_entry = db_entry_param)
-		if read_param is not None:
-			query = query.filter(read = read_param)
+		if param.__class__ is DbEntry:
+			query = query.filter(db_entry = param.db_id)
+		elif param.__class__ is Read:
+			query = query.filter(read = param.read_id)
+		else:
+			return None
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('bitscore', 'error_value')
 		return query[:self.max_amount]
 
-	def build_adjacency_lists(self):
-		query = self.make_blast_query()
-		nodes_this_level = set()
-		for blastitem in query:
-			if blastitem.read not in self.nodes:
-				self.nodes[blastitem.read] = set()
-				nodes_this_level.add(blastitem_read)
-			self.nodes[blastitem.read].add(blastitem.db_entry)
-			if blastitem.db_entry not in self.nodes:
-				self.nodes[blastitem.db_entry] = set()
-				nodes_this_level.add(blastitem.db_entry)
-			self.nodes[blastitem.db_entry].add(blastitem.read)
+	def build_graph(self, startnode, depth):
+		queryset = self.make_blast_queryset(startnode)
+		self.nodes[self.get_node_id(startnode)] = [startnode, set()]
+
+#		for blastitem in nodes_this_level():
+#			if blastitem.read not in self.nodes:
+#				self.nodes[blastitem.read] = set()
+#				nodes_this_level.add(blastitem_read)
+#			self.nodes[blastitem.read].add(blastitem.db_entry)
+#			if blastitem.db_entry not in self.nodes:
+#				self.nodes[blastitem.db_entry] = set()
+#				nodes_this_level.add(blastitem.db_entry)
+#			self.nodes[blastitem.db_entry].add(blastitem.read)
 
 		return 0
 
-	def build_adjacency_list_level(self, depth, maxdepth):
+	def add_edges(self, startnode, queryset):
+		if startnode.__class__ is DbEntry:
+			for edge in queryset:
+				readid = (edge.read, "read")
+				if readid not in self.nodes:
+					self.nodes[readid] = [Read.objects.get(read_id = edge.read), set()]
+				self.nodes[self.get_node_id(startnode)][1].add((readid, edge))
+		elif startnode.__class__ is Read:
+			for edge in queryset:
+				db_id = (edge.db_entry, "db_entry")
+				if db_id not in self.nodes:
+					self.nodes[db_id] = [DbEntry.objects.get(db_id = edge.db_entry), set()]
+				self.nodes[self.get_node_id(startnode)][1].add((db_id, edge))
 
+
+	def build_graph_level(self, depth, maxdepth):
+		queryset = self.make_blast_queryset()
 		return 0
 
-	def make_read_query(self, read):
-		return Read.objects.filter(read_id = read)[:1]
+	def get_node(self, node_id):
+		if node_id[1] is "read":
+			return Read.objects.get(read_id = node_id[0])
+		elif node_id[1] is "db_entry":
+			return DbEntry.objects.get(db_id = node_id[0])
+		else:
+			raise Exception("Invalid node_id parameter, must be tuple (type, id)")
 
-
+	def get_node_id(self, node):
+		if node.__class__ is DbEntry:
+			return (node.db_id, "db_entry")
+		elif node.__class__ is Read:
+			return (node.read_id, "read")
+		else:
+			raise Exception("Invalid node parameter, must be Read or DbEntry")
+			
 #def graph_JSON(query_type, query_value, bitscorelimit, e_value_limit, depthlimit, max_amount):
 #
 #    ec_list = []
