@@ -39,35 +39,35 @@ class  Test_create_JSONTestCase(unittest.TestCase):
         db_entry7= DbEntry.objects.get(db_id="DB7")
 
         Result.objects.create(read="R1", db_entry="DB1", evident_type="l", ec_number="1.1.2.22",
-			error_value=0.005, bitscore=50)
+			error_value=0.005, bitscore=200)
         Result.objects.create(read="R2", db_entry="DB1", evident_type="l", ec_number="1.1.2.22",
-			error_value=0.002, bitscore=30)
+			error_value=0.002, bitscore=300)
         Result.objects.create(read="R3", db_entry="DB2", evident_type="l", ec_number="1.1.2.22",
-			error_value=0.005, bitscore=50)
+			error_value=0.005, bitscore=500)
         Result.objects.create(read="R5", db_entry="DB4", evident_type="l", ec_number="1.1.2.24",
-			error_value=0.002, bitscore=30)
+			error_value=0.002, bitscore=1200)
         Result.objects.create(read="R4", db_entry="DB6", evident_type="l", ec_number="1.1.2.22",
 			error_value=0.002, bitscore=780)
         Result.objects.create(read="R1", db_entry="DB2", evident_type="l", ec_number="1.1.2.22",
-			error_value=0.002, bitscore=70)
-        Result.objects.create(read="R1", db_entry="DB2", evident_type="l", ec_number="1.1.2.24",
+			error_value=0.002, bitscore=1600)
+        Result.objects.create(read="R3", db_entry="DB2", evident_type="l", ec_number="1.1.2.24",
 			error_value=0.004, bitscore=50)
-        Result.objects.create(read="R1", db_entry="DB3", evident_type="l", ec_number="1.1.2.23",
-			error_value=0.002, bitscore=100)
+        Result.objects.create(read="R4", db_entry="DB3", evident_type="l", ec_number="1.1.2.23",
+			error_value=0.002, bitscore=1000)
         Result.objects.create(read="R2", db_entry="DB5", evident_type="l", ec_number="1.1.2.24",
-			error_value=0.001, bitscore=90)
+			error_value=0.001, bitscore=900)
 
 
         Result.objects.create(read="R4", db_entry="DB6", evident_type="l", ec_number="1.1.2.22",
-			error_value=0.002, bitscore=50)
+			error_value=0.002, bitscore=500)
         Result.objects.create(read="R1", db_entry="DB2", evident_type="l", ec_number="1.1.2.22",
-			error_value=0.003, bitscore=70)
-        Result.objects.create(read="R1", db_entry="DB2", evident_type="l", ec_number="1.1.2.24",
-			error_value=0.002, bitscore=33)
+			error_value=0.003, bitscore=700)
+        Result.objects.create(read="R2", db_entry="DB2", evident_type="l", ec_number="1.1.2.24",
+			error_value=0.002, bitscore=330)
         Result.objects.create(read="R1", db_entry="DB3", evident_type="l", ec_number="1.1.2.23",
-			error_value=0.003, bitscore=44)
+			error_value=0.003, bitscore=1300)
         Result.objects.create(read="R1", db_entry="DB4", evident_type="l", ec_number="1.1.2.24",
-			error_value=0.002, bitscore=55)
+			error_value=0.002, bitscore=4000)
 
     #def tearDown(self):
     #    self.foo.dispose()

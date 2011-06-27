@@ -2,6 +2,17 @@ body, html {
     background-color: #E6F2EA;
     height: 100%;
 }
+div#loader{
+    position:absolute;
+    top:0px;
+    left:0px;
+    z-index:100;
+    background-color: #ACC2B3;
+    width:100%;
+    height:60%;
+    text-align: center;
+    padding-top: 20%;
+}
 div.greenbox{
     position:relative;
     background-color:#ACC2B3;
@@ -56,6 +67,8 @@ div.error{
     margin-right:auto;
     text-align: center;
     width: 400px;
+    z-index:20;
+    position:relative;
 }
 
 /*UPPER NAVIGATION*/
@@ -134,4 +147,7 @@ div#close{
     float:right;
     font-size:20px;
     cursor: pointer;
+}
+.submitForm{
+	cursor: pointer;
 }

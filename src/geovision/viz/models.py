@@ -23,7 +23,7 @@ class DbEntry(models.Model):
 class DbUniprotEcs(models.Model):
 	db_id = models.CharField(max_length=32)
 	protein_existence_type = models.CharField(max_length=4)
-	ecs = models.CharField(max_length=128)
+	ec = models.CharField(max_length=12)
 
 class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
 	read = models.CharField(max_length=64)
@@ -47,3 +47,7 @@ class Result(models.Model): # Query_seq_id    Target_seq_id   Evident_type    E.
 	ec_number = models.CharField(max_length = 32)
 	error_value = models.FloatField()
 	bitscore = models.FloatField()
+
+class EnzymeName(models.Model):
+	ec_number = models.CharField(max_length=12)
+	enzyme_name = models.CharField(max_length=128)
