@@ -16,7 +16,7 @@ if __name__ == "__main__":
 	try:
 		parser = geovision.text_to_db.sample_parser.SamplefileParser(sys.argv[1])
 	except IOError:
-		print "Unable to open file", argv[1]
+		print "Unable to open file", sys.argv[1]
 		sys.exit(1);
 	inserter = BulkInserter(Read)
 	read_entry = parser.next_read()
