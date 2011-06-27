@@ -3,11 +3,9 @@ from geovision.userdb.models import Sample
 
 class Read(models.Model):
 	sample = models.CharField(max_length=32)
-	read_id = models.CharField(max_length=64)
+	read_id = models.CharField(max_length=64, primary_key=True)
 	description = models.TextField()
 	data = models.TextField()
-	class Meta:
-		unique_together = ("sample", "read_id")
 
 class DbEntry(models.Model):
 	source_file = models.CharField(max_length=32)
@@ -26,9 +24,9 @@ class DbUniprotEcs(models.Model):
 	ec = models.CharField(max_length=12)
 
 class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
-	read = models.CharField(max_length=64)
+	read = models.ForeignKey(Read)
 	database_name = models.CharField(max_length=16)
-	db_entry = models.CharField(max_length=32)
+	db_entry = models.ForeignKey(DbEntry)
 	pident = models.FloatField()
 	length = models.IntegerField()
 	mismatch = models.IntegerField()

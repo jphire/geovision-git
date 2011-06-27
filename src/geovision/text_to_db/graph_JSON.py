@@ -76,6 +76,7 @@ class QueryToJSON:
 		return 0
 
 	def add_edges(self, startnode, queryset):
+		next_level_nodes = set()
 		if startnode.__class__ is DbEntry:
 			for edge in queryset:
 				readid = (edge.read, "read")
