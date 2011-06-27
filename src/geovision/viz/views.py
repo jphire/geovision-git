@@ -70,16 +70,16 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	#c = Context ({ecnumber:request.POST['ecnumber'], read:request.POST['read'], dbentry:request.POST['dbentry'], bitscore:request.POST['bitscore'], evalue:request.POST['e-value'], depth:request.POST['depth'], hits:request.POST['hits']})
 	return render(request, "graphviz.html", condition_dict)
 
-	@login_required
-	def enzyme_autocompletion(request):
-		try:
-			search = request.GET['term']
-		except KeyError:
-			return HttpResponse('')
-		try:
-			limit = request.GET['limit']
-		except KeyError:
-			limit = 10
+@login_required
+def enzyme_autocompletion(request):
+	try:
+		search = request.GET['term']
+	except KeyError:
+		return HttpResponse('')
+	try:
+		limit = request.GET['limit']
+	except KeyError:
+		limit = 10
 
-		matches = EnzymeName.objects.filter(enzyme_name__startswith=search).order_by('enzyme_name')[:limit]
-		return HttpResponse(json.dump(({'id': en.ec_number, 'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches)))
+	matches = EnzymeName.objects.filter(enzyme_name__startswith=search).order_by('enzyme_name')[:limit]
+	return HttpResponse(json.dumps([{'id': en.ec_number, 'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches]))
