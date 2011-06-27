@@ -12,6 +12,7 @@ from django.contrib.auth import logout
 from django.core.context_processors import csrf
 from django.db.models import Q
 from geovision.viz.models import EnzymeName
+import json
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
@@ -71,7 +72,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	@login_required
 	def enzyme_autocompletion(request):
 		try:
-			search = request.GET['q']
+			search = request.GET['term']
 		except KeyError:
 			return HttpResponse('')
 		try:
@@ -80,4 +81,4 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			limit = 10
 
 		matches = EnzymeName.objects.filter(enzyme_name__startswith=search).order_by('enzyme_name')[:limit]
-		return HttpResponse('\n'.join((en.enzyme_name for en in matches)))
+		return HttpResponse(json.dump(({'id': en.ec_number, 'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches)))
