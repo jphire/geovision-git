@@ -13,6 +13,7 @@ from django.core.context_processors import csrf
 from django.db.models import Q
 from geovision.viz.models import EnzymeName
 import json
+import re
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
@@ -30,6 +31,21 @@ def testgraph(request):
 	return render_to_response("graphviz.html", {'ecnumber':0, 'read':0, 'dbentry':'DB1', 'bitscore':30, 'evalue':0.005, 'depth':1, 'hits':10}, context_instance=RequestContext(request) )
 @login_required
 def graphrefresh(request): #make a new JSon, set defaults if needed
+	def lookup_enzyme(enzyme):
+		match = re.search("\\(([-0-9.]+)\\)", enzyme) # queries of form 'asdasdasd (1.2.3.4)
+		if match:
+			enzyme = match.group(1)
+
+		ec_match = EnzymeName.objects.filter(ec_number=enzyme).exists()
+		if ec_match:
+			return enzyme
+		else:
+			ec_numbers = EnzymeName.objects.filter(enzyme_name__iexact=enzyme)
+			num_results = len(ec_numbers)
+			if num_results == 0: return None
+			elif num_results == 1: return enzyme.ec_number
+			else: return ec_numbers
+
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10, 'ecnumber': '', 'read': '', 'dbentry': ''}
 	for k in condition_dict.keys():
 		try:
@@ -51,15 +67,12 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	if condition_dict['dbentry'] != '':
 		error = create_json(0, 0, condition_dict['dbentry'], bitscore, evalue, depth, hits)
 	elif condition_dict['ecnumber']!='':
-			ec_match = EnzymeName.objects.filter(ec_number=condition_dict['ecnumber']).exists()
-			if ec_match:
-				error = create_json(condition_dict['ecnumber'], 0, 0, bitscore, evalue, depth, hits)
-			else:
-				ec_numbers = EnzymeName.objects.filter(enzyme_name__iexact=condition_dict['ecnumber'])
-				num_results = len(ec_numbers)
-				if num_results == 0: return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
-				elif num_results == 1: error = create_json(ec_numbers[0].ec_number, 0, 0, bitscore, evalue, depth, hits)
-				else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': ec_numbers}))
+		result = lookup_enzyme(condition_dict['ecnumber'])
+		if isinstance(result, str):
+			error = create_json(result, 0, 0, bitscore, evalue, depth, hits)
+		elif result == None:
+			return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
+		else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': ec_numbers}))
 
 	elif condition_dict['read']!='':
 		error = create_json(0, condition_dict['read'], 0, bitscore, evalue, depth, hits)
@@ -82,4 +95,4 @@ def enzyme_autocompletion(request):
 		limit = 10
 
 	matches = EnzymeName.objects.filter(enzyme_name__startswith=search).order_by('enzyme_name')[:limit]
-	return HttpResponse(json.dumps([{'id': en.ec_number, 'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches]))
+	return HttpResponse(json.dumps([{'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches]))

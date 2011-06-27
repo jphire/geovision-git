@@ -8,27 +8,23 @@
 <!-- JSON File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}json_file.js"></script>
 
+
 <link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
+<link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />	
 
 <!-- Example File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
+
+<!-- jQuery-UI, for autocomplete -->
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
+
 {% endblock %}
 
 {% block additional_title %}- graph {% endblock %}
 <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
 {% block sidenavi_content %}
 
-<!--
-<script language="javascript" type="text/javascript">
-$(function() {
-		$( "#ec" ).autocomplete({
-		source: "/autocomplete",
-		}
-	});
-});
-</script>
---!>
-
+<script language="javascript" src="static/autocomplete.js"></script>
 
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <p>Input only one of the three following:</p>
@@ -55,6 +51,15 @@ $(function() {
     <input id="graphrefresh" type="submit" value="Refresh page" size="10"/><br/>
 </form>
 
+<script language="javascript" type="text/javascript">
+$(function()
+{
+		$( "#ec" ).autocomplete(
+		{
+			source: '/autocomplete'
+		});
+});
+</script>
 
 {% endblock %}
 {% block content %}
