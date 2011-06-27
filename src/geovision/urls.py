@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     (r'^testgraph$', 'viz.views.testgraph'),
     (r'^graphrefresh$', 'viz.views.graphrefresh'),
     (r'^about$', 'userdb.views.about'),
+	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
     #(r'^polls/(?P<poll_id>\d+)/vote/$', 'polls.views.vote'),
     
     # Uncomment the admin/doc line below to enable admin documentation:
