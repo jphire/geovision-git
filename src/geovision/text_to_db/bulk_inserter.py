@@ -3,7 +3,7 @@ from subprocess import Popen, PIPE
 from django.db.models import ForeignKey
 
 class BulkInserter():
-	CSV_DELIMITER = '^'
+	CSV_DELIMITER = '$'
 	@classmethod
 	def db_is_postgres(cls):
 		return connection.vendor == 'postgresql'
@@ -34,9 +34,10 @@ class BulkInserter():
 		self.model_class = model_class
 		self.obj_to_csv = eval(self.obj_to_csv_code())
 		self.use_postgres = self.db_is_postgres() and use_postgres_if_possible
+		self.check_counter = 0
 		if self.use_postgres:
 			self.next_id = self.db_get_pk_nextval()
-			self.psql_popen = Popen(self.get_psql_argv(), shell=False, stdin=PIPE, bufsize=65536)
+			self.psql_popen = Popen(self.get_psql_argv(), shell=False, stdin=PIPE, bufsize=2**20)
 			self.check_psql_status()
 		else:
 			self.next_id = 1
@@ -48,8 +49,10 @@ class BulkInserter():
 
 	def write_to_psql(self, line):
 		self.psql_popen.stdin.write(line)
-		self.psql_popen.stdin.write("\n")
-		self.check_psql_status()
+		self.check_counter +=1
+		if self.check_counter >= 50000:
+			self.check_psql_status()
+			self.check_counter = 0
 
 	def get_next_id(self):
 		id = self.next_id
@@ -60,9 +63,7 @@ class BulkInserter():
 		if not self.use_postgres:
 			modelobj.save()
 		else:
-			id = self.get_next_id()
-			self.write_to_psql(self.obj_to_csv(modelobj, id))
-			modelobj.id = id
+			self.write_to_psql(self.obj_to_csv(self, modelobj))
 			
 
 	def field_to_csv_code(self, field):
@@ -86,7 +87,7 @@ class BulkInserter():
 
 	def close(self):
 		if self.use_postgres:
-			self.write_to_psql("\\.")
+			self.write_to_psql("\\.\n")
 			self.db_set_pk_nextval(self.next_id)
 			self.psql_popen.stdin.close()
 			self.check_psql_status(True)

@@ -30,7 +30,6 @@ if gethostname() == 'users' and login_user in ('tkt_gvis', 'tmtynkky'): # Postgr
 		'default': {
 			'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 			'NAME': login_user, # Or path to database file if using sqlite3.
-			'TEST_NAME': login_user, # Or path to database file if using sqlite3.
 			'USER': login_user, # Not used with sqlite3.
 			'PASSWORD': '', # Not used with sqlite3.
 			'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.

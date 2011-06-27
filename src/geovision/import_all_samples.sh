@@ -1,10 +1,13 @@
 #!/bin/sh
-BASE=/home/group/urenzyme/geoviz/
+BASE=/home/group/urenzyme/geoviz
+EXCLUDE=toy
 
 for f in $BASE/samples/data/*.fasta
 do
 #	BASENAME=`basename $f`
 #	NAME=${BASENAME/.fasta/}
-	echo $f
-	time -p ./run.sh run_sample_parser.py $f
+#	echo $f
+	if echo "$f" | grep -v "$EXCLUDE"
+	then time -p ./run.sh run_sample_parser.py $f
+	fi
 done

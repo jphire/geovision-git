@@ -25,8 +25,10 @@ class DbUniprotEcs(models.Model):
 
 class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
 	read = models.ForeignKey(Read)
+#	read = models.CharField(max_length=32)
 	database_name = models.CharField(max_length=16)
 	db_entry = models.ForeignKey(DbEntry)
+#	db_entry = models.CharField(max_length=32)
 	pident = models.FloatField()
 	length = models.IntegerField()
 	mismatch = models.IntegerField()
