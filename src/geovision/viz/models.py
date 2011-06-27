@@ -39,6 +39,8 @@ class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart
 	send = models.IntegerField()
 	error_value = models.FloatField()
 	bitscore = models.FloatField()
+	read_seq = models.TextField()
+	db_seq = models.TextField()
 
 class Result(models.Model): # Query_seq_id    Target_seq_id   Evident_type    E.C._number     p_value Bit_score
 	read = models.CharField(max_length=64)

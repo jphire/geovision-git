@@ -61,4 +61,7 @@ def logging_out(request):
     logout(request)
     return render_to_response("login.html", {'error_message': "You have been logged out.", }, context_instance=RequestContext(request) )
 
+def about(request):
+	return render_to_response("about.html")
+
 #graphviews moved to viz.views

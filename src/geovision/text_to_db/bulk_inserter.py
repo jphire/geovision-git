@@ -24,7 +24,7 @@ class BulkInserter():
 				[value])
 
 	def get_psql_argv(self):
-		return ('psql', '-c',
+		return ('psql', '-h', connection.settings_dict['HOST'], '-p', connection.settings_dict['PORT'], '-c',
 			"COPY %s FROM STDIN DELIMITER '%s';" %
 				(self.model_class._meta.db_table, self.CSV_DELIMITER))
 

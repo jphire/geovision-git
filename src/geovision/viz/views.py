@@ -29,8 +29,8 @@ def testgraph(request):
 	return render_to_response("graphviz.html", {'ecnumber':0, 'read':0, 'dbentry':'DB1', 'bitscore':30, 'evalue':0.005, 'depth':1, 'hits':10}, context_instance=RequestContext(request) )
 @login_required
 def graphrefresh(request): #make a new JSon, set defaults if needed
-	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10 }
-	for k in condition_dict.keys() + ['ecnumber', 'read', 'dbentry']:
+	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10, 'ecnumber': '', 'read': '', 'dbentry': ''}
+	for k in condition_dict.keys():
 		try:
 			if request.POST[k] != '':
 				condition_dict[k] = request.POST[k]
@@ -42,25 +42,26 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	hits = int(condition_dict['hits'])
 
 	error = ''
-	if (request.POST['ecnumber']=='' and request.POST['read']=='' and request.POST['dbentry']!=''):
-		error = create_json(0, 0, request.POST['dbentry'], bitscore, evalue, depth, hits)
-	elif (request.POST['ecnumber']!='' and request.POST['read']=='' and request.POST['dbentry']==''):
-			ec_match = EnzymeName.objects.filter(ec_number=request.POST['ecnumber']).exists()
+	search_fields = filter(lambda k: condition_dict[k] != '', ['ecnumber', 'read', 'dbentry'])
+	if len(search_fields) > 1:
+		return render(request, 'graphviz.html', merge_dict({
+			'error_message': "Error: You can only enter one of the following: Enzyme, DB entry id, Read id.",
+		}, condition_dict))
+	if condition_dict['dbentry'] != '':
+		error = create_json(0, 0, condition_dict['dbentry'], bitscore, evalue, depth, hits)
+	elif condition_dict['ecnumber']!='':
+			ec_match = EnzymeName.objects.filter(ec_number=condition_dict['ecnumber']).exists()
 			if ec_match:
-				error = create_json(request.POST['ecnumber'], 0, 0, bitscore, evalue, depth, hits)
+				error = create_json(condition_dict['ecnumber'], 0, 0, bitscore, evalue, depth, hits)
 			else:
-				ec_numbers = EnzymeName.objects.filter(enzyme_name__iexact=request.POST['ecnumber'])
+				ec_numbers = EnzymeName.objects.filter(enzyme_name__iexact=condition_dict['ecnumber'])
 				num_results = len(ec_numbers)
 				if num_results == 0: return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
 				elif num_results == 1: error = create_json(ec_numbers[0].ec_number, 0, 0, bitscore, evalue, depth, hits)
 				else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': ec_numbers}))
 
-	elif (request.POST['ecnumber']=='' and request.POST['read']!='' and request.POST['dbentry']==''):
-		error = create_json(0, request.POST['read'], 0, bitscore, evalue, depth, hits)
-	else:
-		return render(request, 'graphviz.html', merge_dict({
-			'error_message': "Error: You can only enter one of the following: Enzyme, DB entry id, Read id.",
-		}, condition_dict))
+	elif condition_dict['read']!='':
+		error = create_json(0, condition_dict['read'], 0, bitscore, evalue, depth, hits)
 	if (error == 'error_no_children'):
 		return render(request, 'graphviz.html', merge_dict({
 			'error_message': "Error: No data found, input different values.",
@@ -68,16 +69,16 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	#c = Context ({ecnumber:request.POST['ecnumber'], read:request.POST['read'], dbentry:request.POST['dbentry'], bitscore:request.POST['bitscore'], evalue:request.POST['e-value'], depth:request.POST['depth'], hits:request.POST['hits']})
 	return render(request, "graphviz.html", condition_dict)
 
-	@login_required
-	def enzyme_autocompletion(request):
-		try:
-			search = request.GET['q']
-		except KeyError:
-			return HttpResponse('')
-		try:
-			limit = request.GET['limit']
-		except KeyError:
-			limit = 10
+@login_required
+def enzyme_autocompletion(request):
+	try:
+		search = request.GET['q']
+	except KeyError:
+		return HttpResponse('')
+	try:
+		limit = request.GET['limit']
+	except KeyError:
+		limit = 10
 
-		matches = EnzymeName.objects.filter(enzyme_name__startswith=search).order_by('enzyme_name')[:limit]
-		return HttpResponse('\n'.join((en.enzyme_name for en in matches)))
+	matches = EnzymeName.objects.filter(enzyme_name__startswith=search).order_by('enzyme_name')[:limit]
+	return HttpResponse('\n'.join((en.enzyme_name for en in matches)), mimetype='text/plain')
