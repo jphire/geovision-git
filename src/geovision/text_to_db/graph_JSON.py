@@ -94,16 +94,16 @@ class QueryToJSON:
 		next_level_nodes = set()
 		if startnode.__class__ is DbEntry:
 			for blast in queryset:
-				readnode = blast.read
-				readid = NodeId(readnode.read_id, "read")
+				readid = NodeId(blast.read, "read")
+				readnode = Read.objects.get(read_id = blast.read)
 				if readid not in self.nodes:
 					self.nodes[readid] = (readnode, {})
 					next_level_nodes.add(readnode)
 				self.nodes[self.get_node_id(startnode)][1][readid] = blast
 		elif startnode.__class__ is Read:
 			for blast in queryset:
-				dbnode = blast.db_entry
-				db_id = (dbnode.db_id, "db_entry")
+				db_id = NodeId(blast.db_entry, "db_entry")
+				dbnode = Blast.objects.get(db_id = blast.db_entry)
 				if db_id not in self.nodes:
 					self.nodes[db_id] = (dbnode, {})
 					next_level_nodes.add(dbnode)
