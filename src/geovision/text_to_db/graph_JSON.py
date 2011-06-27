@@ -35,6 +35,18 @@ class QueryToJSON:
 			self.startpoint = (db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
 
+	def build_graph(self, startnode, maxdepth):
+		self.nodes[self.get_node_id(startnode)] = [startnode, {}]
+		self.build_graph_level([startnode], 1, maxdepth)
+
+
+	def build_graph_level(self, nodes, depth, maxdepth):
+		if depth <= maxdepth:
+			for node in nodes:
+				queryset = self.make_blast_queryset(node)
+				next_level_nodes = self.add_edges(node, queryset)
+				self.build_graph_level(next_level_nodes, depth + 1, maxdepth)
+
 	def make_blast_queryset(self, param = None):
 		"""
 		Function for making the blast table QuerySet. Takes only one parameter,
@@ -59,41 +71,34 @@ class QueryToJSON:
 		query = query.order_by('bitscore', 'error_value')
 		return query[:self.max_amount]
 
-	def build_graph(self, startnode, depth):
-		queryset = self.make_blast_queryset(startnode)
-		self.nodes[self.get_node_id(startnode)] = [startnode, set()]
-
-#		for blastitem in nodes_this_level():
-#			if blastitem.read not in self.nodes:
-#				self.nodes[blastitem.read] = set()
-#				nodes_this_level.add(blastitem_read)
-#			self.nodes[blastitem.read].add(blastitem.db_entry)
-#			if blastitem.db_entry not in self.nodes:
-#				self.nodes[blastitem.db_entry] = set()
-#				nodes_this_level.add(blastitem.db_entry)
-#			self.nodes[blastitem.db_entry].add(blastitem.read)
-
-		return 0
-
 	def add_edges(self, startnode, queryset):
+		"""
+		Adds (read/db id, Blast object) tuples to the set in index 1 in
+		dict entry self.nodes[startnode id].
+		
+		Returns set of next level nodes (Read or DbEntry objects) that have not
+		been visited.
+		"""
 		next_level_nodes = set()
 		if startnode.__class__ is DbEntry:
-			for edge in queryset:
-				readid = (edge.read, "read")
+			for blast in queryset:
+				readnode = blast.read
+				readid = (readnode.read_id, "read")
 				if readid not in self.nodes:
-					self.nodes[readid] = [Read.objects.get(read_id = edge.read), set()]
-				self.nodes[self.get_node_id(startnode)][1].add((readid, edge))
+					self.nodes[readid] = [readnode, {}]
+					next_level_nodes.add(readnode)
+				self.nodes[self.get_node_id(startnode)][1][readid] = blast
 		elif startnode.__class__ is Read:
-			for edge in queryset:
-				db_id = (edge.db_entry, "db_entry")
+			for blast in queryset:
+				dbnode = blast.db_entry
+				db_id = (dbnode.db_id, "db_entry")
 				if db_id not in self.nodes:
-					self.nodes[db_id] = [DbEntry.objects.get(db_id = edge.db_entry), set()]
-				self.nodes[self.get_node_id(startnode)][1].add((db_id, edge))
-
-
-	def build_graph_level(self, depth, maxdepth):
-		queryset = self.make_blast_queryset()
-		return 0
+					self.nodes[db_id] = [dbnode, set()]
+					next_level_nodes.add(dbnode)
+				self.nodes[self.get_node_id(startnode)][1][db_id] = blast
+		else:
+			raise Exception("startnode class must be DbEntry or Read")
+		return next_level_nodes
 
 	def get_node(self, node_id):
 		if node_id[1] is "read":
