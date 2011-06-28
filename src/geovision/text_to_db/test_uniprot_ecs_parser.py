@@ -6,10 +6,8 @@ __date__ ="$Jun 16, 2011 5:45:47 PM$"
 
 import unittest
 import uniprot_ecs_parser
-from geovision.settings import PROJECT_PATH
+from geovision.settings import TEST_FILE_PATH
 from os import path
-
-TEST_FILE_PATH = PROJECT_PATH + '/text_to_db/testfiles/'
 
 class Test_Uniprot_Ecs_parser(unittest.TestCase):
 	def test_ecs_parse_first(self):

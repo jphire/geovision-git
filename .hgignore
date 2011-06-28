@@ -7,3 +7,4 @@
 \.fasta$
 \.sqlite$
 json_file.js$
+hotshot.prof$

@@ -44,4 +44,4 @@ class RegistrationTests(TestCase):
     def test_logging_in_succesfully(self):
 	self.test_registering_succesful()
         r = self.client.post('/logging_in', {'username': 'def', 'csrfmiddlewaretoken': '380af29ce1b6e7b00f6a0aa750e48dc8', 'password': 'def', })
-	self.assertNotContains(r, 'The username or password was incorrect')
+	self.assertNotContains(r, 'The username or password was incorrect', status_code=302)

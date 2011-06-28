@@ -1,13 +1,7 @@
 #coding: UTF-8
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
-__author__ = "lassetyr"
-__date__ = "$23.5.2011 15:12:48$"
 
 import os
 import string
-os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 
 from geovision.viz.models import Read as ReadModel
 

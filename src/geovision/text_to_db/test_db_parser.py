@@ -1,13 +1,8 @@
 #coding: UTF-8
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
 import unittest
 import db_parser
 
-from geovision.settings import PROJECT_PATH
-
-TEST_FILE_PATH = PROJECT_PATH + '/text_to_db/testfiles/'
+from geovision.settings import TEST_FILE_PATH
 
 class Test_Db_parserTestCase(unittest.TestCase):
 	def test_db_parse_first_uniprot(self):

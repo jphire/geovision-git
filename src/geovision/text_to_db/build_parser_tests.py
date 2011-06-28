@@ -30,7 +30,7 @@ class BuildParserTestsTestCase(TestCase):
 #	@raises(Read.DoesNotExist)
 #	def testNonexistentRead(self):
 #		parseBuilds('SMPL', 'FOODB', StringIO("""ASDSDSDSADSADASADSDA\tDB002\tH\t4.-.-.-\t0.049\t36.6\n"""))
-
+#
 #	@raises(DbEntry.DoesNotExist)
 #	def testNonexistentDbEntry(self):
 #		parseBuilds('SMPL', 'FOODB', StringIO("""R001\tDB_ASDSADSADSA\tH\t4.-.-.-\t0.049\t36.6\n"""))

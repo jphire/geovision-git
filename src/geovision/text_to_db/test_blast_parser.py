@@ -6,19 +6,19 @@ from decimal import *
 from nose.tools import raises
 from geovision.text_to_db.blast_parser import create_blast
 from geovision.viz.models import Result, Read, DbEntry, Blast
+from geovision.settings import TEST_FILE_PATH
 
 class Test_blast_parserTestCase(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
 
-        file = open("test_blast.txt")
+        file = open(TEST_FILE_PATH + "test_blast.txt")
         #in case objects left from other tests..
         DbEntry.objects.all().delete()
         Read.objects.all().delete()
         
         cls.read = Read.objects.create(sample="ABLU", read_id="gi|185682811|gb|ABLU01132423.1|", description="baz", data='ASD')
-
         cls.strings = []
         #creating db_entrys for all lines in test file
         for line in file:
@@ -27,15 +27,15 @@ class Test_blast_parserTestCase(unittest.TestCase):
             DbEntry.objects.create(source_file="uniprot", db_id=cls.str[1].split('|')[1], description="quux", data='ASD')
 
         cls.dbe = DbEntry.objects.all()
-        create_blast(cls.dbe[0].source_file, cls.read.sample, "test_blast.txt")
+        create_blast(cls.dbe[0].source_file, cls.read.sample, TEST_FILE_PATH + "test_blast.txt")
 
     def test_parse_blast(self):
 #        print self.strings[1]
 	results = Blast.objects.all()
 	for i in range(len(results)):
-		self.assertEqual(results[i].read, self.read.read_id)
+		self.assertEqual(results[i].read, self.read)
 		self.assertEqual(results[i].database_name, self.dbe[i].source_file)
-		self.assertEqual(results[i].db_entry, self.dbe[i].db_id)
+		self.assertEqual(results[i].db_entry, self.dbe[i])
 		self.assertEqual(results[i].pident, float(self.strings[i][2]))
 		self.assertEqual(results[i].length, Decimal(self.strings[i][3]))
 		self.assertEqual(results[i].mismatch, Decimal(self.strings[i][4]))

@@ -1,9 +1,8 @@
 #coding: UTF-8
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
 
 import unittest
 import sample_parser
+from geovision.settings import TEST_FILE_PATH
 
 class Test_sample_parserTestCase(unittest.TestCase):
 	#def setUp(self):
@@ -15,14 +14,14 @@ class Test_sample_parserTestCase(unittest.TestCase):
     #    self.foo = None
 
 	def test_sample_parse_first(self):
-		parser = sample_parser.SamplefileParser("test.txt")
+		parser = sample_parser.SamplefileParser(TEST_FILE_PATH + "sample_test.txt")
 		read = parser.next_read()
 		self.assertEqual(read.read_id, 'ensimmainen')
 		self.assertEqual(read.description, 'seliseli')
 		self.assertEqual(read.data, 'ASDFASEGAASGEASGASG')
 
 	def test_sample_parse_last(self):
-		parser = sample_parser.SamplefileParser("test.txt")
+		parser = sample_parser.SamplefileParser(TEST_FILE_PATH + "sample_test.txt")
 		parser.next_read()
 		read = parser.next_read()
 		self.assertEqual(read.read_id, 'toinen')
@@ -30,7 +29,7 @@ class Test_sample_parserTestCase(unittest.TestCase):
 		self.assertEqual(read.data, 'ASGEAGSGASEGAG')
 
 	def test_sample_parse_past_the_end(self):
-		parser = sample_parser.SamplefileParser("test.txt")
+		parser = sample_parser.SamplefileParser(TEST_FILE_PATH + "sample_test.txt")
 		parser.next_read()
 		parser.next_read()
 		read = parser.next_read()

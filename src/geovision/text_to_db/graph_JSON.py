@@ -1,8 +1,7 @@
 import json
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 from geovision.viz.models import *
-from geovision.settings import PROJECTROOT
+from geovision.settings import PROJECT_PATH
 
 class NodeId:
 	def __init__(self, id, type):
@@ -141,7 +140,7 @@ class QueryToJSON:
 #    read_query = False
 #    enzyme_query = False
 #    db_query = False
-#    json_file = open(PROJECTROOT + "/static/json_test_file.js", 'w')
+#    json_file = open(PROJECT_PATH + "/static/json_test_file.js", 'w')
 #
 #    json_file.write("var json_data = ")
 #

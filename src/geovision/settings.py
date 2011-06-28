@@ -4,7 +4,9 @@ import os
 import sys
 from socket import gethostname
 
-PROJECTROOT = os.path.dirname(__file__)
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+TEST_FILE_PATH = PROJECT_PATH + '/text_to_db/testfiles/'
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -40,7 +42,7 @@ else: # Use a local SQLite database if not on users
 	DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-		'NAME': PROJECTROOT + '/testdb.sqlite', # Or path to database file if using sqlite3.
+		'NAME': PROJECT_PATH + '/testdb.sqlite', # Or path to database file if using sqlite3.
 		'USER': '', # Not used with sqlite3.
 		'PASSWORD': '', # Not used with sqlite3.
 		'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
@@ -95,8 +97,6 @@ STATIC_URL = '/static/'
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
-
-PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # Additional locations of static files
 STATICFILES_DIRS = (
