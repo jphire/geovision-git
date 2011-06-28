@@ -71,10 +71,10 @@ class QueryToJSON:
 		query = Blast.objects.all()
 #		if self.ec_number is not None:
 #			query = query.filter(ec_number = self.ec_number)
-		if self.db_entry is not None:
-			query = query.filter(db_entry = self.db_entry)
-		elif self.read is not None:
-			query = query.filter(read = self.read)
+		if param.__class__ is DbEntry:
+			query = query.filter(db_entry = param.db_id)
+		elif param.__class__ is Read:
+			query = query.filter(read = param.read_id)
 		else:
 			return None
 		query = query.filter(error_value__lte = self.e_value_limit)
@@ -94,16 +94,16 @@ class QueryToJSON:
 		next_level_nodes = set()
 		if startnode.__class__ is DbEntry:
 			for blast in queryset:
-				readid = NodeId(blast.read, "read")
-				readnode = Read.objects.get(read_id = blast.read)
+				readnode = blast.read
+				readid = self.get_node_id(readnode)
 				if readid not in self.nodes:
 					self.nodes[readid] = (readnode, {})
 					next_level_nodes.add(readnode)
 				self.nodes[self.get_node_id(startnode)][1][readid] = blast
 		elif startnode.__class__ is Read:
 			for blast in queryset:
-				db_id = NodeId(blast.db_entry, "db_entry")
-				dbnode = DbEntry.objects.get(db_id = blast.db_entry)
+				dbnode = blast.db_entry
+				db_id = self.get_node_id(dbnode)
 				if db_id not in self.nodes:
 					self.nodes[db_id] = (dbnode, {})
 					next_level_nodes.add(dbnode)
