@@ -77,6 +77,9 @@ class DbfileParser:
 			if len(self.nextline) is 0:
 				break
 
-		return DbEntry(source_file = self.source, db_id = self.id,
-				description = self.description, sub_db = self.sub_db, entry_name = self.entry_name,
-				os_field = self.os_field, other_info = self.other_info, data = self.dnadata)
+#		return DbEntry(source_file = self.source, db_id = self.id,
+#				description = self.description, sub_db = self.sub_db, entry_name = self.entry_name,
+#				os_field = self.os_field, other_info = self.other_info, data = self.dnadata)
+		return {'source_file': self.source, 'db_id': self.id,
+				'description': self.description, 'sub_db': self.sub_db, 'entry_name': self.entry_name,
+				'os_field': self.os_field, 'other_info': self.other_info, 'data': self.dnadata}
