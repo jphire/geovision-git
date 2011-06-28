@@ -103,7 +103,7 @@ class QueryToJSON:
 		elif startnode.__class__ is Read:
 			for blast in queryset:
 				db_id = NodeId(blast.db_entry, "db_entry")
-				dbnode = Blast.objects.get(db_id = blast.db_entry)
+				dbnode = DbEntry.objects.get(db_id = blast.db_entry)
 				if db_id not in self.nodes:
 					self.nodes[db_id] = (dbnode, {})
 					next_level_nodes.add(dbnode)
