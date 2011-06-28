@@ -18,7 +18,7 @@ if __name__ == "__main__":
 	except IOError:
 		print "Unable to open file", sys.argv[1]
 		sys.exit(1);
-	inserter = BulkInserter(Read)
+	inserter = BulkInserter(Read, use_dict=True)
 	read_entry = parser.next_read()
 	while read_entry is not None:
 		inserter.save(read_entry)
