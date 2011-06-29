@@ -1,6 +1,3 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
 import unittest
 from geovision.text_to_db.create_JSON import *
 from geovision.viz.models import Result, Read, DbEntry, Blast

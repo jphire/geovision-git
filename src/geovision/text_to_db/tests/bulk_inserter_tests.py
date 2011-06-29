@@ -33,6 +33,3 @@ class BulkInserterTests(unittest.TestCase):
 		eq_(tests[1].int_field, self.obj2.int_field)
 		eq_(tests[1].char_field, self.obj2.char_field)
 		eq_(tests[1].fk_field, self.obj2.fk_field)
-
-if __name__ == '__main__':
-    unittest.main()

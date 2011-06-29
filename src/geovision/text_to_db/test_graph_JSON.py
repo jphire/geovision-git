@@ -1,6 +1,3 @@
-#To change this template, choose Tools | Templates
-# and open the template in the editor.
-
 import unittest
 from geovision.text_to_db.graph_JSON import *
 import json

@@ -6,13 +6,6 @@ from geovision.settings import TEST_FILE_PATH
 from viz.models import Read
 
 class SampleParserTests(unittest.TestCase):
-	#def setUp(self):
-    #    self.foo = Test_sample_parser()
-    #
-
-    #def tearDown(self):
-    #    self.foo.dispose()
-    #    self.foo = None
 
 	def test_sample_parse_first(self):
 		parser = sample_parser.SamplefileParser(TEST_FILE_PATH + "sample_test.txt")
