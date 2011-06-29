@@ -32,7 +32,7 @@ def testgraph(request):
 @login_required
 def graphrefresh(request): #make a new JSon, set defaults if needed
 	def lookup_enzyme(enzyme):
-		match = re.search("\\(([-0-9.]+)\\)", enzyme) # queries of form 'asdasdasd (1.2.3.4)
+		match = re.search("\\(([-0-9.]+)\\)", enzyme) # XXX: queries of form 'asdasdasd (1.2.3.4) return 1.2.3.4 with all values of asdasdasd
 		if match:
 			enzyme = match.group(1)
 
@@ -68,11 +68,11 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		error = create_json(0, 0, condition_dict['dbentry'], bitscore, evalue, depth, hits)
 	elif condition_dict['ecnumber']!='':
 		result = lookup_enzyme(condition_dict['ecnumber'])
-		if isinstance(result, str):
+		if isinstance(result, basestring):
 			error = create_json(result, 0, 0, bitscore, evalue, depth, hits)
 		elif result == None:
 			return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
-		else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': ec_numbers}))
+		else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': result}))
 
 	elif condition_dict['read']!='':
 		error = create_json(0, condition_dict['read'], 0, bitscore, evalue, depth, hits)
@@ -94,5 +94,5 @@ def enzyme_autocompletion(request):
 	except KeyError:
 		limit = 10
 
-	matches = EnzymeName.objects.filter(enzyme_name__startswith=search).order_by('enzyme_name')[:limit]
-	return HttpResponse(json.dumps([{'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches]))
+	matches = EnzymeName.objects.filter(enzyme_name__istartswith=search).order_by('enzyme_name')[:limit]
+	return HttpResponse(json.dumps([{'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches]), mimetype='text/plain')

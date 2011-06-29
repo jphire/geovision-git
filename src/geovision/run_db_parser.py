@@ -15,7 +15,7 @@ if __name__ == "__main__":
 	except IOError:
 		print("Unable to open file", sys.argv[1])
 		sys.exit(1);
-	inserter = BulkInserter(DbEntry, use_dict=True)
+	inserter = BulkInserter(DbEntry)
 	db_entry = parser.next_db_entry()
 	while db_entry is not None:
 		inserter.save(db_entry)

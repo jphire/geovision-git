@@ -41,6 +41,7 @@ if __name__ == '__main__':
 			for name in entry['NAME']:
 				inserter.save(EnzymeName(ec_number=ecnum, enzyme_name=name))
 		except KeyError:
-			print('Warning, no names for EC %s' % (ecnum,))
+#			print('Warning, no names for EC %s' % (ecnum,))
+			pass
 
 	inserter.close()

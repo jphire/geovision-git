@@ -24,7 +24,8 @@ DATABASES = None
 LOGIN_URL = '/login'
 
 login_user = os.environ['USER']
-if gethostname() == 'users' and login_user in ('tkt_gvis', 'tmtynkky'): # Postgres settings if running on users.cs, the user/database tmtynkky is used for tests
+RUNNING_ON_USERS = (gethostname() == 'users' and login_user in ('tkt_gvis', 'tmtynkky'))
+if RUNNING_ON_USERS: # Postgres settings if running on users.cs, the user/database tmtynkky is used for tests
 #	pwfile = open(os.environ['HOME'] + '/.psql_password') # Read the password from the file created by wanna-postgres
 #	pw = pwfile.readline().strip()
 #	pwfile.close()
@@ -34,7 +35,7 @@ if gethostname() == 'users' and login_user in ('tkt_gvis', 'tmtynkky'): # Postgr
 			'NAME': login_user, # Or path to database file if using sqlite3.
 			'USER': login_user, # Not used with sqlite3.
 			'PASSWORD': '', # Not used with sqlite3.
-			'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
+			'HOST': os.environ['HOME'] + '/pg_data/', # Set to empty string for localhost. Not used with sqlite3.
 			'PORT': '58786'                      # Set to empty string for default. Not used with sqlite3.
 		}
 	}
@@ -132,7 +133,7 @@ MIDDLEWARE_CLASSES = (
 					  'django.middleware.csrf.CsrfViewMiddleware',
 					  'django.contrib.auth.middleware.AuthenticationMiddleware',
 					  'django.contrib.messages.middleware.MessageMiddleware',
-					  #'debug_toolbar.middleware.DebugToolbarMiddleware',
+					  'debug_toolbar.middleware.DebugToolbarMiddleware',
 					  )
 INTERNAL_IPS = ('127.0.0.1',)
 ROOT_URLCONF = 'geovision.urls'
@@ -163,9 +164,9 @@ INSTALLED_APPS = (
 
 				  # Uncomment this to enable Testmaker (http://ericholscher.com/blog/2008/jul/26/testmaker-002-even-easier-automated-testing-django/)
 				  # 'test_utils',
-				  # Uncomment this to enable debug toolbar
-				    #'debug_toolbar'
 				  )
+if RUNNING_ON_USERS:
+	INSTALLED_APPS += ('debug_toolbar',)
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
