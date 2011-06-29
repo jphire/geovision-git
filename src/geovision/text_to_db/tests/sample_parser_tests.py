@@ -41,7 +41,9 @@ class SampleParserTests(unittest.TestCase):
 		Read.objects.all().delete()
 		run_sample_parser.run(["argv0", TEST_FILE_PATH + "sample_test.txt"])
 
-		read = Read.objects.all()[0]
+		reads = Read.objects.all()
+		self.assertEqual(len(reads), 2)
+		read = reads[0]
 		self.assertEqual(read.read_id, 'ensimmainen')
 		self.assertEqual(read.description, 'seliseli')
 		self.assertEqual(read.data, 'ASDFASEGAASGEASGASG')

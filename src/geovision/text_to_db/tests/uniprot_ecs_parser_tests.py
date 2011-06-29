@@ -1,6 +1,7 @@
 import unittest
 import text_to_db.uniprot_ecs_parser as uniprot_ecs_parser
 from geovision.settings import TEST_FILE_PATH
+from viz.models import DbUniprotEcs as EcsEntry
 
 
 class UniprotEcsParserTests(unittest.TestCase):
@@ -33,3 +34,11 @@ class UniprotEcsParserTests(unittest.TestCase):
 		parser.next_ecs_entry()
 		entry = parser.next_ecs_entry()
 		self.assertEqual(entry, None)
+
+	def test_run_ecs_parser(self):
+		EcsEntry.objects.all().delete()
+		uniprot_ecs_parser.run(["argv0", TEST_FILE_PATH + "test_uniprot.ecs"])
+		entry = EcsEntry.objects.all()[0]
+		self.assertEqual(entry.db_id, 'Q91G55')
+		self.assertEqual(entry.protein_existence_type, 'P')
+		self.assertEqual(entry.ec, '?')
