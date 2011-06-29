@@ -4,6 +4,10 @@ from geovision.viz.models import *
 from geovision.settings import PROJECT_PATH
 
 class NodeId:
+	"""
+	NodeId class used as a node_id keys in node dictionary. It is simply
+	a container for type information.
+	"""
 	def __init__(self, id, type):
 		self.id = id
 		self.type = type
@@ -13,6 +17,9 @@ class NodeId:
 
 	def __hash__(self):
 		return self.id.__hash__()
+
+	def __eq__(self, other):
+		return (self.id == other.id) and (self.type == other.type)
 	
 class QueryToJSON:
 	"""
@@ -41,6 +48,8 @@ class QueryToJSON:
 			else:
 				self.startpoint = NodeId(read, "read")
 		else:
+			if read is not None:
+				raise Exception("Cannot filter with both read and db_entry")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
 		self.build_graph(self.startnode, self.depth_limit)
