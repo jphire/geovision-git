@@ -5,7 +5,6 @@ from django.db.models import ForeignKey
 def dict_from_kwargs(**kwargs):
 	return kwargs
 
-
 class BulkInserter():
 	CSV_DELIMITER = '$'
 	@classmethod
@@ -13,13 +12,18 @@ class BulkInserter():
 		return connection.vendor == 'postgresql'
 
 	def db_get_pk_nextval(self):
+		idfields = filter(lambda f: f.name == 'id', self.model_class._meta.fields)
+		if len(idfields) == 0:
+			self.has_seq = False
+			return 0
 		try:
 			cursor = connection.cursor()
 			cursor.execute("SELECT nextval('%s_id_seq');" % self.model_class._meta.db_table)
 			return cursor.fetchone()[0]
 		except Exception:
-			self.has_seq = False
-			return 0
+			raise RuntimeError("should not happen, check your models!")
+#			self.has_seq = False
+#			return 0
 
 	def db_set_pk_nextval(self, value):
 		if self.has_seq:
