@@ -49,11 +49,11 @@ class BlastParserTests(unittest.TestCase):
 
 	@raises(Read.DoesNotExist)
 	def testNonexistentRead(self):
-		create_blast('SMPL', 'FOODB', "test_blast.txt")
+		create_blast('SMPL', 'FOODB', TEST_FILE_PATH + "test_blast.txt")
 
 	@raises(DbEntry.DoesNotExist)
 	def testNonexistentDbEntry(self):
-		create_blast('SMPL', 'FOODB', "test_blast.txt")
+		create_blast('SMPL', 'FOODB', TEST_FILE_PATH + "test_blast.txt")
 
 if __name__ == '__main__':
 	unittest.main()
