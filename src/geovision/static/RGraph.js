@@ -2158,8 +2158,9 @@ Extras.Classes.Tips = new Class({
     this.hide(false);
   },
   
-  onMouseOver: function(e, win) {
+  onMouseOver: function(e, win, event) {
     //mouseover a label
+	var evt = $.event.get(e, win);
     var label;
     if(this.dom && (label = this.isLabel(e, win, false))) {
       this.node = this.viz.graph.getNode(label.id);
@@ -2173,7 +2174,8 @@ Extras.Classes.Tips = new Class({
     }
     if(!this.dom) {
       var node = opt.getNode();
-      if(!node) {
+      var edge = opt.getEdge();
+	  if(!node && !edge) {
         this.hide(true);
         return;
       }
@@ -2181,6 +2183,11 @@ Extras.Classes.Tips = new Class({
         this.node = node;
         this.config.onShow(this.tip, node, opt.getContains());
       }
+	  if(edge && !node){
+		//this.node = edge; ??
+		this.config.onShow(this.tip, edge, opt.getContains());
+	  }
+
       this.setTooltipPosition($.event.getPos(e, win));
     }
   },
