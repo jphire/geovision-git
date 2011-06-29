@@ -45,10 +45,10 @@ class Test_graph_JSONTestCase(unittest.TestCase):
 		a = NodeId("12345", "test")
 		b = NodeId("12345", "test")
 		c = NodeId("asdf", "test")
-		assertEquals(a.id, "12345")
-		assertEquals(b.type, "test")
-		assertEquals(a, b)
-		assertNotEqual(a, c)
+		self.assertEqual(a.id, "12345")
+		self.assertEqual(b.type, "test")
+		self.assertEqual(a, b)
+		self.assertNotEqual(a, c)
 
 	def test_query_to_json_init_1(self):
 		q = QueryToJSON(db_entry="DB1", )
