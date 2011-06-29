@@ -51,8 +51,14 @@ class Test_graph_JSONTestCase(unittest.TestCase):
 		self.assertNotEqual(a, c)
 
 	def test_query_to_json_init_1(self):
-		q = QueryToJSON(db_entry="DB1", )
-
+		self.assertRaises(Exception, QueryToJSON, db_entry="DB1", read="R1")
+		q = QueryToJSON(db_entry = "DB2")
+		self.assertEquals(q.startnode, DbEntry.objects.get(db_id = "DB2"))
+		self.assertEquals(q.startpoint, NodeId("DB2", "db_entry"))
+		self.assertEquals(q.e_value_limit, 1)
+		self.assertEquals(q.bitscore_limit, 0)
+		self.assertEquals(q.depth_limit, 2)
+		self.assertEquals(q.max_amount, 5)
 
 if __name__ == '__main__':
     unittest.main()
