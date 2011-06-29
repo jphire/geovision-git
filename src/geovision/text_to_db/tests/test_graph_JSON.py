@@ -45,14 +45,34 @@ class Test_graph_JSONTestCase(unittest.TestCase):
 		a = NodeId("12345", "test")
 		b = NodeId("12345", "test")
 		c = NodeId("asdf", "test")
-		assertEquals(a.id, "12345")
-		assertEquals(b.type, "test")
-		assertEquals(a, b)
-		assertNotEqual(a, c)
+		self.assertEqual(a.id, "12345")
+		self.assertEqual(b.type, "test")
+		self.assertEqual(a, b)
+		self.assertNotEqual(a, c)
 
 	def test_query_to_json_init_1(self):
-		q = QueryToJSON(db_entry="DB1", )
+		self.assertRaises(Exception, QueryToJSON, db_entry="DB1", read="R1")
 
+	def test_query_to_json_init_2(self):
+		q = QueryToJSON(db_entry = "DB2")
+		self.assertEquals(q.startnode, DbEntry.objects.get(db_id = "DB2"))
+		self.assertEquals(q.startpoint, NodeId("DB2", "db_entry"))
+		self.assertEquals(q.e_value_limit, 1)
+		self.assertEquals(q.bitscore_limit, 0)
+		self.assertEquals(q.depth_limit, 2)
+		self.assertEquals(q.max_amount, 5)
+
+	def test_query_to_json_init_3(self):
+		q = QueryToJSON(read = "R1", e_value_limit=0.002, bitscore_limit=300)
+		self.assertEquals(q.startnode, Read.objects.get(read_id = "R1"))
+		self.assertEquals(q.startpoint, NodeId("R1", "read"))
+		self.assertEquals(q.e_value_limit, 0.002)
+		self.assertEquals(q.bitscore_limit, 300)
+		self.assertEquals(q.depth_limit, 2)
+		self.assertEquals(q.max_amount, 5)
+
+	def test_query_to_json_graphbuild_1(self):
+		q = QueryToJSON(db_entry = "DB1")
 
 if __name__ == '__main__':
     unittest.main()
