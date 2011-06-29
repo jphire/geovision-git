@@ -1,10 +1,10 @@
 #coding: UTF-8
 import unittest
-import db_parser
+import text_to_db.db_parser as db_parser
 
 from geovision.settings import TEST_FILE_PATH
 
-class Test_Db_parserTestCase(unittest.TestCase):
+class DbParserTests(unittest.TestCase):
 	def test_db_parse_first_uniprot(self):
 		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_uniprot.fasta")
 		entry = parser.next_db_entry()
@@ -120,7 +120,7 @@ ATTGCAGACACATTGAGCACTAAAAATTCGAACGTACATTGCGCCATCGGGTTCATTCCCGTTGGCACGTCTGGCTGAGG
 
 	def test_db_parse_past_the_end_frnadb(self):
 		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_frnadb.fasta")
-		for i in xrange(0,3):
+		for _ in xrange(0,3):
 			parser.next_db_entry()
 		entry = parser.next_db_entry()
 		self.assertEqual(entry, None)

@@ -1,7 +1,7 @@
 import unittest
-import uniprot_ecs_parser
+import text_to_db.uniprot_ecs_parser as uniprot_ecs_parser
 from geovision.settings import TEST_FILE_PATH
-from os import path
+
 
 class UniprotEcsParserTests(unittest.TestCase):
 	def test_ecs_parse_first(self):

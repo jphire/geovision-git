@@ -1,7 +1,7 @@
 #coding: UTF-8
 
 import unittest
-import sample_parser
+import text_to_db.sample_parser as sample_parser
 from geovision.settings import TEST_FILE_PATH
 
 class SampleParserTests(unittest.TestCase):
