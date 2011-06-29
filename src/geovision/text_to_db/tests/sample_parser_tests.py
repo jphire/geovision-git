@@ -4,7 +4,7 @@ import unittest
 import sample_parser
 from geovision.settings import TEST_FILE_PATH
 
-class Test_sample_parserTestCase(unittest.TestCase):
+class SampleParserTests(unittest.TestCase):
 	#def setUp(self):
     #    self.foo = Test_sample_parser()
     #
