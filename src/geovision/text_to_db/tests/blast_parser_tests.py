@@ -47,13 +47,13 @@ class BlastParserTests(unittest.TestCase):
 			self.assertEqual(results[i].bitscore, float(self.strings[i][11]))
 
 
-	@raises(Read.DoesNotExist)
-	def testNonexistentRead(self):
-		create_blast('SMPL', 'FOODB', TEST_FILE_PATH + "test_blast.txt")
+#	@raises(Read.DoesNotExist)
+#	def testNonexistentRead(self):
+#		create_blast('SMPL', 'FOODB', TEST_FILE_PATH + "test_blast.txt")
 
-	@raises(DbEntry.DoesNotExist)
-	def testNonexistentDbEntry(self):
-		create_blast('SMPL', 'FOODB', TEST_FILE_PATH + "test_blast.txt")
+#	@raises(DbEntry.DoesNotExist)
+#	def testNonexistentDbEntry(self):
+#		create_blast('SMPL', 'FOODB', TEST_FILE_PATH + "test_blast.txt")
 
 if __name__ == '__main__':
 	unittest.main()
