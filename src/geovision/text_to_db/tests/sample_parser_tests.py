@@ -3,6 +3,7 @@
 import unittest
 import text_to_db.sample_parser as sample_parser
 from geovision.settings import TEST_FILE_PATH
+from viz.models import Read
 
 class SampleParserTests(unittest.TestCase):
 	#def setUp(self):
@@ -35,6 +36,12 @@ class SampleParserTests(unittest.TestCase):
 		read = parser.next_read()
 		self.assertEqual(read, None)
 
-if __name__ == '__main__':
-	unittest.main()
+	def test_run_sample_parser(self):
+		import run_sample_parser
+		Read.objects.all().delete()
+		run_sample_parser.run(["argv0", TEST_FILE_PATH + "sample_test.txt"])
 
+		read = Read.objects.all()[0]
+		self.assertEqual(read.read_id, 'ensimmainen')
+		self.assertEqual(read.description, 'seliseli')
+		self.assertEqual(read.data, 'ASDFASEGAASGEASGASG')
