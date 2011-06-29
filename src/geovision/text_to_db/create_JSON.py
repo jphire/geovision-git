@@ -1,7 +1,6 @@
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 from geovision.viz.models import Blast, Read, DbEntry, Result
-from geovision.settings import PROJECTROOT
+from geovision.settings import PROJECT_PATH
 
 # result is a string that contains the data that is to be written to json_file
 result = ""
@@ -70,7 +69,7 @@ def create_json(ecnumber, read_id, db_entry_id, bitscorelimit, e_value_limit, de
     read_query = False
     enzyme_query = False
     db_query = False
-    json_file = open(PROJECTROOT + "/static/json_file.js", 'w')
+    json_file = open(PROJECT_PATH + "/static/json_file.js", 'w')
 
     json_file.write("var json_data = {\n")
 

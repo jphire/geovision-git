@@ -1,12 +1,5 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
-__author__="sundo"
-__date__ ="$Jun 14, 2011 6:06:37 PM$"
-
 import os
 import string
-os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 
 from geovision.viz.models import DbEntry
 import re
@@ -16,7 +9,7 @@ class DbfileParser:
 	def __init__(self, source_file, source=None):
 		self.filename = source_file
 		self.textfile = open(self.filename, 'r')
-		self.source = source or self.filename[self.filename.rfind('/')+1:]
+		self.source = source or self.filename[self.filename.rfind('/')+1:].split('.')[0]
 		self.nextline = self.textfile.readline()
 		self.dnadata = ''
 		self.infoline = []

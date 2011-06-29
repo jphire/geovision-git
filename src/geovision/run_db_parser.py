@@ -1,19 +1,13 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
-__author__="lassetyr"
-__date__ ="$17.6.2011 14:15:47$"
-
 import sys
 import geovision.text_to_db.db_parser
 from geovision.text_to_db.bulk_inserter import BulkInserter
 from geovision.viz.models import DbEntry
 
-if __name__ == "__main__":
+def run(args):
 	try:
-		parser = geovision.text_to_db.db_parser.DbfileParser(sys.argv[1], sys.argv[2])
+		parser = geovision.text_to_db.db_parser.DbfileParser(args[1], args[2])
 	except IOError:
-		print "Unable to open file", argv[1]
+		print("Unable to open file", args[1])
 		sys.exit(1);
 	inserter = BulkInserter(DbEntry)
 	db_entry = parser.next_db_entry()
@@ -21,3 +15,6 @@ if __name__ == "__main__":
 		inserter.save(db_entry)
 		db_entry = parser.next_db_entry()
 	inserter.close()
+
+if __name__ == "__main__":
+	run(sys.argv)

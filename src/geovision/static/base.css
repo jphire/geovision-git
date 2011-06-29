@@ -37,12 +37,12 @@ h4 {
 #right-container, 
 #center-container {
     height:600px;
-    position:absolute;
-    top:0px;
+/*    position:absolute;
+    top:0px;*/
 }
 
 #left-container, #right-container {
-    width:200px;
+    width:500px;
     color:#686c70;
     text-align: left;
     overflow: auto;
@@ -52,18 +52,18 @@ h4 {
 }
 
 #left-container {
-    left:0;
-    background-image:url('col2.png');
+   /* background-image:url('col2.png');*/
     background-position:center right;
     border-left:1px solid #ddd;
-    
+	float:left;
 }
 
 #right-container {
     right:0;
-    background-image:url('col1.png');
+    /*background-image:url('col1.png');*/
     background-position:center left;
     border-right:1px solid #ddd;
+	float:right;
 }
 
 #right-container h4{
@@ -72,7 +72,8 @@ h4 {
 
 #center-container {
     width:600px;
-    left:200px;
+	float:right;
+    /*left:200px;*/
     background-color:#1a1a1a;
     color:#ccc;
 }

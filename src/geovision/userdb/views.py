@@ -1,4 +1,3 @@
-# Create your views here.
 from django.http import HttpResponse
 from django.template import Context, loader
 from django.shortcuts import render_to_response, redirect
@@ -13,55 +12,53 @@ def loginpage(request):
 	if request.user.is_authenticated():
 		return redirect('/graphrefresh')
 	else:
-	    return render_to_response("login.html", { }, context_instance=RequestContext(request) )
+		return render_to_response("login.html", { }, context_instance=RequestContext(request) )
 def register(request):
-    return render_to_response("register.html", { }, context_instance=RequestContext(request) )
+	return render_to_response("register.html", { }, context_instance=RequestContext(request) )
 def registering(request):
-    datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
-    for data in datatable:
-        if (len(data) < 1):
-            return render_to_response('register.html', {
-            'error_message': "Error: All fields must be filled.",
-        }, context_instance=RequestContext(request)) #error for for not filling all fields!
-    if (cmp(request.POST['password1'], request.POST['password2']) != 0 ):
-        return render_to_response('register.html', {
-            'error_message': "Error: Passwords did not match.",
-        }, context_instance=RequestContext(request)) #error for entering two different passwords!
-    user, new = User.objects.get_or_create(username = request.POST['username'])
-    if (new == False):
-        return render_to_response('register.html', {
-            'error_message': "Error: User already exists.",
-        }, context_instance=RequestContext(request)) #error trying the same username two times!
-    else:
-        user.set_password(request.POST['password2'])
-        user.email = request.POST['email']
-        user.is_staff = False
-        user.save()
-        return render_to_response('login.html', {
-                'error_message': "Account succesfully created.",
-        }, context_instance=RequestContext(request)) 
+	datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
+	for data in datatable:
+		if (len(data) < 1):
+			return render_to_response('register.html', {
+			'error_message': "Error: All fields must be filled.",
+		}, context_instance=RequestContext(request)) #error for for not filling all fields!
+	if (cmp(request.POST['password1'], request.POST['password2']) != 0 ):
+		return render_to_response('register.html', {
+			'error_message': "Error: Passwords did not match.",
+		}, context_instance=RequestContext(request)) #error for entering two different passwords!
+	user, new = User.objects.get_or_create(username = request.POST['username'])
+	if (new == False):
+		return render_to_response('register.html', {
+			'error_message': "Error: User already exists.",
+		}, context_instance=RequestContext(request)) #error trying the same username two times!
+	else:
+		user.set_password(request.POST['password2'])
+		user.email = request.POST['email']
+		user.is_staff = False
+		user.save()
+		return render_to_response('login.html', {
+				'error_message': "Account succesfully created.",
+		}, context_instance=RequestContext(request)) 
 def logging_in(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return redirect('/graphrefresh')
-        else:
-            return render_to_response('login.html', {
-                    'error_message': "Account is not active.",
-                    }, context_instance=RequestContext(request))
-    else:
-        return render_to_response('login.html', {
-            'error_message': "The username or password was incorrect.",
-        }, context_instance=RequestContext(request))
+	username = request.POST['username']
+	password = request.POST['password']
+	user = authenticate(username=username, password=password)
+	if user is not None:
+		if user.is_active:
+			login(request, user)
+			return redirect('/graphrefresh')
+		else:
+			return render_to_response('login.html', {
+					'error_message': "Account is not active.",
+					}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('login.html', {
+			'error_message': "The username or password was incorrect.",
+		}, context_instance=RequestContext(request))
 
 def logging_out(request):
-    logout(request)
-    return render_to_response("login.html", {'error_message': "You have been logged out.", }, context_instance=RequestContext(request) )
+	logout(request)
+	return redirect('/')
 
 def about(request):
 	return render_to_response("about.html")
-
-#graphviews moved to viz.views

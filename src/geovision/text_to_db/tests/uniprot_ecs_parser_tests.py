@@ -1,17 +1,10 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
-__author__="sundo"
-__date__ ="$Jun 16, 2011 5:45:47 PM$"
-
 import unittest
-import uniprot_ecs_parser
-from geovision.settings import PROJECT_PATH
-from os import path
+import text_to_db.uniprot_ecs_parser as uniprot_ecs_parser
+from geovision.settings import TEST_FILE_PATH
+from viz.models import DbUniprotEcs as EcsEntry
 
-TEST_FILE_PATH = PROJECT_PATH + '/text_to_db/testfiles/'
 
-class Test_Uniprot_Ecs_parser(unittest.TestCase):
+class UniprotEcsParserTests(unittest.TestCase):
 	def test_ecs_parse_first(self):
 		parser = uniprot_ecs_parser.EcsFileParser(TEST_FILE_PATH + "test_uniprot.ecs")
 		entries = list(parser.next_ecs_entry())
@@ -41,3 +34,11 @@ class Test_Uniprot_Ecs_parser(unittest.TestCase):
 		parser.next_ecs_entry()
 		entry = parser.next_ecs_entry()
 		self.assertEqual(entry, None)
+
+	def test_run_ecs_parser(self):
+		EcsEntry.objects.all().delete()
+		uniprot_ecs_parser.run(["argv0", TEST_FILE_PATH + "test_uniprot.ecs"])
+		entry = EcsEntry.objects.all()[0]
+		self.assertEqual(entry.db_id, 'Q91G55')
+		self.assertEqual(entry.protein_existence_type, 'P')
+		self.assertEqual(entry.ec, '?')

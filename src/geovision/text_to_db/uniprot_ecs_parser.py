@@ -1,11 +1,4 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
-__author__="sundo"
-__date__ ="$Jun 16, 2011 4:59:28 PM$"
-
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 
 from geovision.viz.models import DbUniprotEcs as EcsEntry
 
@@ -34,9 +27,9 @@ class EcsFileParser:
 		
 		return (EcsEntry(db_id = self.db_id, protein_existence_type = self.pext, ec = ec) for ec in self.ecs)
 
-if __name__ == '__main__':
+def run(args):
 	import sys
-	parser = EcsFileParser(sys.argv[1])
+	parser = EcsFileParser(args[1])
 
 	from geovision.text_to_db.bulk_inserter import BulkInserter
 	inserter = BulkInserter(EcsEntry)
@@ -47,3 +40,6 @@ if __name__ == '__main__':
 		for entry in entries:
 			inserter.save(entry)
 	inserter.close()
+
+if __name__ == '__main__':
+	run(sys.argv)

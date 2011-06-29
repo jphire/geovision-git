@@ -1,3 +1,13 @@
+DROP INDEX "viz_blast_read_id";
+DROP INDEX "viz_blast_read_id_like";
+DROP INDEX "viz_blast_db_entry_id";
+DROP INDEX "viz_blast_db_entry_id_like";
+--
+CREATE INDEX "viz_blast_read_id" ON "viz_blast" ("read_id");
+CREATE INDEX "viz_blast_read_id_like" ON "viz_blast" ("read_id" varchar_pattern_ops);
+CREATE INDEX "viz_blast_db_entry_id" ON "viz_blast" ("db_entry_id");
+CREATE INDEX "viz_blast_db_entry_id_like" ON "viz_blast" ("db_entry_id" varchar_pattern_ops);
+--
 CREATE INDEX viz_result__db_entry ON viz_result USING hash (db_entry);
 CREATE INDEX viz_result__ec_number ON viz_result USING btree (ec_number);
 CREATE INDEX viz_result__read ON viz_result USING btree (read);
