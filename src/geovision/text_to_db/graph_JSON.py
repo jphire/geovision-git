@@ -3,6 +3,37 @@ import os
 from geovision.viz.models import *
 from geovision.settings import PROJECT_PATH
 
+class Node:
+	def __init__(self, data):
+		if data.__class__ is not DbEntry and data.__class__ is not Read:
+			raise Exception("parameter class must be Read or DbEntry")
+		self.dict = {}
+		if data.__class__ is DbEntry:
+			self.type = "db_entry"
+			self.dict["id"] = data.db_id
+			self.dict["name"] = data.db_id
+			self.dict["data"] = {}
+			self.dict["data"]["source"] = data.source_file
+			self.dict["data"]["description"] = data.description
+			if data.source_file == "uniprot":
+				self.dict["data"]["sub_db"] = data.sub_db
+				self.dict["data"]["entry_name"] = data.entry_name
+				self.dict["data"]["os_field"] = data.os_field
+				self.dict["data"]["other_info"] = data.other_info
+		elif data.__class__ is Read:
+			self.type = "read"
+			self.dict["id"] = data.read_id
+			self.dict["name"] = data.read_id
+			self.dict["data"] = {}
+			self.dict["data"]["description"] = data.description
+		self.dict["adjacencies"] = []
+
+	def __repr__(self):
+		return json.dumps(self.dict)
+
+	def __hash__(self):
+		return self.dict["id"].__hash__()
+
 class NodeId:
 	"""
 	NodeId class used as a node_id keys in node dictionary. It is simply
@@ -41,7 +72,7 @@ class QueryToJSON:
 		self.bitscore_limit = bitscore_limit
 		self.depth_limit = depth_limit
 		self.max_amount = max_amount
-		self.nodes = {}
+		self.nodes = []
 		if db_entry is None:
 			if read is None:
 				raise Exception("Either db_entry or read parameter must be supplied")
@@ -49,15 +80,14 @@ class QueryToJSON:
 				self.startpoint = NodeId(read, "read")
 		else:
 			if read is not None:
-				raise Exception("Cannot filter with both read and db_entry")
+				raise Exception("Cannot use both read and db_entry as starting point")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
 		self.build_graph(self.startnode, self.depth_limit)
 
 	def build_graph(self, startnode, maxdepth):
-		self.nodes[self.get_node_id(startnode)] = (startnode, {})
+		self.nodes.append(startnode)
 		self.build_graph_level([startnode], 1, maxdepth)
-
 
 	def build_graph_level(self, nodes, depth, maxdepth):
 		if depth <= maxdepth:
@@ -69,7 +99,7 @@ class QueryToJSON:
 	def make_blast_queryset(self, param = None):
 		"""
 		Function for making the blast table QuerySet. Takes only one parameter,
-		an instance of DbEntry or Read object. Other query parameters are
+		an instance of Node object. Other query parameters are
 		carried over as class parameters.
 
 		Makes a QuerySet by stacking filters to an initial unfiltered QuerySet
@@ -79,10 +109,10 @@ class QueryToJSON:
 		query = Blast.objects.all()
 #		if self.ec_number is not None:
 #			query = query.filter(ec_number = self.ec_number)
-		if param.__class__ is DbEntry:
-			query = query.filter(db_entry = param.db_id)
-		elif param.__class__ is Read:
-			query = query.filter(read = param.read_id)
+		if param.type == "db_entry":
+			query = query.filter(db_entry = param.dict["id"])
+		elif param.type == "read":
+			query = query.filter(read = param.dict["id"])
 		else:
 			return None
 		query = query.filter(error_value__lte = self.e_value_limit)
@@ -100,19 +130,20 @@ class QueryToJSON:
 		been visited.
 		"""
 		next_level_nodes = set()
-		if startnode.__class__ is DbEntry:
+		if startnode.type == "db_entry":
 			for blast in queryset:
-				readnode = blast.read
+				readnode = Node(blast.read)
 				readid = self.get_node_id(readnode)
-				if readid not in self.nodes:
-					self.nodes[readid] = (readnode, {})
+				if readnode not in self.nodes:
+					self.nodes.add(readnode)
+					self.nodes
 					next_level_nodes.add(readnode)
 				self.nodes[self.get_node_id(startnode)][1][readid] = blast
 		elif startnode.__class__ is Read:
 			for blast in queryset:
-				dbnode = blast.db_entry
+				dbnode = Node(blast.db_entry)
 				db_id = self.get_node_id(dbnode)
-				if db_id not in self.nodes:
+				if dbnode not in self.nodes:
 					self.nodes[db_id] = (dbnode, {})
 					next_level_nodes.add(dbnode)
 				self.nodes[self.get_node_id(startnode)][1][db_id] = blast
@@ -122,19 +153,19 @@ class QueryToJSON:
 
 	def get_node(self, node_id):
 		if node_id.type is "read":
-			return Read.objects.get(read_id = node_id.id)
+			return Node(Read.objects.get(read_id = node_id.id))
 		elif node_id.type is "db_entry":
-			return DbEntry.objects.get(db_id = node_id.id)
+			return Node(DbEntry.objects.get(db_id = node_id.id))
 		else:
 			raise Exception("Invalid node_id parameter, must be tuple (type, id)")
 
 	def get_node_id(self, node):
-		if node.__class__ is DbEntry:
-			return NodeId(node.db_id, "db_entry")
-		elif node.__class__ is Read:
-			return NodeId(node.read_id, "read")
+		if node.type == "db_entry":
+			return NodeId(node.dict["id"], "db_entry")
+		elif node.type == "read":
+			return NodeId(node.dict["id"], "read")
 		else:
-			raise Exception("Invalid node parameter, must be Read or DbEntry")
+			raise Exception("Invalid node parameter, must be Node of type read or db_entry")
 
 	def __repr__(self):
 		return str(self.nodes)
