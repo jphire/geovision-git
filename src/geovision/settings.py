@@ -133,8 +133,9 @@ MIDDLEWARE_CLASSES = (
 					  'django.middleware.csrf.CsrfViewMiddleware',
 					  'django.contrib.auth.middleware.AuthenticationMiddleware',
 					  'django.contrib.messages.middleware.MessageMiddleware',
-					  'debug_toolbar.middleware.DebugToolbarMiddleware',
 					  )
+if RUNNING_ON_USERS:
+	MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 INTERNAL_IPS = ('127.0.0.1',)
 ROOT_URLCONF = 'geovision.urls'
 

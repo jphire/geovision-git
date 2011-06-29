@@ -1,15 +1,9 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
-__author__="sundo"
-__date__ ="$Jun 16, 2011 5:45:47 PM$"
-
 import unittest
 import uniprot_ecs_parser
 from geovision.settings import TEST_FILE_PATH
 from os import path
 
-class Test_Uniprot_Ecs_parser(unittest.TestCase):
+class UniprotEcsParserTests(unittest.TestCase):
 	def test_ecs_parse_first(self):
 		parser = uniprot_ecs_parser.EcsFileParser(TEST_FILE_PATH + "test_uniprot.ecs")
 		entries = list(parser.next_ecs_entry())
