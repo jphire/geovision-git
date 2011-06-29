@@ -19,7 +19,8 @@ class BlastParserTests(unittest.TestCase):
 		#in case objects left from other tests..
 		DbEntry.objects.all().delete()
 		Read.objects.all().delete()
-	
+
+		file = open(TEST_FILE_PATH + "test_blast.txt")	
 		cls.read = Read.objects.create(sample="ABLU", read_id="gi|185682811|gb|ABLU01132423.1|", description="baz", data='ASD')
 		cls.strings = []
 		#creating db_entrys for all lines in test file

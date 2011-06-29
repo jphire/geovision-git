@@ -9,7 +9,7 @@ class DbfileParser:
 	def __init__(self, source_file, source=None):
 		self.filename = source_file
 		self.textfile = open(self.filename, 'r')
-		self.source = source or self.filename[self.filename.rfind('/')+1:]
+		self.source = source or self.filename[self.filename.rfind('/')+1:].split('.')[0]
 		self.nextline = self.textfile.readline()
 		self.dnadata = ''
 		self.infoline = []

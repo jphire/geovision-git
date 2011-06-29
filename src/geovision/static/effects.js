@@ -1,27 +1,30 @@
-jQuery(function($) {
-/*! Function to open the graph-option-navigation and the alignment with a nice animation.
- */
-    var opened = false;
-    var closed = true;
-    $('#graphnavi').mouseenter(function() {
+var opened = false;
+var closed = true;
+
+function openSearch()
+{
         if (!opened){
             opened = true;
             $(this).find('#optiontag').hide();
             $(this).animate({width: "40%"}, {complete:
               function() { $(this).find('*').not('#optiontag').fadeIn();  }
-            });
-        }
-    });
-    $('#close').click(function() {
-        if (opened){
-            $('#graphnavi').find('*').hide();/*!Hide all elements*/
-            $('#graphnavi').animate({width: "7px"}, {complete: function() {
+	}
+}
+function closeSearch()
+{
+	if (opened){
+		$('#graphnavi').find('*').hide();/*!Hide all elements*/
+		$('#graphnavi').animate({width: "7px"}, {complete: function() {
                        $(this).find('#optiontag').fadeIn();
                        opened = false;
-            }});
-            
-        }
-    });
+		}
+	}
+}
+jQuery(function($) {
+/*! Function to open the graph-option-navigation and the alignment with a nice animation.
+ */
+    $('#graphnavi').mouseenter(openSearch);
+    $('#close').click(closeSearch);
     $('#graphrefresh').click(function(){
 		$('#loader').fadeIn(); //loader in
     });

@@ -6,13 +6,6 @@ from geovision.settings import TEST_FILE_PATH
 from viz.models import Read
 
 class SampleParserTests(unittest.TestCase):
-	#def setUp(self):
-    #    self.foo = Test_sample_parser()
-    #
-
-    #def tearDown(self):
-    #    self.foo.dispose()
-    #    self.foo = None
 
 	def test_sample_parse_first(self):
 		parser = sample_parser.SamplefileParser(TEST_FILE_PATH + "sample_test.txt")
@@ -41,7 +34,9 @@ class SampleParserTests(unittest.TestCase):
 		Read.objects.all().delete()
 		run_sample_parser.run(["argv0", TEST_FILE_PATH + "sample_test.txt"])
 
-		read = Read.objects.all()[0]
+		reads = Read.objects.all()
+		self.assertEqual(len(reads), 2)
+		read = reads[0]
 		self.assertEqual(read.read_id, 'ensimmainen')
 		self.assertEqual(read.description, 'seliseli')
 		self.assertEqual(read.data, 'ASDFASEGAASGEASGASG')

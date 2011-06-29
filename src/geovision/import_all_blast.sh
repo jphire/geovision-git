@@ -1,6 +1,6 @@
 #!/bin/bash
 BASE=/home/group/urenzyme/geoviz/blast/results
-EXCLUDE="silva|SRR|AAFX"
+EXCLUDE="silva-all|SRR|AAFX"
 
 for f in $BASE/*.*.align
 do

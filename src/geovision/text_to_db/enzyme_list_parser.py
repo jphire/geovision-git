@@ -28,9 +28,9 @@ class enzyme_parser:
 				cur_valuelist.append(value)
 		return None
 
-if __name__ == '__main__':
+def run(args):
 	import sys
-	ep = enzyme_parser(open(sys.argv[1], 'r'), ['ENTRY', 'NAME'])
+	ep = enzyme_parser(open(args[1], 'r'), ['ENTRY', 'NAME'])
 	inserter = BulkInserter(EnzymeName)
 
 	while True:
@@ -45,3 +45,6 @@ if __name__ == '__main__':
 			pass
 
 	inserter.close()
+
+if __name__ == '__main__':
+	run(sys.argv)

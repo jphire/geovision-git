@@ -66,7 +66,7 @@
 {% endblock %}
 {% block content %}
 <body onload="init();">
-    <div id="loader"><img src="../static/images/loader.gif"/></div>
+    <div id="loader"><img src="../static/images/loader.gif" alt="Loading..."/></div>
 
 	<div id="container">
 		<div id="alignment"></div>
@@ -80,7 +80,10 @@
 			<div style="text-align:center;"><a href="{{ STATIC_URL }}graphviz.js">See the Example Code</a></div>            
 			</div>
 			-->
-			{% if error_message %}<div class="error">{{ error_message }}</div>{% endif %}
+			{% if error_message %}
+				<script language="javascript" type="text/javascript">openSearch();</script>
+				<div class="error">{{ error_message }}</div>
+			{% endif %}
 
 			<div id="center-container">
 				<div id="infovis"></div>

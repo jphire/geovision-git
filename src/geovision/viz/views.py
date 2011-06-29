@@ -1,4 +1,3 @@
-# Create your views here.
 from geovision.text_to_db.create_JSON import create_json
 from geovision.text_to_db.create_JSON import setupderp #TEMP
 from django.http import HttpResponse
