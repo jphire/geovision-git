@@ -3,12 +3,14 @@ import unittest
 import text_to_db.db_parser as db_parser
 
 from geovision.settings import TEST_FILE_PATH
+from viz.models import DbEntry
 
 class DbParserTests(unittest.TestCase):
 	def test_db_parse_first_uniprot(self):
 		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_uniprot.fasta")
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'Q197F8')
+		self.assertEqual(entry.source_file, 'db_test_uniprot')
 		self.assertEqual(entry.sub_db, 'sp')
 		self.assertEqual(entry.entry_name, '002R_IIV3')
 		self.assertEqual(entry.description, 'Uncharacterized protein 002R')
@@ -28,6 +30,7 @@ QSIDRYFCSLDSNYNSEDEDFEYDSDSEDDDSDSEDDC")
 		parser.next_db_entry()
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'Q197F7')
+		self.assertEqual(entry.source_file, 'db_test_uniprot')
 		self.assertEqual(entry.sub_db, 'sp')
 		self.assertEqual(entry.entry_name, '003L_IIV3')
 		self.assertEqual(entry.description, 'Uncharacterized protein 003L')
@@ -49,6 +52,7 @@ TTSNTAPDTYRLLITNSKTRKNNYGTCRLEPLTYGI")
 		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_silva_ssu.fasta")
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'A93610.1.1301')
+		self.assertEqual(entry.source_file, 'db_test_silva_ssu')
 		self.assertEqual(entry.description, 'Archaea;Euryarchaeota;Thermococci;Thermococcales;Thermococcaceae;Thermococcus;unidentified')
 		self.assertEqual(entry.os_field, '')
 		self.assertEqual(entry.other_info, '')
@@ -102,6 +106,7 @@ CUCGGCCCAAGUCAGCCCAAGUCAAGCCGAGCCGCGCGCGCGCUCGCUGCUGUUGAC")
 		parser = db_parser.DbfileParser(TEST_FILE_PATH + "db_test_frnadb.fasta")
 		entry = parser.next_db_entry()
 		self.assertEqual(entry.db_id, 'FR000001')
+		self.assertEqual(entry.source_file, 'db_test_frnadb')
 		self.assertEqual(entry.description, 'AB027356;Group II intron')
 		self.assertEqual(entry.os_field, '')
 		self.assertEqual(entry.other_info, '')
@@ -125,7 +130,17 @@ ATTGCAGACACATTGAGCACTAAAAATTCGAACGTACATTGCGCCATCGGGTTCATTCCCGTTGGCACGTCTGGCTGAGG
 		entry = parser.next_db_entry()
 		self.assertEqual(entry, None)
 
+	def test_run_db_parser(self):
+		import run_db_parser
+		DbEntry.objects.all().delete()
 
-if __name__ == '__main__':
-	unittest.main()
-
+		run_db_parser.run(["argv0", TEST_FILE_PATH + "db_test_frnadb.fasta", 'db_test_frnadb'])
+		entrys = DbEntry.objects.all()
+		self.assertEqual(len(entrys), 2)
+		entry = entrys[0]
+		self.assertEqual(entry.db_id, 'FR000001')
+		self.assertEqual(entry.source_file, 'db_test_frnadb')
+		self.assertEqual(entry.description, 'AB027356;Group II intron')
+		self.assertEqual(entry.os_field, '')
+		self.assertEqual(entry.other_info, '')
+		self.assertEqual(entry.data, "TTGAGCCGTATGCGATGAAAGTTGCACGTACGGTTCTTTAAGGGGGAAAGTTTGAGAGGACCTACCTATCTTAAC")

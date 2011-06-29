@@ -37,13 +37,13 @@ class SampleParserTests(unittest.TestCase):
 		self.assertEqual(read, None)
 
 	def test_run_sample_parser(self):
-		from django.db import connection
 		import run_sample_parser
 		Read.objects.all().delete()
 		run_sample_parser.run(["argv0", TEST_FILE_PATH + "sample_test.txt"])
 
-		print connection.queries
-		read = Read.objects.all()[0]
+		reads = Read.objects.all()
+		self.assertEqual(len(reads), 2)
+		read = reads[0]
 		self.assertEqual(read.read_id, 'ensimmainen')
 		self.assertEqual(read.description, 'seliseli')
 		self.assertEqual(read.data, 'ASDFASEGAASGEASGASG')
