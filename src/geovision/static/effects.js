@@ -36,27 +36,29 @@ jQuery(function($) {
 	var alignmentopen = false;
 	$('#test').click(function(){
 		if (alignmentopen == false){
-			alignmentopen = true;
-			var part1 = $('<nobr></nobr>');
-			var part2 = $('<nobr></nobr>');
-			part1.css('display', 'none');
-			part2.css('display', 'none');
-			part1.appendTo($('#alignment'));
-			$('<br/>').appendTo($('#alignment'));
-			part2.appendTo($('#alignment'));
-			$('#test').after(alignment);
-			var dnatesti = staticurl + 'dnatesti.txt';
-			var dnatesti2 = staticurl + 'dnatesti2.txt';
-			part1.load(dnatesti);
-			part2.load(dnatesti2);
-			$('#alignment').css('border', '2px solid #265434');
-			$('#alignment').css('margin-bottom', '10px');
-			$('#alignment').animate({height: "60px"}, {complete:
-				  function() { part1.fadeIn(); part2.fadeIn();
-								var close = $('<div id = "closealign">Close</div>');
-								$('#alignment').before(close);  }
+			$.getJSON('/show_alignment', {}, function (data) {
+				alignmentopen = true;
+				var part1 = $('<nobr></nobr>');
+				var part2 = $('<nobr></nobr>');
+				part1.css('display', 'none');
+				part2.css('display', 'none');
+				part1.appendTo($('#alignment'));
+				$('<br/>').appendTo($('#alignment'));
+				part2.appendTo($('#alignment'));
+				$('#test').after(alignment);
+				var readseq = data.readseq;
+				var dbseq = data.dbseq;
+				part1.load(readseq);
+				part2.load(dbseq);
+				$('#alignment').css('border', '2px solid #265434');
+				$('#alignment').css('margin-bottom', '10px');
+				$('#alignment').animate({height: "60px"}, {complete:
+					  function() { part1.fadeIn(); part2.fadeIn();
+									var close = $('<div id = "closealign">Close</div>');
+									$('#alignment').before(close);  }
+				});
+				$('#log').css('top', '90px');
 			});
-			$('#log').css('top', '90px');
 			return false;
 		}
 		else {
