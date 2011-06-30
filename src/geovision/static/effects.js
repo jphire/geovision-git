@@ -34,9 +34,9 @@ jQuery(function($) {
 		$(this).parents('form').submit();
 	})
 	var alignmentopen = false;
-	$('#test').click(function(){
+	$('.alignlink').click(function(){
 		if (alignmentopen == false){
-			$.getJSON('/show_alignment', {}, function (data) {
+			$.getJSON('/show_alignment', {id: $(this).attr('id')}, function (data) {
 				alignmentopen = true;
 				var part1 = $('<nobr></nobr>');
 				var part2 = $('<nobr></nobr>');
@@ -46,10 +46,8 @@ jQuery(function($) {
 				$('<br/>').appendTo($('#alignment'));
 				part2.appendTo($('#alignment'));
 				$('#test').after(alignment);
-				var readseq = data.readseq;
-				var dbseq = data.dbseq;
-				part1.load(readseq);
-				part2.load(dbseq);
+				part1.load(data.readseq);
+				part2.load(data.dbseq);
 				$('#alignment').css('border', '2px solid #265434');
 				$('#alignment').css('margin-bottom', '10px');
 				$('#alignment').animate({height: "60px"}, {complete:

@@ -97,10 +97,10 @@ def enzyme_autocompletion(request):
 @login_required
 def show_alignment(request):
 	try:
-		searchterm = request.GET['searchterm']
+		searchterm = request.GET['id']
 	except KeyError:
 		return HttpResponse('')
 	#	Blastin read_seq = models.TextField()
 	#   db_seq = models.TextField()
-	data = Blast.objects.filter(JOTAIN TÄHÄN = searchterm)
+	data = Blast.objects.filter(id = id)
 	return HttpResponse(json.dumps([{'readseq': '%s' % (data.read_seq)}, {'dbseq': '%s' % (data.db_seq)} ]), mimetype='text/plain')

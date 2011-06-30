@@ -57,7 +57,7 @@ var json = json_data;
 
         //set transformation style
         transition: $jit.Trans.Circ,
-
+i
         //Add navigation capabilities:
         //zooming by scrolling and panning.
         Navigation: {
@@ -171,9 +171,10 @@ var json = json_data;
 			$jit.id('inner-details').innerHTML = ""
             $jit.id('inner-details').innerHTML += "<b>" + node.id + "</b></br>"
 			$jit.id('inner-details').innerHTML += node.data.description + "</br>"
-			//if(node.data.db_seq){
-					//$jit.id('inner-details').innerHTML += //alignmentdata link here
-			//}
+			if(node.data.db_seq){
+				//just added, might be a bug:
+				$jit.id('inner-details').innerHTML += "<p class='alignlink' id='" + node.data.id + "'>Show alignmentdata</p> </br>"
+			}
 
         },
         
