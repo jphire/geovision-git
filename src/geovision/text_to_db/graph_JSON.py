@@ -236,9 +236,9 @@ class QueryToJSON:
 		else:
 			return 'error'
 
-	def write_to_json(self):
-		json_file = open(PROJECTROOT + "/static/json_test_file.js", 'w')
-		json.dump(self.nodes, json_file)
+	def write_to_json(self, file="/static/json_test_file.js"):
+		json_file = open(PROJECTROOT + file, 'w')
+		json_file.write(self.nodes)
 		json_file.close()
 		
 	def __repr__(self):
