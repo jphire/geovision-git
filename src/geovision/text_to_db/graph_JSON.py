@@ -68,7 +68,7 @@ class Edge:
 		self.dict["data"]["error_value"] = blastobject.error_value
 		self.dict["data"]["bitscore"] = blastobject.bitscore
 ############## Graph visualization style options below ################
-		self.dict["data"]["$color"] = QueryToJSON.bitscore_to_hex(blastobject.bitscore)
+		self.dict["data"]["$color"] = bitscore_to_hex(blastobject.bitscore)
 		self.dict["data"]["$type"] = "arrow"
 		self.dict["data"]["$dim"] = 15
 		self.dict["data"]["$lineWidth"] = 5
@@ -226,23 +226,23 @@ class QueryToJSON:
 			json_file = open(PROJECTROOT + file, 'w')
 		except NameError:
 			json_file = open(file, 'w')
-		json_file.write(self.nodes)
+		json_file.write(str(self.nodes))
 		json_file.close()
 		
 	def __repr__(self):
 		return str(self.nodes)
 
 def bitscore_to_hex(bitscore):
-	if 0 < bitscore < 100:
+	if 0 < bitscore < 10:
 		return '#C0C0C0'
 
-	elif 100 <= bitscore < 500:
+	elif 10 <= bitscore < 20:
 		return '#FFFF00'
 
-	elif 500 <= bitscore < 1000:
+	elif 20 <= bitscore < 30:
 		return '#0000FF'
 
-	elif 1000 <= bitscore:
+	elif 30 <= bitscore:
 		return '#00FF00'
 
 	else:
