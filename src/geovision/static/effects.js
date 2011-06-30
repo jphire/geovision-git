@@ -56,7 +56,7 @@ jQuery(function($) {
 								var close = $('<div id = "closealign">Close</div>');
 								$('#alignment').before(close);  }
 			});
-			$('#log').css('top', '80px');
+			$('#log').css('top', '90px');
 			return false;
 		}
 		else {
@@ -72,7 +72,7 @@ jQuery(function($) {
 			$('#alignment').css('border', '0px');
 			$('#alignment').css('background-color', '#E6F2EA');
 			$('#alignment').css('margin-bottom', '0px');
-			$('#log').css('top', '5px');
+			$('#log').css('top', '15px');
 		}
     });
 });
