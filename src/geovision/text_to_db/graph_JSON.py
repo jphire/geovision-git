@@ -218,21 +218,7 @@ class QueryToJSON:
 		else:
 			raise Exception("Invalid node parameter, must be Node of type read or db_entry")
 
-	def bitscore_to_hex(self, bitscore):
-		if 0 < bitscore < 100:
-			return '#C0C0C0'
 
-		elif 100 <= bitscore < 500:
-			return '#FFFF00'
-
-		elif 500 <= bitscore < 1000:
-			return '#0000FF'
-
-		elif 1000 <= bitscore:
-			return '#00FF00'
-
-		else:
-			return '#CCCCCC'
 
 	def write_to_json(self, file="/static/json_test_file.js"):
 		json_file = None
@@ -245,6 +231,22 @@ class QueryToJSON:
 		
 	def __repr__(self):
 		return str(self.nodes)
+
+def bitscore_to_hex(bitscore):
+	if 0 < bitscore < 100:
+		return '#C0C0C0'
+
+	elif 100 <= bitscore < 500:
+		return '#FFFF00'
+
+	elif 500 <= bitscore < 1000:
+		return '#0000FF'
+
+	elif 1000 <= bitscore:
+		return '#00FF00'
+
+	else:
+		return '#CCCCCC'
 			
 #def graph_JSON(query_type, query_value, bitscorelimit, e_value_limit, depthlimit, max_amount):
 #
