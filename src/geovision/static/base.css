@@ -42,7 +42,7 @@ h4 {
 }
 
 #left-container, #right-container {
-    width:198px;
+    width:500px;
     color:#686c70;
     text-align: left;
     overflow: auto;
