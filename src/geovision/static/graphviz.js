@@ -149,7 +149,6 @@ var json = json_data;
 			
             onShow: function(tip, node) {
 				tip.innerHTML = "";
-//				var adj = node.adjacencies;
 				if (!node) return;
 
 				if(node.nodeFrom){
@@ -162,12 +161,6 @@ var json = json_data;
 					tip.innerHTML += "<b>" + node.id + "</b></br>";
 					tip.innerHTML += node.data.description + "</br>";
 				}
-//
-//				for(var edge in adj){
-//					var i = edge;
-//					tip.innerHTML += i + "</br>";
-					
-//				}
             }
         },
         
@@ -175,14 +168,13 @@ var json = json_data;
             Log.write("centering " + node.name + "...");
             //Add the relation list in the right column.
             //This list is taken from the data property of each JSON node.
-//            var adj = node.adjacencies;
 			$jit.id('inner-details').innerHTML = ""
             $jit.id('inner-details').innerHTML += "<b>" + node.id + "</b></br>"
 			$jit.id('inner-details').innerHTML += node.data.description + "</br>"
-//            for(var edge in adj){
-//                var i = edge.nodeTo.id;
-//                $jit.id('inner-details').innerHTML = i + "a</br>";
-//            }
+			//if(node.data.db_seq){
+					//$jit.id('inner-details').innerHTML += //alignmentdata link here
+			//}
+
         },
         
         onAfterCompute: function(){
@@ -236,7 +228,6 @@ var json = json_data;
       duration: 1000
     });
     
-  
     //end
     //append information about the root relations in the right column
     $jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b></br>";
