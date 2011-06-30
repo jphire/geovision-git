@@ -3,11 +3,12 @@ var closed = true;
 
 function openSearch()
 {
+	elem = $('#graphnavi')
         if (!opened){
             opened = true;
-            $(this).find('#optiontag').hide();
-            $(this).animate({width: "40%"}, {complete:
-              function() { $(this).find('*').not('#optiontag').fadeIn();  }
+            elem.find('#optiontag').hide();
+            elem.animate({width: "40%"}, {complete:
+		function() { elem.find('*').not('#optiontag').fadeIn(); }});
 	}
 }
 function closeSearch()
@@ -17,7 +18,7 @@ function closeSearch()
 		$('#graphnavi').animate({width: "7px"}, {complete: function() {
                        $(this).find('#optiontag').fadeIn();
                        opened = false;
-		}
+		}});
 	}
 }
 jQuery(function($) {
