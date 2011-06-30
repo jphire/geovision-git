@@ -3,36 +3,90 @@ import os
 from geovision.viz.models import *
 from geovision.settings import PROJECT_PATH
 
+class NodeEdgeJSONEncoder(json.JSONEncoder):
+	def default(self, o):
+		if isinstance(o, Node) or isinstance(o, Edge):
+			return o.dict
+		return json.JSONEncoder.default(self, o)
+
 class Node:
-	def __init__(self, data):
-		if data.__class__ is not DbEntry and data.__class__ is not Read:
-			raise Exception("parameter class must be Read or DbEntry")
+	def __init__(self, dataobject):
 		self.dict = {}
-		if data.__class__ is DbEntry:
+		if isinstance(dataobject, DbEntry):
 			self.type = "db_entry"
-			self.dict["id"] = data.db_id
-			self.dict["name"] = data.db_id
+			self.dict["id"] = dataobject.db_id
+			self.dict["name"] = dataobject.db_id
 			self.dict["data"] = {}
-			self.dict["data"]["source"] = data.source_file
-			self.dict["data"]["description"] = data.description
-			if data.source_file == "uniprot":
-				self.dict["data"]["sub_db"] = data.sub_db
-				self.dict["data"]["entry_name"] = data.entry_name
-				self.dict["data"]["os_field"] = data.os_field
-				self.dict["data"]["other_info"] = data.other_info
-		elif data.__class__ is Read:
+			self.dict["data"]["source"] = dataobject.source_file
+			self.dict["data"]["description"] = dataobject.description
+			if dataobject.source_file == "uniprot":
+				self.dict["data"]["sub_db"] = dataobject.sub_db
+				self.dict["data"]["entry_name"] = dataobject.entry_name
+				self.dict["data"]["os_field"] = dataobject.os_field
+				self.dict["data"]["other_info"] = dataobject.other_info
+		elif isinstance(dataobject, Read):
 			self.type = "read"
-			self.dict["id"] = data.read_id
-			self.dict["name"] = data.read_id
+			self.dict["id"] = dataobject.read_id
+			self.dict["name"] = dataobject.read_id
 			self.dict["data"] = {}
-			self.dict["data"]["description"] = data.description
+			self.dict["data"]["description"] = dataobject.description
+		else:
+			raise Exception("parameter class must be Read or DbEntry")
 		self.dict["adjacencies"] = []
 
+
 	def __repr__(self):
-		return json.dumps(self.dict)
+		return json.dumps(self.dict, cls=NodeEdgeJSONEncoder)
 
 	def __hash__(self):
 		return self.dict["id"].__hash__()
+
+	def __eq__(self, other):
+		if isinstance(other, Node):
+			return ((self.type == other.type) and (self.dict["id"] == other.dict["id"]))
+		else:
+			return False
+
+class Edge:
+	def __init__(self, nodeTo, blastobject):
+		if nodeTo is None:
+			raise Exception("Must supply nodeTo parameter")
+		if not isinstance(blastobject, Blast):
+			raise Exception("Second parameter must be a blast object, is " + str(blastobject.__class__))
+		self.dict = {}
+		self.dict["nodeTo"] = nodeTo
+		self.dict["data"] = {}
+		self.dict["data"]["read"] = blastobject.read.read_id
+		self.dict["data"]["database_name"] = blastobject.database_name
+		self.dict["data"]["db_entry"] = blastobject.db_entry.db_id
+		self.dict["data"]["length"] = blastobject.length
+#		self.dict["data"]["pident"] = blastobject.pident
+#		self.dict["data"]["mismatch"] = blastobject.mismatch
+#		self.dict["data"]["gapopen"] = blastobject.gapopen
+#		self.dict["data"]["qstart"] = blastobject.qstart
+#		self.dict["data"]["qend"] = blastobject.qend
+#		self.dict["data"]["sstart"] = blastobject.sstart
+#		self.dict["data"]["send"] = blastobject.send
+		self.dict["data"]["error_value"] = blastobject.error_value
+		self.dict["data"]["bitscore"] = blastobject.bitscore
+############## Graph visualization style options below ################
+		self.dict["data"]["$color"] = "#ff0000"
+		self.dict["data"]["$type"] = "arrow"
+		self.dict["data"]["$dim"] = 15
+		self.dict["data"]["$lineWidth"] = 5
+		self.dict["data"]["$alpha"] = 1
+		self.dict["data"]["$epsilon"] = 7
+
+	def __repr__(self):
+		return json.dumps(self.dict, cls=NodeEdgeJSONEncoder)
+
+	def __eq__(self, other):
+		if isinstance(other, Edge):
+			return ((self.nodeTo == other.nodeTo)
+					and (self.dict["data"]["read"] == other.dict["data"]["read"])
+					and (self.dict["data"]["db_entry"] == other.dict["data"]["db_entry"]))
+		else:
+			return False
 
 class NodeId:
 	"""
@@ -50,15 +104,15 @@ class NodeId:
 		return self.id.__hash__()
 
 	def __eq__(self, other):
-		return (self.id == other.id) and (self.type == other.type)
+		if isinstance(other, NodeId):
+			return (self.id == other.id) and (self.type == other.type)
+		else:
+			return False
 	
 class QueryToJSON:
 	"""
 	Makes a query according to the parameters and generates graph JSON file
 	from the fetched data.
-	Nodes and edges are kept in a dictionary with node_ids as keys.
-	Dictionary format is:
-	{node_id : [node, {node_id : blast}]
 
 	Currently assumes that both Read.read_id and DbEntry.db_id are foreign keys.
 	"""
@@ -135,20 +189,19 @@ class QueryToJSON:
 				readnode = Node(blast.read)
 				readid = self.get_node_id(readnode)
 				if readnode not in self.nodes:
-					self.nodes.add(readnode)
-					self.nodes
+					self.nodes.append(readnode)
 					next_level_nodes.add(readnode)
-				self.nodes[self.get_node_id(startnode)][1][readid] = blast
-		elif startnode.__class__ is Read:
+				startnode.dict["adjacencies"].append(Edge(readid.id, blast))
+		elif startnode.type is "read":
 			for blast in queryset:
 				dbnode = Node(blast.db_entry)
 				db_id = self.get_node_id(dbnode)
 				if dbnode not in self.nodes:
-					self.nodes[db_id] = (dbnode, {})
+					self.nodes.append(dbnode)
 					next_level_nodes.add(dbnode)
-				self.nodes[self.get_node_id(startnode)][1][db_id] = blast
+				startnode.dict["adjacencies"].append(Edge(db_id.id, blast))
 		else:
-			raise Exception("startnode class must be DbEntry or Read")
+			raise Exception("startnode type must be db_entry or read")
 		return next_level_nodes
 
 	def get_node(self, node_id):
