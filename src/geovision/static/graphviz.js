@@ -49,7 +49,7 @@ var json = json_data;
         },
 
         //set distance for nodes on different levels
-	levelDistance: 100,
+		levelDistance: 100,
 
         //set transformation speed
         duration: 500,
@@ -57,7 +57,7 @@ var json = json_data;
 
         //set transformation style
         transition: $jit.Trans.Circ,
-
+i
         //Add navigation capabilities:
         //zooming by scrolling and panning.
         Navigation: {
@@ -69,17 +69,17 @@ var json = json_data;
         //Set Node and Edge styles.
         Node: {
             overridable: true,
-            color: '#ccb',
+            color: '#ff0000',
             alpha: 1,
-            dim: 3,
+            dim: 5,
             height: 20,
             width: 90,
             autoHeight: false,
             autoWidth: false,
-            lineWidth: 1,
+            lineWidth: 0.5,
             transform: true,
             align: "center",
-            angularWidth:1,
+            angularWidth: 1,
             span:1,
             type: 'circle',
             CanvasStyles: {}
@@ -88,21 +88,79 @@ var json = json_data;
         Edge: {
           overridable: true,
           color: '#068481',
-          lineWidth:1.2,
-          dim: 50
+		  alpha: 1,
+          lineWidth:1.0,
+          dim: 10,
+		  type: 'line',
+		  epsilon: 7
         },
+
+		Events : {
+			enableForEdges: true,
+			enable : true,
+			type : 'Native', //edge event doesn't work with 'HTML'..
+			onRightClick : function(node, eventInfo, e) {
+				//if no node is returned then exit
+				if (!node) return;
+				if (node.nodeFrom) {
+					// living on the edge..
+					alert('Clicked on the edge ' + node.nodeFrom.name);
+
+				} else {
+					// TODO: dynamic graph refresh here..
+					//rgraph.onClick(node.id);
+				}
+			},
+			onMouseEnter: function(node, eventInfo, e) { 
+				//console.log("mouse entered" + node)
+				if (node.nodeFrom) {
+					rgraph.canvas.getElement().style.cursor = 'pointer';
+					node.data.$color = "#FDCC97"
+					//rgraph.refresh()
+					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
+				}
+			},
+			onMouseLeave: function(object, eventInfo, e) {
+				if(object) {
+					if(object.nodeTo) {
+						object.data.$color = object.data.color
+					} else{
+						object.data.$color = 'FF0000'
+					}
+				}
+				rgraph.canvas.getElement().style.cursor = ''
+				//rgraph.refresh()
+			}
+		},
+
+		//Label styling is done via CSS!
+		Label: {
+			$extend: true,
+			type: 'HTML',
+			overridable: true
+		},
 
         //Set tooltip configuration
         Tips: {
             enable: true,
+			type: 'Native',
             width: 30,
             align: 'left',
+			
             onShow: function(tip, node) {
-                tip.innerHTML = ""
-                if(node.data.description != undefined)
-                    tip.innerHTML += node.data.description;
-                if(node.data.adjacencies != undefined)
-                    tip.innerHTML += node.data.adjacencies;
+				tip.innerHTML = "";
+				if (!node) return;
+
+				if(node.nodeFrom){
+					//it's an edge
+					tip.innerHTML += "<b>" + node.nodeFrom.name + " - " + node.nodeTo.name + "</b></br>";
+					tip.innerHTML += "<b>" + node.nodeFrom.data.bitscore + "</b></br>";
+				}
+				else {
+					//it's a label
+					tip.innerHTML += "<b>" + node.id + "</b></br>";
+					tip.innerHTML += node.data.description + "</br>";
+				}
             }
         },
         
@@ -110,17 +168,14 @@ var json = json_data;
             Log.write("centering " + node.name + "...");
             //Add the relation list in the right column.
             //This list is taken from the data property of each JSON node.
-//            var adj = node.adjacencies;
-//            $jit.id('inner-details').innerHTML = ""
-//            for(var edge in adj){
-//                var i = edge.nodeTo.id;
-//                $jit.id('inner-details').innerHTML = i + "a</br>";
-//            }
-            $jit.id('inner-details').innerHTML = ""
-            if(node.data.description != undefined)
-                $jit.id('inner-details').innerHTML += node.data.description;
-            if(node.data.adjacencies != undefined)
-                $jit.id('inner-details').innerHTML += node.data.adjacencies;
+			$jit.id('inner-details').innerHTML = ""
+            $jit.id('inner-details').innerHTML += "<b>" + node.id + "</b></br>"
+			$jit.id('inner-details').innerHTML += node.data.description + "</br>"
+			if(node.data.db_seq){
+				//just added, might be a bug:
+				$jit.id('inner-details').innerHTML += "<p class='alignlink' id='" + node.data.id + "'>Show alignmentdata</p> </br>"
+			}
+
         },
         
         onAfterCompute: function(){
@@ -160,8 +215,8 @@ var json = json_data;
         }
     });
 
-    //load JSON data
-    rgraph.loadJSON(json);
+    //load JSON data, second argument is the index of the centered node
+    rgraph.loadJSON(json, 3);
     
     //trigger small animation
     rgraph.graph.eachNode(function(n) {
@@ -174,10 +229,9 @@ var json = json_data;
       duration: 1000
     });
     
-  
     //end
     //append information about the root relations in the right column
-    $jit.id('inner-details').innerHTML = rgraph.graph.getNode(rgraph.root).data.description;
-    $jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.adjacencies;
+    $jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b></br>";
+    $jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
 
 }

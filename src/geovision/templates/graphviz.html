@@ -6,7 +6,7 @@
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}RGraph.js"></script>
 
 <!-- JSON File -->
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}json_test_file.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}json_test_graph.js"></script>
 
 <script language="javascript" type="text/javascript">
 	var staticurl = {{ STATIC_URL }};
@@ -26,6 +26,11 @@
 {% block additional_title %}- graph {% endblock %}
 <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
 {% block sidenavi_content %}
+
+{% if error_message %}
+	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
+	<div class="error">{{ error_message }}</div>
+{% endif %}
 
 
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
@@ -75,16 +80,12 @@
 		</div>
 		<div id="graphcontainer">
 			<div id="left-container">
-				<!--<div class="text">
+			<!--<div class="text">
 			<div id="id-list"></div>
 			<div style="text-align:center;"><a href="{{ STATIC_URL }}graphviz.js">See the Example Code</a></div>            
 			</div>
 			-->
-			{% if error_message %}
-				<script language="javascript" type="text/javascript">openSearch();</script>
-				<div class="error">{{ error_message }}</div>
-			{% endif %}
-
+			</div>
 			<div id="center-container">
 				<div id="infovis"></div>
 			</div>

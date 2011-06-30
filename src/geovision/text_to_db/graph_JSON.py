@@ -220,6 +220,27 @@ class QueryToJSON:
 		else:
 			raise Exception("Invalid node parameter, must be Node of type read or db_entry")
 
+	def bitscore_to_hex(self, bitscore):
+		if 0 < bitscore < 100:
+			return '#C0C0C0'
+
+		elif 100 <= bitscore < 500:
+			return '#FFFF00'
+
+		elif 500 <= bitscore < 1000:
+			return '#0000FF'
+
+		elif 1000 <= bitscore:
+			return '#00FF00'
+
+		else:
+			return 'error'
+
+	def write_to_json(self):
+		json_file = open(PROJECTROOT + "/static/json_test_file.js", 'w')
+		json.dump(self.nodes, json_file)
+		json_file.close()
+		
 	def __repr__(self):
 		return str(self.nodes)
 			

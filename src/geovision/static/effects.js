@@ -3,11 +3,12 @@ var closed = true;
 
 function openSearch()
 {
+	elem = $('#graphnavi')
         if (!opened){
             opened = true;
-            $(this).find('#optiontag').hide();
-            $(this).animate({width: "40%"}, {complete:
-              function() { $(this).find('*').not('#optiontag').fadeIn();  }
+            elem.find('#optiontag').hide();
+            elem.animate({width: "40%"}, {complete:
+		function() { elem.find('*').not('#optiontag').fadeIn(); }});
 	}
 }
 function closeSearch()
@@ -17,7 +18,7 @@ function closeSearch()
 		$('#graphnavi').animate({width: "7px"}, {complete: function() {
                        $(this).find('#optiontag').fadeIn();
                        opened = false;
-		}
+		}});
 	}
 }
 jQuery(function($) {
@@ -33,29 +34,29 @@ jQuery(function($) {
 		$(this).parents('form').submit();
 	})
 	var alignmentopen = false;
-	$('#test').click(function(){
+	$('.alignlink').click(function(){
 		if (alignmentopen == false){
-			alignmentopen = true;
-			var part1 = $('<nobr></nobr>');
-			var part2 = $('<nobr></nobr>');
-			part1.css('display', 'none');
-			part2.css('display', 'none');
-			part1.appendTo($('#alignment'));
-			$('<br/>').appendTo($('#alignment'));
-			part2.appendTo($('#alignment'));
-			$('#test').after(alignment);
-			var dnatesti = staticurl + 'dnatesti.txt';
-			var dnatesti2 = staticurl + 'dnatesti2.txt';
-			part1.load(dnatesti);
-			part2.load(dnatesti2);
-			$('#alignment').css('border', '2px solid #265434');
-			$('#alignment').css('margin-bottom', '10px');
-			$('#alignment').animate({height: "60px"}, {complete:
-				  function() { part1.fadeIn(); part2.fadeIn();
-								var close = $('<div id = "closealign">Close</div>');
-								$('#alignment').before(close);  }
+			$.getJSON('/show_alignment', {id: $(this).attr('id')}, function (data) {
+				alignmentopen = true;
+				var part1 = $('<nobr></nobr>');
+				var part2 = $('<nobr></nobr>');
+				part1.css('display', 'none');
+				part2.css('display', 'none');
+				part1.appendTo($('#alignment'));
+				$('<br/>').appendTo($('#alignment'));
+				part2.appendTo($('#alignment'));
+				$('#test').after(alignment);
+				part1.load(data.readseq);
+				part2.load(data.dbseq);
+				$('#alignment').css('border', '2px solid #265434');
+				$('#alignment').css('margin-bottom', '10px');
+				$('#alignment').animate({height: "60px"}, {complete:
+					  function() { part1.fadeIn(); part2.fadeIn();
+									var close = $('<div id = "closealign">Close</div>');
+									$('#alignment').before(close);  }
+				});
+				$('#log').css('top', '90px');
 			});
-			$('#log').css('top', '80px');
 			return false;
 		}
 		else {
@@ -71,7 +72,7 @@ jQuery(function($) {
 			$('#alignment').css('border', '0px');
 			$('#alignment').css('background-color', '#E6F2EA');
 			$('#alignment').css('margin-bottom', '0px');
-			$('#log').css('top', '5px');
+			$('#log').css('top', '15px');
 		}
     });
 });
