@@ -1,5 +1,4 @@
 from geovision.text_to_db.create_JSON import create_json
-from geovision.text_to_db.create_JSON import setupderp #TEMP
 from django.http import HttpResponse
 from django.template import Context, loader
 from django.shortcuts import render_to_response
@@ -94,4 +93,14 @@ def enzyme_autocompletion(request):
 		limit = 10
 
 	matches = EnzymeName.objects.filter(enzyme_name__istartswith=search).order_by('enzyme_name')[:limit]
+	return HttpResponse(json.dumps([{'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches]), mimetype='text/plain')
+@login_required
+def show_alignment(request):
+	try:
+		search = request.GET['term']
+	except KeyError:
+		return HttpResponse('')
+	#	Blastin read_seq = models.TextField()
+	#   db_seq = models.TextField()
+	alignment = Blast.objects.filter(enzyme_name__istartswith=search).order_by('enzyme_name')
 	return HttpResponse(json.dumps([{'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches]), mimetype='text/plain')

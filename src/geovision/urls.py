@@ -14,7 +14,12 @@ urlpatterns = patterns('',
 	(r'^graphrefresh$', 'viz.views.graphrefresh'),
 	(r'^about$', 'userdb.views.about'),
 	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
-	url(r'^admin/', include(admin.site.urls)),
+
+	(r'^show_alignment$', 'viz.views.show_alignment'),
+    
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	(r'^admin/', include(admin.site.urls)),
 
 	(r'', 'userdb.views.loginpage'), #everything else regirects to login for now
 )
