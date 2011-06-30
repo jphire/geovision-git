@@ -1,7 +1,5 @@
 import json
-import os
 from geovision.viz.models import *
-from geovision.settings import PROJECT_PATH
 
 class NodeEdgeJSONEncoder(json.JSONEncoder):
 	def default(self, o):
@@ -70,7 +68,7 @@ class Edge:
 		self.dict["data"]["error_value"] = blastobject.error_value
 		self.dict["data"]["bitscore"] = blastobject.bitscore
 ############## Graph visualization style options below ################
-		self.dict["data"]["$color"] = "#ff0000"
+		self.dict["data"]["$color"] = self.bitscore_to_hex(blastobject.bitscore)
 		self.dict["data"]["$type"] = "arrow"
 		self.dict["data"]["$dim"] = 15
 		self.dict["data"]["$lineWidth"] = 5
@@ -234,10 +232,14 @@ class QueryToJSON:
 			return '#00FF00'
 
 		else:
-			return 'error'
+			return '#CCCCCC'
 
 	def write_to_json(self, file="/static/json_test_file.js"):
-		json_file = open(PROJECTROOT + file, 'w')
+		json_file = None
+		try:
+			json_file = open(PROJECTROOT + file, 'w')
+		except NameError:
+			json_file = open(file, 'w')
 		json_file.write(self.nodes)
 		json_file.close()
 		
