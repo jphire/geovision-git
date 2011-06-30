@@ -57,7 +57,6 @@ var json = json_data;
 
         //set transformation style
         transition: $jit.Trans.Circ,
-i
         //Add navigation capabilities:
         //zooming by scrolling and panning.
         Navigation: {
