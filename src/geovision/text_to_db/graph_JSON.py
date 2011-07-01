@@ -70,12 +70,16 @@ class Edge:
 		self.dict["data"]["error_value"] = blastobject.error_value
 		self.dict["data"]["bitscore"] = blastobject.bitscore
 ############## Graph visualization style options below ################
-		self.dict["data"]["$color"] = self.dict["data"]["color"] = bitscore_to_hex(blastobject.bitscore)
+		self.dict["data"]["$color"] = self.calculate_color(blastobject.bitscore)
 		self.dict["data"]["$type"] = "arrow"
 		self.dict["data"]["$dim"] = 15
 		self.dict["data"]["$lineWidth"] = 5
 		self.dict["data"]["$alpha"] = 1
 		self.dict["data"]["$epsilon"] = 7
+
+	def calculate_color(self, bitscore):
+		max_bitscore = 5356
+		return int(floor((1.0 * bitscore / max_bitscore) * 16777215))
 
 	def __repr__(self):
 		return json.dumps(self.dict, cls=NodeEdgeJSONEncoder)
