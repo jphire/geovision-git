@@ -33,55 +33,57 @@ jQuery(function($) {
 		$(this).parents('form').submit();
 	})
 	
-	var alignmentopen = false;
-	//this if used with links:
-	//$('.alignlink').click(function(){
 
-	//nonlinks:
-	function alignment(thisid) {
+});
+var alignmentopen = false;
+//this if used with links:
+//$('.alignlink').click(function(){
 
-		if (alignmentopen == false){
-			//this if used with links:
-			//$.getJSON('/show_alignment', {id: $(this).attr('id')}, function (data) {
-			//nonlinks:
-			$.getJSON('/show_alignment', {id: thisid}, function (data) {
-				alignmentopen = true;
-				var part1 = $('<nobr></nobr>');
-				var part2 = $('<nobr></nobr>');
-				part1.css('display', 'none');
-				part2.css('display', 'none');
-				part1.appendTo($('#alignment'));
-				$('<br/>').appendTo($('#alignment'));
-				part2.appendTo($('#alignment'));
-				$('#test').after(alignment);
-				part1.load(data.readseq);
-				part2.load(data.dbseq);
-				$('#alignment').css('border', '2px solid #265434');
-				$('#alignment').css('margin-bottom', '10px');
-				$('#alignment').animate({height: "60px"}, {complete:
-					  function() { part1.fadeIn(); part2.fadeIn();
-									var close = $('<div id = "closealign">Close</div>');
-									$('#alignment').before(close);  }
-				});
-				$('#log').css('top', '90px');
+//nonlinks:
+function alignment(thisid) {
+
+	if (alignmentopen == false){
+		//this if used with links:
+		//$.getJSON('/show_alignment', {id: $(this).attr('id')}, function (data) {
+		//nonlinks:
+		$.getJSON('/show_alignment', {id: thisid}, function (data) {
+			alignmentopen = true;
+			var part1 = $('<nobr></nobr>');
+			var part2 = $('<nobr></nobr>');
+			part1.css('display', 'none');
+			part2.css('display', 'none');
+			part1.appendTo($('#alignment'));
+			$('<br/>').appendTo($('#alignment'));
+			part2.appendTo($('#alignment'));
+			$('#test').after(alignment);
+			part1.load(data.readseq);
+			part2.load(data.dbseq);
+			$('#alignment').css('border', '2px solid #265434');
+			$('#alignment').css('margin-bottom', '10px');
+			$('#alignment').animate({height: "60px"}, {complete:
+				  function() { part1.fadeIn(); part2.fadeIn();
+								var close = $('<div id = "closealign">Close</div>');
+								$('#alignment').before(close);  }
 			});
-			return false;
-		}
-		else {
-			return false;
-		}
+			$('#log').css('top', '90px');
+		});
+		return false;
 	}
+	else {
+		return false;
+	}
+}
+}
 	//) if link
-    $('#closealign').live('click', function() {
+	$('#closealign').live('click', function() {
 		if (alignmentopen == true){
 			alignmentopen = false;
-            $('#alignment').find('*').remove();/*!Hide all elements*/
+			$('#alignment').find('*').remove();/*!Hide all elements*/
 			$('#closealign').remove();
-            $('#alignment').animate({height: "1px"});
+			$('#alignment').animate({height: "1px"});
 			$('#alignment').css('border', '0px');
 			$('#alignment').css('background-color', '#E6F2EA');
 			$('#alignment').css('margin-bottom', '0px');
 			$('#log').css('top', '15px');
 		}
-    });
-});
+	});
