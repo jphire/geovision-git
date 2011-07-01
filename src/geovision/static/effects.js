@@ -33,8 +33,6 @@ jQuery(function($) {
 		$(this).parents('form').submit();
 	})
 	
-
-});
 var alignmentopen = false;
 //this if used with links:
 //$('.alignlink').click(function(){
@@ -73,7 +71,6 @@ function alignment(thisid) {
 		return false;
 	}
 }
-
 	//) if link
 	$('#closealign').live('click', function() {
 		if (alignmentopen == true){
@@ -87,3 +84,4 @@ function alignment(thisid) {
 			$('#log').css('top', '15px');
 		}
 	});
+});

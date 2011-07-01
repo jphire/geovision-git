@@ -1,3 +1,4 @@
+import math
 import json
 from geovision.viz.models import *
 
@@ -60,6 +61,7 @@ class Edge:
 		self.dict["data"]["database_name"] = blastobject.database_name
 		self.dict["data"]["db_entry"] = blastobject.db_entry.db_id
 		self.dict["data"]["length"] = blastobject.length
+		self.dict["data"]["id"] = blastobject.id
 #		self.dict["data"]["pident"] = blastobject.pident
 #		self.dict["data"]["mismatch"] = blastobject.mismatch
 #		self.dict["data"]["gapopen"] = blastobject.gapopen
@@ -79,7 +81,7 @@ class Edge:
 
 	def calculate_color(self, bitscore):
 		max_bitscore = 5356
-		return int(floor((1.0 * bitscore / max_bitscore) * 16777215))
+		return int(math.floor((1.0 * bitscore / max_bitscore) * 16777215))
 
 	def __repr__(self):
 		return json.dumps(self.dict, cls=NodeEdgeJSONEncoder)
