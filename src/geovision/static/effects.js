@@ -71,7 +71,8 @@ jQuery(function($) {
 		else {
 			return false;
 		}
-	})
+	}
+	//) if link
     $('#closealign').live('click', function() {
 		if (alignmentopen == true){
 			alignmentopen = false;
