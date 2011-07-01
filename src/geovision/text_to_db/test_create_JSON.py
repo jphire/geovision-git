@@ -3,7 +3,10 @@ from geovision.text_to_db.create_JSON import *
 from geovision.viz.models import Result, Read, DbEntry, Blast
 
 class  Test_create_JSONTestCase(unittest.TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
+	Read.objects.all().delete()
+	DbEntry.objects.all().delete()
 
         Read.objects.create(sample="SMPL1", read_id="R1", description="baz", data='ASD')
         Read.objects.create(sample="SMPL2", read_id="R2", description="baz", data='ASD')
