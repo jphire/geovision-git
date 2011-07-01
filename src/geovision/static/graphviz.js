@@ -92,7 +92,7 @@ function initGraph(json)
           lineWidth:1.0,
           dim: 10,
 		  type: 'line',
-		  epsilon: 7
+		  epsilon: 14
         },
 
 		Events : {
