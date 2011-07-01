@@ -10,12 +10,13 @@ urlpatterns = patterns('',
 	(r'^registering$', 'userdb.views.registering'),
 	(r'^logging_in$', 'userdb.views.logging_in'),
 	(r'^logging_out$', 'userdb.views.logging_out'),
+	(r'^about$', 'userdb.views.about'),
+
 	(r'^testgraph$', 'viz.views.testgraph'),
 	(r'^graphrefresh$', 'viz.views.graphrefresh'),
-	(r'^about$', 'userdb.views.about'),
-	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
-
+	(r'^graphjson$', 'viz.views.graphjson'),
 	(r'^show_alignment$', 'viz.views.show_alignment'),
+	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
     
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

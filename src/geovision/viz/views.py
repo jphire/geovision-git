@@ -13,12 +13,17 @@ from django.contrib.auth import logout
 from django.core.context_processors import csrf
 from django.db.models import Q
 from geovision.viz.models import EnzymeName
+from geovision.settings import STATIC_URL
 import json
 import re
+import urllib
 
-def create_json(ecnumber, dbentry, read, bitscore, evalue, depth, hits):
-	qtj = QueryToJSON(ecnumber, read, dbentry, bitscore, evalue, depth, hits)
-	qtj.write_to_json(PROJECT_PATH + '/static/json_file.js')
+def create_json(ecnumber, read, dbentry, bitscore, evalue, depth, hits):
+	# for testing only
+#	qtj = QueryToJSON(ecnumber, read, dbentry, bitscore, evalue, depth, hits)
+#	qtj.write_to_json(PROJECT_PATH + '/static/json_file.js')
+
+	return '/graphjson?' + urllib.urlencode({'ecnumber': ecnumber or '', 'dbentry': dbentry or '', 'read': read or '', 'bitscore': bitscore, 'evalue': evalue, 'depth': depth, 'hits': hits}.items())
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
@@ -34,6 +39,19 @@ def merge_dict(d1, d2):
 @login_required
 def testgraph(request):
 	return render_to_response("graphviz.html", {'ecnumber':0, 'read':0, 'dbentry':'DB1', 'bitscore':30, 'evalue':0.005, 'depth':1, 'hits':10}, context_instance=RequestContext(request) )
+
+@login_required
+def graphjson(request):
+	p = dict(map(lambda k: (k, request.GET[k]), ('ecnumber', 'read', 'dbentry', 'bitscore', 'evalue', 'depth', 'hits')))
+	for k in ('ecnumber', 'read', 'dbentry'):
+		if p[k] == '':
+			p[k] = None
+	try:
+		out = QueryToJSON(p['ecnumber'], p['dbentry'], p['read'], float(p['bitscore']), float(p['evalue']), int(p['depth']), int(p['hits']))
+	except Exception as e:
+		out = str(e)
+	return HttpResponse(out, mimetype='text/plain')
+
 @login_required
 def graphrefresh(request): #make a new JSon, set defaults if needed
 	def lookup_enzyme(enzyme):
@@ -63,30 +81,30 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	depth = int(condition_dict['depth'])
 	hits = int(condition_dict['hits'])
 
-	error = ''
+	json_url = ''
 	search_fields = filter(lambda k: condition_dict[k] != '', ['ecnumber', 'read', 'dbentry'])
 	if len(search_fields) > 1:
 		return render(request, 'graphviz.html', merge_dict({
 			'error_message': "Error: You can only enter one of the following: Enzyme, DB entry id, Read id.",
 		}, condition_dict))
 	if condition_dict['dbentry'] != '':
-		error = create_json(None, None, condition_dict['dbentry'], bitscore, evalue, depth, hits)
+		json_url = create_json(None, None, condition_dict['dbentry'], bitscore, evalue, depth, hits)
 	elif condition_dict['ecnumber']!='':
 		result = lookup_enzyme(condition_dict['ecnumber'])
 		if isinstance(result, basestring):
-			error = create_json(result, None, None, bitscore, evalue, depth, hits)
+			json_url = create_json(result, None, None, bitscore, evalue, depth, hits)
 		elif result == None:
 			return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
 		else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': result}))
 
 	elif condition_dict['read']!='':
-		error = create_json(None, condition_dict['read'], None, bitscore, evalue, depth, hits)
-	if (error == 'error_no_children'):
+		json_url = create_json(None, condition_dict['read'], None, bitscore, evalue, depth, hits)
+	if (json_url == 'error_no_children'):
 		return render(request, 'graphviz.html', merge_dict({
 			'error_message': "Error: No data found, input different values.",
 		}, condition_dict))
 	#c = Context ({ecnumber:request.POST['ecnumber'], read:request.POST['read'], dbentry:request.POST['dbentry'], bitscore:request.POST['bitscore'], evalue:request.POST['e-value'], depth:request.POST['depth'], hits:request.POST['hits']})
-	return render(request, "graphviz.html", condition_dict)
+	return render(request, "graphviz.html", merge_dict(condition_dict, {'json_url': json_url}))
 
 @login_required
 def enzyme_autocompletion(request):

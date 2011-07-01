@@ -218,7 +218,8 @@ class QueryToJSON:
 		else:
 			raise Exception("Invalid node parameter, must be Node of type read or db_entry")
 
-
+	def dump_to_json(self):
+		return str(self.nodes)
 
 	def write_to_json(self, file="/static/json_test_file.js"):
 		json_file = None
