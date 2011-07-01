@@ -117,7 +117,6 @@ var json = json_data;
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$color = "#FDCC97"
 					//rgraph.refresh()
-					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
 				}
 			},
 			onMouseLeave: function(object, eventInfo, e) {
