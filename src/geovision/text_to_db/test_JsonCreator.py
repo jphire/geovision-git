@@ -26,20 +26,20 @@ class  Test_graph_JSONTestCase(unittest.TestCase):
 		db_entry6 = DbEntry.objects.create(source_file = "uniprot", db_id = "DB6", description="quux", data='ASD')
 		db_entry7 = DbEntry.objects.create(source_file = "uniprot", db_id = "DB7", description="quux", data='ASD')
 
-		Blast.objects.create(read = read1, db_entry = db_entry1, error_value = 0.005, bitscore=200, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read2, db_entry = db_entry2, error_value=0.005, bitscore=400, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read1, db_entry = db_entry3, error_value=0.005, bitscore=600, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read3, db_entry = db_entry4, error_value=0.005, bitscore=800, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read2, db_entry = db_entry1, error_value=0.005, bitscore=1000, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read3, db_entry = db_entry1, error_value=0.005, bitscore=200, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read4, db_entry = db_entry2, error_value=0.005, bitscore=400, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read5, db_entry = db_entry3, error_value=0.005, bitscore=700, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read1, db_entry = db_entry4, error_value=0.005, bitscore=1100, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
-		Blast.objects.create(read=read1, db_entry = db_entry5, error_value = 0.005, bitscore=1500, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2)
+		Blast.objects.create(read = read1, db_entry = db_entry1, error_value = 0.005, bitscore=200, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read2, db_entry = db_entry2, error_value=0.005, bitscore=400, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read1, db_entry = db_entry3, error_value=0.005, bitscore=600, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read3, db_entry = db_entry4, error_value=0.005, bitscore=800, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read2, db_entry = db_entry1, error_value=0.005, bitscore=1000, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read3, db_entry = db_entry1, error_value=0.005, bitscore=200, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read4, db_entry = db_entry2, error_value=0.005, bitscore=400, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read5, db_entry = db_entry3, error_value=0.005, bitscore=700, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read1, db_entry = db_entry4, error_value=0.005, bitscore=1100, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
+		Blast.objects.create(read=read1, db_entry = db_entry5, error_value = 0.005, bitscore=1500, pident=3, length = 20, mismatch=2, gapopen = 2, qstart= 2, qend = 2, sstart= 3,send=2, read_seq="qwertyadfg", db_seq="asdfjqwerut")
 
 	def test_JsonCreator(self):
 		
-		graph = JsonCreator(None, "DB1", None, 1, 0, 2, 5)
+		graph = JsonCreator(None, "DB1", None, 1, 0, 4, 10)
 		graph.build_graph(2)
 		graph.write_to_json()
 
