@@ -1,9 +1,8 @@
 import math
 import json
 from geovision.viz.models import *
-from django.db.models import Max
 
-MAX_BITSCORE = Blast.objects.aggregate(Max("bitscore"))['bitscore__max']
+MAX_BITSCORE = 0
 
 class NodeEdgeJSONEncoder(json.JSONEncoder):
 	def default(self, o):
@@ -74,13 +73,16 @@ class Edge:
 #		self.dict["data"]["send"] = blastobject.send
 		self.dict["data"]["error_value"] = blastobject.error_value
 		self.dict["data"]["bitscore"] = blastobject.bitscore
+		if blastobject.bitscore > MAX_BITSCORE:
+			MAX_BITSCORE = blastobject.bitscore
 ############## Graph visualization style options below ################
 		self.dict["data"]["$color"] = self.calculate_color(blastobject.bitscore)
+		self.dict["data"]["color"] = self.dict["data"]["$color"]
 		self.dict["data"]["$type"] = "arrow"
 		self.dict["data"]["$dim"] = 15
 		self.dict["data"]["$lineWidth"] = 2
 		self.dict["data"]["$alpha"] = 1
-		self.dict["data"]["$epsilon"] = 7
+		self.dict["data"]["$epsilon"] = 14
 
 	def calculate_color(self, bitscore):
 		return "#%0.2x0000" % int(math.floor((1.0 * bitscore / MAX_BITSCORE) * 255))
