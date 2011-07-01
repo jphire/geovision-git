@@ -135,4 +135,4 @@ def show_alignment(request):
 	#	Blastin read_seq = models.TextField()
 	#   db_seq = models.TextField()
 	data = Blast.objects.get(id = searchterm)
-	return HttpResponse(json.dumps([{'readseq': '%s' % (data.read_seq)}, {'dbseq': '%s' % (data.db_seq)} ]), mimetype='text/plain')
+	return HttpResponse(json.dumps({'readseq': '%s' % (data.read_seq), 'dbseq': '%s' % (data.db_seq)}), mimetype='text/plain')
