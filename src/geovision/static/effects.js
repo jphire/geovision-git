@@ -33,10 +33,19 @@ jQuery(function($) {
 		$('#ec').replaceWith('<input size="10" type="text" name="ecnumber" id="ec" value="'+$(this).attr('id')+'"/>');
 		$(this).parents('form').submit();
 	})
+	
 	var alignmentopen = false;
-	$('.alignlink').click(function(){
+	//this if used with links:
+	//$('.alignlink').click(function(){
+
+	//nonlinks:
+	function alignment(thisid) {
+
 		if (alignmentopen == false){
-			$.getJSON('/show_alignment', {id: $(this).attr('id')}, function (data) {
+			//this if used with links:
+			//$.getJSON('/show_alignment', {id: $(this).attr('id')}, function (data) {
+			//nonlinks:
+			$.getJSON('/show_alignment', {id: thisid}, function (data) {
 				alignmentopen = true;
 				var part1 = $('<nobr></nobr>');
 				var part2 = $('<nobr></nobr>');

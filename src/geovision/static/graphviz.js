@@ -103,9 +103,9 @@ function initGraph(json)
 				if (!node) return;
 				if (node.nodeFrom) {
 					// living on the edge..
-
+					alignment(node.data.id);
 					//testcode:
-					alert('Clicked on the edge ' + node.nodeFrom.name + '<p class='alignlink' id='' + node.data.id + ''>Show alignmentdata</p>');
+					//alert('Clicked on the edge ' + node.nodeFrom.name')
 
 				} else {
 					// TODO: dynamic graph refresh here..
