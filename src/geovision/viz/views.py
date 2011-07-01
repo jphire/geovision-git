@@ -23,7 +23,8 @@ def create_json(ecnumber, read, dbentry, bitscore, evalue, depth, hits):
 #	qtj = QueryToJSON(ecnumber, read, dbentry, bitscore, evalue, depth, hits)
 #	qtj.write_to_json(PROJECT_PATH + '/static/json_file.js')
 
-	return '/graphjson?' + urllib.urlencode({'ecnumber': ecnumber or '', 'dbentry': dbentry or '', 'read': read or '', 'bitscore': bitscore, 'evalue': evalue, 'depth': depth, 'hits': hits}.items())
+	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'depth': depth, 'hits': hits}.items()),
+		urllib.urlencode({'ecnumber': ecnumber or '', 'dbentry': dbentry or '', 'read': read or ''}.items()))
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
@@ -42,7 +43,11 @@ def testgraph(request):
 
 @login_required
 def graphjson(request):
-	p = dict(map(lambda k: (k, request.GET[k]), ('ecnumber', 'read', 'dbentry', 'bitscore', 'evalue', 'depth', 'hits')))
+	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'ecnumber': '', 'read': '', 'dbentry': ''}
+#	p = dict(map(lambda k: (k, request.GET[k]), ('ecnumber', 'read', 'dbentry', 'bitscore', 'evalue', 'depth', 'hits')))
+	for (k,v) in request.GET.items():
+		p[k] = v
+			
 	for k in ('ecnumber', 'read', 'dbentry'):
 		if p[k] == '':
 			p[k] = None
@@ -81,7 +86,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	depth = int(condition_dict['depth'])
 	hits = int(condition_dict['hits'])
 
-	json_url = ''
+	json_url = ('', '')
 	search_fields = filter(lambda k: condition_dict[k] != '', ['ecnumber', 'read', 'dbentry'])
 	if len(search_fields) > 1:
 		return render(request, 'graphviz.html', merge_dict({
@@ -104,7 +109,8 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			'error_message': "Error: No data found, input different values.",
 		}, condition_dict))
 	#c = Context ({ecnumber:request.POST['ecnumber'], read:request.POST['read'], dbentry:request.POST['dbentry'], bitscore:request.POST['bitscore'], evalue:request.POST['e-value'], depth:request.POST['depth'], hits:request.POST['hits']})
-	return render(request, "graphviz.html", merge_dict(condition_dict, {'json_url': json_url}))
+	(json_base_url, json_query_url_part) = json_url
+	return render(request, "graphviz.html", merge_dict(condition_dict, {'json_base_url': json_base_url, 'json_query_url_part': json_query_url_part}))
 
 @login_required
 def enzyme_autocompletion(request):

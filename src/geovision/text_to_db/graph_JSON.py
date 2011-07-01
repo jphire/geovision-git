@@ -22,12 +22,14 @@ class Node:
 				self.dict["data"]["entry_name"] = dataobject.entry_name
 				self.dict["data"]["os_field"] = dataobject.os_field
 				self.dict["data"]["other_info"] = dataobject.other_info
+				self.dict["data"]["type"] = "dbentry"
 		elif isinstance(dataobject, Read):
 			self.type = "read"
 			self.dict["id"] = dataobject.read_id
 			self.dict["name"] = dataobject.read_id
 			self.dict["data"] = {}
 			self.dict["data"]["description"] = dataobject.description
+			self.dict["data"]["type"] = "read"
 		else:
 			raise Exception("parameter class must be Read or DbEntry")
 		self.dict["adjacencies"] = []

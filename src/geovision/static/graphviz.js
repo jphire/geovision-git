@@ -153,7 +153,7 @@ function initGraph(json)
 				if(node.nodeFrom){
 					//it's an edge
 					tip.innerHTML += "<b>" + node.nodeFrom.name + " - " + node.nodeTo.name + "</b></br>";
-					tip.innerHTML += "<b>" + node.nodeFrom.data.bitscore + "</b></br>";
+					tip.innerHTML += "<b>" + node.data.bitscore + "</b></br>";
 				}
 				else {
 					//it's a label
@@ -164,7 +164,20 @@ function initGraph(json)
         },
         
         onBeforeCompute: function(node){
-            Log.write("centering " + node.name + "...");
+		numSubnodes = $jit.Graph.Util.getSubnodes(node).length;
+		Log.write(node.name + ": " + node.data.type + ", subnodes: " + numSubnodes);
+		if (numSubnodes == 1)
+		{
+			$.getJSON(json_base_url + '&' + node.data.type + '=' + node.name,
+				function(newdata) {
+					rgraph.op.sum(newdata, { type: 'replot'});
+					rgraph.refresh();
+				 }
+			);
+
+		}
+
+
             //Add the relation list in the right column.
             //This list is taken from the data property of each JSON node.
 			$jit.id('inner-details').innerHTML = ""

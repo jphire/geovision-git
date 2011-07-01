@@ -17,9 +17,10 @@
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
 
 <!-- JSON File -->
-{% if json_url %}
+{% if json_base_url %}
 <script language="javascript" type="text/javascript">
- 	$.getJSON("{{ json_url|safe }}", function(data) { initGraph(data); });
+	var json_base_url = "{{ json_base_url|safe }}";
+ 	$.getJSON(json_base_url + "&{{ json_query_url_part|safe }}", function(data) { initGraph(data); });
 </script>
 {% endif %}
 <!-- jQuery-UI, for autocomplete -->
@@ -31,7 +32,7 @@
 <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
 {% block sidenavi_content %}
 
-{% if error_message or not json_url %}
+{% if error_message or not json_base_url %}
 	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
 	<div class="error">{{ error_message }}</div>
 {% endif %}
