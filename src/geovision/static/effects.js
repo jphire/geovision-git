@@ -1,5 +1,4 @@
 var opened = false;
-var closed = true;
 
 function openSearch()
 {
