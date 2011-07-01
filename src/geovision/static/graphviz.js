@@ -57,6 +57,7 @@ function initGraph(json)
 
         //set transformation style
         transition: $jit.Trans.Circ,
+
         //Add navigation capabilities:
         //zooming by scrolling and panning.
         Navigation: {
@@ -105,7 +106,6 @@ function initGraph(json)
 					// living on the edge..
 
 					//testcode:
-					alert('Clicked on the edge ' + node.nodeFrom.name + '<p class='alignlink' id='' + node.data.id + ''>Show alignmentdata</p>');
 
 				} else {
 					// TODO: dynamic graph refresh here..
@@ -117,7 +117,7 @@ function initGraph(json)
 				if (node.nodeFrom) {
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$color = "#FDCC97"
-					//rgraph.refresh()
+					rgraph.refresh()
 					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
 				}
 			},
@@ -130,7 +130,7 @@ function initGraph(json)
 					}
 				}
 				rgraph.canvas.getElement().style.cursor = ''
-				//rgraph.refresh()
+				rgraph.refresh()
 			}
 		},
 
@@ -167,7 +167,7 @@ function initGraph(json)
         
         onBeforeCompute: function(node){
 		numSubnodes = $jit.Graph.Util.getSubnodes(node).length;
-		Log.write(node.name + ": " + node.data.type + ", subnodes: " + numSubnodes);
+//		Log.write(node.name + ": " + node.data.type + ", subnodes: " + numSubnodes);
 		if (numSubnodes == 1)
 		{
 			$.getJSON(json_base_url + '&' + node.data.type + '=' + node.name,
