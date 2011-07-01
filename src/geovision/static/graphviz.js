@@ -159,6 +159,7 @@ function initGraph(json)
 					//it's an edge
 					tip.innerHTML += "<b>" + node.nodeFrom.name + " - " + node.nodeTo.name + "</b></br>";
 					tip.innerHTML += "<b>" + node.data.bitscore + "</b></br>";
+					tip.innerHTML += "<b>" + node.data.error_value + "</b></br>";
 				}
 				else {
 					//it's a label

@@ -8,7 +8,7 @@ import json
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'geovision.settings'
 from geovision.viz.models import *
-from geovision.settings import PROJECTROOT
+from geovision.settings import PROJECT_PATH
 
 class JsonCreator:
 	"""
@@ -92,7 +92,7 @@ class JsonCreator:
 	def add_new_read(self, blastitem):
 		self.nodes[blastitem.read.read_id] = {'name':blastitem.read.read_id, 'id':blastitem.read.read_id, 'data':{}, 'adjacencies':[]}
 		description = self.make_read_query(blastitem.read.read_id).description
-		data = {'description':description, 'bitscore':blastitem.bitscore, '$type':'circle'}
+		data = {'description':description, 'bitscore':blastitem.bitscore, 'read_seq':blastitem.read_seq, 'db_seq':blastitem.db_seq, '$type':'circle'}
 		self.nodes[blastitem.read.read_id]['data'] = data
 
 	def add_db_adj(self, blastitem):
@@ -103,7 +103,7 @@ class JsonCreator:
 	def add_new_db(self, blastitem):
 		self.nodes[blastitem.db_entry.db_id] = {'name':blastitem.db_entry.db_id, 'id':blastitem.db_entry.db_id, 'data':{}, 'adjacencies':[]}
 		description = self.make_db_query(blastitem.db_entry.db_id).description
-		data = {'description':description, 'bitscore':blastitem.bitscore, '$type':'triangle'}
+		data = {'description':description, 'bitscore':blastitem.bitscore, 'read_seq':blastitem.read_seq, 'db_seq':blastitem.db_seq, '$type':'triangle'}
 		self.nodes[blastitem.db_entry.db_id]['data'] = data
 
 	def add_read_adj(self, blastitem):
@@ -152,7 +152,7 @@ class JsonCreator:
 		for k, v in self.nodes.iteritems():
 			self.node_list.append(v)
 			
-		json_file = open(PROJECTROOT + "/static/json_test_graph.js", 'w')
+		json_file = open(PROJECT_PATH + "/static/json_test_graph.js", 'w')
 		json_file.write("var json_data = \n")
 		json.dump(self.node_list, json_file)
 		json_file.close()
