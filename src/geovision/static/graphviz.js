@@ -103,6 +103,7 @@ function initGraph(json)
 				if (!node) return;
 				if (node.nodeFrom) {
 					// living on the edge..
+					console.log(node.data.id);
 					alignment(node.data.id);
 					//testcode:
 					//alert('Clicked on the edge ' + node.nodeFrom.name')
