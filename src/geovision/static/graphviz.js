@@ -267,8 +267,8 @@ function alignmentfunction(thisid) {
 			$('<br/>').appendTo($('#alignment'));
 			part2.appendTo($('#alignment'));
 			$('#test').after(alignment);
-			part1.load(data.readseq);
-			part2.load(data.dbseq);
+			part1.load(data.Object.readseq);
+			part2.load(data.Object.dbseq);
 			$('#alignment').css('border', '2px solid #265434');
 			$('#alignment').css('margin-bottom', '10px');
 			$('#alignment').animate({height: "60px"}, {complete:
