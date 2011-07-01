@@ -259,17 +259,13 @@ function alignmentfunction(thisid) {
 	if (alignmentopen == false){
 		$.getJSON('/show_alignment', {id: thisid}, function (data) {
 			alignmentopen = true;
-			var part1 = $('<nobr></nobr>');
-			var part2 = $('<nobr></nobr>');
+			var part1 = $('<nobr>' + data.readseq + '</nobr>');
+			var part2 = $('<nobr>' + data.dbseq + '</nobr>');
 			part1.css('display', 'none');
 			part2.css('display', 'none');
 			part1.appendTo($('#alignment'));
 			$('<br/>').appendTo($('#alignment'));
 			part2.appendTo($('#alignment'));
-			$(data.readseq).appendTo(part1);
-			$(data.dbseq).appendTo(part2);
-			console.log(data.readseq);
-			console.log(data.dbseq);
 			$('#alignment').slideDown(300, function() { part1.fadeIn(); part2.fadeIn();
 								var close = $('<div id = "closealign">Close</div>');
 								$('#alignment').before(close);
