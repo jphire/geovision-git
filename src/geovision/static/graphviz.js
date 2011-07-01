@@ -104,8 +104,8 @@ function initGraph(json)
 				if (!node) return;
 				if (node.nodeFrom) {
 					// living on the edge..
-					console.log(node.id);
-					alignment(node.id);
+					console.log(node.data.id);
+					alignment(node.data.id);
 					//testcode:
 
 				} else {
