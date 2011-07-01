@@ -51,6 +51,7 @@ class Node:
 			return False
 
 class Edge:
+	MAX_BITSCORE = 6000
 	def __init__(self, nodeTo, blastobject):
 		if nodeTo is None:
 			raise Exception("Must supply nodeTo parameter")
