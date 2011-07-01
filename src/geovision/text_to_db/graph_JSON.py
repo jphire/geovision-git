@@ -51,7 +51,6 @@ class Node:
 			return False
 
 class Edge:
-	MAX_BITSCORE = 0
 	def __init__(self, nodeTo, blastobject):
 		if nodeTo is None:
 			raise Exception("Must supply nodeTo parameter")
@@ -74,8 +73,6 @@ class Edge:
 #		self.dict["data"]["send"] = blastobject.send
 		self.dict["data"]["error_value"] = blastobject.error_value
 		self.dict["data"]["bitscore"] = blastobject.bitscore
-		if blastobject.bitscore > self.MAX_BITSCORE:
-			self.MAX_BITSCORE = blastobject.bitscore
 ############## Graph visualization style options below ################
 		self.dict["data"]["$color"] = self.calculate_color(blastobject.bitscore)
 		self.dict["data"]["color"] = self.dict["data"]["$color"]
@@ -83,7 +80,7 @@ class Edge:
 		self.dict["data"]["$dim"] = 15
 		self.dict["data"]["$lineWidth"] = 2
 		self.dict["data"]["$alpha"] = 1
-		self.dict["data"]["$epsilon"] = 14
+		self.dict["data"]["$epsilon"] = 7
 
 	def calculate_color(self, bitscore):
 		return "#%0.2x0000" % int(math.floor((1.0 * bitscore / self.MAX_BITSCORE) * 255))
