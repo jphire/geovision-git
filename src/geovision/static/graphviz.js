@@ -103,7 +103,9 @@ function initGraph(json)
 				if (!node) return;
 				if (node.nodeFrom) {
 					// living on the edge..
-					alert('Clicked on the edge ' + node.nodeFrom.name);
+
+					//testcode:
+					alert('Clicked on the edge ' + node.nodeFrom.name + '<p class='alignlink' id='' + node.data.id + ''>Show alignmentdata</p>');
 
 				} else {
 					// TODO: dynamic graph refresh here..
@@ -184,8 +186,7 @@ function initGraph(json)
             $jit.id('inner-details').innerHTML += "<b>" + node.id + "</b></br>"
 			$jit.id('inner-details').innerHTML += node.data.description + "</br>"
 			if(node.data.db_seq){
-				//just added, might be a bug:
-				$jit.id('inner-details').innerHTML += "<p class='alignlink' id='" + node.data.id + "'>Show alignmentdata</p> </br>"
+				//link moved from here to rightclick
 			}
 
         },
