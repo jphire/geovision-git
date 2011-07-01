@@ -20,7 +20,7 @@ import urllib
 
 def create_json(ecnumber, read, dbentry, bitscore, evalue, depth, hits):
 	# for testing only
-#	qtj = QueryToJSON(ecnumber, read, dbentry, bitscore, evalue, depth, hits)
+	qtj = QueryToJSON(ecnumber, dbentry, read, evalue, bitscore, depth, hits)
 #	qtj.write_to_json(PROJECT_PATH + '/static/json_file.js')
 
 	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'depth': depth, 'hits': hits}.items()),
@@ -52,7 +52,7 @@ def graphjson(request):
 		if p[k] == '':
 			p[k] = None
 	try:
-		out = QueryToJSON(p['ecnumber'], p['dbentry'], p['read'], float(p['bitscore']), float(p['evalue']), int(p['depth']), int(p['hits']))
+		out = QueryToJSON(p['ecnumber'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']))
 	except Exception as e:
 		out = str(e)
 	return HttpResponse(out, mimetype='text/plain')
