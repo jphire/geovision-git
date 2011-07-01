@@ -258,6 +258,7 @@ function alignmentfunction(thisid) {
 	if (alignmentopen == false){
 		$.getJSON('/show_alignment', {id: thisid}, function (data) {
 			alignmentopen = true;
+			console.log(data);
 			var part1 = $('<nobr></nobr>');
 			var part2 = $('<nobr></nobr>');
 			part1.css('display', 'none');
