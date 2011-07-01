@@ -159,6 +159,8 @@ div#alignment{
 	height: 1px;
 	position: relative;
 	overflow: auto;
+	height: 60px;
+	border: 2px solid #265434;
 }
 div#closealign{
 	text-align: right;
