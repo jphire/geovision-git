@@ -11,13 +11,14 @@ class NodeEdgeJSONEncoder(json.JSONEncoder):
 class Node:
 	def __init__(self, dataobject):
 		self.dict = {}
+		self.dict["data"] = {}
 		if isinstance(dataobject, DbEntry):
 			self.type = "db_entry"
 			self.dict["id"] = dataobject.db_id
 			self.dict["name"] = dataobject.db_id
-			self.dict["data"] = {}
 			self.dict["data"]["source"] = dataobject.source_file
 			self.dict["data"]["description"] = dataobject.description
+			self.dict["data"]["$color"] =  '#00ff00'
 			if dataobject.source_file == "uniprot":
 				self.dict["data"]["sub_db"] = dataobject.sub_db
 				self.dict["data"]["entry_name"] = dataobject.entry_name
@@ -28,7 +29,6 @@ class Node:
 			self.type = "read"
 			self.dict["id"] = dataobject.read_id
 			self.dict["name"] = dataobject.read_id
-			self.dict["data"] = {}
 			self.dict["data"]["description"] = dataobject.description
 			self.dict["data"]["type"] = "read"
 		else:
@@ -61,6 +61,7 @@ class Edge:
 		self.dict["data"]["database_name"] = blastobject.database_name
 		self.dict["data"]["db_entry"] = blastobject.db_entry.db_id
 		self.dict["data"]["length"] = blastobject.length
+		self.dict["data"]["id"] = blastobject.id
 #		self.dict["data"]["pident"] = blastobject.pident
 #		self.dict["data"]["mismatch"] = blastobject.mismatch
 #		self.dict["data"]["gapopen"] = blastobject.gapopen
