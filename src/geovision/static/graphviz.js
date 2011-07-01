@@ -25,15 +25,15 @@ var Log = {
   }
 };
 
+
 function init(){
     //init data
     jQuery('#loader').fadeOut();//loader fadeaway
+}
 
-//this references data in json_file.js
-var json = json_data;
- 
-    //init RGraph
-    var rgraph = new $jit.RGraph({
+function initGraph(json)
+{
+        var rgraph = new $jit.RGraph({
         //Where to append the visualization
         injectInto: 'infovis',
         //set canvas size
@@ -104,7 +104,9 @@ var json = json_data;
 				if (!node) return;
 				if (node.nodeFrom) {
 					// living on the edge..
-					alert('Clicked on the edge ' + node.nodeFrom.name);
+					console.log(node.id);
+					alignment(node.id);
+					//testcode:
 
 				} else {
 					// TODO: dynamic graph refresh here..
@@ -116,7 +118,8 @@ var json = json_data;
 				if (node.nodeFrom) {
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$color = "#FDCC97"
-					//rgraph.refresh()
+					rgraph.refresh()
+					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
 				}
 			},
 			onMouseLeave: function(object, eventInfo, e) {
@@ -128,7 +131,7 @@ var json = json_data;
 					}
 				}
 				rgraph.canvas.getElement().style.cursor = ''
-				//rgraph.refresh()
+				rgraph.refresh()
 			}
 		},
 
@@ -153,7 +156,7 @@ var json = json_data;
 				if(node.nodeFrom){
 					//it's an edge
 					tip.innerHTML += "<b>" + node.nodeFrom.name + " - " + node.nodeTo.name + "</b></br>";
-					tip.innerHTML += "<b>" + node.nodeFrom.data.bitscore + "</b></br>";
+					tip.innerHTML += "<b>" + node.data.bitscore + "</b></br>";
 				}
 				else {
 					//it's a label
@@ -164,15 +167,28 @@ var json = json_data;
         },
         
         onBeforeCompute: function(node){
-            Log.write("centering " + node.name + "...");
+		numSubnodes = $jit.Graph.Util.getSubnodes(node).length;
+//		Log.write(node.name + ": " + node.data.type + ", subnodes: " + numSubnodes);
+		if (numSubnodes == 1)
+		{
+			$.getJSON(json_base_url + '&' + node.data.type + '=' + node.name,
+				function(newdata) {
+					rgraph.op.sum(newdata, { type: 'replot'});
+					rgraph.refresh();
+				 }
+			);
+
+		}
+
+
             //Add the relation list in the right column.
             //This list is taken from the data property of each JSON node.
 			$jit.id('inner-details').innerHTML = ""
             $jit.id('inner-details').innerHTML += "<b>" + node.id + "</b></br>"
 			$jit.id('inner-details').innerHTML += node.data.description + "</br>"
-			//if(node.data.db_seq){
-					//$jit.id('inner-details').innerHTML += //alignmentdata link here
-			//}
+			if(node.data.db_seq){
+				//link moved from here to rightclick
+			}
 
         },
         
@@ -214,7 +230,7 @@ var json = json_data;
     });
 
     //load JSON data, second argument is the index of the centered node
-    rgraph.loadJSON(json, 3);
+    rgraph.loadJSON(json, 0);
     
     //trigger small animation
     rgraph.graph.eachNode(function(n) {
