@@ -32,7 +32,8 @@ jQuery(function($) {
 		$('#ec').replaceWith('<input size="10" type="text" name="ecnumber" id="ec" value="'+$(this).attr('id')+'"/>');
 		$(this).parents('form').submit();
 	})
-	
+
+/* moved elsewhere
 var alignmentopen = false;
 //this if used with links:
 //$('.alignlink').click(function(){
@@ -85,3 +86,5 @@ function alignmentfunction(thisid) {
 		}
 	});
 });
+
+*/
