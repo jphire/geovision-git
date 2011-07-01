@@ -106,7 +106,7 @@ function initGraph(json)
 					// living on the edge..
 
 					console.log(node.data.id);
-					alignment(node.data.id);
+					alignmentfunction(node.data.id);
 
 					//testcode:
 

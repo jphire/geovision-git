@@ -38,7 +38,7 @@ var alignmentopen = false;
 //$('.alignlink').click(function(){
 
 //nonlinks:
-function alignment(thisid) {
+function alignmentfunction(thisid) {
 
 	if (alignmentopen == false){
 		//this if used with links:
