@@ -245,6 +245,7 @@ function initGraph(json)
 		});
 
 		adj.data.$color = "#%0.2x0000" % parseInt(Math.floor((1.0 * bitscore / maxScore) * 255));
+		adj.data.color = adj.data.$color;
 	}
 
 	//edge coloring is done here
