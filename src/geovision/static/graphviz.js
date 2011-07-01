@@ -30,10 +30,10 @@ function init(){
     //init data
     jQuery('#loader').fadeOut();//loader fadeaway
 }
-
+var rgraph;
 function initGraph(json)
 {
-        var rgraph = new $jit.RGraph({
+        rgraph = new $jit.RGraph({
         //Where to append the visualization
         injectInto: 'infovis',
         //set canvas size
@@ -92,7 +92,7 @@ function initGraph(json)
           lineWidth:1.0,
           dim: 10,
 		  type: 'line',
-		  epsilon: 14
+		  epsilon: 7
         },
 
 		Events : {
@@ -177,6 +177,7 @@ function initGraph(json)
 			$.getJSON(json_base_url + '&' + node.data.type + '=' + node.name,
 				function(newdata) {
 					rgraph.op.sum(newdata, { type: 'replot'});
+					colorEdges();
 					rgraph.refresh();
 				 }
 			);
@@ -234,8 +235,8 @@ function initGraph(json)
 
     //load JSON data, second argument is the index of the centered node
     rgraph.loadJSON(json, 0);
-    
     //trigger small animation
+
     rgraph.graph.eachNode(function(n) {
       var pos = n.getPos();
       pos.setc(-200, -200);
@@ -245,12 +246,12 @@ function initGraph(json)
       modes:['polar'],
       duration: 1000
     });
-    
     //end
     //append information about the root relations in the right column
     $jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b><br/>";
     $jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
-
+    rgraph.refresh();
+    colorEdges();
 }
 
 var alignmentopen = false;
@@ -258,6 +259,7 @@ function alignmentfunction(thisid) {
 	if (alignmentopen == false){
 		$.getJSON('/show_alignment', {id: thisid}, function (data) {
 			alignmentopen = true;
+			console.log(data);
 			var part1 = $('<nobr></nobr>');
 			var part2 = $('<nobr></nobr>');
 			part1.css('display', 'none');
@@ -295,3 +297,28 @@ $('#closealign').live('click', function() {
 		$('#log').css('top', '15px');
 	}
 });
+
+function colorEdges(){
+	maxScore = 0;
+	minScore = 100000;
+	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
+		$jit.Graph.Util.eachAdjacency(node, function(adj) {
+			if(adj.data.bitscore > maxScore)
+				maxScore = adj.data.bitscore;
+			if(adj.data.bitscore < minScore)
+				minScore = adj.data.bitscore;
+		});
+	});
+	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
+		$jit.Graph.Util.eachAdjacency(node, function(adj) {
+			col = Math.floor((1.0 * adj.data.bitscore / maxScore) * 255).toString(16);
+			if(col.length == 1)
+				col = "0" + col;
+			col = "#" + col;
+			col += "0000";
+			adj.data.$color = col;
+			adj.data.color = col;
+//			alert(col);
+		});
+	});
+}

@@ -1,9 +1,8 @@
 import math
 import json
 from geovision.viz.models import *
-from django.db.models import Max
 
-MAX_BITSCORE = Blast.objects.aggregate(Max("bitscore"))['bitscore__max']
+
 
 class NodeEdgeJSONEncoder(json.JSONEncoder):
 	def default(self, o):
@@ -22,12 +21,13 @@ class Node:
 			self.dict["data"]["source"] = dataobject.source_file
 			self.dict["data"]["description"] = dataobject.description
 			self.dict["data"]["$color"] =  '#00ff00'
+			self.dict["data"]["type"] = "dbentry"
+
 			if dataobject.source_file == "uniprot":
 				self.dict["data"]["sub_db"] = dataobject.sub_db
 				self.dict["data"]["entry_name"] = dataobject.entry_name
 				self.dict["data"]["os_field"] = dataobject.os_field
 				self.dict["data"]["other_info"] = dataobject.other_info
-				self.dict["data"]["type"] = "dbentry"
 		elif isinstance(dataobject, Read):
 			self.type = "read"
 			self.dict["id"] = dataobject.read_id
@@ -52,17 +52,20 @@ class Node:
 			return False
 
 class Edge:
-	def __init__(self, nodeTo, blastobject):
+	MAX_BITSCORE = 6000
+	def __init__(self, nodeFrom, nodeTo, blastobject):
 		if nodeTo is None:
 			raise Exception("Must supply nodeTo parameter")
+		if nodeFrom is None:
+			raise Exception("Must supply nodeFrom parameter")
 		if not isinstance(blastobject, Blast):
 			raise Exception("Second parameter must be a blast object, is " + str(blastobject.__class__))
 		self.dict = {}
 		self.dict["nodeTo"] = nodeTo.id
 		self.dict["data"] = {}
-		self.dict["data"]["read"] = nodeTo.id if nodeTo.type == "read" else blastobject.read.read_id
+		self.dict["data"]["read"] = nodeFrom.id if nodeFrom.type == "read" else blastobject.read.read_id
 		self.dict["data"]["database_name"] = blastobject.database_name
-		self.dict["data"]["db_entry"] = nodeTo.id if nodeTo.type == "db_entry" else blastobject.db_entry.db_id
+		self.dict["data"]["db_entry"] = nodeFrom.id if nodeFrom.type == "db_entry" else blastobject.db_entry.db_id
 		self.dict["data"]["length"] = blastobject.length
 		self.dict["data"]["id"] = blastobject.id
 #		self.dict["data"]["pident"] = blastobject.pident
@@ -75,7 +78,6 @@ class Edge:
 		self.dict["data"]["error_value"] = blastobject.error_value
 		self.dict["data"]["bitscore"] = blastobject.bitscore
 ############## Graph visualization style options below ################
-		self.dict["data"]["$color"] = self.dict["data"]["color"] = self.calculate_color(blastobject.bitscore)
 		self.dict["data"]["$type"] = "arrow"
 		self.dict["data"]["$dim"] = 15
 		self.dict["data"]["$lineWidth"] = 2
@@ -83,7 +85,7 @@ class Edge:
 		self.dict["data"]["$epsilon"] = 7
 
 	def calculate_color(self, bitscore):
-		return "#%0.2x0000" % int(math.floor((1.0 * bitscore / MAX_BITSCORE) * 255))
+		return "#%0.2x0000" % int(math.floor((1.0 * bitscore / self.MAX_BITSCORE) * 255))
 
 	def __repr__(self):
 		return json.dumps(self.dict, cls=NodeEdgeJSONEncoder)
@@ -192,6 +194,7 @@ class QueryToJSON:
 		been visited.
 		"""
 		next_level_nodes = set()
+		startnode_id = self.get_node_id(startnode)
 		if startnode.type == "db_entry":
 			for blast in queryset:
 				readnode = Node(blast.read)
@@ -199,7 +202,7 @@ class QueryToJSON:
 				if readnode not in self.nodes:
 					self.nodes.append(readnode)
 					next_level_nodes.add(readnode)
-				startnode.dict["adjacencies"].append(Edge(readid, blast))
+				startnode.dict["adjacencies"].append(Edge(startnode_id, readid, blast))
 		elif startnode.type is "read":
 			for blast in queryset:
 				dbnode = Node(blast.db_entry)
@@ -207,7 +210,7 @@ class QueryToJSON:
 				if dbnode not in self.nodes:
 					self.nodes.append(dbnode)
 					next_level_nodes.add(dbnode)
-				startnode.dict["adjacencies"].append(Edge(db_id, blast))
+				startnode.dict["adjacencies"].append(Edge(startnode_id, db_id, blast))
 		else:
 			raise Exception("startnode type must be db_entry or read")
 		return next_level_nodes
