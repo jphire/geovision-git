@@ -1,4 +1,7 @@
-from geovision.text_to_db.create_JSON import create_json
+#from geovision.text_to_db.create_JSON import create_json
+from geovision.text_to_db.graph_JSON import QueryToJSON
+from geovision.settings import PROJECT_PATH
+
 from django.http import HttpResponse
 from django.template import Context, loader
 from django.shortcuts import render_to_response
@@ -12,6 +15,10 @@ from django.db.models import Q
 from geovision.viz.models import EnzymeName
 import json
 import re
+
+def create_json(ecnumber, dbentry, read, bitscore, evalue, depth, hits):
+	qtj = QueryToJSON(ecnumber, read, dbentry, bitscore, evalue, depth, hits)
+	qtj.write_to_json(PROJECT_PATH + '/static/json_file.js')
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
@@ -63,17 +70,17 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			'error_message': "Error: You can only enter one of the following: Enzyme, DB entry id, Read id.",
 		}, condition_dict))
 	if condition_dict['dbentry'] != '':
-		error = create_json(0, 0, condition_dict['dbentry'], bitscore, evalue, depth, hits)
+		error = create_json(None, None, condition_dict['dbentry'], bitscore, evalue, depth, hits)
 	elif condition_dict['ecnumber']!='':
 		result = lookup_enzyme(condition_dict['ecnumber'])
 		if isinstance(result, basestring):
-			error = create_json(result, 0, 0, bitscore, evalue, depth, hits)
+			error = create_json(result, None, None, bitscore, evalue, depth, hits)
 		elif result == None:
 			return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
 		else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': result}))
 
 	elif condition_dict['read']!='':
-		error = create_json(0, condition_dict['read'], 0, bitscore, evalue, depth, hits)
+		error = create_json(None, condition_dict['read'], None, bitscore, evalue, depth, hits)
 	if (error == 'error_no_children'):
 		return render(request, 'graphviz.html', merge_dict({
 			'error_message': "Error: No data found, input different values.",

@@ -62,7 +62,10 @@ class BulkInserter():
 			raise RuntimeError('psql subprocess died unexceptedly with code %d' % status)
 
 	def write_to_psql(self, line):
-		self.psql_popen.stdin.write(line)
+		try:
+			self.psql_popen.stdin.write(line)
+		except IOError:
+			self.check_psql_status()
 		self.status_check_counter += 1
 		if self.status_check_counter >= 100000:
 			self.status_check_counter = 0

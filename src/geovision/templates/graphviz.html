@@ -5,8 +5,6 @@
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}RGraph.js"></script>
 
-<!-- JSON File -->
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}json_test_graph.js"></script>
 
 <script language="javascript" type="text/javascript">
 	var staticurl = {{ STATIC_URL }};
@@ -17,6 +15,11 @@
 
 <!-- Example File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
+
+<!-- JSON File -->
+<script language="javascript" type="text/javascript">
+ 	$.getJSON("{{ STATIC_URL }}json_file.js", function(data) { initGraph(data); });
+</script>
 
 <!-- jQuery-UI, for autocomplete -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>

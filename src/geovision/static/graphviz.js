@@ -25,15 +25,15 @@ var Log = {
   }
 };
 
+
 function init(){
     //init data
     jQuery('#loader').fadeOut();//loader fadeaway
+}
 
-//this references data in json_file.js
-var json = json_data;
- 
-    //init RGraph
-    var rgraph = new $jit.RGraph({
+function initGraph(json)
+{
+        var rgraph = new $jit.RGraph({
         //Where to append the visualization
         injectInto: 'infovis',
         //set canvas size
@@ -215,7 +215,7 @@ var json = json_data;
     });
 
     //load JSON data, second argument is the index of the centered node
-    rgraph.loadJSON(json, 3);
+    rgraph.loadJSON(json, 0);
     
     //trigger small animation
     rgraph.graph.eachNode(function(n) {

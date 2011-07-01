@@ -32,10 +32,10 @@ if RUNNING_ON_USERS: # Postgres settings if running on users.cs, the user/databa
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-			'NAME': login_user, # Or path to database file if using sqlite3.
+			'NAME': 'tkt_gvis', # Or path to database file if using sqlite3.
 			'USER': login_user, # Not used with sqlite3.
 			'PASSWORD': '', # Not used with sqlite3.
-			'HOST': os.environ['HOME'] + '/pg_data/',
+			'HOST': '/home/tkt_gvis/pg_data/',
 			'PORT': '58786'
 		}
 	}

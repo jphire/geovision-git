@@ -227,6 +227,7 @@ class QueryToJSON:
 		except NameError:
 			json_file = open(file, 'w')
 		json_file.write(str(self.nodes))
+#		json_file.write(json.dumps(self.nodes)) # what???
 		json_file.close()
 		
 	def __repr__(self):
