@@ -161,6 +161,7 @@ div#alignment{
 	overflow: auto;
 	height: 60px;
 	border: 2px solid #265434;
+	display:none;
 }
 div#closealign{
 	text-align: right;
