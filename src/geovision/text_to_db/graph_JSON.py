@@ -75,8 +75,8 @@ class Edge:
 		self.dict["data"]["error_value"] = blastobject.error_value
 		self.dict["data"]["bitscore"] = blastobject.bitscore
 ############## Graph visualization style options below ################
-		self.dict["data"]["$color"] = self.calculate_color(blastobject.bitscore)
-		self.dict["data"]["color"] = self.dict["data"]["$color"]
+#		self.dict["data"]["$color"] = self.calculate_color(blastobject.bitscore)
+#		self.dict["data"]["color"] = self.dict["data"]["$color"]
 		self.dict["data"]["$type"] = "arrow"
 		self.dict["data"]["$dim"] = 15
 		self.dict["data"]["$lineWidth"] = 2
