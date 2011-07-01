@@ -158,13 +158,13 @@ function initGraph(json)
 				if(node.nodeFrom){
 					//it's an edge
 //					tip.innerHTML += "<b>" + node.nodeFrom.name + " - " + node.nodeTo.name + "</b></br>";
-					tip.innerHTML += "bitscore: " + node.data.bitscore + "</br></br>";
-					tip.innerHTML += "error value: " + node.data.error_value + "</br>";
+					tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
+					tip.innerHTML += "error value: " + node.data.error_value + "<br/>";
 				}
 				else {
 					//it's a label
-					tip.innerHTML += "<b>" + node.id + "</b></br>";
-					tip.innerHTML += node.data.description + "</br>";
+					tip.innerHTML += "<b>" + node.id + "</b><br/>";
+					tip.innerHTML += node.data.description + "<br/>";
 				}
             }
         },
@@ -187,8 +187,8 @@ function initGraph(json)
             //Add the relation list in the right column.
             //This list is taken from the data property of each JSON node.
 			$jit.id('inner-details').innerHTML = ""
-            $jit.id('inner-details').innerHTML += "<b>" + node.id + "</b></br>"
-			$jit.id('inner-details').innerHTML += node.data.description + "</br>"
+            $jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
+			$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
 			if(node.data.db_seq){
 				//link moved from here to rightclick
 			}
@@ -248,7 +248,7 @@ function initGraph(json)
     
     //end
     //append information about the root relations in the right column
-    $jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b></br>";
+    $jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b><br/>";
     $jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
 
 }
