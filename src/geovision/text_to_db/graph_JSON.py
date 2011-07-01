@@ -1,3 +1,4 @@
+import math
 import json
 from geovision.viz.models import *
 
@@ -79,7 +80,7 @@ class Edge:
 
 	def calculate_color(self, bitscore):
 		max_bitscore = 5356
-		return int(floor((1.0 * bitscore / max_bitscore) * 16777215))
+		return int(math.floor((1.0 * bitscore / max_bitscore) * 16777215))
 
 	def __repr__(self):
 		return json.dumps(self.dict, cls=NodeEdgeJSONEncoder)
