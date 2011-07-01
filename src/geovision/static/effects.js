@@ -73,7 +73,7 @@ function alignment(thisid) {
 		return false;
 	}
 }
-}
+
 	//) if link
 	$('#closealign').live('click', function() {
 		if (alignmentopen == true){
