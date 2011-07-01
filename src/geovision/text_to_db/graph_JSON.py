@@ -80,7 +80,7 @@ class Edge:
 
 	def calculate_color(self, bitscore):
 		max_bitscore = 5356
-		return int(math.floor((1.0 * bitscore / max_bitscore) * 16777215))
+		return "#" + hex(int(math.floor((1.0 * bitscore / max_bitscore) * 16777215)))[2:]
 
 	def __repr__(self):
 		return json.dumps(self.dict, cls=NodeEdgeJSONEncoder)
