@@ -158,7 +158,7 @@ function initGraph(json)
 				if(node.nodeFrom){
 					//it's an edge
 //					tip.innerHTML += "<b>" + node.nodeFrom.name + " - " + node.nodeTo.name + "</b></br>";
-					tip.innerHTML += "bitscore: " + node.data.bitscore + "</br>";
+					tip.innerHTML += "bitscore: " + node.data.bitscore + "</br></br>";
 					tip.innerHTML += "error value: " + node.data.error_value + "</br>";
 				}
 				else {
