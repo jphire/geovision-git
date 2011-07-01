@@ -235,12 +235,6 @@ function initGraph(json)
     //load JSON data, second argument is the index of the centered node
     rgraph.loadJSON(json, 0);
 
-	//edge coloring is done here
-	rgraph.eachNode(function(node) {
-		node.eachAdjacency(function(adj) {
-			colorEdges(adj);
-		});
-	});
 
 	function colorEdges(adj){
 		maxScore = 0;
@@ -252,6 +246,14 @@ function initGraph(json)
 
 		adj.data.$color = "#%0.2x0000" % parseInt(Math.floor((1.0 * bitscore / maxScore) * 255));
 	}
+
+	//edge coloring is done here
+	rgraph.eachNode(function(node) {
+		node.eachAdjacency(function(adj) {
+			colorEdges(adj);
+		});
+	});
+	
     //trigger small animation
     rgraph.graph.eachNode(function(n) {
       var pos = n.getPos();
