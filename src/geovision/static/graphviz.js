@@ -25,6 +25,68 @@ var Log = {
   }
 };
 
+function dot(u, v)
+{
+	return u.x * v.x + u.y * v.y;
+}
+function add(u, v)
+{
+	return {'x': u.x + v.x, 'y': u.y + v.y}
+
+}
+function sub(u, v)
+{
+	return {'x': u.x - v.x, 'y': u.y - v.y}
+}
+function mul(k, v)
+{
+	return {'x': k * v.x, 'y': k * v.y};
+}
+
+dotLineLength = function( x, y, x0, y0, x1, y1, o ){
+	function lineLength( x, y, x0, y0 ){
+		return Math.sqrt( ( x -= x0 ) * x + ( y -= y0 ) * y );
+	}
+	if( o && !( o = function( x, y, x0, y0, x1, y1 ){
+		if( !( x1 - x0 ) ) return { x: x0, y: y };
+		else if( !( y1 - y0 ) ) return { x: x, y: y0 };
+		var left, tg = -1 / ( ( y1 - y0 ) / ( x1 - x0 ) );
+		return { x: left = ( x1 * ( x * tg - y + y0 ) + x0 * ( x * - tg + y - y1 ) ) / ( tg * ( x1 - x0 ) + y0 - y1 ), y: tg * left - tg * x + y };
+	}( x, y, x0, y0, x1, y1 ), o.x >= Math.min( x0, x1 ) && o.x <= Math.max( x0, x1 ) && o.y >= Math.min( y0, y1 ) && o.y <= Math.max( y0, y1 ) ) ){
+		var l1 = lineLength( x, y, x0, y0 ), l2 = lineLength( x, y, x1, y1 );
+		return l1 > l2 ? l2 : l1;
+	}
+	else {
+		var a = y0 - y1, b = x1 - x0, c = x0 * y1 - y0 * x1;
+		return Math.abs( a * x + b * y + c ) / Math.sqrt( a * a + b * b );
+	}
+};
+
+$jit.RGraph.Plot.EdgeTypes.implement({  
+	'customArrow':{
+      'render': function(adj, canvas) {
+        var from = adj.nodeFrom.pos.getc(true),
+            to = adj.nodeTo.pos.getc(true),
+            dim = adj.getData('dim'),
+            direction = adj.data.$direction,
+            inv = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
+        this.edgeHelper.arrow.render(from, to, dim, inv, canvas);
+      },
+      'contains': function(adj, pos) {
+        var from = adj.nodeFrom.pos.getc(true),
+            to = adj.nodeTo.pos.getc(true);
+
+	var lineWidth = adj.getData('epsilon');
+	var d = lineWidth/2;
+	var minX = Math.min(from.x, to.x) - d, maxX = Math.max(from.x, to.x) + d;
+	var minY = Math.min(from.y, to.y) - d, maxY = Math.max(from.y, to.y) + d;
+	if(pos.x < minX || pos.x > maxX || pos.y < minY || pos.y > maxY)
+		return false;
+
+	return dotLineLength(pos.x, pos.y, from.x, from.y, to.x, to.y, false) < lineWidth;
+      }
+  }
+});  
 
 function init(){
     //init data
@@ -86,13 +148,12 @@ function initGraph(json)
         },
         
         Edge: {
-          overridable: true,
-          color: '#068481',
-		  alpha: 1,
-          lineWidth:1.0,
-          dim: 10,
-		  type: 'line',
-		  epsilon: 7
+	overridable: true,
+	color: '#888800',
+	alpha: 1,
+	lineWidth:2.5,
+	type: 'customArrow',
+	epsilon: 5.0
         },
 
 		Events : {
@@ -119,7 +180,8 @@ function initGraph(json)
 				//console.log("mouse entered" + node)
 				if (node.nodeFrom) {
 					rgraph.canvas.getElement().style.cursor = 'pointer';
-					node.data.$color = "#FDCC97"
+//					node.data.$color = "#FDCC97"
+					node.data.$lineWidth = node.getData('epsilon');
 					rgraph.refresh()
 					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
 				}
@@ -127,7 +189,8 @@ function initGraph(json)
 			onMouseLeave: function(object, eventInfo, e) {
 				if(object) {
 					if(object.nodeTo) {
-						object.data.$color = object.data.color
+						object.data.$lineWidth = rgraph.config.Edge.lineWidth;
+//						object.data.$color = object.data.color;
 					} else{
 //						object.data.$color = 'FF0000'
 					}
@@ -160,6 +223,7 @@ function initGraph(json)
 //					tip.innerHTML += "<b>" + node.nodeFrom.name + " - " + node.nodeTo.name + "</b></br>";
 					tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
 					tip.innerHTML += "error value: " + node.data.error_value + "<br/>";
+					tip.innerHTML += "color: " + node.data.color;
 				}
 				else {
 					//it's a label
@@ -297,6 +361,14 @@ $('#closealign').live('click', function() {
 	}
 });
 
+function formatHex(num)
+{
+	str = num.toString(16);
+	if(str.length == 1)
+		str = "0" + str;
+	return str;
+}
+
 function colorEdges(){
 	maxScore = 0;
 	minScore = 100000;
@@ -310,14 +382,10 @@ function colorEdges(){
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
-			col = Math.floor((1.0 * adj.data.bitscore / maxScore) * 255).toString(16);
-			if(col.length == 1)
-				col = "0" + col;
-			col = "#" + col;
-			col += "0000";
+			grncol = Math.floor((1.0 * (adj.data.bitscore - minScore) / (maxScore - minScore)) * 255);
+			col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
 			adj.data.$color = col;
 			adj.data.color = col;
-//			alert(col);
 		});
 	});
 }
