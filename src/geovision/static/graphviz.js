@@ -259,7 +259,6 @@ function alignmentfunction(thisid) {
 	if (alignmentopen == false){
 		$.getJSON('/show_alignment', {id: thisid}, function (data) {
 			alignmentopen = true;
-			console.log(data);
 			var part1 = $('<nobr></nobr>');
 			var part2 = $('<nobr></nobr>');
 			part1.css('display', 'none');
@@ -269,12 +268,14 @@ function alignmentfunction(thisid) {
 			part2.appendTo($('#alignment'));
 			$(data.readseq).appendTo(part1);
 			$(data.dbseq).appendTo(part2);
+			console.log(data.readseq);
+			console.log(data.dbseq);
 			$('#alignment').slideDown(300, function() { part1.fadeIn(); part2.fadeIn();
 								var close = $('<div id = "closealign">Close</div>');
-								$('#alignment').before(close);  
+								$('#alignment').before(close);
+								$('#alignment').css('margin-bottom', '10px');
 			});
 			$('#log').css('top', '90px');
-			$('#alignment').css('margin-bottom', '10px');
 		});
 		return false;
 	}
