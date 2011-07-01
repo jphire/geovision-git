@@ -236,14 +236,10 @@ function initGraph(json)
     rgraph.loadJSON(json, 0);
 
 
-	function colorEdges(adj){
+	function colorEdges(adj, maxScore){
 		maxScore = 0;
 		bitscore = adj.data.bitscore;
-		rgraph.eachNode(function(node){
-			if(node.data.bitscore > maxScore)
-				maxScore = node.data.bitscore;
-		});
-
+		
 		adj.data.$color = "#%0.2x0000" % parseInt(Math.floor((1.0 * bitscore / maxScore) * 255));
 		adj.data.color = adj.data.$color;
 	}
@@ -259,6 +255,11 @@ function initGraph(json)
       modes:['polar'],
       duration: 1000
     });
+
+	rgraph.eachNode(function(node){
+			if(node.data.bitscore > maxScore)
+				maxScore = node.data.bitscore;
+	});
 
 	//edge coloring is done here
 	rgraph.eachNode(function(node) {
