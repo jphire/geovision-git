@@ -104,8 +104,10 @@ function initGraph(json)
 				if (!node) return;
 				if (node.nodeFrom) {
 					// living on the edge..
-					console.log(node.id);
-					alignment(node.id);
+
+					console.log(node.data.id);
+					alignment(node.data.id);
+
 					//testcode:
 
 				} else {
@@ -127,7 +129,7 @@ function initGraph(json)
 					if(object.nodeTo) {
 						object.data.$color = object.data.color
 					} else{
-						object.data.$color = 'FF0000'
+//						object.data.$color = 'FF0000'
 					}
 				}
 				rgraph.canvas.getElement().style.cursor = ''
