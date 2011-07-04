@@ -433,8 +433,8 @@ function colorEdges(){
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
 			
-			for (i in node.nodeTo.data.adjacencies){
-				if(node.id == node.nodeTo.data.adjacencies[i].data.id){
+			for (i in adj.nodeTo.data.adjacencies){
+				if(node.id == adj.nodeTo.data.adjacencies[i].data.id){
 					adj.data.$type='line';
 				}
 			}
