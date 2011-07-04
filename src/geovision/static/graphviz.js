@@ -219,6 +219,7 @@ function initGraph(json)
 				}
 				else if(node){
 					rgraph.canvas.getElement().style.cursor = 'pointer';
+					node.data.$dim = node.getData('epsilon');
 					if(busy) return;
 					rgraph.fx.animate(
 					{
@@ -243,7 +244,7 @@ function initGraph(json)
 					});
 
 				}
-				else if(node){
+				else if(object){
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					if(busy) return;
