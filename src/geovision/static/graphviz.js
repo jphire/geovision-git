@@ -378,8 +378,10 @@ function alignmentfunction(thisid) {
 			}
 			part1 = part1 + '</nobr>';
 			part2 = part2 + '</nobr>';
-/*			part1.css('display', 'none');
-			part2.css('display', 'none');*/
+			part1 = $(part1);
+			part2 = $(part2);
+			part1.css('display', 'none');
+			part2.css('display', 'none');
 			part1.appendTo($('#alignment'));
 			$('<br/>').appendTo($('#alignment'));
 			part2.appendTo($('#alignment'));
