@@ -323,22 +323,17 @@ function alignmentfunction(thisid) {
 	if (alignmentopen == false){
 		$.getJSON('/show_alignment', {id: thisid}, function (data) {
 			alignmentopen = true;
-			console.log(data);
-			var part1 = $('<nobr></nobr>');
-			var part2 = $('<nobr></nobr>');
+			var part1 = $('<nobr>' + data.readseq + '</nobr>');
+			var part2 = $('<nobr>' + data.dbseq + '</nobr>');
 			part1.css('display', 'none');
 			part2.css('display', 'none');
 			part1.appendTo($('#alignment'));
 			$('<br/>').appendTo($('#alignment'));
 			part2.appendTo($('#alignment'));
-			$(data.readseq).appendTo(part1);
-			$(data.dbseq).appendTo(part2);
-			$('#alignment').css('border', '2px solid #265434');
-			$('#alignment').css('margin-bottom', '10px');
-			$('#alignment').animate({height: "60px"}, {complete:
-				  function() { part1.fadeIn(); part2.fadeIn();
+			$('#alignment').slideDown(300, function() { part1.fadeIn(); part2.fadeIn();
 								var close = $('<div id = "closealign">Close</div>');
-								$('#alignment').before(close);  }
+								$('#alignment').before(close);
+								$('#alignment').css('margin-bottom', '10px');
 			});
 			$('#log').css('top', '90px');
 		});
@@ -353,10 +348,8 @@ $('#closealign').live('click', function() {
 		alignmentopen = false;
 		$('#alignment').find('*').remove();/*!Hide all elements*/
 		$('#closealign').remove();
-		$('#alignment').animate({height: "1px"});
-		$('#alignment').css('border', '0px');
-		$('#alignment').css('background-color', '#E6F2EA');
 		$('#alignment').css('margin-bottom', '0px');
+		$('#alignment').slideUp();
 		$('#log').css('top', '15px');
 	}
 });
