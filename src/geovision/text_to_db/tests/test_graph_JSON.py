@@ -19,7 +19,7 @@ class Test_graph_JSONTestCase(unittest.TestCase):
 		Read.objects.create(sample="SMPL2", read_id="R6", description="baz", data='ASD')
 
 		DbEntry.objects.all().delete()
-		DbEntry.objects.create(source_file = "uniprot", db_id = "DB1", description="quix", data='ASD', sub_db="subdb", entry_name = "entryname", os_field="osfield", other_info = "otherinfo")
+		DbEntry.objects.create(source_file = "uniprot", db_id = "DB1", description="quix", data='ASD', sub_db="sub", entry_name = "entryname", os_field="osfield", other_info = "otherinfo")
 		DbEntry.objects.create(source_file = "frnadb", db_id = "DB2", description="quux", data='ASD')
 		DbEntry.objects.create(source_file = "frnadb", db_id = "DB3", description="quux", data='ASD')
 		DbEntry.objects.create(source_file = "frnadb", db_id = "DB4", description="quux", data='ASD')
@@ -53,14 +53,14 @@ class Test_graph_JSONTestCase(unittest.TestCase):
 		self.assertEquals(n.dict["name"], "DB1")
 		self.assertEquals(n.dict["data"]["description"], "quix")
 		self.assertEquals(n.dict["data"]["source"], "uniprot")
-		self.assertEquals(n.dict["data"]["sub_db"], "subdb")
+		self.assertEquals(n.dict["data"]["sub_db"], "sub")
 		self.assertEquals(n.dict["data"]["entry_name"], "entryname")
 		self.assertEquals(n.dict["data"]["os_field"], "osfield")
 		self.assertEquals(n.dict["data"]["other_info"], "otherinfo")
 
 	def test_node_repr_1(self):
 		n = Node(DbEntry.objects.get(db_id="DB1"))
-		self.assertEquals(n.__repr__(), '{"adjacencies": [], "data": {"description": "quix", "other_info": "otherinfo", "sub_db": "subdb", "source": "uniprot", "os_field": "osfield", "entry_name": "entryname"}, "id": "DB1", "name": "DB1"}')
+		self.assertEquals(n.__repr__(), '{"adjacencies": [], "data": {"description": "quix", "other_info": "otherinfo", "sub_db": "sub", "source": "uniprot", "os_field": "osfield", "entry_name": "entryname", "type": "dbentry"}, "id": "DB1", "name": "DB1"}')
 
 	def test_edge_init_fail_1(self):
 		self.assertRaises(Exception, Edge, "R1", "moo")
@@ -80,8 +80,8 @@ class Test_graph_JSONTestCase(unittest.TestCase):
 
 	def test_edge_repr_1(self):
 		b = Blast.objects.all()[:1]
-		e = Edge("R1", b[0])
-		self.assertEquals(e.__repr__(), '{"nodeTo": "R1", "data": {"error_value": 0.0050000000000000001, "bitscore": 200.0, "$color": "#ff0000", "read": "R1", "$type": "arrow", "database_name": "uniprot", "$epsilon": 7, "length": 20, "$lineWidth": 5, "$alpha": 1, "$dim": 15, "db_entry": "DB1"}}')
+		e = Edge(Read.objects.get(pk="R1"), b[0])
+		self.assertEquals(e.__repr__(), '{"nodeTo": "R1", "data": {"error_value": 0.0050000000000000001, "bitscore": 200.0, "read": "R1", "database_name": "uniprot", "length": 20, "db_entry": "DB1"}}')
 
 	def test_nodeid(self):
 		a = NodeId("12345", "test")
