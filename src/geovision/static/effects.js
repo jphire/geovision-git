@@ -25,7 +25,7 @@ jQuery(function($) {
  */
     $('#graphnavi').mouseenter(openSearch);
     $('#close').click(closeSearch); 
-	$('#graphnavi').mouseout(closeSearch);
+	$('#graphnavi').mouseleave(closeSearch);
     $('#graphrefresh').click(function(){
 		$('#loader').fadeIn(); //loader in
     });
