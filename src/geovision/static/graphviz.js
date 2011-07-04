@@ -442,7 +442,7 @@ function colorEdges(){
 			col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
 			adj.data.$color = col;
 			adj.data.color = col;
-			if(node.id in checkEdge){
+			if(true){
 				adj.data.$type='line';
 				adj.data.$color = '#ffffff';
 			}
