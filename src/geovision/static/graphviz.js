@@ -330,6 +330,9 @@ function initGraph(json)
 
 var alignmentopen = false;
 function alignmentfunction(thisid) {
+	if (alignmenopen) {
+		closealignment();
+	}
 	if (alignmentopen == false){
 		$.getJSON('/show_alignment', {id: thisid}, function (data) {
 			alignmentopen = true;
@@ -345,7 +348,6 @@ function alignmentfunction(thisid) {
 								$('#alignment').before(close);
 								$('#alignment').css('margin-bottom', '10px');
 			});
-			$('#log').css('top', '90px');
 		});
 		return false;
 	}
@@ -354,15 +356,17 @@ function alignmentfunction(thisid) {
 	}
 }
 $('#closealign').live('click', function() {
+	closealignment();
+});
+function closealignment () {
 	if (alignmentopen == true){
 		alignmentopen = false;
 		$('#alignment').find('*').remove();/*!Hide all elements*/
 		$('#closealign').remove();
 		$('#alignment').css('margin-bottom', '0px');
 		$('#alignment').slideUp();
-		$('#log').css('top', '15px');
 	}
-});
+}
 
 function formatHex(num)
 {
