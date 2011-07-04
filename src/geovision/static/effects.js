@@ -24,7 +24,8 @@ jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment with a nice animation.
  */
     $('#graphnavi').mouseenter(openSearch);
-    $('#close').click(closeSearch);
+    $('#close').click(closeSearch); 
+	$('#graphnavi').mouseout(closeSearch);
     $('#graphrefresh').click(function(){
 		$('#loader').fadeIn(); //loader in
     });
