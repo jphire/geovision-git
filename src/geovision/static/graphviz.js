@@ -201,7 +201,7 @@ function initGraph(json)
 					node.data.$lineWidth = node.getData('epsilon');
 					rgraph.fx.animate({
 						modes: ['edge-property:lineWidth:color'],
-						duration: 500
+						duration: 200
 					});
 //					rgraph.refresh()
 					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
@@ -217,7 +217,10 @@ function initGraph(json)
 					}
 				}
 				rgraph.canvas.getElement().style.cursor = ''
-				rgraph.refresh()
+					rgraph.fx.animate({
+						modes: ['edge-property:lineWidth:color'],
+						duration: 200
+					});
 			}
 		},
 
@@ -263,7 +266,6 @@ function initGraph(json)
 				function(newdata) {
 					rgraph.op.sum(newdata, { type: 'replot'});
 					colorEdges();
-					rgraph.refresh();
 				 }
 			);
 
@@ -321,7 +323,7 @@ function initGraph(json)
     rgraph.loadJSON(json, 0);
     //trigger small animation
 
-    rgraph.graph.eachNode(function(n) {
+	rgraph.graph.eachNode(function(n) {
       var pos = n.getPos();
       pos.setc(-200, -200);
     });
@@ -334,7 +336,6 @@ function initGraph(json)
     //append information about the root relations in the right column
     $jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b><br/>";
     $jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
-    rgraph.refresh();
     colorEdges();
 }
 
@@ -404,5 +405,9 @@ function colorEdges(){
 			adj.data.$color = col;
 			adj.data.color = col;
 		});
+	});
+	rgraph.fx.animate({
+		modes: ['edge-property:lineWidth'],
+		duration: 500
 	});
 }
