@@ -200,6 +200,9 @@ function initGraph(json)
 //					rgraph.refresh()
 					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
 				}
+				else if(node){
+					rgraph.canvas.getElement().style.cursor = 'pointer';
+				}
 			},
 			onMouseLeave: function(object, eventInfo, e) {
 				if(object) {
