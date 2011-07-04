@@ -20,7 +20,6 @@ class Node:
 			self.dict["name"] = dataobject.db_id
 			self.dict["data"]["source"] = dataobject.source_file
 			self.dict["data"]["description"] = dataobject.description
-			self.dict["data"]["$color"] =  '#00ff00'
 			self.dict["data"]["type"] = "dbentry"
 
 			if dataobject.source_file == "uniprot":
@@ -53,20 +52,16 @@ class Node:
 
 class Edge:
 	MAX_BITSCORE = 6000
-	def __init__(self, nodeFrom, nodeTo, blastobject):
+	def __init__(self, nodeTo, blastobject):
 		if nodeTo is None:
 			raise Exception("Must supply nodeTo parameter")
-		if nodeFrom is None:
-			raise Exception("Must supply nodeFrom parameter")
 		if not isinstance(blastobject, Blast):
 			raise Exception("Second parameter must be a blast object, is " + str(blastobject.__class__))
 		self.dict = {}
 		self.dict["nodeTo"] = nodeTo.id
 		self.dict["data"] = {}
-#		self.dict["data"]["read"] = nodeFrom.id if nodeFrom.type == "read" else blastobject.read.read_id
 		self.dict["data"]["read"] = blastobject.read_id
 		self.dict["data"]["database_name"] = blastobject.database_name
-#		self.dict["data"]["db_entry"] = nodeFrom.id if nodeFrom.type == "db_entry" else blastobject.db_entry.db_id
 		self.dict["data"]["db_entry"] = blastobject.db_entry_id
 		self.dict["data"]["length"] = blastobject.length
 		self.dict["data"]["id"] = blastobject.id
@@ -207,7 +202,7 @@ class QueryToJSON:
 				if readnode not in self.nodes:
 					self.nodes.append(readnode)
 					next_level_nodes.add(readnode)
-				startnode.dict["adjacencies"].append(Edge(startnode_id, readid, blast))
+				startnode.dict["adjacencies"].append(Edge(readid, blast))
 		elif startnode.type is "read":
 			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
 
@@ -217,7 +212,7 @@ class QueryToJSON:
 				if dbnode not in self.nodes:
 					self.nodes.append(dbnode)
 					next_level_nodes.add(dbnode)
-				startnode.dict["adjacencies"].append(Edge(startnode_id, db_id, blast))
+				startnode.dict["adjacencies"].append(Edge(db_id, blast))
 		else:
 			raise Exception("startnode type must be db_entry or read")
 		return next_level_nodes
