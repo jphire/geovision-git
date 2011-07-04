@@ -7,6 +7,11 @@ class Read(models.Model):
 	description = models.TextField()
 	data = models.TextField()
 
+	@classmethod
+	def deferred(cls):
+#		return cls.objects
+		return Read.objects.all().defer('data')
+
 class DbEntry(models.Model):
 	source_file = models.CharField(max_length=32)
 	db_id = models.CharField(max_length=32, primary_key=True)
@@ -17,6 +22,11 @@ class DbEntry(models.Model):
 	entry_name = models.CharField(max_length=16, blank=True)
 	os_field = models.CharField(max_length=128, blank=True)
 	other_info = models.TextField(blank=True)
+
+	@classmethod
+	def deferred(cls):
+#		return cls.objects
+		return DbEntry.objects.all().defer('data')
 
 class DbUniprotEcs(models.Model):
 	db_id = models.CharField(max_length=32)
@@ -39,6 +49,10 @@ class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart
 	bitscore = models.FloatField()
 	read_seq = models.TextField()
 	db_seq = models.TextField()
+
+	@classmethod
+	def deferred(cls):
+		return Blast.objects.all().only('read', 'database_name', 'db_entry', 'error_value', 'bitscore', 'length')
 
 class Result(models.Model): # Query_seq_id Target_seq_id Evident_type E.C._number p_value Bit_score
 	read = models.CharField(max_length=64)

@@ -63,9 +63,11 @@ class Edge:
 		self.dict = {}
 		self.dict["nodeTo"] = nodeTo.id
 		self.dict["data"] = {}
-		self.dict["data"]["read"] = nodeFrom.id if nodeFrom.type == "read" else blastobject.read.read_id
+#		self.dict["data"]["read"] = nodeFrom.id if nodeFrom.type == "read" else blastobject.read.read_id
+		self.dict["data"]["read"] = blastobject.read_id
 		self.dict["data"]["database_name"] = blastobject.database_name
-		self.dict["data"]["db_entry"] = nodeFrom.id if nodeFrom.type == "db_entry" else blastobject.db_entry.db_id
+#		self.dict["data"]["db_entry"] = nodeFrom.id if nodeFrom.type == "db_entry" else blastobject.db_entry.db_id
+		self.dict["data"]["db_entry"] = blastobject.db_entry_id
 		self.dict["data"]["length"] = blastobject.length
 		self.dict["data"]["id"] = blastobject.id
 #		self.dict["data"]["pident"] = blastobject.pident
@@ -171,7 +173,7 @@ class QueryToJSON:
 		object. Returns an unevaluated QuerySet object, thus the actual db query
 		is not made in this function.
 		"""
-		query = Blast.objects.all()
+		query = Blast.deferred()
 #		if self.ec_number is not None:
 #			query = query.filter(ec_number = self.ec_number)
 		if param.type == "db_entry":
@@ -197,16 +199,20 @@ class QueryToJSON:
 		next_level_nodes = set()
 		startnode_id = self.get_node_id(startnode)
 		if startnode.type == "db_entry":
-			for blast in queryset:
-				readnode = Node(blast.read)
+			reads = Read.deferred().filter(pk__in=map(lambda blast: blast.read_id, queryset))
+
+			for (read, blast) in zip(reads, queryset):
+				readnode = Node(read)
 				readid = self.get_node_id(readnode)
 				if readnode not in self.nodes:
 					self.nodes.append(readnode)
 					next_level_nodes.add(readnode)
 				startnode.dict["adjacencies"].append(Edge(startnode_id, readid, blast))
 		elif startnode.type is "read":
-			for blast in queryset:
-				dbnode = Node(blast.db_entry)
+			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
+
+			for (dbentry, blast) in zip(db_entries, queryset):
+				dbnode = Node(dbentry)
 				db_id = self.get_node_id(dbnode)
 				if dbnode not in self.nodes:
 					self.nodes.append(dbnode)
