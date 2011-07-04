@@ -180,6 +180,12 @@ function initGraph(json)
 					//rgraph.onClick(node.id);
 				}
 			},
+
+			onClick: function(id, opt){
+				
+
+			},
+
 			onMouseEnter: function(node, eventInfo, e) { 
 				//console.log("mouse entered" + node)
 				if (node.nodeFrom) {
