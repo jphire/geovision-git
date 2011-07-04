@@ -191,8 +191,7 @@ function initGraph(json)
 						function(newdata)
 						{
 							busy = true;
-							rgraph.op.sum(newdata, { type: 'fade:con', duration: 500, onComplete: function() { busy = false; }});
-							colorEdges();
+							rgraph.op.sum(newdata, { type: 'fade:seq', duration: 500, onComplete: function() { rgraph.refresh(); colorEdges(); busy = false; rgraph.refresh(); colorEdges(); rgraph.refresh(); }});
 						}
 					);
 
@@ -211,6 +210,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
 					if(busy) return;
+					rgraph.refresh();
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -239,7 +239,7 @@ function initGraph(json)
 		Label:
 		{
 			$extend: true,
-			type: 'Native',
+			type: 'HTML',
 			overridable: true
 		},
 
@@ -285,7 +285,11 @@ function initGraph(json)
 		//Add the name of the node in the correponding label
 		//and a click handler to move the graph.
 		//This method is called once, on label creation.
-		onCreateLabel: function(domElement, node) {},
+		onCreateLabel: function(domElement, node)
+		{
+			domElement.innerHTML = node.name.substr(0, 10);
+			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
+		},
 		//Change some label dom properties.
 		//This method is called each time a label is plotted.
 		onPlaceLabel: function(domElement, node)
