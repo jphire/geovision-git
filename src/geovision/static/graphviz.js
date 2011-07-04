@@ -445,7 +445,6 @@ function colorEdges(){
 			for (i in checkEdge){
 				if(node.id == checkEdge[i]){
 					adj.data.$type='line';
-					adj.data.$color = '#ffffff';
 				}
 			}
 		});
