@@ -337,6 +337,7 @@ function initGraph(json)
     $jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b><br/>";
     $jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
     colorEdges();
+	rgraph.refresh();
 }
 
 var alignmentopen = false;
