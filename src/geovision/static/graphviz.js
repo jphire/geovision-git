@@ -174,8 +174,6 @@ function initGraph(json)
 				//if no node is returned then exit
 				if (!node) return;
 				if (node.nodeFrom) {
-					// living on the edge..
-
 					//alignment after this function
 					alignmentfunction(node.data.id);
 
@@ -186,6 +184,12 @@ function initGraph(json)
 					//rgraph.onClick(node.id);
 				}
 			},
+
+			onClick: function(id, opt){
+				
+
+			},
+
 			onMouseEnter: function(node, eventInfo, e) { 
 				//console.log("mouse entered" + node)
 				if (node.nodeFrom) {
@@ -261,7 +265,6 @@ function initGraph(json)
 			);
 
 		}
-
 
             //Add the relation list in the right column.
             //This list is taken from the data property of each JSON node.
