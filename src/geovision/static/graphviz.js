@@ -377,8 +377,8 @@ function alignmentfunction(thisid) {
 					part2 = part2.append('<span class=\'aligndifference\'>' + data.dbseq.charAt(i) + '</span>');
 				}
 			}
-			part1 = part1.append('</nobr>');
-			part2 = part2.append('</nobr>');
+	/*		part1 = part1.append('</nobr>');
+			part2 = part2.append('</nobr>');*/
 			part1.css('display', 'none');
 			part2.css('display', 'none');
 			part1.appendTo($('#alignment'));
