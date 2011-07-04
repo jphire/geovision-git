@@ -426,14 +426,18 @@ function formatHex(num)
 function colorEdges(){
 	maxScore = 0;
 	minScore = 100000;
-	checkEdge = [];
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			if(adj.data.bitscore > maxScore)
 				maxScore = adj.data.bitscore;
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
-			checkEdge.push(adj.nodeTo.id);
+			
+			for (i in node.data.adjacencies){
+				if(node.id == node.nodeTo.data.adjacencies[i].data.id){
+					adj.data.$type='line';
+				}
+			}
 		});
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
@@ -442,11 +446,6 @@ function colorEdges(){
 			col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
 			adj.data.$color = col;
 			adj.data.color = col;
-			for (i in checkEdge){
-				if(node.id == checkEdge[i]){
-					adj.data.$type='line';
-				}
-			}
 		});
 	});
 }
