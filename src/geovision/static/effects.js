@@ -4,10 +4,10 @@ function openSearch()
 {
 	elem = $('#graphnavi')
         if (!opened){
-            opened = true;
             elem.find('#optiontag').hide();
             elem.animate({width: "30%"}, {complete:
-		function() { elem.find('*').not('#optiontag').fadeIn(); }});
+			function() { elem.find('*').not('#optiontag').fadeIn(); }});
+            opened = true;
 	}
 }
 function closeSearch()
@@ -24,7 +24,7 @@ jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment with a nice animation.
  */
     $('#graphnavi').mouseenter(openSearch);
-    $('#close').click(closeSearch); 
+  /*  $('#close').click(closeSearch); */
 	$('#graphnavi').mouseleave(closeSearch);
     $('#graphrefresh').click(function(){
 		$('#loader').fadeIn(); //loader in
