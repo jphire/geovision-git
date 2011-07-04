@@ -101,6 +101,9 @@ function initGraph(json)
 		openSearch();
 		return;
 	}
+
+	$('#infovis').disableSelection();
+
         rgraph = new $jit.RGraph({
         //Where to append the visualization
         injectInto: 'infovis',
@@ -331,7 +334,7 @@ function initGraph(json)
 
 var alignmentopen = false;
 function alignmentfunction(thisid) {
-	if (alignmenopen) {
+	if (alignmentopen) {
 		closealignment();
 	}
 	if (alignmentopen == false){
