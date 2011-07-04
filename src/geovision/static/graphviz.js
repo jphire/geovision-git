@@ -340,7 +340,7 @@ function initGraph(json)
 
 var alignmentopen = false;
 function alignmentfunction(thisid) {
-	if (alignmenopen) {
+	if (alignmentopen) {
 		closealignment();
 	}
 	if (alignmentopen == false){
