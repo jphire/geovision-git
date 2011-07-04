@@ -364,22 +364,20 @@ function alignmentfunction(thisid) {
 			alignmentopen = true;
 /*			var part1 = $('<nobr>' + data.readseq + '</nobr>');
 			var part2 = $('<nobr>' + data.dbseq + '</nobr>');  */
-			var part1 = '<nobr>';
-			var part2 = '<nobr>';
+			var part1 = $('<nobr>');
+			var part2 = $('<nobr>');
 			for ( i = 0; i < data.readseq.lenght; i++){
 				if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
-					part1 = part1 + data.readseq.charAt(i);
-					part2 = part2 + data.dbseq.charAt(i);
+					part1 = part1.append(data.readseq.charAt(i));
+					part2 = part2.append(data.dbseq.charAt(i));
 				}
 				else {
-					part1 = part1 + '<span class=\'aligndifference\'>' + data.readseq.charAt(i) + '</span>';
-					part2 = part2 + '<span class=\'aligndifference\'>' + data.dbseq.charAt(i) + '</span>';
+					part1 = part1.append('<span class=\'aligndifference\'>' + data.readseq.charAt(i) + '</span>');
+					part2 = part2.append('<span class=\'aligndifference\'>' + data.dbseq.charAt(i) + '</span>');
 				}
 			}
-			part1 = part1 + '</nobr>';
-			part2 = part2 + '</nobr>';
-			part1 = $(part1);
-			part2 = $(part2);
+			part1 = part1.append('</nobr>');
+			part2 = part2.append('</nobr>');
 			part1.css('display', 'none');
 			part2.css('display', 'none');
 			part1.appendTo($('#alignment'));
