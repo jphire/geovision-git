@@ -188,7 +188,11 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 //					node.data.$color = "#FDCC97"
 					node.data.$lineWidth = node.getData('epsilon');
-					rgraph.refresh()
+					fd.fx.animate({
+						modes: ['edge-property:lineWidth:color'],
+						duration: 500
+					});
+#					rgraph.refresh()
 					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
 				}
 			},
