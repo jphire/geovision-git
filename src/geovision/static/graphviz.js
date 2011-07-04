@@ -217,6 +217,16 @@ function initGraph(json)
 						duration: 500
 					});
 				}
+				else if(node){
+					rgraph.canvas.getElement().style.cursor = 'pointer';
+					if(busy) return;
+					rgraph.fx.animate(
+					{
+						modes: ['node-property:dim'],
+						duration: 500
+					});
+
+				}
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
@@ -229,6 +239,17 @@ function initGraph(json)
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
+						duration: 500
+					});
+
+				}
+				else if(node){
+					rgraph.canvas.getElement().style.cursor = '';
+					object.data.$dim = rgraph.config.Node.dim;
+					if(busy) return;
+					rgraph.fx.animate(
+					{
+						modes: ['edge-property:dim'],
 						duration: 500
 					});
 
