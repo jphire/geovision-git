@@ -184,6 +184,8 @@ function initGraph(json)
 				if(!node || node.nodeFrom)
 					return;
 
+				if(busy)
+					return;
 				numSubnodes = $jit.Graph.Util.getSubnodes(node).length;
 				if (numSubnodes == 1)
 				{
