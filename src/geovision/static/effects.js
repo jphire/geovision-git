@@ -6,7 +6,7 @@ function openSearch()
         if (!opened){
             opened = true;
             elem.find('#optiontag').hide();
-            elem.animate({width: "40%"}, {complete:
+            elem.animate({width: "30%"}, {complete:
 		function() { elem.find('*').not('#optiontag').fadeIn(); }});
 	}
 }
