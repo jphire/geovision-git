@@ -167,9 +167,7 @@ function initGraph(json)
 			enable : true,
 			type : 'Native', //edge event doesn't work with 'HTML'..
 
-			onClick : function(id, opt) {
-			},
-			
+					
 			onRightClick : function(node, eventInfo, e) {
 				//if no node is returned then exit
 				if (!node) return;
@@ -185,11 +183,7 @@ function initGraph(json)
 				}
 			},
 
-			onClick: function(id, opt){
-				
-
-			},
-
+			
 			onMouseEnter: function(node, eventInfo, e) { 
 				//console.log("mouse entered" + node)
 				if (node.nodeFrom) {
