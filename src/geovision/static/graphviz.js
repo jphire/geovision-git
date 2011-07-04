@@ -433,7 +433,7 @@ function colorEdges(){
 				maxScore = adj.data.bitscore;
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
-			checkEdge[adj.nodeTo]=1;
+			checkEdge[adj.nodeTo] = true;
 		});
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
@@ -444,6 +444,7 @@ function colorEdges(){
 			adj.data.color = col;
 			if(node.id in checkEdge){
 				adj.data.$type='line';
+				adj.data.$color = '#ffffff';
 			}
 		});
 	});
