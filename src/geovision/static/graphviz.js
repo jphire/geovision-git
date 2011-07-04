@@ -93,6 +93,7 @@ function init(){
 	jQuery('#loader').fadeOut();//loader fadeaway
 }
 var rgraph;
+var busy = false;
 function initGraph(json)
 {
 	if(json.error_message)
@@ -172,19 +173,9 @@ function initGraph(json)
 
 			onRightClick : function(node, eventInfo, e)
 			{
-				if (!node) return;
 				if (node.nodeFrom)
 				{
-					//alignment after this function
 					alignmentfunction(node.data.id);
-
-					//testcode:
-
-				}
-				else
-				{
-					// TODO: dynamic graph refresh here..
-					//rgraph.onClick(node.id);
 				}
 			},
 
@@ -199,22 +190,27 @@ function initGraph(json)
 					$.getJSON(json_base_url + '&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(newdata, { type: 'fade:con', duration: 500});
+							busy = true;
+							rgraph.op.sum(newdata, { type: 'fade:con', duration: 500, onComplete: function() { busy = false; }});
 							colorEdges();
-						 }
+						}
 					);
 
 				}
-				else rgraph.onClick(node.id, {});
+				else
+				{
+					busy = true;
+					rgraph.onClick(node.id, {onComplete: function() { busy = false; }});
+				}
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
 			{ 
-				return;
 				if (node.nodeFrom)
 				{
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
+					if(busy) return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -224,16 +220,19 @@ function initGraph(json)
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
-				return;
-				if(object)
+				if(!object) return;
+				if(object.nodeTo)
 				{
-					if(object.nodeTo)
+					rgraph.canvas.getElement().style.cursor = '';
+					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
+					if(busy) return;
+					rgraph.fx.animate(
 					{
-						object.data.$lineWidth = rgraph.config.Edge.lineWidth;
-					}
+						modes: ['edge-property:lineWidth'],
+						duration: 500
+					});
+
 				}
-				rgraph.canvas.getElement().style.cursor = ''
-				rgraph.refresh()
 			}
 		},
 		//Label styling is done via CSS!
