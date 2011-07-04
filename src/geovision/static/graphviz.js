@@ -367,7 +367,7 @@ function alignmentfunction(thisid) {
 			var part2 = $('<nobr>' + data.dbseq + '</nobr>');  */
 			var part1 = $('<nobr>');
 			var part2 = $('<nobr>');
-			for ( i = 0; i < data.readseq.lenght; i++){
+			for ( i = 0; i < data.readseq.length; i++){
 				if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
 					part1 = part1.append(data.readseq.charAt(i));
 					part2 = part2.append(data.dbseq.charAt(i));
