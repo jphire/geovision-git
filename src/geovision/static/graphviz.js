@@ -95,6 +95,12 @@ function init(){
 var rgraph;
 function initGraph(json)
 {
+	if(json.error_message)
+	{
+		document.getElementById("error").innerHTML = json.error_message;
+		openSearch();
+		return;
+	}
         rgraph = new $jit.RGraph({
         //Where to append the visualization
         injectInto: 'infovis',
