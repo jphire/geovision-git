@@ -114,9 +114,9 @@ function initGraph(json)
         //Optional: create a background canvas that plots
         //concentric circles.
         background: {
-          CanvasStyles: {
-            strokeStyle: '#555'
-          }
+            CanvasStyles: {
+                strokeStyle: '#555'
+            }
         },
 
         //set distance for nodes on different levels
@@ -132,9 +132,9 @@ function initGraph(json)
         //Add navigation capabilities:
         //zooming by scrolling and panning.
         Navigation: {
-          enable: true,
-          panning: true,
-          zooming: 25
+            enable: true,
+            panning: true,
+            zooming: 25
         },
         
         //Set Node and Edge styles.
@@ -157,12 +157,12 @@ function initGraph(json)
         },
         
         Edge: {
-	overridable: true,
-	color: '#888800',
-	alpha: 1,
-	lineWidth:2.5,
-	type: 'customArrow',
-	epsilon: 5.0
+            overridable: true,
+            color: '#888800',
+            alpha: 1,
+            lineWidth:2.5,
+            type: 'customArrow',
+            epsilon: 5.0
         },
 
 		Events : {
@@ -170,7 +170,6 @@ function initGraph(json)
 			enable : true,
 			type : 'Native', //edge event doesn't work with 'HTML'..
 
-					
 			onRightClick : function(node, eventInfo, e) {
 				//if no node is returned then exit
 				if (!node) return;
@@ -186,7 +185,6 @@ function initGraph(json)
 				}
 			},
 
-			
 			onMouseEnter: function(node, eventInfo, e) { 
 				//console.log("mouse entered" + node)
 				if (node.nodeFrom) {
@@ -199,9 +197,6 @@ function initGraph(json)
 					});
 //					rgraph.refresh()
 					//alert('Hey, click on the edge:' + node.nodeFrom.name);// it's an edge
-				}
-				else if(node){
-					rgraph.canvas.getElement().style.cursor = 'pointer';
 				}
 			},
 			onMouseLeave: function(object, eventInfo, e) {
@@ -365,6 +360,7 @@ function alignmentfunction(thisid) {
 $('#closealign').live('click', function() {
 	closealignment();
 });
+
 function closealignment () {
 	if (alignmentopen == true){
 		alignmentopen = false;
