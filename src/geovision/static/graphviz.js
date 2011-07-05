@@ -209,7 +209,6 @@ function initGraph(json)
 			{ 
 				if (node.nodeFrom)
 				{
-					rgraph.config.Tips.type = 'Native';
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
 					if(busy) return;
@@ -234,7 +233,6 @@ function initGraph(json)
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
-				//rgraph.config.Tips.type = 'HTML';
 				if(!object) return;
 				if(object.nodeTo)
 				{
@@ -265,7 +263,7 @@ function initGraph(json)
 		Label:
 		{
 			$extend: true,
-			type: 'HTML',
+			type: 'Native',
 			overridable: true
 		},
 
