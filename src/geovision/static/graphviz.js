@@ -169,7 +169,7 @@ function initGraph(json)
 		{
 			enableForEdges: true,
 			enable : true,
-			type : 'Native', //edge event doesn't work with 'HTML'..
+			type : 'HTML', //edge event doesn't work with 'HTML'..
 
 			onRightClick : function(node, eventInfo, e)
 			{
@@ -432,7 +432,7 @@ function colorEdges(){
 				maxScore = adj.data.bitscore;
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
-			
+			//check if there is a two-way adjacency
 			if(node.adjacentTo(adj.nodeTo) == true){
 //				a = adj.nodeTo.getAdjacency(node.id);
 //				a.data.$type = 'line';
