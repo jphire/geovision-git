@@ -2049,6 +2049,7 @@ Extras.Classes.Events = new Class({
      return;
    }
    if(this.dom) {
+	   //original is commented out:
 //     this.config.onMouseMove(this.hovered,
 //         event, evt);
 //   } else {
@@ -2187,6 +2188,7 @@ Extras.Classes.Tips = new Class({
     if(this.dom && this.isLabel(e, win)) {
       this.setTooltipPosition($.event.getPos(e, win));
     }
+	//this was originally if(!this.dom){
     else if(this.dom) {
       var node = opt.getNode();
       var edge = opt.getEdge();
