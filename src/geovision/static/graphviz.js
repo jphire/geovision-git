@@ -169,7 +169,7 @@ function initGraph(json)
 		{
 			enableForEdges: true,
 			enable : true,
-			type : 'HTML', //edge event doesn't work with 'HTML'..
+			type : 'Native', //edge event doesn't work with 'HTML'..
 
 			onRightClick : function(node, eventInfo, e)
 			{
@@ -272,7 +272,7 @@ function initGraph(json)
 		Tips:
 		{
 			enable: true,
-			type: 'HTML',
+			type: 'Native',
 			width: 30,
 			align: 'left',
 			

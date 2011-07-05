@@ -2050,9 +2050,9 @@ Extras.Classes.Events = new Class({
    }
    if(this.dom) {
 	   //original is commented out:
-//     this.config.onMouseMove(this.hovered,
-//         event, evt);
-//   } else {
+     this.config.onMouseMove(this.hovered,
+         event, evt);
+   } else {
      if(this.hovered) {
        var hn = this.hovered;
        var geom = hn.nodeFrom? this.etypes[hn.getData('type')] : this.ntypes[hn.getData('type')];
@@ -2189,7 +2189,7 @@ Extras.Classes.Tips = new Class({
       this.setTooltipPosition($.event.getPos(e, win));
     }
 	//this was originally if(!this.dom){
-    else if(this.dom) {
+    if(!this.dom) {
       var node = opt.getNode();
       var edge = opt.getEdge();
 	  if(!node && !edge) {
