@@ -2024,8 +2024,8 @@ Extras.Classes.Events = new Class({
       this.config.onMouseEnter(this.hovered,
                                event, evt);
     }
-	else if(this.dom){
-		this.hovered = event.getEdge();
+//	else if(this.dom){
+//		this.hovered = event.getEdge();
 //	  var node = event.getNode();
 //      var edge = event.getEdge();
 //	  if(!node && !edge) {
@@ -2035,9 +2035,9 @@ Extras.Classes.Events = new Class({
 //        this.node = node;
 //        this.config.onMouseEnter(this.hovered, event, evt);
 //      }
-	  if(this.hovered){
-		this.config.onMouseEnter(this.hovered, event, evt);
-	  }
+//	  if(this.hovered){
+//		this.config.onMouseEnter(this.hovered, event, evt);
+//	  }
 	}
   },
   
