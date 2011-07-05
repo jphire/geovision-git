@@ -434,7 +434,7 @@ function colorEdges(){
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
 			//check if there is a two-way adjacency
-			if(node.adjacentTo(adj.nodeTo) == true){
+			if(node.adjacentTo(adj.nodeFrom) == true){
 //				a = adj.nodeTo.getAdjacency(node.id);
 //				a.data.$type = 'line';
 				adj.data.$type='line';
