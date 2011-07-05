@@ -375,7 +375,7 @@ function alignmentfunction(thisid) {
 			var part1 = $('<nobr>');
 			var part2 = $('<nobr>');
 			for ( i = 0; i < data.readseq.length; i++){
-				if (i % 110 == 0 && i>0){
+				if (i % 95 == 0 && i>0){
 					part1.append('<br/>');
 					part1.appendTo($('#alignment'));
 					part1 = $('<nobr>');
