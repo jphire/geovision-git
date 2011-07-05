@@ -2049,8 +2049,13 @@ Extras.Classes.Events = new Class({
      return;
    }
    if(this.dom) {
-     this.config.onMouseMove(this.hovered,
-         event, evt);
+	 if(this.hovered = (event.getNode() || (this.config.enableForEdges && event.getEdge()))) {
+       this.config.onMouseEnter(this.hovered, event, evt);
+     } else {
+       this.config.onMouseMove(false, event, evt);
+     }
+//     this.config.onMouseMove(this.hovered,
+//         event, evt);
    } else {
      if(this.hovered) {
        var hn = this.hovered;
