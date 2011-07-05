@@ -64,28 +64,26 @@ dotLineLength = function( x, y, x0, y0, x1, y1, o ){
 
 $jit.RGraph.Plot.EdgeTypes.implement({  
 	'customArrow':{
-	  'render': function(adj, canvas) {
-		var from = adj.nodeFrom.pos.getc(true),
-			to = adj.nodeTo.pos.getc(true),
-			dim = adj.getData('dim'),
-			direction = adj.data.$direction,
-			inv = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
-		this.edgeHelper.arrow.render(from, to, dim, inv, canvas);
-	  },
-	  'contains': function(adj, pos) {
-		var from = adj.nodeFrom.pos.getc(true),
-			to = adj.nodeTo.pos.getc(true);
-
-	var lineWidth = adj.getData('epsilon');
-	var d = lineWidth/2;
-	var minX = Math.min(from.x, to.x) - d, maxX = Math.max(from.x, to.x) + d;
-	var minY = Math.min(from.y, to.y) - d, maxY = Math.max(from.y, to.y) + d;
-	if(pos.x < minX || pos.x > maxX || pos.y < minY || pos.y > maxY)
-		return false;
-
-	return dotLineLength(pos.x, pos.y, from.x, from.y, to.x, to.y, false) < lineWidth;
-	  }
-  }
+	    'render': function(adj, canvas) {
+            var from = adj.nodeFrom.pos.getc(true),
+                to = adj.nodeTo.pos.getc(true),
+                dim = adj.getData('dim'),
+                direction = adj.data.$direction,
+                inv = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
+            this.edgeHelper.arrow.render(from, to, dim, inv, canvas);
+        },
+        'contains': function(adj, pos) {
+            var from = adj.nodeFrom.pos.getc(true),
+		        to = adj.nodeTo.pos.getc(true);
+            var lineWidth = adj.getData('epsilon');
+            var d = lineWidth/2;
+            var minX = Math.min(from.x, to.x) - d, maxX = Math.max(from.x, to.x) + d;
+            var minY = Math.min(from.y, to.y) - d, maxY = Math.max(from.y, to.y) + d;
+            if(pos.x < minX || pos.x > maxX || pos.y < minY || pos.y > maxY)
+	            return false;
+        return dotLineLength(pos.x, pos.y, from.x, from.y, to.x, to.y, false) < lineWidth;
+	    }
+    }
 });  
 
 function init(){
@@ -140,7 +138,7 @@ function initGraph(json)
 		{
 			overridable: true,
 			color: '#ff0000',
-			alpha: 1,
+			alpha: 0.6,
 			dim: 5,
 			height: 20,
 			width: 90,
@@ -159,7 +157,7 @@ function initGraph(json)
 		{
 			overridable: true,
 			color: '#888800',
-			alpha: 1,
+			alpha: 0.6,
 			lineWidth:2.5,
 			type: 'customArrow',
 			epsilon: 5.0
