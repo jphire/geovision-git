@@ -2038,7 +2038,7 @@ Extras.Classes.Events = new Class({
 //	  if(this.hovered){
 //		this.config.onMouseEnter(this.hovered, event, evt);
 //	  }
-	}
+//	}
   },
   
   onMouseMove: function(e, win, event) {
