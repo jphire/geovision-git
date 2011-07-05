@@ -193,7 +193,7 @@ function initGraph(json)
 						function(newdata)
 						{
 							busy = true;
-							rgraph.op.sum(newdata, { type: 'fade:seq', fps:30, duration: 500, onComplete: function() { rgraph.refresh(); colorEdges(); busy = false; rgraph.refresh(); colorEdges(); rgraph.refresh(); }});
+							rgraph.op.sum(newdata, { type: 'fade:seq', fps:30, duration: 500, onComplete: function() { busy = false;}})//rgraph.refresh(); colorEdges(); busy = false; rgraph.refresh(); colorEdges(); rgraph.refresh(); }});
 						}
 					);
 
