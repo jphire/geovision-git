@@ -196,6 +196,7 @@ function initGraph(json)
 							rgraph.op.sum(newdata, { type: 'fade:seq', fps:30, duration: 500, onComplete: function() { busy = false;}})//rgraph.refresh(); colorEdges(); busy = false; rgraph.refresh(); colorEdges(); rgraph.refresh(); }});
 						}
 					);
+					rgraph.refresh();
 
 				}
 				else
@@ -427,6 +428,9 @@ function formatHex(num)
 function colorEdges(){
 	maxScore = 0;
 	minScore = 100000;
+	if(busy){
+		return;
+	}
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			if(adj.data.bitscore > maxScore)
