@@ -214,7 +214,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
 					if(busy) return;
-					rgraph.refresh();
+					//rgraph.refresh();
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -225,7 +225,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = node.getData('dim') + 3;
 					if(busy) return;
-					rgraph.refresh();
+					//rgraph.refresh();
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -289,8 +289,7 @@ function initGraph(json)
 					//it's an edge
 					tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
 					tip.innerHTML += "error value: " + node.data.error_value + "<br/>";
-					tip.innerHTML += "color: " + node.data.color;
-				}
+					}
 				else
 				{
 					//it's a label
@@ -439,12 +438,6 @@ function colorEdges(){
 				maxScore = adj.data.bitscore;
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
-			//check if there is a two-way adjacency
-			if(node.adjacentTo(adj.nodeFrom) == true){
-//				a = adj.nodeTo.getAdjacency(node.id);
-//				a.data.$type = 'line';
-				adj.data.$type='line';
-			}
 		});
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
