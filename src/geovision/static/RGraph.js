@@ -2024,6 +2024,21 @@ Extras.Classes.Events = new Class({
       this.config.onMouseEnter(this.hovered,
                                event, evt);
     }
+	else if(this.dom){
+		this.hovered = event.getEdge();
+//	  var node = event.getNode();
+//      var edge = event.getEdge();
+//	  if(!node && !edge) {
+//        return;
+//      }
+//      if(this.config.force || !this.node || this.node.id != node.id) {
+//        this.node = node;
+//        this.config.onMouseEnter(this.hovered, event, evt);
+//      }
+	  if(edge){
+		this.config.onMouseEnter(this.hovered, event, evt);
+	  }
+	}
   },
   
   onMouseMove: function(e, win, event) {
