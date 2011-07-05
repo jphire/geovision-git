@@ -435,7 +435,6 @@ function colorEdges(){
 
 			if(node.adjacentTo(adj.nodeTo.id) == true)
 				adj.data.$type='line';
-
 		});
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
