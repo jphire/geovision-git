@@ -224,6 +224,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = node.getData('dim') + 3;
 					if(busy) return;
+					rgraph.refresh();
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
