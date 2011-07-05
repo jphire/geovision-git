@@ -375,6 +375,14 @@ function alignmentfunction(thisid) {
 			var part1 = $('<nobr>');
 			var part2 = $('<nobr>');
 			for ( i = 0; i < data.readseq.length; i++){
+				if (i % 80 == 0){
+					part1.append('<br/>');
+					part1.appendTo($('#alignment'));
+					part1 = $('<nobr>');
+					part2.appendTo($('#alignment'));
+					part2 = $('<nobr>');
+					$('<br/><br/>').appendTo($('#alignment'));
+				}
 				if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
 					part1 = part1.append(data.readseq.charAt(i));
 					part2 = part2.append(data.dbseq.charAt(i));
@@ -385,9 +393,9 @@ function alignmentfunction(thisid) {
 				}
 			}
 	/*		part1 = part1.append('</nobr>');
-			part2 = part2.append('</nobr>');*/
+			part2 = part2.append('</nobr>');
 			part1.css('display', 'none');
-			part2.css('display', 'none');
+			part2.css('display', 'none'); */
 			part1.appendTo($('#alignment'));
 			$('<br/>').appendTo($('#alignment'));
 			part2.appendTo($('#alignment'));
