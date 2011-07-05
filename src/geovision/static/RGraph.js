@@ -1980,7 +1980,7 @@ Extras.Classes.Events = new Class({
       if(isRightClick) {
         this.config.onRightClick(this.hovered, event, evt);
       } else {
-        this.config.onClick(this.pressed, event, evt);
+//        this.config.onClick(this.pressed, event, evt);
       }
     }
     if(this.pressed) {
