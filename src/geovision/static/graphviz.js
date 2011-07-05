@@ -234,6 +234,7 @@ function initGraph(json)
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
+				rgraph.config.Tips.type = 'HTML';
 				if(!object) return;
 				if(object.nodeTo)
 				{
