@@ -273,7 +273,7 @@ function initGraph(json)
 		Tips:
 		{
 			enable: true,
-			type: 'HTML',
+			type: 'Native',
 			width: 30,
 			align: 'left',
 			
