@@ -2172,7 +2172,7 @@ Extras.Classes.Tips = new Class({
     if(this.dom && this.isLabel(e, win)) {
       this.setTooltipPosition($.event.getPos(e, win));
     }
-    if(!this.dom) {
+    if(this.dom) {
       var node = opt.getNode();
       var edge = opt.getEdge();
 	  if(!node && !edge) {
@@ -2190,18 +2190,18 @@ Extras.Classes.Tips = new Class({
 
       this.setTooltipPosition($.event.getPos(e, win));
     }
-	if(this.dom){
-		var edge1 = opt.getEdge();
-		if(!edge1) {
-			this.hide(true);
-			return;
-		}
-		if(edge1){
-		//this.node = edge; ??
-			this.config.onShow(this.tip, edge, opt.getContains());
-			this.setTooltipPosition($.event.getPos(e, win));
-		}
-	}
+//	if(this.dom){
+//		var edge1 = opt.getEdge();
+//		if(!edge1) {
+//			this.hide(true);
+//			return;
+//		}
+//		if(edge1){
+//		//this.node = edge; ??
+//			this.config.onShow(this.tip, edge, opt.getContains());
+//			this.setTooltipPosition($.event.getPos(e, win));
+//		}
+//	}
   },
   
   setTooltipPosition: function(pos) {
