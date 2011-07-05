@@ -434,7 +434,7 @@ function colorEdges(){
 				minScore = adj.data.bitscore;
 			console.log(node.id);
 			console.log(adj.nodeTo.id);
-			if(node.adjacentTo(adj.nodeTo.id) == true){
+			if(node.adjacentTo(adj.nodeTo) == true){
 				console.log("testsucc");
 				a = adj.nodeTo.getAdjacency(node.id);
 				a.data.$type = 'line';
