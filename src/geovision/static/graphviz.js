@@ -432,13 +432,10 @@ function colorEdges(){
 				maxScore = adj.data.bitscore;
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
-			
-			for (i in adj.nodeTo.data.adjacencies){
-				console.log(adj.nodeTo.data.adjacencies[i].data.id);
-				if(node.id == adj.nodeTo.data.adjacencies[i].data.id){
-					adj.data.$type='line';
-				}
-			}
+
+			if(node.adjacentTo(adj.nodeTo.id) == true)
+				adj.data.$type='line';
+
 		});
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
