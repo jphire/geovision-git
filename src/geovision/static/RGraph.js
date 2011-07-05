@@ -2309,9 +2309,9 @@ Extras.Classes.NodeStyles = new Class({
   
   onMouseUp: function(e, win, event, isRightClick) {
     if(isRightClick) return;
-    if(!this.move) {
-      this.onClick(event.getNode());
-    }
+//    if(!this.move) {
+//      this.onClick(event.getNode());
+//    }
     this.down = this.move = false;
   },
   
