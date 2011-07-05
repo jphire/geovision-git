@@ -433,8 +433,11 @@ function colorEdges(){
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
 
-			if(node.adjacentTo(adj.nodeTo.id) == true)
+			if(node.adjacentTo(adj.nodeTo.id) == true){
+				a = adj.nodeTo.getAdjacency(node.id);
+				a.data.$type = 'line';
 				adj.data.$type='line';
+			}
 		});
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
