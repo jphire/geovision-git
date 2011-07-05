@@ -2049,14 +2049,9 @@ Extras.Classes.Events = new Class({
      return;
    }
    if(this.dom) {
-	 if(this.hovered = (event.getNode() || (this.config.enableForEdges && event.getEdge()))) {
-       this.config.onMouseEnter(this.hovered, event, evt);
-     } else {
-       this.config.onMouseMove(false, event, evt);
-     }
 //     this.config.onMouseMove(this.hovered,
 //         event, evt);
-   } else {
+//   } else {
      if(this.hovered) {
        var hn = this.hovered;
        var geom = hn.nodeFrom? this.etypes[hn.getData('type')] : this.ntypes[hn.getData('type')];
