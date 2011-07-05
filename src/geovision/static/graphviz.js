@@ -169,7 +169,7 @@ function initGraph(json)
 		{
 			enableForEdges: true,
 			enable : true,
-			type : 'HTML', //edge event doesn't work with 'HTML'..
+			type : 'Native', //edge event doesn't work with 'HTML'..
 
 			onRightClick : function(node, eventInfo, e)
 			{
@@ -209,6 +209,7 @@ function initGraph(json)
 			{ 
 				if (node.nodeFrom)
 				{
+					rgraph.config.Tips.type = 'Native';
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
 					if(busy) return;

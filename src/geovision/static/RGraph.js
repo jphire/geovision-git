@@ -2170,6 +2170,7 @@ Extras.Classes.Tips = new Class({
   
   onMouseMove: function(e, win, opt) {
     if(this.dom && this.isLabel(e, win)) {
+	this.config.Tips.type= 'HTML';
       this.setTooltipPosition($.event.getPos(e, win));
     }
     if(!this.dom) {
