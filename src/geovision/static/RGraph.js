@@ -2190,6 +2190,18 @@ Extras.Classes.Tips = new Class({
 
       this.setTooltipPosition($.event.getPos(e, win));
     }
+	if(this.dom){
+		var edge1 = opt.getEdge();
+		if(!edge1) {
+			this.hide(true);
+			return;
+		}
+		if(edge1){
+		//this.node = edge; ??
+			this.config.onShow(this.tip, edge, opt.getContains());
+			this.setTooltipPosition($.event.getPos(e, win));
+		}
+	}
   },
   
   setTooltipPosition: function(pos) {

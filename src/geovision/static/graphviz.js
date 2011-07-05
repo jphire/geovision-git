@@ -169,7 +169,7 @@ function initGraph(json)
 		{
 			enableForEdges: true,
 			enable : true,
-			type : 'Native', //edge event doesn't work with 'HTML'..
+			type : 'HTML', //edge event doesn't work with 'HTML'..
 
 			onRightClick : function(node, eventInfo, e)
 			{
@@ -233,6 +233,7 @@ function initGraph(json)
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
+				//rgraph.config.Tips.type = 'HTML';
 				if(!object) return;
 				if(object.nodeTo)
 				{
@@ -263,7 +264,7 @@ function initGraph(json)
 		Label:
 		{
 			$extend: true,
-			type: 'Native',
+			type: 'HTML',
 			overridable: true
 		},
 
@@ -271,7 +272,7 @@ function initGraph(json)
 		Tips:
 		{
 			enable: true,
-			type: 'Native',
+			type: 'HTML',
 			width: 30,
 			align: 'left',
 			
