@@ -191,9 +191,11 @@ function initGraph(json)
 						function(newdata)
 						{
 							busy = true;
-							rgraph.op.sum(newdata, { type: 'fade:seq', fps:30, duration: 500, onComplete: function() { rgraph.refresh(); colorEdges(); busy = false; rgraph.refresh(); colorEdges(); rgraph.refresh(); }});
+							rgraph.op.sum(newdata, { type: 'fade:seq', fps:30, duration: 500, onComplete: function() { busy = false;}})//rgraph.refresh(); colorEdges(); busy = false; rgraph.refresh(); colorEdges(); rgraph.refresh(); }});
 						}
 					);
+					colorEdges();
+					rgraph.refresh();
 
 				}
 				else
@@ -210,7 +212,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
 					if(busy) return;
-					rgraph.refresh();
+					//rgraph.refresh();
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -221,6 +223,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = node.getData('dim') + 3;
 					if(busy) return;
+					//rgraph.refresh();
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -231,6 +234,7 @@ function initGraph(json)
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
+				//rgraph.config.Tips.type = 'HTML';
 				if(!object) return;
 				if(object.nodeTo)
 				{
@@ -269,7 +273,7 @@ function initGraph(json)
 		Tips:
 		{
 			enable: true,
-			type: 'HTML',
+			type: 'Native',
 			width: 30,
 			align: 'left',
 			
@@ -283,8 +287,7 @@ function initGraph(json)
 					//it's an edge
 					tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
 					tip.innerHTML += "error value: " + node.data.error_value + "<br/>";
-					tip.innerHTML += "color: " + node.data.color;
-				}
+					}
 				else
 				{
 					//it's a label
@@ -424,18 +427,15 @@ function formatHex(num)
 function colorEdges(){
 	maxScore = 0;
 	minScore = 100000;
+	if(busy){
+		return;
+	}
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			if(adj.data.bitscore > maxScore)
 				maxScore = adj.data.bitscore;
 			if(adj.data.bitscore < minScore)
 				minScore = adj.data.bitscore;
-			
-			for (i in adj.nodeTo.data.adjacencies){
-				if(node.id == adj.nodeTo.data.adjacencies[i].data.id){
-					adj.data.$type='line';
-				}
-			}
 		});
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {

@@ -2024,6 +2024,21 @@ Extras.Classes.Events = new Class({
       this.config.onMouseEnter(this.hovered,
                                event, evt);
     }
+//	else if(this.dom){
+//		this.hovered = event.getEdge();
+//	  var node = event.getNode();
+//      var edge = event.getEdge();
+//	  if(!node && !edge) {
+//        return;
+//      }
+//      if(this.config.force || !this.node || this.node.id != node.id) {
+//        this.node = node;
+//        this.config.onMouseEnter(this.hovered, event, evt);
+//      }
+//	  if(this.hovered){
+//		this.config.onMouseEnter(this.hovered, event, evt);
+//	  }
+//	}
   },
   
   onMouseMove: function(e, win, event) {
@@ -2034,6 +2049,7 @@ Extras.Classes.Events = new Class({
      return;
    }
    if(this.dom) {
+	   //original is commented out:
      this.config.onMouseMove(this.hovered,
          event, evt);
    } else {
@@ -2172,6 +2188,7 @@ Extras.Classes.Tips = new Class({
     if(this.dom && this.isLabel(e, win)) {
       this.setTooltipPosition($.event.getPos(e, win));
     }
+	//this was originally if(!this.dom){
     if(!this.dom) {
       var node = opt.getNode();
       var edge = opt.getEdge();
@@ -2184,7 +2201,7 @@ Extras.Classes.Tips = new Class({
         this.config.onShow(this.tip, node, opt.getContains());
       }
 	  if(edge && !node){
-		//this.node = edge; ??
+		this.node = edge; 
 		this.config.onShow(this.tip, edge, opt.getContains());
 	  }
 
