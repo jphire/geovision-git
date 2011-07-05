@@ -81,6 +81,7 @@ class Edge:
 #		self.dict["data"]["$lineWidth"] = 2
 #		self.dict["data"]["$alpha"] = 1
 #		self.dict["data"]["$epsilon"] = 7
+		self.dict["data"]["$color"]='#ffffff'
 
 	def calculate_color(self, bitscore):
 		return "#%0.2x0000" % int(math.floor((1.0 * bitscore / self.MAX_BITSCORE) * 255))
