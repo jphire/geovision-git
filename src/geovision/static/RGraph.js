@@ -6974,7 +6974,7 @@ Graph.Plot = {
          !animating && opt.onAfterPlotNode(node);
        }
        if(!that.labelsHidden && opt.withLabels) {
-         if(node.drawn && nodeAlpha >= 0.95) {
+         if(node.drawn && nodeAlpha >= 0.4) {//CHANGED! original value 0.95
            that.labels.plotLabel(canvas, node, opt);
          } else {
            that.labels.hideLabel(node, false);
