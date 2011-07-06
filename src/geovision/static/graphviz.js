@@ -212,6 +212,8 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					//node.data.$lineWidth = node.getData('epsilon');
 
+					if(busy)
+						return;
 					node.data.$alpha = 1;
 					rgraph.refresh();
 //					rgraph.fx.animate(
@@ -223,6 +225,8 @@ function initGraph(json)
 				else if(node){
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					//node.data.$dim = node.getData('dim') + 3;
+					if(busy)
+						return;
 					node.data.$alpha = 1;
 //					if(busy) return;
 					rgraph.refresh();
