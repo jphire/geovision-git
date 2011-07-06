@@ -210,30 +210,25 @@ function initGraph(json)
 				if (node.nodeTo)
 				{
 					rgraph.canvas.getElement().style.cursor = 'pointer';
-					//node.data.$lineWidth = node.getData('epsilon');
-					if(busy)
-						return;
-					node.data.$alpha = 1;
-					rgraph.refresh();
-//					rgraph.fx.animate(
-//					{
-//						modes: ['edge-property:lineWidth'],
-//						duration: 500
-//					});
+					node.data.$lineWidth = node.getData('epsilon')-2;
+					if(busy) return;
+
+					rgraph.fx.animate(
+					{
+						modes: ['edge-property:lineWidth'],
+						duration: 500
+					});
 				}
 				else if(node){
 					rgraph.canvas.getElement().style.cursor = 'pointer';
-					//node.data.$dim = node.getData('dim') + 3;
-					if(busy)
-						return;
-					node.data.$alpha = 1;
-//					if(busy) return;
-					rgraph.refresh();
-//					rgraph.fx.animate(
-//					{
-//						modes: ['node-property:dim'],
-//						duration: 500
-//					});
+					node.data.$dim = node.getData('dim') + 3;
+					
+					if(busy) return;
+					rgraph.fx.animate(
+					{
+						modes: ['node-property:dim'],
+						duration: 500
+					});
 
 				}
 			},
@@ -243,33 +238,27 @@ function initGraph(json)
 				if(!object) return;
 				if(object.nodeTo)
 				{
-					if(busy)
-						return;
 					rgraph.canvas.getElement().style.cursor = '';
-					object.data.$alpha = 0.6;
-					rgraph.refresh();
-					//object.data.$lineWidth = rgraph.config.Edge.lineWidth;
-//					if(busy) return;
-//					rgraph.fx.animate(
-//					{
-//						modes: ['edge-property:lineWidth'],
-//						duration: 500
-//					});
+					
+					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
+					if(busy) return;
+					rgraph.fx.animate(
+					{
+						modes: ['edge-property:lineWidth'],
+						duration: 500
+					});
 
 				}
 				else if(object){
-					if(busy)
-						return;
+					
 					rgraph.canvas.getElement().style.cursor = '';
-					object.data.$alpha = 0.6;
-					rgraph.refresh();
-//					object.data.$dim = rgraph.config.Node.dim;
-//					if(busy) return;
-//					rgraph.fx.animate(
-//					{
-//						modes: ['edge-property:dim'],
-//						duration: 500
-//					});
+					object.data.$dim = rgraph.config.Node.dim;
+					if(busy) return;
+					rgraph.fx.animate(
+					{
+						modes: ['edge-property:dim'],
+						duration: 500
+					});
 
 				}
 			}
