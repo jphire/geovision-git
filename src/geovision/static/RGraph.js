@@ -1980,7 +1980,7 @@ Extras.Classes.Events = new Class({
       if(isRightClick) {
         this.config.onRightClick(this.hovered, event, evt);
       } else {
-//        this.config.onClick(this.pressed, event, evt);
+        this.config.onClick(this.pressed, event, evt);
       }
     }
     if(this.pressed) {
@@ -2035,7 +2035,7 @@ Extras.Classes.Events = new Class({
    }
    if(this.dom) {
 	   //original is commented out:
-     this.config.onMouseOver(this.hovered,
+     this.config.onMouseMove(this.hovered,
          event, evt);
    } else {
      if(this.hovered) {
@@ -2294,9 +2294,9 @@ Extras.Classes.NodeStyles = new Class({
   
   onMouseUp: function(e, win, event, isRightClick) {
     if(isRightClick) return;
-//    if(!this.move) {
-//      this.onClick(event.getNode());
-//    }
+    if(!this.move) {
+      this.onClick(event.getNode());
+    }
     this.down = this.move = false;
   },
   
