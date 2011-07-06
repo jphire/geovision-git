@@ -211,7 +211,7 @@ function initGraph(json)
 					//node.data.$lineWidth = node.getData('epsilon');
 
 					node.data.$alpha = 1;
-					//rgraph.refresh();
+					rgraph.refresh();
 //					rgraph.fx.animate(
 //					{
 //						modes: ['edge-property:lineWidth'],
@@ -223,7 +223,7 @@ function initGraph(json)
 					node.data.$dim = node.getData('dim') + 3;
 					node.data.$alpha = 1;
 //					if(busy) return;
-//					//rgraph.refresh();
+					rgraph.refresh();
 //					rgraph.fx.animate(
 //					{
 //						modes: ['node-property:dim'],
@@ -240,7 +240,7 @@ function initGraph(json)
 				{
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$alpha = 0.6;
-
+					rgraph.refresh();
 					//object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 //					if(busy) return;
 //					rgraph.fx.animate(
@@ -253,6 +253,7 @@ function initGraph(json)
 				else if(object){
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$alpha = 0.6;
+					rgraph.refresh();
 //					object.data.$dim = rgraph.config.Node.dim;
 //					if(busy) return;
 //					rgraph.fx.animate(
