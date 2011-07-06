@@ -216,7 +216,6 @@ class QueryToJSON:
 				ecid = self.get_node_id(ecnode)
 				if ecnode not in self.nodes:
 					self.nodes.append(ecnode)
-					next_level_nodes.add(ecnode)
 				startnode.dict["adjacencies"].append(Edge(ec, ec))
 		elif startnode.type is "read":
 			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
