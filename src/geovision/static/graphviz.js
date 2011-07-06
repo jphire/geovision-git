@@ -191,7 +191,7 @@ function initGraph(json)
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(newdata, { type: 'fade:con', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false;}})
+							rgraph.op.sum(newdata, { type: 'fade:con', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false; rgraph.each(function(node){node.data.$alpha = 0.6;})}})
 						}
 					);
 
@@ -462,7 +462,6 @@ function colorEdges(){
 		return;
 	}
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
-		node.data.$alpha = 0.6;
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			if(adj.data.bitscore > maxScore)
 				maxScore = adj.data.bitscore;
