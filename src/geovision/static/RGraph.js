@@ -2035,7 +2035,7 @@ Extras.Classes.Events = new Class({
    }
    if(this.dom) {
 	   //original is commented out:
-     this.config.onMouseOver(this.hovered,
+     this.config.onMouseMove(this.hovered,
          event, evt);
    } else {
      if(this.hovered) {
