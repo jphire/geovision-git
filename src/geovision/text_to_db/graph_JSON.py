@@ -1,7 +1,7 @@
 import math
 import json
 from geovision.viz.models import *
-
+from django.db.models import Q
 
 
 class NodeEdgeJSONEncoder(json.JSONEncoder):
@@ -33,6 +33,11 @@ class Node:
 			self.dict["name"] = dataobject.read_id
 			self.dict["data"]["description"] = dataobject.description
 			self.dict["data"]["type"] = "read"
+		elif isinstance(dataobject, DbUniprotEcs):
+			self.type = 'enzyme'
+			self.dict['name'] = self.dict['id'] = dataobject.ec
+			self.dict['data']['type'] = 'enzyme'
+			self.dict['data']['$color'] = '#0000ff'
 		else:
 			raise Exception("parameter class must be Read or DbEntry")
 		self.dict["adjacencies"] = []
@@ -55,35 +60,36 @@ class Edge:
 	def __init__(self, nodeTo, blastobject):
 		if nodeTo is None:
 			raise Exception("Must supply nodeTo parameter")
-		if not isinstance(blastobject, Blast):
-			raise Exception("Second parameter must be a blast object, is " + str(blastobject.__class__))
 		self.dict = {}
-		self.dict["nodeTo"] = nodeTo.id
 		self.dict["data"] = {}
-		self.dict["data"]["read"] = blastobject.read_id
-		self.dict["data"]["database_name"] = blastobject.database_name
-		self.dict["data"]["db_entry"] = blastobject.db_entry_id
-		self.dict["data"]["length"] = blastobject.length
-		self.dict["data"]["id"] = blastobject.id
-#		self.dict["data"]["pident"] = blastobject.pident
-#		self.dict["data"]["mismatch"] = blastobject.mismatch
-#		self.dict["data"]["gapopen"] = blastobject.gapopen
-#		self.dict["data"]["qstart"] = blastobject.qstart
-#		self.dict["data"]["qend"] = blastobject.qend
-#		self.dict["data"]["sstart"] = blastobject.sstart
-#		self.dict["data"]["send"] = blastobject.send
-		self.dict["data"]["error_value"] = blastobject.error_value
-		self.dict["data"]["bitscore"] = blastobject.bitscore
+		if isinstance(blastobject, Blast):
+			self.dict["nodeTo"] = nodeTo.id
+			self.dict["data"]["read"] = blastobject.read_id
+			self.dict["data"]["database_name"] = blastobject.database_name
+			self.dict["data"]["db_entry"] = blastobject.db_entry_id
+			self.dict["data"]["length"] = blastobject.length
+			self.dict["data"]["id"] = blastobject.id
+#			self.dict["data"]["pident"] = blastobject.pident
+#			self.dict["data"]["mismatch"] = blastobject.mismatch
+#			self.dict["data"]["gapopen"] = blastobject.gapopen
+#			self.dict["data"]["qstart"] = blastobject.qstart
+#			self.dict["data"]["qend"] = blastobject.qend
+#			self.dict["data"]["sstart"] = blastobject.sstart
+#			self.dict["data"]["send"] = blastobject.send
+			self.dict["data"]["error_value"] = blastobject.error_value
+			self.dict["data"]["bitscore"] = blastobject.bitscore
 ############## Graph visualization style options below ################
 # use these only to override, defaults in graphviz.js
-#		self.dict["data"]["$type"] = "arrow"
-#		self.dict["data"]["$dim"] = 15
-#		self.dict["data"]["$lineWidth"] = 2
-#		self.dict["data"]["$alpha"] = 1
-#		self.dict["data"]["$epsilon"] = 7
-
-	def calculate_color(self, bitscore):
-		return "#%0.2x0000" % int(math.floor((1.0 * bitscore / self.MAX_BITSCORE) * 255))
+#			self.dict["data"]["$type"] = "arrow"
+#			self.dict["data"]["$dim"] = 15
+#			self.dict["data"]["$lineWidth"] = 2
+#			self.dict["data"]["$alpha"] = 1
+#			self.dict["data"]["$epsilon"] = 7
+		elif isinstance(blastobject, DbUniprotEcs):
+			self.dict['nodeTo'] = nodeTo.ec
+			self.dict['data']['$color'] = '#0000ff'
+		else:
+			raise Exception("Second parameter must be a blast or uniprot ecs object, is " + str(blastobject.__class__))
 
 	def __repr__(self):
 		return json.dumps(self.dict, cls=NodeEdgeJSONEncoder)
@@ -203,6 +209,15 @@ class QueryToJSON:
 					self.nodes.append(readnode)
 					next_level_nodes.add(readnode)
 				startnode.dict["adjacencies"].append(Edge(readid, blast))
+
+			ecs = DbUniprotEcs.objects.filter(db_id=blast.db_entry_id).filter(~Q(ec='?'))
+			for ec in ecs:
+				ecnode = Node(ec)
+				ecid = self.get_node_id(ecnode)
+				if ecnode not in self.nodes:
+					self.nodes.append(ecnode)
+					next_level_nodes.add(ecnode)
+				startnode.dict["adjacencies"].append(Edge(ec, ec))
 		elif startnode.type is "read":
 			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
 
@@ -230,8 +245,10 @@ class QueryToJSON:
 			return NodeId(node.dict["id"], "db_entry")
 		elif node.type == "read":
 			return NodeId(node.dict["id"], "read")
+		elif node.type == 'enzyme':
+			return NodeId(node.dict["id"], 'enzyme')
 		else:
-			raise Exception("Invalid node parameter, must be Node of type read or db_entry")
+			raise Exception("Invalid node parameter, must be Node of type read or db_entry or enzyme")
 
 	def dump_to_json(self):
 		return str(self.nodes)

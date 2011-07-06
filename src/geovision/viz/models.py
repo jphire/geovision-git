@@ -29,11 +29,11 @@ class DbEntry(models.Model):
 		return DbEntry.objects.all().defer('data')
 
 class DbUniprotEcs(models.Model):
-	db_id = models.CharField(max_length=32)
+	db_id = models.ForeignKey(DbEntry, db_column='db_id', related_name='uniprot_ecs')
 	protein_existence_type = models.CharField(max_length=4)
 	ec = models.CharField(max_length=12)
 
-class Blast(models.Model): # qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore
+class Blast(models.Model):
 	read = models.ForeignKey(Read)
 	database_name = models.CharField(max_length=16)
 	db_entry = models.ForeignKey(DbEntry)

@@ -290,15 +290,24 @@ function initGraph(json)
 
 				if(node.nodeFrom)
 				{
-					//it's an edge
-					tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
-					tip.innerHTML += "error value: " + node.data.error_value + "<br/>";
+					if(node.data.bitscore)
+					{
+						//it's an edge
+						tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
+						tip.innerHTML += "error value: " + node.data.error_value + "<br/>";
 					}
-				else
+					else
+						tip.innerHTML = 'enzyme edge';
+				}
+				else if(node.data.type != 'enzyme')
 				{
-					//it's a label
+					//it's a read or db entry
 					tip.innerHTML += "<b>" + node.id + "</b><br/>";
 					tip.innerHTML += node.data.description + "<br/>";
+				}
+				else
+				{
+					tip.innerHTML = 'enzyme';
 				}
 			}
 		},
@@ -318,7 +327,10 @@ function initGraph(json)
 		//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
-			domElement.innerHTML = node.name.substr(0, 10);
+			if(node.name)
+				domElement.innerHTML = node.name.substr(0, 10);
+			else
+				console.log(node);
 			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 		},
 		//Change some label dom properties.
@@ -456,10 +468,18 @@ function colorEdges(){
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
-			grncol = Math.floor((1.0 * (adj.data.bitscore - minScore) / (maxScore - minScore)) * 255);
-			col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
-			adj.data.$color = col;
-			adj.data.color = col;
+			if(adj.data.bitscore) // XXX - is a blast
+			{
+				grncol = Math.floor((1.0 * (adj.data.bitscore - minScore) / (maxScore - minScore)) * 255);
+				col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
+				adj.data.$color = col;
+				adj.data.color = col;
+			}
+			else
+			{
+				adj.data.$color = '#0000ff';
+				adj.data.color = '#0000ff';
+			}
 		});
 	});
 }
