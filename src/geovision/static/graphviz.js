@@ -462,6 +462,7 @@ function colorEdges(){
 		return;
 	}
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
+		node.data.$alpha = 0.6;
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			if(adj.data.bitscore > maxScore)
 				maxScore = adj.data.bitscore;
