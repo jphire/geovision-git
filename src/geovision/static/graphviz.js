@@ -187,7 +187,7 @@ function initGraph(json)
 				numSubnodes = $jit.Graph.Util.getSubnodes(node).length;
 				if (numSubnodes == 1)
 				{
-					busy = true;
+					busy = 'expanding';
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
@@ -198,7 +198,9 @@ function initGraph(json)
 				}
 				else
 				{
-					busy = true;
+					if(node.id == rgraph.root)
+						return;
+					busy = 'centering';
 					rgraph.onClick(node.id, {onComplete: function() { busy = false; }});
 				}
 			},
