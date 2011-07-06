@@ -211,7 +211,6 @@ function initGraph(json)
 				{
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					//node.data.$lineWidth = node.getData('epsilon');
-
 					if(busy)
 						return;
 					node.data.$alpha = 1;
@@ -244,6 +243,8 @@ function initGraph(json)
 				if(!object) return;
 				if(object.nodeTo)
 				{
+					if(busy)
+						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$alpha = 0.6;
 					rgraph.refresh();
@@ -257,6 +258,8 @@ function initGraph(json)
 
 				}
 				else if(object){
+					if(busy)
+						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$alpha = 0.6;
 					rgraph.refresh();
