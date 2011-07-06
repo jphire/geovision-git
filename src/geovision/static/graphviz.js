@@ -191,7 +191,7 @@ function initGraph(json)
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(newdata, { type: 'fade:con', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false; $jit.Graph.Util.each(rgraph, function(node){node.data.$alpha = 0.6;});rgraph.refresh();}})
+							rgraph.op.sum(newdata, { type: 'fade:con', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false;}})
 						}
 					);
 
@@ -333,8 +333,7 @@ function initGraph(json)
 			if(node.name)
 				domElement.innerHTML = node.name.substr(0, 10);
 			else
-				console.log(node);
-			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
+				domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 		},
 		//Change some label dom properties.
 		//This method is called each time a label is plotted.
