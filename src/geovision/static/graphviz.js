@@ -213,7 +213,7 @@ function initGraph(json)
 					//node.data.$lineWidth = node.getData('epsilon');
 
 					node.data.$alpha = 1;
-					
+					rgraph.refresh();
 //					rgraph.fx.animate(
 //					{
 //						modes: ['edge-property:lineWidth'],
