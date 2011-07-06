@@ -212,16 +212,21 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
 					
+					if(busy)
+						return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
 						duration: 500
 					});
 				}
-				else if(node){
+				else if(node)
+				{
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = node.getData('dim') + 3;
 					
+					if(busy)
+						return;
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -240,6 +245,8 @@ function initGraph(json)
 					
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					
+					if(busy)
+						return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -252,6 +259,8 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					
+					if(busy)
+						return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:dim'],
