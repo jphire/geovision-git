@@ -207,12 +207,12 @@ function initGraph(json)
 
 			onMouseEnter: function(node, eventInfo, e)
 			{ 
-				if (node.nodeFrom)
+				if (node.nodeTo)
 				{
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					//node.data.$lineWidth = node.getData('epsilon');
 
-					node.data.$alpha = 1;
+					node.data.$color = '#ffffff';
 					rgraph.refresh();
 //					rgraph.fx.animate(
 //					{
