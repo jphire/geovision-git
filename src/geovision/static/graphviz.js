@@ -188,7 +188,7 @@ function initGraph(json)
 				if (numSubnodes == 1)
 				{
 					busy = true;
-					$.getJSON(json_base_url + '&' + node.data.type + '=' + node.name,
+					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
 							rgraph.op.sum(newdata, { type: 'fade:seq', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false;}})

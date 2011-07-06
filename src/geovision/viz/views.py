@@ -24,8 +24,8 @@ def create_json(ecnumber, read, dbentry, bitscore, evalue, depth, hits):
 #	qtj = QueryToJSON(ecnumber, dbentry, read, evalue, bitscore, depth, hits)
 #	qtj.write_to_json(PROJECT_PATH + '/static/json_file.js')
 
-	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'depth': depth, 'hits': hits}.items()),
-		urllib.urlencode({'ecnumber': ecnumber or '', 'dbentry': dbentry or '', 'read': read or ''}.items()))
+	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits}.items()),
+		urllib.urlencode({'ecnumber': ecnumber or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth}.items()))
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
