@@ -332,7 +332,7 @@ function initGraph(json)
 		{
 			if(node.name)
 				domElement.innerHTML = node.name.substr(0, 10);
-			else
+			//else
 				//domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 		},
 		//Change some label dom properties.
