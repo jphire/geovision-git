@@ -2024,21 +2024,6 @@ Extras.Classes.Events = new Class({
       this.config.onMouseEnter(this.hovered,
                                event, evt);
     }
-//	else if(this.dom){
-//		this.hovered = event.getEdge();
-//	  var node = event.getNode();
-//      var edge = event.getEdge();
-//	  if(!node && !edge) {
-//        return;
-//      }
-//      if(this.config.force || !this.node || this.node.id != node.id) {
-//        this.node = node;
-//        this.config.onMouseEnter(this.hovered, event, evt);
-//      }
-//	  if(this.hovered){
-//		this.config.onMouseEnter(this.hovered, event, evt);
-//	  }
-//	}
   },
   
   onMouseMove: function(e, win, event) {
@@ -2050,7 +2035,7 @@ Extras.Classes.Events = new Class({
    }
    if(this.dom) {
 	   //original is commented out:
-     this.config.onMouseMove(this.hovered,
+     this.config.onMouseOver(this.hovered,
          event, evt);
    } else {
      if(this.hovered) {
