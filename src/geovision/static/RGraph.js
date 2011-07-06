@@ -2038,25 +2038,25 @@ Extras.Classes.Events = new Class({
 //     this.config.onMouseMove(this.hovered,
 //         event, evt);
 //   } else {
-//     if(this.hovered) {
-//       var hn = this.hovered;
-//       var geom = hn.nodeFrom? this.etypes[hn.getData('type')] : this.ntypes[hn.getData('type')];
-//       var contains = geom && geom.contains
-//         && geom.contains.call(this.fx, hn, event.getPos());
-//       if(contains) {
-//         this.config.onMouseMove(hn, event, evt);
-//         return;
-//       } else {
-//         this.config.onMouseLeave(hn, event, evt);
-//         this.hovered = false;
-//       }
-//     }
-//     if(this.hovered = (event.getNode() || (this.config.enableForEdges && event.getEdge()))) {
-//       this.config.onMouseEnter(this.hovered, event, evt);
-//     } else {
-//       this.config.onMouseMove(false, event, evt);
-//     }
-//   }
+     if(this.hovered) {
+       var hn = this.hovered;
+       var geom = hn.nodeFrom? this.etypes[hn.getData('type')] : this.ntypes[hn.getData('type')];
+       var contains = geom && geom.contains
+         && geom.contains.call(this.fx, hn, event.getPos());
+       if(contains) {
+         this.config.onMouseMove(hn, event, evt);
+         return;
+       } else {
+         this.config.onMouseLeave(hn, event, evt);
+         this.hovered = false;
+       }
+     }
+     if(this.hovered = (event.getNode() || (this.config.enableForEdges && event.getEdge()))) {
+       this.config.onMouseEnter(this.hovered, event, evt);
+     } else {
+       this.config.onMouseMove(false, event, evt);
+     }
+   //}
   },
   
   onMouseWheel: function(e, win, delta) {
