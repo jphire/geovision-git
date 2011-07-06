@@ -2034,10 +2034,10 @@ Extras.Classes.Events = new Class({
      return;
    }
    if(this.dom) {
-//	   //original is commented out:
-//     this.config.onMouseMove(this.hovered,
-//         event, evt);
-//   } else {
+	   //original is commented out:
+     this.config.onMouseOver(this.hovered,
+         event, evt);
+   } else {
      if(this.hovered) {
        var hn = this.hovered;
        var geom = hn.nodeFrom? this.etypes[hn.getData('type')] : this.ntypes[hn.getData('type')];
