@@ -191,7 +191,7 @@ function initGraph(json)
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(newdata, { type: 'fade:seq', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false;}})
+							rgraph.op.sum(newdata, { type: 'fade:con', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false;}})
 						}
 					);
 
@@ -329,6 +329,12 @@ function initGraph(json)
 			style.display = '';
 			style.cursor = 'pointer';
 
+			var left = parseInt(style.left);
+			var w = domElement.offsetWidth;
+			style.left = (left - w / 2) + 'px';
+
+			return;
+
 			if (node._depth <= 2) {
 				style.fontSize = "1.1em";
 				style.color = "#ccc";
@@ -340,10 +346,6 @@ function initGraph(json)
 			} else {
 				style.display = 'none';
 			}
-
-			var left = parseInt(style.left);
-			var w = domElement.offsetWidth;
-			style.left = (left - w / 2) + 'px';
 		}		
 	});
 
