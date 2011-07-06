@@ -212,7 +212,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					//node.data.$lineWidth = node.getData('epsilon');
 
-					node.data.$color = '#ffffff';
+					node.data.$alpha = 1;
 					rgraph.refresh();
 //					rgraph.fx.animate(
 //					{
