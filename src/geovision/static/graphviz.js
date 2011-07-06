@@ -210,7 +210,7 @@ function initGraph(json)
 				if (node.nodeTo)
 				{
 					rgraph.canvas.getElement().style.cursor = 'pointer';
-					node.data.$lineWidth = node.getData('epsilon')-2;
+					node.data.$lineWidth = node.getData('epsilon');
 					if(busy) return;
 
 					rgraph.fx.animate(
