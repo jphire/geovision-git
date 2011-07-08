@@ -191,7 +191,7 @@ function initGraph(json)
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(newdata, { type: 'fade:con', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false;}})
+							rgraph.op.sum(newdata, { type: 'fade:con', fps:30, duration: 500, onComplete: function() { $jit.config.Node.$alpha=0.6; colorEdges(); busy = false;}})
 						}
 					);
 				}
@@ -474,11 +474,9 @@ function colorEdges(){
 				col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
 				adj.data.$color = col;
 				adj.data.color = col;
-				adj.nodeTo.$alpha = 0.6;
 			}
 			else
 			{
-				adj.nodeTo.$alpha = 0.6;
 				adj.data.$color = '#0000ff';
 				adj.data.color = '#0000ff';
 			}
