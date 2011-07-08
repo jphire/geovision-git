@@ -37,7 +37,7 @@ class Node:
 			self.type = 'enzyme'
 			self.dict['name'] = self.dict['id'] = dataobject.ec
 			self.dict['data']['type'] = 'enzyme'
-			self.dict['data']['$color'] = '#0000ff'
+#			self.dict['data']['$color'] = '#0000ff'
 		else:
 			raise Exception("parameter class must be Read or DbEntry")
 		self.dict["adjacencies"] = []
@@ -156,6 +156,7 @@ class QueryToJSON:
 	def build_graph(self, startnode, maxdepth):
 		self.nodes.append(startnode)
 		self.build_graph_level([startnode], 1, maxdepth)
+		self.add_ec_nodes()
 
 	def build_graph_level(self, nodes, depth, maxdepth):
 		if depth <= maxdepth:
@@ -163,6 +164,25 @@ class QueryToJSON:
 				queryset = self.make_blast_queryset(node)
 				next_level_nodes = self.add_edges(node, queryset)
 				self.build_graph_level(next_level_nodes, depth + 1, maxdepth)
+
+	def add_ec_nodes(self):
+		db_ids = []
+		for node in self.nodes:
+			if node.dict['data']['type'] == 'dbentry':
+				db_ids.append(node.dict['id'])
+
+		ecs = DbUniprotEcs.objects.filter(db_id__in=db_ids).filter(~Q(ec='?'))
+		for ec in ecs:
+			ecnode = Node(ec)
+			ecid = self.get_node_id(ecnode)
+			if ecnode not in self.nodes:
+				self.nodes.append(ecnode)
+			self.find_node_by_id(ec.db_id_id).dict["adjacencies"].append(Edge(ec, ec))
+	def find_node_by_id(self, id): # XXX - linear search, change self.nodes to a dict!
+		for n in self.nodes:
+			if id == n.dict['id']:
+				return n
+		raise KeyError(repr(id))
 
 	def make_blast_queryset(self, param = None):
 		"""
@@ -210,13 +230,6 @@ class QueryToJSON:
 					next_level_nodes.add(readnode)
 				startnode.dict["adjacencies"].append(Edge(readid, blast))
 
-			ecs = DbUniprotEcs.objects.filter(db_id=blast.db_entry_id).filter(~Q(ec='?'))
-			for ec in ecs:
-				ecnode = Node(ec)
-				ecid = self.get_node_id(ecnode)
-				if ecnode not in self.nodes:
-					self.nodes.append(ecnode)
-				startnode.dict["adjacencies"].append(Edge(ec, ec))
 		elif startnode.type is "read":
 			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
 

@@ -1979,8 +1979,8 @@ Extras.Classes.Events = new Class({
     if(!this.moved) {
       if(isRightClick) {
         this.config.onRightClick(this.hovered, event, evt);
-//      } else {
-//        this.config.onClick(this.pressed, event, evt);
+      } else {
+        this.config.onClick(this.pressed, event, evt);
       }
     }
     if(this.pressed) {
@@ -5398,6 +5398,10 @@ Graph.Op = {
 
                 //set alpha to 0 for nodes to add.
                 var fadeEdges = this.preprocessSum(graph);
+
+		if (options.onMerge) // ADDED TO SIMPLIFY NODE COLORING
+			options.onMerge();
+
                 var modes = !fadeEdges? ['node-property:alpha'] : ['node-property:alpha', 'edge-property:alpha'];
                 viz.reposition();
                 if(options.type != 'fade:con') {
@@ -5736,7 +5740,7 @@ Graph.Op = {
                 var n = viz.graph.getNode(elem.id);
                 n.setData('alpha', 0);
                 n.setData('alpha', 0, 'start');
-                n.setData('alpha', 1, 'end');
+                n.setData('alpha', graph.Node.alpha, 'end'); // CHANGED: second argument was originally 1.0
             }
         }); 
         var fadeEdges = false;
@@ -5751,7 +5755,7 @@ Graph.Op = {
                         fadeEdges = true;
                         adj.setData('alpha', 0);
                         adj.setData('alpha', 0, 'start');
-                        adj.setData('alpha', 1, 'end');
+                        adj.setData('alpha', graph.Edge.alpha, 'end'); // CHANGED: second argument was originally 1.0
                     } 
                 }
             });
