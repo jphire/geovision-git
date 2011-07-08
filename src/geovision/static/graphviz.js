@@ -475,9 +475,11 @@ function colorEdges(){
 				col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
 				adj.data.$color = col;
 				adj.data.color = col;
+				adj.nodeTo.$alpha = 0.6;
 			}
 			else
 			{
+				adj.nodeTo.$alpha = 0.6;
 				adj.data.$color = '#0000ff';
 				adj.data.color = '#0000ff';
 			}
