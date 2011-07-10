@@ -150,8 +150,8 @@ class QueryToJSON:
 			else:
 				self.startpoint = NodeId(read, "read")
 		else:
-			if read is not None or enzyme is not None:
-				raise Exception("Cannot use both read and db_entry as starting point")
+			if read is not None or ec_number is not None:
+				raise Exception("Cannot use both read and db_entry as a starting point")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
 		self.build_graph(self.startnode, self.depth_limit)
@@ -275,8 +275,8 @@ class QueryToJSON:
 			return NodeId(node.dict["id"], "db_entry")
 		elif node.type == "read":
 			return NodeId(node.dict["id"], "read")
-		elif node.type == 'enzyme':
-			return NodeId(node.dict["id"], 'enzyme')
+		elif node.type == "enzyme":
+			return NodeId(node.dict["id"], "enzyme")
 		else:
 			raise Exception("Invalid node parameter, must be Node of type read or db_entry or enzyme")
 
