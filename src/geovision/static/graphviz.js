@@ -315,7 +315,7 @@ function initGraph(json)
 				}
 				else
 				{
-					tip.innerHTML = "<b>" + node.nodeTo + "</b>";
+					tip.innerHTML = "<b>" + node.id + "</b>";
 				}
 			}
 		},
