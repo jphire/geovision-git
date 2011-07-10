@@ -218,7 +218,7 @@ class QueryToJSON:
 		elif param.type == "read":
 			query = query.filter(read = param.dict["id"])
 		else:
-			query = make_enzyme_query(param)
+			query = self.make_enzyme_query(param)
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
