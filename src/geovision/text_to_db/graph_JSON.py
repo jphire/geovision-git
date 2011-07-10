@@ -39,7 +39,7 @@ class Node:
 			self.dict['data']['type'] = 'enzyme'
 			self.dict['data']['$color'] = '#0000ff'
 		else:
-			raise Exception("parameter class must be Read or DbEntry")
+			raise Exception("parameter class must be Read, DbEntry or DbUniProtEcs")
 		self.dict["adjacencies"] = []
 
 
@@ -143,11 +143,14 @@ class QueryToJSON:
 		self.nodes = []
 		if db_entry is None:
 			if read is None:
-				raise Exception("Either db_entry or read parameter must be supplied")
+				if ec_number is None:
+					raise Exception("Either db_entry or read parameter must be supplied")
+				else:
+					self.startpoint = NodeId(ec_number, "enzyme")
 			else:
 				self.startpoint = NodeId(read, "read")
 		else:
-			if read is not None:
+			if read is not None or enzyme is not None:
 				raise Exception("Cannot use both read and db_entry as starting point")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
@@ -178,11 +181,24 @@ class QueryToJSON:
 			if ecnode not in self.nodes:
 				self.nodes.append(ecnode)
 			self.find_node_by_id(ec.db_id_id).dict["adjacencies"].append(Edge(ec, ec))
+
 	def find_node_by_id(self, id): # XXX - linear search, change self.nodes to a dict!
 		for n in self.nodes:
 			if id == n.dict['id']:
 				return n
 		raise KeyError(repr(id))
+
+	def make_enzyme_query(self, param = None):
+
+		db_list = []
+		db_query = DbUniprotEcs.objects.filter(ec = param.dict["id"])
+		for line in db_query:
+			if line.db_id not in db_list:
+				node = DbEntry.objects.get(db_id = line.db_id)
+				db_list.append(node)
+
+		db_entrys = Blast.objects.filter(db_entry__in = db_list).aggregate(Max('bitscore'))
+		return db_entrys
 
 	def make_blast_queryset(self, param = None):
 		"""
@@ -195,14 +211,14 @@ class QueryToJSON:
 		is not made in this function.
 		"""
 		query = Blast.deferred()
-#		if self.ec_number is not None:
-#			query = query.filter(ec_number = self.ec_number)
+#		if param_type == "enzyme":
+#			query = query.filter(ec_number = param.dict["id"])
 		if param.type == "db_entry":
 			query = query.filter(db_entry = param.dict["id"])
 		elif param.type == "read":
 			query = query.filter(read = param.dict["id"])
 		else:
-			return None
+			query = make_enzyme_query(param)
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
@@ -230,7 +246,7 @@ class QueryToJSON:
 					next_level_nodes.add(readnode)
 				startnode.dict["adjacencies"].append(Edge(readid, blast))
 
-		elif startnode.type is "read":
+		elif startnode.type is "read" or startnode.type is "enzyme":
 			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
 
 			for (dbentry, blast) in zip(db_entries, queryset):

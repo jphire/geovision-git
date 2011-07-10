@@ -325,7 +325,9 @@ function initGraph(json)
 			//This list is taken from the data property of each JSON node.
 			$jit.id('inner-details').innerHTML = ""
 			$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
-			$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+			if(node.data.bitscore){
+				$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+			}
 		},
 		
 		onAfterCompute: function() {},
