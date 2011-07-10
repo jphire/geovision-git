@@ -95,8 +95,8 @@ function prepareJSON(json)
 {
 	for (i in json)
 	{
-		if(json[i].data.type == "enzyme")
-			json[i].data.$color = '#0000FF';
+//		if(json[i].data.type == "enzyme")
+//			json[i].data.$color = '#0000FF';
 	}
 	return json;
 }
