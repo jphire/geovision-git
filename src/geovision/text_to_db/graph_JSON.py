@@ -177,7 +177,7 @@ class QueryToJSON:
 			ecid = self.get_node_id(ecnode)
 			if ecnode not in self.nodes:
 				self.nodes.append(ecnode)
-			self.find_node_by_id(ec.db_id_id).dict["adjacencies"].append(Edge(ecid, ec))
+			self.find_node_by_id(ec.db_id_id).dict["adjacencies"].append(Edge(ec, ec))
 	def find_node_by_id(self, id): # XXX - linear search, change self.nodes to a dict!
 		for n in self.nodes:
 			if id == n.dict['id']:
