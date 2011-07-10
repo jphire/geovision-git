@@ -198,6 +198,7 @@ class QueryToJSON:
 				db_list.append(line.db_id)
 
 		db_entrys = Blast.objects.filter(db_entry__in = db_list)
+		raise Exception("test exception")
 		return db_entrys
 
 	def make_blast_queryset(self, param = None):
@@ -247,7 +248,6 @@ class QueryToJSON:
 				startnode.dict["adjacencies"].append(Edge(readid, blast))
 
 		elif startnode.type is "read" or startnode.type is "enzyme":
-			raise Exception("test exception")
 			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
 
 			for (dbentry, blast) in zip(db_entries, queryset):
