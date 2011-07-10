@@ -154,6 +154,7 @@ class QueryToJSON:
 				raise Exception("Cannot use both read and db_entry as a starting point")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
+		raise Exception("test2 exception")
 		self.build_graph(self.startnode, self.depth_limit)
 
 	def build_graph(self, startnode, maxdepth):
@@ -267,7 +268,6 @@ class QueryToJSON:
 			return Node(DbEntry.objects.get(db_id = node_id.id))
 		elif node_id.type is "enzyme":
 			query=DbUniprotEcs.objects.filter(ec = node_id.id)[:1]
-			raise Exception("test2 exception")
 			for q in query:
 				return Node(q)
 		else:
