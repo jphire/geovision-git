@@ -39,7 +39,6 @@ class Node:
 			self.dict['data']['type'] = 'enzyme'
 			self.dict['data']['$color'] = '#0000ff'
 		else:
-			console.log(dataobject.ec)
 			raise Exception("parameter class must be Read, DbEntry or DbUniProtEcs")
 		self.dict["adjacencies"] = []
 
@@ -267,7 +266,8 @@ class QueryToJSON:
 		elif node_id.type is "db_entry":
 			return Node(DbEntry.objects.get(db_id = node_id.id))
 		elif node_id.type is "enzyme":
-			return Node(DbUniprotEcs.objects.filter(ec = node_id.id)[:1])
+			raise Exception("Invalid type")
+			#return Node(DbUniprotEcs.objects.filter(ec = node_id.id)[:1])
 		else:
 			raise Exception("Invalid node_id parameter, must be tuple (type, id)")
 
