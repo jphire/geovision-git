@@ -196,9 +196,9 @@ class QueryToJSON:
 			if line.db_id.db_id not in db_list:
 				node = DbEntry.objects.get(db_id = line.db_id.db_id)
 				db_list.append(node.db_id)
-
-		db_entrys = Blast.objects.filter(db_entry__db_id__in = db_list)
 		raise Exception("test1 exception")
+		db_entrys = Blast.objects.filter(db_entry__in = db_list)
+		
 		return db_entrys
 
 	def make_blast_queryset(self, param = None):
