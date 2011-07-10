@@ -198,7 +198,6 @@ class QueryToJSON:
 				db_list.append(line.db_id)
 
 		db_entrys = Blast.objects.filter(db_entry__in = db_list)
-		raise Exception("test exception")
 		return db_entrys
 
 	def make_blast_queryset(self, param = None):
@@ -267,7 +266,9 @@ class QueryToJSON:
 		elif node_id.type is "db_entry":
 			return Node(DbEntry.objects.get(db_id = node_id.id))
 		elif node_id.type is "enzyme":
+			raise Exception("test1 exception")
 			query=DbUniprotEcs.objects.filter(ec = node_id.id)[:1]
+			raise Exception("test2 exception")
 			for q in query:
 				return Node(q)
 		else:
