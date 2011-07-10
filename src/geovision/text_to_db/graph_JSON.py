@@ -196,6 +196,7 @@ class QueryToJSON:
 			if line.db_id.db_id not in db_list:
 #				node = DbEntry.objects.get(db_id = line.db_id.db_id)
 				db_list.append(line.db_id.db_id)
+		raise Exception("test1 exception")
 		db_entrys = Blast.objects.filter(db_entry__db_id__in = db_list)
 		return db_entrys
 
@@ -218,6 +219,7 @@ class QueryToJSON:
 			query = query.filter(read = param.dict["id"])
 		else:
 			query = self.make_enzyme_query(param)
+			
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
