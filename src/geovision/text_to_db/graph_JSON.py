@@ -194,7 +194,8 @@ class QueryToJSON:
 		db_query = DbUniprotEcs.objects.filter(ec = param.dict["id"])
 		for line in db_query:
 			if line.db_id not in db_list:
-#				node = DbEntry.objects.get(db_id = line.db_id)
+				node = DbEntry.objects.get(db_id = line.db_id)
+				raise Exception("test1 exception")
 				db_list.append(line.db_id)
 
 		db_entrys = Blast.objects.filter(db_entry__in = db_list)
@@ -220,7 +221,6 @@ class QueryToJSON:
 		else:
 			query = self.make_enzyme_query(param)
 		query = query.filter(error_value__lte = self.e_value_limit)
-		raise Exception("test1 exception")
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
 		return query[:self.max_amount]
