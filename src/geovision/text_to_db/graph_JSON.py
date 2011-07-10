@@ -192,6 +192,7 @@ class QueryToJSON:
 
 		db_list = []
 		db_query = DbUniprotEcs.objects.filter(ec = param.dict["id"])
+		raise Exception("test1 exception")
 		for line in db_query:
 			if line.db_id not in db_list:
 #				node = DbEntry.objects.get(db_id = line.db_id)
@@ -218,8 +219,8 @@ class QueryToJSON:
 		elif param.type == "read":
 			query = query.filter(read = param.dict["id"])
 		else:
-			raise Exception("test2 exception")
 			query = self.make_enzyme_query(param)
+			raise Exception("test2 exception")
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
