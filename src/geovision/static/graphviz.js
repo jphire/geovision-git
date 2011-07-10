@@ -315,7 +315,7 @@ function initGraph(json)
 				}
 				else
 				{
-					tip.innerHTML = 'enzyme';
+					tip.innerHTML = "<b>" + node.nodeTo + "</b>";
 				}
 			}
 		},
