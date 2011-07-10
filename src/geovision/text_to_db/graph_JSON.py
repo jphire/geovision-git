@@ -39,6 +39,7 @@ class Node:
 			self.dict['data']['type'] = 'enzyme'
 			self.dict['data']['$color'] = '#0000ff'
 		else:
+			console.log(dataobject.ec)
 			raise Exception("parameter class must be Read, DbEntry or DbUniProtEcs")
 		self.dict["adjacencies"] = []
 
