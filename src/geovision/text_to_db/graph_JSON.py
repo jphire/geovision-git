@@ -37,7 +37,7 @@ class Node:
 			self.type = 'enzyme'
 			self.dict['name'] = self.dict['id'] = dataobject.ec
 			self.dict['data']['type'] = 'enzyme'
-#			self.dict['data']['$color'] = '#0000ff'
+			self.dict['data']['$color'] = '#0000ff'
 		else:
 			raise Exception("parameter class must be Read or DbEntry")
 		self.dict["adjacencies"] = []

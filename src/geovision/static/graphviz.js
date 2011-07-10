@@ -395,6 +395,9 @@ function alignmentfunction(thisid) {
 	}
 	if (alignmentopen == false){
 		$.getJSON('/show_alignment', {id: thisid}, function (data) {
+			if(data == null){
+				return false;
+			}
 			alignmentopen = true;
 /*			var part1 = $('<nobr>' + data.readseq + '</nobr>');
 			var part2 = $('<nobr>' + data.dbseq + '</nobr>');  */
