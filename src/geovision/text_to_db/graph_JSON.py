@@ -265,6 +265,8 @@ class QueryToJSON:
 			return Node(Read.objects.get(read_id = node_id.id))
 		elif node_id.type is "db_entry":
 			return Node(DbEntry.objects.get(db_id = node_id.id))
+		elif node_id.type is "enzyme":
+			return Node(node_id)
 		else:
 			raise Exception("Invalid node_id parameter, must be tuple (type, id)")
 
