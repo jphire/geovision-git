@@ -6,19 +6,18 @@ def run(args):
 	import sys
 	ep = KeggParser(open(args[1], 'r'), ['ENTRY', 'NAME', 'PATHWAY'])
 	name_inserter = BulkInserter(EnzymeName)
-	enzyme_inserter = BulkInserter(Enzyme)
 
 	while True:
 		entry =  ep.get_entry()
 		if not entry: break
-		ecnum = entry['ENTRY'][0][3:13].strip()
+		ecnum = entry['ENTRY'][0][3:14].strip()
 		try:
 			for name in entry['NAME']:
 				name_inserter.save(EnzymeName(ec_number=ecnum, enzyme_name=name))
 		except KeyError:
 #			print('Warning, no names for EC %s' % (ecnum,))
 			pass
-		enzyme = Enzyme()
+		enzyme = Enzyme.objects.create(pk=ecnum)
 		try:
 			for pathway in entry['PATHWAY']:
 				id = pathway[2:7]
@@ -26,11 +25,11 @@ def run(args):
 				try:
 					pw = Pathway.objects.get(pk=id)
 				except Pathway.DoesNotExist:
-					pw = Pathway.create(pk=id, name=name)
-				enzyme.pathways += pw
-		except:
+					pw = Pathway.objects.create(pk=id, name=name)
+				enzyme.pathways.add(pw)
+		except KeyError:
 			pass
-		enzyme_inserter.save(enzyme)
+		enzyme.save()
 	name_inserter.close()
 
 if __name__ == '__main__':

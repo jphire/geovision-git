@@ -68,7 +68,7 @@ class EnzymeName(models.Model):
 
 class Pathway(models.Model):
 	id = models.CharField(max_length=6, primary_key=True)
-	name = models.CharField(max_length=32)
+	name = models.CharField(max_length=64)
 
 class Compound(models.Model):
 	id = models.CharField(max_length=6, primary_key=True)
