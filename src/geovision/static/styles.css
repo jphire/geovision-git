@@ -162,8 +162,11 @@ div#alignment{
 	display:none;
 	padding:5px;
 }
-span.aligndifference{
+#alignment span {
 	background-color: #FF636E;
+}
+span.aligndifference{
+	background-color: #E6F2EA;
 }
 div#closealign{
 	text-align: right;

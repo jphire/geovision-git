@@ -442,8 +442,8 @@ function alignmentfunction(thisid) {
 					$('<br/><br/>').appendTo($('#alignment'));
 				}
 				if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
-					part1 = part1.append(data.readseq.charAt(i));
-					part2 = part2.append(data.dbseq.charAt(i));
+					part1 = part1.append('<span>' + data.readseq.charAt(i) + '</span>');
+					part2 = part2.append('<span>' + data.dbseq.charAt(i) + '</span>');
 				}
 				else {
 					part1 = part1.append('<span class=\'aligndifference\'>' + data.readseq.charAt(i) + '</span>');
