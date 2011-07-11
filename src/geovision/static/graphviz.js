@@ -89,6 +89,13 @@ $jit.RGraph.Plot.EdgeTypes.implement({
 function init(){
 	//init data
 	jQuery('#loader').fadeOut();//loader fadeaway
+
+	$('#infovis').contextMenu('nodeMenu', {
+		'bindings': {
+			'close': function() { },
+			'derp': function() { alert('herpderp'); }
+		}});
+		
 }
 
 function prepareJSON(json)
@@ -338,12 +345,15 @@ function initGraph(json)
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
 					$.getJSON('/enzyme_names', {id: thisid}, function (data) {
-						if(data == null){
+						if(data == null)
+						{
 							return false;
 						}
-						for (name in data){
+						for (name in data)
+						{
 							tip.innerHTML = tip.innerHTML + "<br/>" + name;
 						}
+					});
 				}
 			}
 		},

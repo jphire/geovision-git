@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
 <link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />	
 
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
+
 <!-- Example File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
 
@@ -78,6 +80,12 @@
 {% endblock %}
 {% block content %}
 <body onload="init();">
+    <div class="contextMenu" id="nodeMenu">
+        <ul> 
+             <li id="close">Close menu</li>
+             <li id="derp">Derp</li>
+        </ul>
+    </div>
     <div id="loader"><img src="../static/images/loader.gif" alt="Loading..."/></div>
 
 	<div id="container">		
