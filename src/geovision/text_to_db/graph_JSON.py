@@ -197,6 +197,7 @@ class QueryToJSON:
 				node = DbEntry.objects.get(db_id = line.db_id_id)
 				db_list.append(line.db_id_id)
 
+		raise Exception("test failed")
 		db_entrys = Blast.objects.filter(db_entry__in = db_list)
 		return db_entrys
 
