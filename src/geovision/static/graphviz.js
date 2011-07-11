@@ -181,9 +181,14 @@ function initGraph(json)
 				{
 					alignmentfunction(node.data.id);
 				}
+                else 
+                {
+                    node.traversalTag = true;
+                    console.log(node.traversalTag);
+                }
 			},
 
-			onClick: function(node, opt, unk)
+			onClick: function(node, opt)
 			{
 				if(!node || node.nodeFrom)
 					return;
@@ -203,10 +208,26 @@ function initGraph(json)
 				}
 				else
 				{
-					if(node.id == rgraph.root)
-						return;
-					busy = 'centering';
-					rgraph.onClick(node.id, { hideLabels: false, onComplete: function() { busy = false; }});
+					if(node.collapsed) 
+                    {
+                        busy = 'expanding';
+                        rgraph.op.expand(node, 
+                                { type: 'animate', 
+                                duration: 1000, 
+                                hideLabels: true, 
+                                transition: $jit.Trans.Quart.easeOut, 
+                                onComplete: function() {colorEdges(); busy = false}});
+                    }
+                    else 
+                    {
+                        busy = 'contracting';
+                        rgraph.op.contract(node, 
+                                { type: 'animate', 
+                                duration: 1000, 
+                                hideLabels: true, 
+                                transition: $jit.Trans.Quart.easeOut, 
+                                onComplete: function() {colorEdges(); busy = false}});
+    				}
 				}
 			},
 
@@ -388,6 +409,7 @@ function initGraph(json)
 	$jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
 	rgraph.refresh();
 	colorEdges();
+    rgraph.op.contract = contractForTraversal;
 }
 
 var alignmentopen = false;
@@ -491,3 +513,49 @@ function colorEdges(){
 		});
 	});
 }
+
+/*
+ * Modified version of the original contract function for removing unnecessary
+ * nodes while traversing the graph.
+ */
+
+function contractForTraversal(node, opt) {
+    console.log("contractForTraversal");
+  var viz = this.viz;
+  if(node.collapsed || !node.anySubnode($jit.util.lambda(true))) return;
+  opt = $jit.util.merge(this.options, viz.config, opt || {}, {
+    'modes': ['node-property:alpha:span', 'linear']
+  });
+  node.collapsed = true;
+  (function subn(n) {
+    n.eachSubnode(function(ch) {
+        if (!ch.traversalTag) 
+        {
+            ch.ignore = true;
+            ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
+            subn(ch);
+      }
+    });
+  })(node);
+  if(opt.type == 'animate') {
+    viz.compute('end');
+    if(viz.rotated) {
+      viz.rotate(viz.rotated, 'none', {
+        'property':'end'
+      });
+    }
+    (function subn(n) {
+      n.eachSubnode(function(ch) {
+        if (!ch.traversalTag) 
+        {
+            ch.setPos(node.getPos('end'), 'end');
+            subn(ch);
+        }
+      });
+    })(node);
+    viz.fx.animate(opt);
+  } else if(opt.type == 'replot'){
+    viz.refresh();
+  }
+}
+
