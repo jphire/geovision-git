@@ -90,6 +90,17 @@ function init(){
 	//init data
 	jQuery('#loader').fadeOut();//loader fadeaway
 }
+
+function prepareJSON(json)
+{
+	for (i in json)
+	{
+//		if(json[i].data.type == "enzyme")
+//			json[i].data.$color = '#0000FF';
+	}
+	return json;
+}
+
 var rgraph;
 var busy = false;
 function initGraph(json)
@@ -139,14 +150,8 @@ function initGraph(json)
 			overridable: true,
 			color: '#ff0000',
 			alpha: 0.6,
-			dim: 5,
-			height: 20,
-			width: 90,
-			autoHeight: false,
-			autoWidth: false,
+			dim: 5.0,
 			lineWidth: 0.5,
-			transform: true,
-			align: "center",
 			angularWidth: 1,
 			span:1,
 			type: 'circle',
@@ -158,9 +163,10 @@ function initGraph(json)
 			overridable: true,
 			color: '#888800',
 			alpha: 0.6,
-			lineWidth:2.5,
+			lineWidth:1.5,
 			type: 'customArrow',
-			epsilon: 5.0
+			epsilon: 5.0,
+			dim: 10,
 		},
 
 		Events:
@@ -191,10 +197,9 @@ function initGraph(json)
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(newdata, { type: 'fade:con', fps:30, duration: 500, onComplete: function() { colorEdges(); busy = false;}})
+							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;}})
 						}
 					);
-
 				}
 				else
 				{
@@ -266,7 +271,7 @@ function initGraph(json)
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
-						duration: 500
+						duration: 1
 					});
 
 				}
@@ -280,7 +285,7 @@ function initGraph(json)
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:dim'],
-						duration: 500
+						duration: 1
 					});
 
 				}
@@ -313,7 +318,7 @@ function initGraph(json)
 					{
 						//it's an edge
 						tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
-						tip.innerHTML += "error value: " + node.data.error_value + "<br/>";
+						tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
 					}
 					else
 						tip.innerHTML = 'enzyme edge';
@@ -326,7 +331,7 @@ function initGraph(json)
 				}
 				else
 				{
-					tip.innerHTML = 'enzyme';
+					tip.innerHTML = "<b>" + node.id + "</b>";
 				}
 			}
 		},
@@ -336,7 +341,9 @@ function initGraph(json)
 			//This list is taken from the data property of each JSON node.
 			$jit.id('inner-details').innerHTML = ""
 			$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
-			$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+			if(node.data.bitscore){
+				$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+			}
 		},
 		
 		onAfterCompute: function() {},
@@ -379,7 +386,7 @@ function initGraph(json)
 	});
 
 	//load JSON data, second argument is the index of the centered node
-	rgraph.loadJSON(json, 0);
+	rgraph.loadJSON(prepareJSON(json), 0);
 	//trigger small animation
 
 	rgraph.graph.eachNode(function(n) {
@@ -406,6 +413,9 @@ function alignmentfunction(thisid) {
 	}
 	if (alignmentopen == false){
 		$.getJSON('/show_alignment', {id: thisid}, function (data) {
+			if(data == null){
+				return false;
+			}
 			alignmentopen = true;
 /*			var part1 = $('<nobr>' + data.readseq + '</nobr>');
 			var part2 = $('<nobr>' + data.dbseq + '</nobr>');  */
@@ -472,9 +482,6 @@ function formatHex(num)
 function colorEdges(){
 	maxScore = 0;
 	minScore = 100000;
-	if(busy){
-		return;
-	}
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			if(adj.data.bitscore > maxScore)

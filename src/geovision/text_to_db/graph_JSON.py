@@ -39,7 +39,7 @@ class Node:
 			self.dict['data']['type'] = 'enzyme'
 			self.dict['data']['$color'] = '#0000ff'
 		else:
-			raise Exception("parameter class must be Read or DbEntry")
+			raise Exception("parameter class must be Read, DbEntry or DbUniProtEcs")
 		self.dict["adjacencies"] = []
 
 
@@ -143,12 +143,15 @@ class QueryToJSON:
 		self.nodes = []
 		if db_entry is None:
 			if read is None:
-				raise Exception("Either db_entry or read parameter must be supplied")
+				if ec_number is None:
+					raise Exception("Either db_entry or read parameter must be supplied")
+				else:
+					self.startpoint = NodeId(ec_number, "enzyme")
 			else:
 				self.startpoint = NodeId(read, "read")
 		else:
-			if read is not None:
-				raise Exception("Cannot use both read and db_entry as starting point")
+			if read is not None or ec_number is not None:
+				raise Exception("Cannot use both read and db_entry as a starting point")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
 		self.build_graph(self.startnode, self.depth_limit)
@@ -156,6 +159,7 @@ class QueryToJSON:
 	def build_graph(self, startnode, maxdepth):
 		self.nodes.append(startnode)
 		self.build_graph_level([startnode], 1, maxdepth)
+		self.add_ec_nodes()
 
 	def build_graph_level(self, nodes, depth, maxdepth):
 		if depth <= maxdepth:
@@ -163,6 +167,38 @@ class QueryToJSON:
 				queryset = self.make_blast_queryset(node)
 				next_level_nodes = self.add_edges(node, queryset)
 				self.build_graph_level(next_level_nodes, depth + 1, maxdepth)
+
+	def add_ec_nodes(self):
+		db_ids = []
+		for node in self.nodes:
+			if node.dict['data']['type'] == 'dbentry':
+				db_ids.append(node.dict['id'])
+
+		ecs = DbUniprotEcs.objects.filter(db_id__in=db_ids).filter(~Q(ec='?'))
+		for ec in ecs:
+			ecnode = Node(ec)
+			ecid = self.get_node_id(ecnode)
+			if ecnode not in self.nodes:
+				self.nodes.append(ecnode)
+			self.find_node_by_id(ec.db_id_id).dict["adjacencies"].append(Edge(ec, ec))
+
+	def find_node_by_id(self, id): # XXX - linear search, change self.nodes to a dict!
+		for n in self.nodes:
+			if id == n.dict['id']:
+				return n
+		raise KeyError(repr(id))
+
+	def make_enzyme_query(self, param = None):
+
+		db_list = []
+		db_query = DbUniprotEcs.objects.filter(ec = param)
+		for line in db_query:
+			if line.db_id_id not in db_list:
+				node = DbEntry.objects.get(db_id = line.db_id_id)
+				db_list.append(line.db_id_id)
+
+		db_entrys = Blast.objects.filter(db_entry__in = db_list)
+		return db_entrys
 
 	def make_blast_queryset(self, param = None):
 		"""
@@ -175,14 +211,15 @@ class QueryToJSON:
 		is not made in this function.
 		"""
 		query = Blast.deferred()
-#		if self.ec_number is not None:
-#			query = query.filter(ec_number = self.ec_number)
+#		if param_type == "enzyme":
+#			query = query.filter(ec_number = param.dict["id"])
 		if param.type == "db_entry":
 			query = query.filter(db_entry = param.dict["id"])
 		elif param.type == "read":
 			query = query.filter(read = param.dict["id"])
 		else:
-			return None
+			query = self.make_enzyme_query(param.dict["id"])
+			
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
@@ -210,14 +247,7 @@ class QueryToJSON:
 					next_level_nodes.add(readnode)
 				startnode.dict["adjacencies"].append(Edge(readid, blast))
 
-			ecs = DbUniprotEcs.objects.filter(db_id=blast.db_entry_id).filter(~Q(ec='?'))
-			for ec in ecs:
-				ecnode = Node(ec)
-				ecid = self.get_node_id(ecnode)
-				if ecnode not in self.nodes:
-					self.nodes.append(ecnode)
-				startnode.dict["adjacencies"].append(Edge(ec, ec))
-		elif startnode.type is "read":
+		elif startnode.type is "read" or startnode.type is "enzyme":
 			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
 
 			for (dbentry, blast) in zip(db_entries, queryset):
@@ -236,6 +266,10 @@ class QueryToJSON:
 			return Node(Read.objects.get(read_id = node_id.id))
 		elif node_id.type is "db_entry":
 			return Node(DbEntry.objects.get(db_id = node_id.id))
+		elif node_id.type is "enzyme":
+			query=DbUniprotEcs.objects.filter(ec = node_id.id)[:1]
+			for q in query:
+				return Node(q)
 		else:
 			raise Exception("Invalid node_id parameter, must be tuple (type, id)")
 
@@ -244,8 +278,8 @@ class QueryToJSON:
 			return NodeId(node.dict["id"], "db_entry")
 		elif node.type == "read":
 			return NodeId(node.dict["id"], "read")
-		elif node.type == 'enzyme':
-			return NodeId(node.dict["id"], 'enzyme')
+		elif node.type == "enzyme":
+			return NodeId(node.dict["id"], "enzyme")
 		else:
 			raise Exception("Invalid node parameter, must be Node of type read or db_entry or enzyme")
 

@@ -65,3 +65,22 @@ class Result(models.Model): # Query_seq_id Target_seq_id Evident_type E.C._numbe
 class EnzymeName(models.Model):
 	ec_number = models.CharField(max_length=12)
 	enzyme_name = models.CharField(max_length=128)
+
+class Pathway(models.Model):
+	id = models.CharField(max_length=6, primary_key=True)
+	name = models.CharField(max_length=32)
+
+class Compound(models.Model):
+	id = models.CharField(max_length=6, primary_key=True)
+	pathways = models.ManyToManyField(Pathway, related_name='compounds')
+
+class Enzyme(models.Model):
+	ec_number = models.CharField(max_length=12, primary_key=True)
+	pathways = models.ManyToManyField(Pathway, related_name='enzymes')
+
+class Reaction(models.Model):
+	id = models.CharField(max_length=6, primary_key=True)
+	name = models.CharField(max_length=32)
+	equation = models.CharField(max_length=64)
+	enzyme = models.ForeignKey(Enzyme, related_name='reactions')
+	compounds = models.ManyToManyField(Pathway, related_name='reactions')

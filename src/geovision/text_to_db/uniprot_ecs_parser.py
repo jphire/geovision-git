@@ -25,7 +25,7 @@ class EcsFileParser:
 		self.ecs = split_line[2].split(',')
 		self.nextline = self.textfile.readline()
 		
-		return (EcsEntry(db_id = self.db_id, protein_existence_type = self.pext, ec = ec) for ec in self.ecs)
+		return (EcsEntry(db_id_id = self.db_id, protein_existence_type = self.pext, ec = ec) for ec in self.ecs)
 
 def run(args):
 	import sys
