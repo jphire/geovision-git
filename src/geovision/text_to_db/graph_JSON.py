@@ -191,13 +191,12 @@ class QueryToJSON:
 	def make_enzyme_query(self, param = None):
 
 		db_list = []
-		db_query = DbUniprotEcs.objects.filter(ec = param.dict["id"])
+		db_query = DbUniprotEcs.objects.filter(ec = param)
 		for line in db_query:
-#			if line.db_id not in db_list:
-#				node = DbEntry.objects.get(db_id = line.db_id.db_id)
-			db_list.append(line.db_id.db_id)
-			raise Exception("test1 exception" + str(line.db_id.db_id))
-		
+			if line.db_id not in db_list:
+				node = DbEntry.objects.get(db_id = line.db_id.db_id)
+				db_list.append(node.db_id)
+
 		db_entrys = Blast.objects.filter(db_entry__in = db_list)
 		return db_entrys
 
@@ -219,7 +218,7 @@ class QueryToJSON:
 		elif param.type == "read":
 			query = query.filter(read = param.dict["id"])
 		else:
-			query = self.make_enzyme_query(param)
+			query = self.make_enzyme_query(param.dict["id"])
 			
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
