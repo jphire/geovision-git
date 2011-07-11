@@ -193,9 +193,9 @@ class QueryToJSON:
 		db_list = []
 		db_query = DbUniprotEcs.objects.filter(ec = param)
 		for line in db_query:
-			if line.db_id not in db_list:
-				node = DbEntry.objects.get(db_id = line.db_id.db_id)
-				db_list.append(node.db_id)
+			if line.db_id_id not in db_list:
+				node = DbEntry.objects.get(db_id = line.db_id_id)
+				db_list.append(line.db_id_id)
 
 		db_entrys = Blast.objects.filter(db_entry__in = db_list)
 		return db_entrys
