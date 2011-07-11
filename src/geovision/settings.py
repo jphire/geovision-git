@@ -24,7 +24,7 @@ DATABASES = None
 LOGIN_URL = '/login'
 
 login_user = os.environ['USER']
-RUNNING_ON_USERS = (gethostname() == 'users' and login_user in ('tkt_gvis', 'tmtynkky'))
+RUNNING_ON_USERS = (gethostname() == 'users') 
 if RUNNING_ON_USERS: # Postgres settings if running on users.cs, the user/database tmtynkky is used for tests
 #	pwfile = open(os.environ['HOME'] + '/.psql_password') # Read the password from the file created by wanna-postgres
 #	pw = pwfile.readline().strip()

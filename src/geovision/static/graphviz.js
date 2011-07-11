@@ -183,7 +183,7 @@ function initGraph(json)
 				}
 			},
 
-			onClick: function(node, opt, unk)
+			onClick: function(node, opt)
 			{
 				if(!node || node.nodeFrom)
 					return;
@@ -203,10 +203,26 @@ function initGraph(json)
 				}
 				else
 				{
-					if(node.id == rgraph.root)
-						return;
-					busy = 'centering';
-					rgraph.onClick(node.id, { hideLabels: false, onComplete: function() { busy = false; }});
+					if(node.collapsed) 
+                    {
+                        busy = 'expanding';
+                        rgraph.op.expand(node, 
+                                { type: 'animate', 
+                                duration: 1000, 
+                                hideLabels: true, 
+                                transition: $jit.Trans.Quart.easeOut, 
+                                onComplete: function() {colorEdges(); busy = false}});
+                    }
+                    else 
+                    {
+                        busy = 'contracting';
+                        rgraph.op.contract(node, 
+                                { type: 'animate', 
+                                duration: 1000, 
+                                hideLabels: true, 
+                                transition: $jit.Trans.Quart.easeOut, 
+                                onComplete: function() {colorEdges(); busy = false}});
+    				}
 				}
 			},
 
