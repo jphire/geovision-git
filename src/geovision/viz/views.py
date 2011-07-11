@@ -132,7 +132,14 @@ def show_alignment(request):
 		searchterm = request.GET['id']
 	except KeyError:
 		return HttpResponse('')
-	#	Blastin read_seq = models.TextField()
-	#   db_seq = models.TextField()
 	data = Blast.objects.get(id = searchterm)
 	return HttpResponse(json.dumps({'readseq': '%s' % (data.read_seq), 'dbseq': '%s' % (data.db_seq)}), mimetype='text/plain')
+
+@login_required
+def enzyme_names(request):
+	try:
+		searchterm = request.GET['id']
+	except KeyError:
+		return HttpResponse('')
+	data = EnzymeName.objects.filter(id = searchterm).order_by('enzyme_name')
+	return HttpResponse(json.dumps([{'name': '%s' % (en.ensyme_name)} for en in data]), mimetype='text/plain')

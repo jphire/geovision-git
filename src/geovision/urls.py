@@ -17,7 +17,8 @@ urlpatterns = patterns('',
 	(r'^graphjson$', 'viz.views.graphjson'),
 	(r'^show_alignment$', 'viz.views.show_alignment'),
 	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
-    
+	(r'^enzyme_names$', 'viz.views.enzyme_names'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/', include(admin.site.urls)),

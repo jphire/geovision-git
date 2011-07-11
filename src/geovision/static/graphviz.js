@@ -337,6 +337,13 @@ function initGraph(json)
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
+					$.getJSON('/enzyme_names', {id: thisid}, function (data) {
+						if(data == null){
+							return false;
+						}
+						for (name in data){
+							tip.innerHTML = tip.innerHTML + "<br/>" + name;
+						}
 				}
 			}
 		},
@@ -423,8 +430,6 @@ function alignmentfunction(thisid) {
 				return false;
 			}
 			alignmentopen = true;
-/*			var part1 = $('<nobr>' + data.readseq + '</nobr>');
-			var part2 = $('<nobr>' + data.dbseq + '</nobr>');  */
 			var part1 = $('<nobr>');
 			var part2 = $('<nobr>');
 			for ( i = 0; i < data.readseq.length; i++){
@@ -445,10 +450,6 @@ function alignmentfunction(thisid) {
 					part2 = part2.append('<span class=\'aligndifference\'>' + data.dbseq.charAt(i) + '</span>');
 				}
 			}
-	/*		part1 = part1.append('</nobr>');
-			part2 = part2.append('</nobr>');
-			part1.css('display', 'none');
-			part2.css('display', 'none'); */
 			part1.appendTo($('#alignment'));
 			$('<br/>').appendTo($('#alignment'));
 			part2.appendTo($('#alignment'));
