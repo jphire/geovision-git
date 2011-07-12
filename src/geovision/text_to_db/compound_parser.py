@@ -12,14 +12,7 @@ def run(args):
 
 		compound = Compound.objects.create(pk=cnum, name=entry['NAME'][0])
 		try:
-			for pathway in entry['PATHWAY']:
-				id = pathway[2:7]
-				name = pathway[9:]
-				try:
-					pw = Pathway.objects.get(pk=id)
-				except Pathway.DoesNotExist:
-					pw = Pathway.objects.create(pk=id, name=name)
-				compound.pathways.add(pw)
+			(compound.pathways.add(pw) for pw in get_pathways(entry['PATHWAY']))
 		except KeyError:
 			pass
 		compound.save()

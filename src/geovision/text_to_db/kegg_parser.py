@@ -1,4 +1,5 @@
 from geovision.text_to_db.bulk_inserter import *
+from viz.models import Pathway
 
 class KeggParser:
 	def __init__(self, filehandle, fields):
@@ -27,3 +28,16 @@ class KeggParser:
 				cur_valuelist.append(value)
 		return None
 
+def get_pathways(entry):
+	i = 0
+	elems = []
+	while i < len(entry):
+		pw = entry[i]
+		while i+1 < len(entry) and entry[i+1].startswith(' '):
+			pw += ' ' + entry[i+1].lstrip()
+			i += 1
+		(id, name) = pw.split(None, 1)
+		elems.append(Pathway.objects.get_or_create(id=id, name=name)[0])
+		i += 1
+	return elems
+		

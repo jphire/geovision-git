@@ -57,30 +57,31 @@ class Blast(models.Model):
 class Result(models.Model): # Query_seq_id Target_seq_id Evident_type E.C._number p_value Bit_score
 	read = models.CharField(max_length=64)
 	db_entry = models.CharField(max_length=32)
-	evident_type = models.CharField(max_length = 2)
+	evident_type = models.CharField(max_length=2)
 	ec_number = models.CharField(max_length = 32)
 	error_value = models.FloatField()
 	bitscore = models.FloatField()
 
 class EnzymeName(models.Model):
-	ec_number = models.CharField(max_length=12)
+	ec_number = models.CharField(max_length=13)
 	enzyme_name = models.CharField(max_length=128)
 
 class Pathway(models.Model):
-	id = models.CharField(max_length=6, primary_key=True)
-	name = models.CharField(max_length=64)
+	id = models.CharField(max_length=8, primary_key=True)
+	name = models.CharField(max_length=128)
 
 class Compound(models.Model):
-	id = models.CharField(max_length=6, primary_key=True)
+	id = models.CharField(max_length=5, primary_key=True)
+	name = models.CharField(max_length=100)
 	pathways = models.ManyToManyField(Pathway, related_name='compounds')
 
 class Enzyme(models.Model):
-	ec_number = models.CharField(max_length=12, primary_key=True)
+	ec_number = models.CharField(max_length=13, primary_key=True)
 	pathways = models.ManyToManyField(Pathway, related_name='enzymes')
 
 class Reaction(models.Model):
 	id = models.CharField(max_length=6, primary_key=True)
-	name = models.CharField(max_length=32)
-	equation = models.CharField(max_length=64)
-	enzyme = models.ForeignKey(Enzyme, related_name='reactions')
+	name = models.CharField(max_length=128)
+	equation = models.CharField(max_length=128)
+	enzymes = models.ManyToManyField(Enzyme, related_name='reactions')
 	compounds = models.ManyToManyField(Pathway, related_name='reactions')

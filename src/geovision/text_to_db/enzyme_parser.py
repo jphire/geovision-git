@@ -19,14 +19,7 @@ def run(args):
 			pass
 		enzyme = Enzyme.objects.create(pk=ecnum)
 		try:
-			for pathway in entry['PATHWAY']:
-				id = pathway[2:7]
-				name = pathway[9:]
-				try:
-					pw = Pathway.objects.get(pk=id)
-				except Pathway.DoesNotExist:
-					pw = Pathway.objects.create(pk=id, name=name)
-				enzyme.pathways.add(pw)
+			(enzyme.pathways.add(pw) for pw in get_pathways(entry['PATHWAY']))
 		except KeyError:
 			pass
 		enzyme.save()
