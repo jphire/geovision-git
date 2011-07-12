@@ -86,6 +86,19 @@ $jit.RGraph.Plot.EdgeTypes.implement({
     }
 });  
 
+var currentNode;
+var currentEdge;
+var ctxMenuOpen;
+
+function hideCtxMenu()
+{
+	ctxMenuOpen = false;
+	busy = false;
+	currentEdge = currentNode = false;
+	rgraph.config.Navigation.panning = true;
+	rgraph.config.Tips.enable = true;
+}
+
 function init(){
 	//init data
 	jQuery('#loader').fadeOut();//loader fadeaway
@@ -93,8 +106,29 @@ function init(){
 	$('#infovis').contextMenu('nodeMenu', {
 		'bindings': {
 			'close': function() { },
-			'derp': function() { alert('herpderp'); }
-		}});
+			'e_align': function() { alignmentfunction(currentEdge.data.id); },
+			'n_tag': function() { currentNode.traversalTag = true; console.log(currentNode.traversalTag); }
+
+		},
+		'onContextMenu': function(event)
+		{
+			return currentNode || currentEdge;
+		},
+		'onShowMenu': function(evt, menu)
+		{
+			ctxMenuOpen = true;
+			rgraph.config.Navigation.panning = false;
+			rgraph.config.Tips.enable = false;
+
+			if(!currentEdge)
+				$('li[id^=e_]', menu).remove();
+			if(!currentNode)
+				$('li[id^=n_]', menu).remove();
+
+			return menu;
+		},
+		'onHideMenu': hideCtxMenu
+	});
 		
 }
 
@@ -110,6 +144,7 @@ function prepareJSON(json)
 
 var rgraph;
 var busy = false;
+
 function initGraph(json)
 {
 	if(json.error_message)
@@ -147,7 +182,7 @@ function initGraph(json)
 		Navigation:
 		{
 		  enable: true,
-		  panning: true,
+		  panning: 'avoid nodes',
 		  zooming: 25
 		},
 		
@@ -184,15 +219,16 @@ function initGraph(json)
 
 			onRightClick : function(node, eventInfo, e)
 			{
+				console.log('onRightClick shouldnt happen');
 				if (node.nodeFrom)
 				{
 					alignmentfunction(node.data.id);
 				}
-                else 
-                {
-                    node.traversalTag = true;
-                    console.log(node.traversalTag);
-                }
+				else 
+				{
+					node.traversalTag = true;
+					console.log(node.traversalTag);
+				}
 			},
 
 			onClick: function(node, opt)
@@ -239,9 +275,13 @@ function initGraph(json)
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
-			{ 
+			{
+				if(ctxMenuOpen)
+					return;
 				if (node.nodeTo)
 				{
+					currentEdge = node;
+
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
 					
@@ -255,6 +295,8 @@ function initGraph(json)
 				}
 				else if(node)
 				{
+					currentNode = node;
+
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = node.getData('dim') + 3;
 					
@@ -270,7 +312,9 @@ function initGraph(json)
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
-				//rgraph.config.Tips.type = 'HTML';
+				if(ctxMenuOpen)
+					return;
+				currentNode = currentEdge = undefined;
 				if(!object) return;
 				if(object.nodeTo)
 				{
@@ -316,11 +360,12 @@ function initGraph(json)
 		{
 			enable: true,
 			type: 'Native',
-			width: 30,
 			align: 'left',
 			
 			onShow: function(tip, node)
 			{
+				if(ctxMenuOpen)
+					return false;
 				tip.innerHTML = "";
 				if (!node) return;
 

@@ -45,7 +45,8 @@
     eventPosY: 'pageY',
     shadow : true,
     onContextMenu: null,
-    onShowMenu: null
+    onShowMenu: null,
+    onHideMenu: null // ADDED
  	};
 
   $.fn.contextMenu = function(id, options) {
@@ -74,6 +75,7 @@
       shadow: options.shadow || options.shadow === false ? options.shadow : defaults.shadow,
       onContextMenu: options.onContextMenu || defaults.onContextMenu,
       onShowMenu: options.onShowMenu || defaults.onShowMenu,
+      onHideMenu: options.onHideMenu || defaults.onHideMenu, // ADDED
       eventPosX: options.eventPosX || defaults.eventPosX,
       eventPosY: options.eventPosY || defaults.eventPosY
     });
@@ -110,19 +112,21 @@
 
     $.each(cur.bindings, function(id, func) {
       $('#'+id, menu).bind('click', function(e) {
-        hide();
         func(trigger, currentTarget);
+        hide(cur); // ADDED cur argument, added hide AFTER func(...)
       });
     });
 
     menu.css({'left':e[cur.eventPosX],'top':e[cur.eventPosY]}).show();
     if (cur.shadow) shadow.css({width:menu.width(),height:menu.height(),left:e.pageX+2,top:e.pageY+2}).show();
-    $(document).one('click', hide);
+    $(document).one('click', function() { hide(cur) }); // ADDED cur argument
   }
 
-  function hide() {
+  function hide(cur) { // ADDED cur argument
     menu.hide();
     shadow.hide();
+    if(!!cur.onHideMenu) // ADDED
+        cur.onHideMenu();
   }
 
   // Apply defaults
