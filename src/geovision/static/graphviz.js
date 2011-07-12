@@ -94,6 +94,7 @@ function hideCtxMenu()
 {
 	ctxMenuOpen = false;
 	busy = false;
+	rgraph.config.Events.onMouseLeave(currentNode || currentEdge); // XXX does this work completely?
 	currentEdge = currentNode = false;
 	rgraph.config.Navigation.panning = true;
 	rgraph.config.Tips.enable = true;
@@ -119,6 +120,7 @@ function init(){
 			ctxMenuOpen = true;
 			rgraph.config.Navigation.panning = false;
 			rgraph.config.Tips.enable = false;
+			rgraph.tips.hide();
 
 			if(!currentEdge)
 				$('li[id^=e_]', menu).remove();
