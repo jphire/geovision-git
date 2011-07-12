@@ -25,24 +25,6 @@ var Log = {
   }
 };
 
-function dot(u, v)
-{
-	return u.x * v.x + u.y * v.y;
-}
-function add(u, v)
-{
-	return {'x': u.x + v.x, 'y': u.y + v.y}
-
-}
-function sub(u, v)
-{
-	return {'x': u.x - v.x, 'y': u.y - v.y}
-}
-function mul(k, v)
-{
-	return {'x': k * v.x, 'y': k * v.y};
-}
-
 dotLineLength = function( x, y, x0, y0, x1, y1, o ){
 	function lineLength( x, y, x0, y0 ){
 		return Math.sqrt( ( x -= x0 ) * x + ( y -= y0 ) * y );
@@ -65,18 +47,52 @@ dotLineLength = function( x, y, x0, y0, x1, y1, o ){
 $jit.RGraph.Plot.EdgeTypes.implement({  
 	'customArrow':{
 	    'render': function(adj, canvas) {
-            var from = adj.nodeFrom.pos.getc(true),
-                to = adj.nodeTo.pos.getc(true),
+            var from = adj.nodeFrom.pos.getc(),
+                to = adj.nodeTo.pos.getc(),
                 dim = adj.getData('dim'),
                 direction = adj.data.$direction,
-                inv = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
-            this.edgeHelper.arrow.render(from, to, dim, inv, canvas);
+//                swap = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
+                swap = false; // XXX - may cause bugs
+
+            var ctx = canvas.getCtx();
+            Complex = $jit.Complex;
+            // invert edge direction
+            if (swap) {
+              var tmp = from;
+              from = to;
+              to = tmp;
+            }
+            var vect = new Complex(to.x - from.x, to.y - from.y);
+	    var norm = vect.norm();
+            to.$add(vect.scale(-adj.nodeTo.getData("dim") / norm));
+            from.$add(vect.$scale(adj.nodeFrom.getData("dim") / norm));
+            vect = new Complex(to.x - from.x, to.y - from.y);
+
+            vect.$scale(dim / vect.norm());
+            var intermediatePoint = new Complex(to.x - vect.x, to.y - vect.y),
+                normal = new Complex(-vect.y / 2, vect.x / 2),
+                v1 = intermediatePoint.add(normal), 
+                vM = intermediatePoint.clone();
+                v2 = intermediatePoint.$add(normal.$scale(-1));
+            
+            ctx.beginPath();
+            ctx.moveTo(from.x, from.y);
+            ctx.lineTo(vM.x, vM.y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(v1.x, v1.y);
+            ctx.lineTo(v2.x, v2.y);
+            ctx.lineTo(to.x, to.y);
+            ctx.closePath();
+            ctx.fill();
+
         },
         'contains': function(adj, pos) {
             var from = adj.nodeFrom.pos.getc(true),
 		        to = adj.nodeTo.pos.getc(true);
             var lineWidth = adj.getData('epsilon');
             var d = lineWidth/2;
+
             var minX = Math.min(from.x, to.x) - d, maxX = Math.max(from.x, to.x) + d;
             var minY = Math.min(from.y, to.y) - d, maxY = Math.max(from.y, to.y) + d;
             if(pos.x < minX || pos.x > maxX || pos.y < minY || pos.y > maxY)
@@ -207,10 +223,12 @@ function initGraph(json)
 			overridable: true,
 			color: '#888800',
 			alpha: 0.6,
-			lineWidth:1.5,
 			type: 'customArrow',
-			epsilon: 5.0,
+
+			lineWidth:1.5,
+			lineWidth_hover: 5.0,
 			dim: 10,
+			dim_hover: 15
 		},
 
 		Events:
@@ -285,7 +303,8 @@ function initGraph(json)
 					currentEdge = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
-					node.data.$lineWidth = node.getData('epsilon');
+					node.data.$lineWidth = node.getData('lineWidth_hover');
+					node.data.$dim = node.getData('dim_hover');
 					
 					if(busy)
 						return;
@@ -323,7 +342,8 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = '';
 					
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
-					
+					object.data.$dim = rgraph.config.Edge.dim;
+
 					if(busy)
 						return;
 					rgraph.fx.animate(
