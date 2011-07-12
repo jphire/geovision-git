@@ -135,7 +135,7 @@ div#graphnavi{
     background-image: url(images/navitausta.png);
 	color: white;
 }
-div#graphnavi *{
+div#navicontainer{
     display: none;
 }
 div#graphnavi #optiontag {
