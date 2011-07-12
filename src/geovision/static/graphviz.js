@@ -86,9 +86,50 @@ $jit.RGraph.Plot.EdgeTypes.implement({
     }
 });  
 
+var currentNode;
+var currentEdge;
+var ctxMenuOpen;
+
+function hideCtxMenu()
+{
+	ctxMenuOpen = false;
+	busy = false;
+	currentEdge = currentNode = false;
+	rgraph.config.Navigation.panning = true;
+	rgraph.config.Tips.enable = true;
+}
+
 function init(){
 	//init data
 	jQuery('#loader').fadeOut();//loader fadeaway
+
+	$('#infovis').contextMenu('nodeMenu', {
+		'bindings': {
+			'close': function() { },
+			'e_align': function() { alignmentfunction(currentEdge.data.id); },
+			'n_tag': function() { currentNode.traversalTag = true; console.log(currentNode.traversalTag); }
+
+		},
+		'onContextMenu': function(event)
+		{
+			return currentNode || currentEdge;
+		},
+		'onShowMenu': function(evt, menu)
+		{
+			ctxMenuOpen = true;
+			rgraph.config.Navigation.panning = false;
+			rgraph.config.Tips.enable = false;
+
+			if(!currentEdge)
+				$('li[id^=e_]', menu).remove();
+			if(!currentNode)
+				$('li[id^=n_]', menu).remove();
+
+			return menu;
+		},
+		'onHideMenu': hideCtxMenu
+	});
+		
 }
 
 function prepareJSON(json)
@@ -103,6 +144,7 @@ function prepareJSON(json)
 
 var rgraph;
 var busy = false;
+
 function initGraph(json)
 {
 	if(json.error_message)
@@ -140,7 +182,7 @@ function initGraph(json)
 		Navigation:
 		{
 		  enable: true,
-		  panning: true,
+		  panning: 'avoid nodes',
 		  zooming: 25
 		},
 		
@@ -177,9 +219,15 @@ function initGraph(json)
 
 			onRightClick : function(node, eventInfo, e)
 			{
+				console.log('onRightClick shouldnt happen');
 				if (node.nodeFrom)
 				{
 					alignmentfunction(node.data.id);
+				}
+				else 
+				{
+					node.traversalTag = true;
+					console.log(node.traversalTag);
 				}
 			},
 
@@ -227,9 +275,13 @@ function initGraph(json)
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
-			{ 
+			{
+				if(ctxMenuOpen)
+					return;
 				if (node.nodeTo)
 				{
+					currentEdge = node;
+
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('epsilon');
 					
@@ -243,6 +295,8 @@ function initGraph(json)
 				}
 				else if(node)
 				{
+					currentNode = node;
+
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = node.getData('dim') + 3;
 					
@@ -258,7 +312,9 @@ function initGraph(json)
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
-				//rgraph.config.Tips.type = 'HTML';
+				if(ctxMenuOpen)
+					return;
+				currentNode = currentEdge = undefined;
 				if(!object) return;
 				if(object.nodeTo)
 				{
@@ -304,11 +360,12 @@ function initGraph(json)
 		{
 			enable: true,
 			type: 'Native',
-			width: 30,
 			align: 'left',
 			
 			onShow: function(tip, node)
 			{
+				if(ctxMenuOpen)
+					return false;
 				tip.innerHTML = "";
 				if (!node) return;
 
@@ -332,6 +389,16 @@ function initGraph(json)
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
+					$.getJSON('/enzyme_names', {id: thisid}, function (data) {
+						if(data == null)
+						{
+							return false;
+						}
+						for (name in data)
+						{
+							tip.innerHTML = tip.innerHTML + "<br/>" + name;
+						}
+					});
 				}
 			}
 		},
@@ -404,6 +471,7 @@ function initGraph(json)
 	$jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
 	rgraph.refresh();
 	colorEdges();
+    rgraph.op.contract = contractForTraversal;
 }
 
 var alignmentopen = false;
@@ -417,8 +485,6 @@ function alignmentfunction(thisid) {
 				return false;
 			}
 			alignmentopen = true;
-/*			var part1 = $('<nobr>' + data.readseq + '</nobr>');
-			var part2 = $('<nobr>' + data.dbseq + '</nobr>');  */
 			var part1 = $('<nobr>');
 			var part2 = $('<nobr>');
 			for ( i = 0; i < data.readseq.length; i++){
@@ -431,18 +497,14 @@ function alignmentfunction(thisid) {
 					$('<br/><br/>').appendTo($('#alignment'));
 				}
 				if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
-					part1 = part1.append(data.readseq.charAt(i));
-					part2 = part2.append(data.dbseq.charAt(i));
+					part1 = part1.append('<span>' + data.readseq.charAt(i) + '</span>');
+					part2 = part2.append('<span>' + data.dbseq.charAt(i) + '</span>');
 				}
 				else {
 					part1 = part1.append('<span class=\'aligndifference\'>' + data.readseq.charAt(i) + '</span>');
 					part2 = part2.append('<span class=\'aligndifference\'>' + data.dbseq.charAt(i) + '</span>');
 				}
 			}
-	/*		part1 = part1.append('</nobr>');
-			part2 = part2.append('</nobr>');
-			part1.css('display', 'none');
-			part2.css('display', 'none'); */
 			part1.appendTo($('#alignment'));
 			$('<br/>').appendTo($('#alignment'));
 			part2.appendTo($('#alignment'));
@@ -507,3 +569,49 @@ function colorEdges(){
 		});
 	});
 }
+
+/*
+ * Modified version of the original contract function for removing unnecessary
+ * nodes while traversing the graph.
+ */
+
+function contractForTraversal(node, opt) {
+    console.log("contractForTraversal");
+  var viz = this.viz;
+  if(node.collapsed || !node.anySubnode($jit.util.lambda(true))) return;
+  opt = $jit.util.merge(this.options, viz.config, opt || {}, {
+    'modes': ['node-property:alpha:span', 'linear']
+  });
+  node.collapsed = true;
+  (function subn(n) {
+    n.eachSubnode(function(ch) {
+        if (!ch.traversalTag) 
+        {
+            ch.ignore = true;
+            ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
+            subn(ch);
+      }
+    });
+  })(node);
+  if(opt.type == 'animate') {
+    viz.compute('end');
+    if(viz.rotated) {
+      viz.rotate(viz.rotated, 'none', {
+        'property':'end'
+      });
+    }
+    (function subn(n) {
+      n.eachSubnode(function(ch) {
+        if (!ch.traversalTag) 
+        {
+            ch.setPos(node.getPos('end'), 'end');
+            subn(ch);
+        }
+      });
+    })(node);
+    viz.fx.animate(opt);
+  } else if(opt.type == 'replot'){
+    viz.refresh();
+  }
+}
+

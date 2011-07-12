@@ -135,7 +135,7 @@ div#graphnavi{
     background-image: url(images/navitausta.png);
 	color: white;
 }
-div#graphnavi *{
+div#navicontainer{
     display: none;
 }
 div#graphnavi #optiontag {
@@ -156,14 +156,17 @@ div#alignment{
 	font-family: Courier, Consolas, 'Andale Mono', 'Everson Mono', Fixedsys, Hyperfont, Inconsolata, 'Lucida Console', Monaco, 'Pro Font';/*must be a monospace font for this to work*/
 	background-color: #E6F2EA;
 	font-size: 16px;
-	width: 990px;
+	width: 62em;
 	position: relative;
 	border: 2px solid #265434;
 	display:none;
 	padding:5px;
 }
-span.aligndifference{
+#alignment span {
 	background-color: #FF636E;
+}
+#alignment span.aligndifference{
+	background-color: #E6F2EA;
 }
 div#closealign{
 	text-align: right;

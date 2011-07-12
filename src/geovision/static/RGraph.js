@@ -2143,6 +2143,8 @@ Extras.Classes.Tips = new Class({
   setAsProperty: $.lambda(true),
   
   onMouseOut: function(e, win) {
+    if(!this.isEnabled()) // ADDED
+	return;
     //mouseout a label
     var evt = $.event.get(e, win);
     if(this.dom && this.isLabel(e, win, true)) {
@@ -2160,6 +2162,8 @@ Extras.Classes.Tips = new Class({
   },
   
   onMouseOver: function(e, win, event) {
+    if(!this.isEnabled()) // ADDED
+	return;
     //mouseover a label
 	var evt = $.event.get(e, win);
     var label;
@@ -2170,6 +2174,8 @@ Extras.Classes.Tips = new Class({
   },
   
   onMouseMove: function(e, win, opt) {
+    if(!this.isEnabled()) // ADDED
+	return;
     if(this.dom && this.isLabel(e, win)) {
       this.setTooltipPosition($.event.getPos(e, win));
     }
@@ -2450,7 +2456,7 @@ Extras.Classes.Navigation = new Class({
   },
   
   onMouseDown: function(e, win, eventInfo) {
-    if(!this.config.panning) return;
+    if(!this.config.panning || e.button == 2) return; // ADDED check for right button
     if(this.config.panning == 'avoid nodes' && (this.dom? this.isLabel(e, win) : eventInfo.getNode())) return;
     this.pressed = true;
     this.pos = eventInfo.getPos();
