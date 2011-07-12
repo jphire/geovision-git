@@ -95,7 +95,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		}, condition_dict))
 	if condition_dict['dbentry'] != '':
 		json_url = create_json(None, None, condition_dict['dbentry'], bitscore, evalue, depth, hits)
-	elif condition_dict['enzyme']!='':
+	elif condition_dict['enzyme'] != '':
 		result = lookup_enzyme(condition_dict['enzyme'])
 		if isinstance(result, basestring):
 			json_url = create_json(result, None, None, bitscore, evalue, depth, hits)

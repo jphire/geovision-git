@@ -45,11 +45,11 @@
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <p>Input only one of the three following:</p>
     <label>Enzyme</label>
-    <input size="10" type="text" name="ecnumber" id="ec" value="{{ ecnumber }}"/><br/><br/>
+    <input size="10" type="text" name="enzyme" id="ec" value="{{ enzyme }}"/><br/><br/>
 	{% if enzyme_list %}
 	Multiple enzymes matched, pick one:
 	{% for e in enzyme_list %}
-	<p class="submitForm" id='{{ e.ec_number }}'>{{ e.enzyme_name }} ({{ e.ec_number }})</p>
+	<p class="submitForm" id='{{ e.enzyme }}'>{{ e.enzyme_name }} ({{ e.enzyme }})</p>
 	{% endfor %}
 	{% endif %}
     <label>Read id</label>
