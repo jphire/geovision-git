@@ -130,10 +130,10 @@ class QueryToJSON:
 
 	Currently assumes that both Read.read_id and DbEntry.db_id are foreign keys.
 	"""
-	def __init__(self, ec_number=None, db_entry=None, read=None,
+	def __init__(self, enzyme=None, db_entry=None, read=None,
 				e_value_limit=1, bitscore_limit=0, depth_limit=2,
 				max_amount=5):
-		self.ec_number = ec_number
+		self.enzyme = enzyme
 		self.db_entry = db_entry
 		self.read = read
 		self.e_value_limit = e_value_limit
@@ -143,14 +143,14 @@ class QueryToJSON:
 		self.nodes = []
 		if db_entry is None:
 			if read is None:
-				if ec_number is None:
+				if enzyme is None:
 					raise Exception("Either db_entry or read parameter must be supplied")
 				else:
-					self.startpoint = NodeId(ec_number, "enzyme")
+					self.startpoint = NodeId(enzyme, "enzyme")
 			else:
 				self.startpoint = NodeId(read, "read")
 		else:
-			if read is not None or ec_number is not None:
+			if read is not None or enzyme is not None:
 				raise Exception("Cannot use both read and db_entry as a starting point")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
@@ -213,7 +213,7 @@ class QueryToJSON:
 		"""
 		query = Blast.deferred()
 #		if param_type == "enzyme":
-#			query = query.filter(ec_number = param.dict["id"])
+#			query = query.filter(enzyme = param.dict["id"])
 		if param.type == "db_entry":
 			query = query.filter(db_entry = param.dict["id"])
 		elif param.type == "read":
