@@ -165,7 +165,7 @@ div#alignment{
 #alignment span {
 	background-color: #FF636E;
 }
-span.aligndifference{
+#alignment span.aligndifference{
 	background-color: #E6F2EA;
 }
 div#closealign{
