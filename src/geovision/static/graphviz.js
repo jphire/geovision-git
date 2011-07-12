@@ -44,6 +44,39 @@ dotLineLength = function( x, y, x0, y0, x1, y1, o ){
 	}
 };
 
+$jit.RGraph.Plot.NodeTypes.implement({
+    'customCircle': {
+      'render': function(node, canvas){
+          var pos = node.pos.getc(),
+              radius = node.getData('dim');
+          var ctx = canvas.getCtx();
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2, true);
+          ctx.closePath();
+          ctx.fill();
+
+          if(node.traversalTag)
+          {
+	          ctx.fillStyle = '#ffffff';
+	          ctx.beginPath();
+	          ctx.arc(pos.x, pos.y, radius/2, 0, Math.PI * 2, true);
+	          ctx.closePath();
+	          ctx.fill();
+          }
+
+
+        },
+        'contains': function(node, pos){
+          var npos = node.pos.getc(true),
+              radius = node.getData('dim');
+          var diffx = npos.x - pos.x,
+              diffy = npos.y - pos.y,
+              diff = diffx * diffx + diffy * diffy;
+          return diff <= radius * radius;
+        }
+    }
+});
+
 $jit.RGraph.Plot.EdgeTypes.implement({  
 	'customArrow':{
 	    'render': function(adj, canvas) {
@@ -114,6 +147,7 @@ function hideCtxMenu()
 	currentEdge = currentNode = false;
 	rgraph.config.Navigation.panning = true;
 	rgraph.config.Tips.enable = true;
+	rgraph.events.pressed = undefined;
 }
 
 function init(){
@@ -210,11 +244,11 @@ function initGraph(json)
 			overridable: true,
 			color: '#ff0000',
 			alpha: 0.6,
-			dim: 5.0,
+			dim: 7.0,
 			lineWidth: 0.5,
 			angularWidth: 1,
 			span:1,
-			type: 'circle',
+			type: 'customCircle',
 			CanvasStyles: {}
 		},
 		
@@ -239,7 +273,8 @@ function initGraph(json)
 
 			onRightClick : function(node, eventInfo, e)
 			{
-				console.log('onRightClick shouldnt happen');
+//				console.log('onRightClick shouldnt happen');
+				return;
 				if (node.nodeFrom)
 				{
 					alignmentfunction(node.data.id);
