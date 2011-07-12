@@ -6,7 +6,7 @@ function openSearch()
         if (!opened){
             elem.find('#optiontag').hide();
             elem.animate({width: "30%"}, {complete:
-			function() { elem.find('*').not('#optiontag').fadeIn('fast', function() { opened = true; } ); }});
+			function() { $('#navicontainer').fadeIn('fast', function() { opened = true; } ); }});
 	}
 }
 function closeSearch(e)
@@ -20,7 +20,7 @@ function closeSearch(e)
 			reltg= reltg.parentNode
 		if (reltg== tg) return;
 		// Now we know that the mouse actually left the layer:
-		$('#graphnavi').find('*').hide();/*!Hide all elements*/
+		$('#graphnavi').find('#navicontainer').hide();/*!Hide all elements*/
 		$('#graphnavi').animate({width: "7px"}, {complete: function() {
                        $(this).find('#optiontag').fadeIn();
                        opened = false;
