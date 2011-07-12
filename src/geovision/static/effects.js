@@ -14,7 +14,7 @@ function closeSearch(e)
 	if (opened){
 		if (!e) var e = window.event;
 		var tg = (window.event) ? e.srcElement : e.target;
-		if (tg.nodeName != 'DIV') return;
+		//if (tg.nodeName != 'DIV') return;
 		var reltg = (e.relatedTarget) ? e.relatedTarget : e.toElement;
 		while (reltg != tg && reltg.nodeName != 'BODY')
 			reltg= reltg.parentNode
