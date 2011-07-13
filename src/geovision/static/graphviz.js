@@ -747,7 +747,8 @@ function showNames (names){
 		html = html + name + '<br/>';
 	}
 	html = html + '</div>';
-	$('#rightcontainer').add($(html));
+	$(html).appendTo($('#names'));
+	console.log(html);
 	return;
  }
 
