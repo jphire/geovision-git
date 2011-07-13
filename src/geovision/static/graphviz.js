@@ -451,7 +451,6 @@ function initGraph(json)
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
 					tip.innerHTML = tip.innerHTML + "<br/>" + node.names;
-					});
 				}
 			}
 		},
