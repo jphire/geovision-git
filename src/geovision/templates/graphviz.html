@@ -41,7 +41,7 @@
 	<!--<div class="error" id="error"></div>-->
 {% endif %}
 
-<a style="float:left; border: 2px white solid; background-color: #F2F2F2" href="logging_out">Logout</a><br/>
+<a style="float:left; border: 2px white solid; background-color: #F2F2F2; margin-left: 10px; margin-bottom: 10px;" href="logging_out">Logout</a><br/>
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <p>Input only one of the three following:</p>
     <label>Enzyme</label>
@@ -87,6 +87,7 @@
              <li id="close">Close menu</li>
              <li id="e_align">Show Alignment</li>
              <li id="n_tag">Tag</li>
+			 <li id="n_names">Show all names</li>
         </ul>
     </div>
     <div id="loader"><img src="../static/images/loader.gif" alt="Loading..."/></div>
