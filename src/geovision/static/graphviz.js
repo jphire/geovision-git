@@ -177,7 +177,7 @@ function init(){
 			'n_en_names': function() { showNames(currentNode.data.names, currentNode.id); },
 			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
 			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); },
-			'n_db_uni_link': function() { window.open('http://www.uniprot.org/uniprot/' + currentNode.id); }
+			'n_db_uni_link': function() { window.open('http://www.uniprot.org/uniprot/' + currentNode.id); },
 			'n_db_frn_link': function() { window.open('http://www.ncrna.org/frnadb/detail.html?i_name=' + currentNode.id); }
 
 		},
