@@ -450,15 +450,7 @@ function initGraph(json)
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
-					$.getJSON('/enzyme_names', {id: thisid}, function (data) {
-						if(data == null)
-						{
-							return false;
-						}
-						for (name in data)
-						{
-							tip.innerHTML = tip.innerHTML + "<br/>" + name;
-						}
+					tip.innerHTML = tip.innerHTML + "<br/>" + node.names;
 					});
 				}
 			}
