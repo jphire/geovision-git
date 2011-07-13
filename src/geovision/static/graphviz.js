@@ -159,8 +159,19 @@ function init(){
 		'bindings': {
 			'close': function() { },
 			'e_align': function() { alignmentfunction(currentEdge.data.id); },
-			'n_tag': function() { currentNode.traversalTag = true; console.log(currentNode.traversalTag); }
-
+			'n_tag': function() { 
+				if (currentNode.traversalTag != true) {
+					tagNode(currentNode);
+				}
+				else {
+					untagNode(currentNode);
+				}
+			},
+			'n_tagparents': function() { rgraph.op.tagParents(currentNode)},
+			'n_tagsubnodes': function() { rgraph.op.tagSubnodes(currentNode)},
+			'n_tagsubgraph': function() { rgraph.op.tagSubgraph(currentNode)},
+			'n_untagsubgraph': function() { untagSubgraph(currentNode)},
+			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))}
 		},
 		'onContextMenu': function(event)
 		{
@@ -323,7 +334,7 @@ function initGraph(json)
                     else 
                     {
                         busy = 'contracting';
-                        rgraph.op.contract(node, 
+                        rgraph.op.contractForTraversal(node, 
                                 { type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
@@ -523,7 +534,10 @@ function initGraph(json)
 	$jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
 	rgraph.refresh();
 	colorEdges();
-    rgraph.op.contract = contractForTraversal;
+    rgraph.op.contractForTraversal = contractForTraversal;
+	rgraph.op.tagParents = tagParents;
+	rgraph.op.tagSubgraph = tagSubgraph;
+	rgraph.op.tagSubnodes = tagSubnodes;
 }
 
 var alignmentopen = false;
@@ -666,6 +680,26 @@ function contractForTraversal(node, opt) {
 	}
 }
 
+/*
+ * Function for checking if node has a tagged path to the root node.
+ */
+function checkRootTagpath(node) {
+	var parentNodes = node.getParents();
+	if (!node.traversalTag) return false;
+	if (parentNodes.length == 0) return true;
+	for (var i = 0; i < parentNodes.length; i++) {
+		pnode = parentNodes[i]
+		if (pnode.traversalTag != true) continue;
+		if (checkRootTagpath(pnode)) return true;
+	}
+	return false;
+}
+
+function tagNode(node) {
+	if (!checkRootTagpath(node)) tagParents(node);
+	node.traversalTag = true;
+}
+
 function tagParents(node) {
 	var parents = node.getParents();
 	while (parents.length > 0) {
@@ -677,16 +711,35 @@ function tagParents(node) {
 }
 
 function tagSubnodes(node) {
+	if (!checkRootTagpath(node)) tagParents(node);
 	node.eachSubnode(function(child) {
 		child.traversalTag = true;
 		console.log("Child " + child.id + " tagged");
 	});
+	node.traversalTag = true;
 }
 
 function tagSubgraph(node) {
+	if (!checkRootTagpath(node)) tagParents(node);
 	node.eachSubgraph(function(child) {
 		child.traversalTag = true;
 		console.log("Child " + child.id + " tagged");
 	});
+	node.traversalTag = true;
 }
 
+function untagNode(node) {
+	node.traversalTag = false;
+	(function subn(n) {
+		n.eachSubnode(function(ch) {
+			ch.traversalTag = checkRootTagpath(ch);
+			subn(ch);
+		});
+	})(node);
+}
+
+function untagSubgraph(node) {
+	node.eachSubgraph(function(sn) {
+		sn.traversalTag = false;
+	});
+}
