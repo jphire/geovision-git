@@ -110,17 +110,18 @@
 		// updating the content
     if (!!cur.onShowMenu) menu = cur.onShowMenu(e, menu);
 
+    hiderfunc = function() { hide(cur); }; // ADDED to fix a bug with other unrelated click handlers disappearing
     $.each(cur.bindings, function(id, func) {
       $('#'+id, menu).bind('click', function(e) {
         func(trigger, currentTarget);
-        $(document).unbind('click'); // ADDED
-        hide(cur); // ADDED cur argument, added hide before func(...)
+        $(document).unbind('click', hiderfunc); // ADDED
+        hiderfunc(); // CHANGED from hide()
       });
     });
 
     menu.css({'left':e[cur.eventPosX],'top':e[cur.eventPosY]}).show();
     if (cur.shadow) shadow.css({width:menu.width(),height:menu.height(),left:e.pageX+2,top:e.pageY+2}).show();
-    $(document).one('click', function() { hide(cur); }); // ADDED cur argument
+    $(document).one('click', hiderfunc); // CHANGED from function() { hide(); }
   }
 
   function hide(cur) { // ADDED cur argument
