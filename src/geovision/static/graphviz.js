@@ -742,7 +742,7 @@ function tagSubgraph(node) {
 }
 
 function showNames (names, ec){
-	var html = '<strong>Other names of ' + ec + ':</strong>';
+	var html = '<strong>Other names of ' + ec + ':</strong><br/>';
 	for (name in names){
 		html = html + names[name] + '<br/>';
 	}
