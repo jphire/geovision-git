@@ -162,8 +162,7 @@ function init(){
 			'close': function() { },
 			'e_align': function() { alignmentfunction(currentEdge.data.id); },
 			'n_tag': function() { currentNode.traversalTag = true; console.log(currentNode.traversalTag); },
-			'n_names': function() { console.log(currentNode.names); }
-
+			'n_en_names': function() { console.log(currentNode.data.names); }
 		},
 		'onContextMenu': function(event)
 		{
@@ -180,7 +179,8 @@ function init(){
 				$('li[id^=e_]', menu).remove();
 			if(!currentNode)
 				$('li[id^=n_]', menu).remove();
-
+			if(! (currentNode.data.type == 'enzyme'))
+				$('li[id^=n_en_]', menu).remove();
 			return menu;
 		},
 		'onHideMenu': hideCtxMenu
