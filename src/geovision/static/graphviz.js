@@ -162,7 +162,7 @@ function init(){
 			'close': function() { },
 			'e_align': function() { alignmentfunction(currentEdge.data.id); },
 			'n_tag': function() { currentNode.traversalTag = true; console.log(currentNode.traversalTag); },
-			'n_en_names': function() { (current.data.names).appendTo($('#rightcontainer')); console.log(currentNode.data.names); },
+			'n_en_names': function() { (currentNode.data.names).appendTo($('#rightcontainer')); console.log(currentNode.data.names); },
 			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
 			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); }
 		},
