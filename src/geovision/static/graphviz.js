@@ -630,42 +630,63 @@ function colorEdges(){
  */
 
 function contractForTraversal(node, opt) {
-    console.log("contractForTraversal");
-  var viz = this.viz;
-  if(node.collapsed || !node.anySubnode($jit.util.lambda(true))) return;
-  opt = $jit.util.merge(this.options, viz.config, opt || {}, {
-    'modes': ['node-property:alpha:span', 'linear']
-  });
-  node.collapsed = true;
-  (function subn(n) {
-    n.eachSubnode(function(ch) {
-        if (!ch.traversalTag) 
-        {
-            ch.ignore = true;
-            ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
-            subn(ch);
-      }
-    });
-  })(node);
-  if(opt.type == 'animate') {
-    viz.compute('end');
-    if(viz.rotated) {
-      viz.rotate(viz.rotated, 'none', {
-        'property':'end'
-      });
-    }
-    (function subn(n) {
-      n.eachSubnode(function(ch) {
-        if (!ch.traversalTag) 
-        {
-            ch.setPos(node.getPos('end'), 'end');
-            subn(ch);
-        }
-      });
-    })(node);
-    viz.fx.animate(opt);
-  } else if(opt.type == 'replot'){
-    viz.refresh();
-  }
+	console.log("contractForTraversal");
+	var viz = this.viz;
+	if(node.collapsed || !node.anySubnode($jit.util.lambda(true))) return;
+	opt = $jit.util.merge(this.options, viz.config, opt || {}, {
+		'modes': ['node-property:alpha:span', 'linear']
+	});
+	node.collapsed = true;
+	(function subn(n) {
+		n.eachSubnode(function(ch) {
+			if (!ch.traversalTag) {
+				ch.ignore = true;
+				ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
+				subn(ch);
+			}   
+		});
+	})(node);
+	if(opt.type == 'animate') {
+		viz.compute('end');
+		if(viz.rotated) {
+			viz.rotate(viz.rotated, 'none', { 'property':'end' });
+		}
+		(function subn(n) {
+			n.eachSubnode(function(ch) {
+				if (!ch.traversalTag) {
+					ch.setPos(node.getPos('end'), 'end');
+					subn(ch);
+				}
+			});
+		})(node);
+		viz.fx.animate(opt);
+	} 
+	else if(opt.type == 'replot') {
+		viz.refresh();
+	}
+}
+
+function tagParents(node) {
+	var parents = node.getParents();
+	while (parents.length > 0) {
+		parents[0].traversalTag = true;
+		console.log("Parent " + parents[0].id + " tagged");
+		parents = parents[0].getParents();
+	}
+	node.traversalTag = true;
+}
+
+function tagSubnodes(node) {
+	node.eachSubnode(function(child) {
+		child.traversalTag = true;
+		console.log("Child " + child.id + " tagged");
+	});
+}
+
+function tagSubgraph(node) {
+	node.eachSubgraph(function(child) {
+		child.traversalTag = true;
+		console.log("Child " + child.id + " tagged");
+	});
 }
 
