@@ -176,7 +176,8 @@ function init(){
 			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))},
 			'n_en_names': function() { showNames(currentNode.data.names, currentNode.id); },
 			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
-			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); }
+			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); },
+			'n_info': function() { console.log(currentNode.id); } //debug only
 		},
 		'onContextMenu': function(event)
 		{
