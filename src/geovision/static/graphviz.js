@@ -109,6 +109,7 @@ $jit.RGraph.Plot.EdgeTypes.implement({
                 v2 = intermediatePoint.$add(normal.$scale(-1));
             
             ctx.beginPath();
+	    if(from.x != from.x) return;
             ctx.moveTo(from.x, from.y);
             ctx.lineTo(vM.x, vM.y);
             ctx.stroke();
@@ -188,8 +189,11 @@ function prepareJSON(json)
 {
 	for (i in json)
 	{
-//		if(json[i].data.type == "enzyme")
-//			json[i].data.$color = '#0000FF';
+		var data = json[i].data;
+		if(data.type == "enzyme")
+			data.$color = '#0000FF';
+		else if (data.type == "dbentry")
+			data.$color = '#00FF00';
 	}
 	return json;
 }
@@ -603,10 +607,12 @@ function colorEdges(){
 	minScore = 100000;
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
-			if(adj.data.bitscore > maxScore)
-				maxScore = adj.data.bitscore;
-			if(adj.data.bitscore < minScore)
-				minScore = adj.data.bitscore;
+			var bs = adj.data.bitscore;
+			if(!bs) return;
+			if(bs > maxScore)
+				maxScore = bs;
+			if(bs < minScore)
+				minScore = bs;
 		});
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
@@ -616,12 +622,12 @@ function colorEdges(){
 				grncol = Math.floor((1.0 * (adj.data.bitscore - minScore) / (maxScore - minScore)) * 255);
 				col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
 				adj.data.$color = col;
-				adj.data.color = col;
+				//adj.data.color = col;
 			}
 			else
 			{
 				adj.data.$color = '#0000ff';
-				adj.data.color = '#0000ff';
+				//adj.data.color = '#0000ff';
 			}
 		});
 	});

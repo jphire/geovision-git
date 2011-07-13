@@ -37,7 +37,6 @@ class Node:
 			self.type = 'enzyme'
 			self.dict['name'] = self.dict['id'] = dataobject.ec
 			self.dict['data']['type'] = 'enzyme'
-			self.dict['data']['$color'] = '#0000ff'
 		else:
 			raise Exception("parameter class must be Read, DbEntry or DbUniProtEcs")
 		self.dict["adjacencies"] = []
@@ -87,7 +86,6 @@ class Edge:
 #			self.dict["data"]["$epsilon"] = 7
 		elif isinstance(blastobject, DbUniprotEcs):
 			self.dict['nodeTo'] = nodeTo.ec
-			self.dict['data']['$color'] = '#0000ff'
 		else:
 			raise Exception("Second parameter must be a blast or uniprot ecs object, is " + str(blastobject.__class__))
 
