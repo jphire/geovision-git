@@ -162,6 +162,7 @@ function init(){
 			'close': function() { },
 			'e_align': function() { alignmentfunction(currentEdge.data.id); },
 			'n_tag': function() { currentNode.traversalTag = true; console.log(currentNode.traversalTag); }
+			'n_names': function() { /*currentNode.traversalTag = true;*/ console.log(currentNode.names); }
 
 		},
 		'onContextMenu': function(event)
