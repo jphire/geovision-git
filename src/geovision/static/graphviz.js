@@ -741,6 +741,16 @@ function tagSubgraph(node) {
 	node.traversalTag = true;
 }
 
+function showNames (names){
+	var html = '<div id="names"><strong>Names:</strong>';
+	for (name in names){
+		html = html + name + '<br/>';
+	}
+	html = html + '</div>';
+	$('#rightcontainer').add($(html));
+	return;
+ }
+
 function untagNode(node) {
 	node.traversalTag = false;
 	(function subn(n) {
