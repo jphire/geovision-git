@@ -41,7 +41,7 @@
 	<div class="error" id="error"></div>
 {% endif %}
 
-<a style="float:left" href="logging_out">Logout</a><br/>
+
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <p>Input only one of the three following:</p>
     <label>Enzyme</label>
@@ -74,7 +74,7 @@
 		{
 			source: '/autocomplete',
 			appendTo: '#navicontainer',
-			position: { my : "center top", at: "center bottom"}
+			position: { my : "right top", at: "right bottom", collision: "none"}
 		});
 	});
 </script>
