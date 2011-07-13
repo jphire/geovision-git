@@ -36,6 +36,7 @@ class Node:
 		elif isinstance(dataobject, DbUniprotEcs):
 			self.type = 'enzyme'
 			self.dict['name'] = self.dict['id'] = dataobject.ec
+			self.dict['names'] = EnzymeName.objects.filter(id = self.dict['id']).order_by('enzyme_name')
 			self.dict['data']['type'] = 'enzyme'
 			self.dict['data']['$color'] = '#0000ff'
 		else:
