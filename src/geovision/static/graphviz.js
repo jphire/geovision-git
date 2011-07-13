@@ -452,7 +452,7 @@ function initGraph(json)
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
-					tip.innerHTML = tip.innerHTML + "<br/>" + node.names;
+					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name;
 				}
 			}
 		},
