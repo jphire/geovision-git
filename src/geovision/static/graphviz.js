@@ -161,8 +161,10 @@ function init(){
 		'bindings': {
 			'close': function() { },
 			'e_align': function() { alignmentfunction(currentEdge.data.id); },
-			'n_tag': function() { currentNode.traversalTag = true; console.log(currentNode.traversalTag); }
-
+			'n_tag': function() { currentNode.traversalTag = true; console.log(currentNode.traversalTag); },
+			'n_en_names': function() { showNames(currentNode.data.names); console.log(currentNode.data.names); },
+			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
+			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); }
 		},
 		'onContextMenu': function(event)
 		{
@@ -179,7 +181,11 @@ function init(){
 				$('li[id^=e_]', menu).remove();
 			if(!currentNode)
 				$('li[id^=n_]', menu).remove();
-
+			else
+			{
+				if(currentNode.data.type != 'enzyme')
+					$('li[id^=n_en_]', menu).remove();
+			}
 			return menu;
 		},
 		'onHideMenu': hideCtxMenu
@@ -452,7 +458,7 @@ function initGraph(json)
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
-					tip.innerHTML = tip.innerHTML + "<br/>" + node.names;
+					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name;
 				}
 			}
 		},
@@ -479,8 +485,8 @@ function initGraph(json)
 			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
 			//domElement.onmouseout = function() { rgraph.config.Events.onMouseLeave(node); };
-			domElement.onmouseover = function() { currentNode = node; };
-			domElement.onmouseout = function() { currentNode = null; };
+			domElement.onmouseover = function() { if(!ctxMenuOpen) currentNode = node; };
+			domElement.onmouseout = function() { if(!ctxMenuOpen) currentNode = null; };
 		},
 		//Change some label dom properties.
 		//This method is called each time a label is plotted.
@@ -695,4 +701,12 @@ function tagSubgraph(node) {
 		console.log("Child " + child.id + " tagged");
 	});
 }
-
+function showNames (names){
+	var html = '<div id="names"><strong>Names:</strong>';
+	for (name in names){
+		html = html + name + '<br/>';
+	}
+	html = html + '</div>';
+	$('#rightcontainer').add(html);
+	return;
+}
