@@ -702,7 +702,7 @@ function tagSubgraph(node) {
 	});
 }
 function showNames (names){
-	var html = '<div id="names"><strong>Names:</strong>';
+	var html = $('<div id="names"><strong>Names:</strong>');
 	for (name in names){
 		html = html + name + '<br/>';
 	}
