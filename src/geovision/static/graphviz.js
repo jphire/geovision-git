@@ -67,6 +67,8 @@ $jit.RGraph.Plot.NodeTypes.implement({
 
         },
         'contains': function(node, pos){
+	  if(node == currentNode)
+		return true;
           var npos = node.pos.getc(true),
               radius = node.getData('dim');
           var diffx = npos.x - pos.x,
@@ -188,7 +190,11 @@ function init(){
 				$('li[id^=e_]', menu).remove();
 			if(!currentNode)
 				$('li[id^=n_]', menu).remove();
-
+			else
+			{
+				if(currentNode.data.type != 'enzyme')
+					$('li[id^=n_en_]', menu).remove();
+			}
 			return menu;
 		},
 		'onHideMenu': hideCtxMenu
@@ -461,7 +467,7 @@ function initGraph(json)
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
-					tip.innerHTML = tip.innerHTML + "<br/>" + node.names;
+					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name;
 				}
 			}
 		},
@@ -486,6 +492,10 @@ function initGraph(json)
 			if(node.name)
 				domElement.innerHTML = node.name.substr(0, 10);
 			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
+			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
+			//domElement.onmouseout = function() { rgraph.config.Events.onMouseLeave(node); };
+			domElement.onmouseover = function() { if(!ctxMenuOpen) currentNode = node; };
+			domElement.onmouseout = function() { if(!ctxMenuOpen) currentNode = null; };
 		},
 		//Change some label dom properties.
 		//This method is called each time a label is plotted.
