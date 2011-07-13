@@ -174,7 +174,7 @@ function init(){
 			'n_tagsubgraph': function() { rgraph.op.tagSubgraph(currentNode)},
 			'n_untagsubgraph': function() { untagSubgraph(currentNode)},
 			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))},
-			'n_en_names': function() { showNames(currentNode.data.names); console.log(currentNode.data.names); },
+			'n_en_names': function() { showNames(currentNode.data.names, currentNode.id); },
 			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
 			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); }
 		},
@@ -741,14 +741,12 @@ function tagSubgraph(node) {
 	node.traversalTag = true;
 }
 
-function showNames (names){
-	var html = '<div id="names"><strong>Names:</strong>';
+function showNames (names, ec){
+	var html = '<strong>Other names of ' + ec + ':</strong>';
 	for (name in names){
-		html = html + name + '<br/>';
+		html = html + names[name] + '<br/>';
 	}
-	html = html + '</div>';
-	$(html).appendTo($('#names'));
-	console.log(html);
+	$('#names').html(html);
 	return;
  }
 
