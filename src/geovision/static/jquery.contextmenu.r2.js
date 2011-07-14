@@ -118,7 +118,15 @@
       });
     });
 
-    menu.css({'left':e[cur.eventPosX],'top':e[cur.eventPosY]}).show();
+    var winHeight = $(window).height(), winWidth = $(window).width(); // ADDED this block to prevent the menu from going off-screen on small displays
+    var menuHeight = menu.height(), menuWidth = menu.width();
+    var x = e[cur.eventPosX], y = e[cur.eventPosY];
+    if(x + menuWidth > winWidth)
+        x = winWidth - menuWidth;
+    if(y + menuHeight > winHeight)
+        y = winHeight - menuHeight;
+        
+    menu.css({'left': x,'top': y}).show(); // CHANGED 'left':, 'top':
     if (cur.shadow) shadow.css({width:menu.width(),height:menu.height(),left:e.pageX+2,top:e.pageY+2}).show();
     $(document).one('click.contextMenuHider', function() { hide(cur); }); // ADDED cur argument to hide(), added namespace to the event handler
   }
