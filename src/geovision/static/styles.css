@@ -160,7 +160,7 @@ div#alignment{
 	position: relative;
 	border: 2px solid #265434;
 	display:none;
-	padding:5px 15px 5px 5px;
+	padding:5px;
 }
 #alignment span {
 	background-color: #FF636E;

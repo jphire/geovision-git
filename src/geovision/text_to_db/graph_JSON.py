@@ -35,11 +35,8 @@ class Node:
 			self.dict["data"]["type"] = "read"
 		elif isinstance(dataobject, DbUniprotEcs):
 			self.type = 'enzyme'
-			self.dict['id'] = self.dict['name'] = dataobject.ec
-			try:
-				self.dict['data']['name'] = EnzymeName.objects.filter(ec_number=self.dict['id']).order_by('id')[0].enzyme_name
-			except IndexError:
-				pass
+			self.dict['name'] = self.dict['id'] = dataobject.ec
+			self.dict['names'] = EnzymeName.objects.filter(id = self.dict['id']).order_by('enzyme_name')
 			self.dict['data']['type'] = 'enzyme'
 		else:
 			raise Exception("parameter class must be Read, DbEntry or DbUniProtEcs")
@@ -193,10 +190,12 @@ class QueryToJSON:
 	def make_enzyme_query(self, param = None):
 
 		db_list = []
-		db_query = DbUniprotEcs.objects.filter(ec = param.dict["id"], db_id__in = DbEntry.objects.all())
+		db_query = DbUniprotEcs.objects.filter(ec = param.dict["id"])
 		for line in db_query:
-#			node = DbEntry.objects.filter(db_id = line.db_id_id)
-			db_list.append(line.db_id_id)
+			if line.db_id_id not in db_list:
+				node = DbEntry.objects.filter(db_id = line.db_id_id)
+				if node.exists():
+					db_list.append(line.db_id_id)
 
 		db_entrys = Blast.objects.filter(db_entry__in = db_list)
 		return db_entrys

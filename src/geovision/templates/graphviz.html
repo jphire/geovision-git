@@ -38,10 +38,10 @@
 	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
 	<div class="error" id="error">{{ error_message }}</div>
 {% else %}
-	<!--<div class="error" id="error"></div>-->
+	<div class="error" id="error"></div>
 {% endif %}
 
-<a style="float:left; border: 2px white solid; background-color: #F2F2F2; margin-left: 10px;" href="logging_out">Logout</a><br/><br/>
+
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <p>Input only one of the three following:</p>
     <label>Enzyme</label>
@@ -73,8 +73,7 @@
 		$( "#ec" ).autocomplete(
 		{
 			source: '/autocomplete',
-			appendTo: '#navicontainer',
-			position: { my : "center top", at: "center bottom"}
+			appendTo: '#navicontainer'
 		});
 	});
 </script>
@@ -92,11 +91,6 @@
              <li id="n_tagsubgraph">Tag Subgraph</li>
              <li id="n_untagsubgraph">Untag Subgraph</li>
              <li id="n_tagpath">Tag Path</li>
-			 <li id="n_en_names">Show all names</li>
-			 <li id="n_en_brendalink">Brenda db-entry</li>
-			 <li id="n_en_kegglink">KEGG db-entry</li>
-			 <li id="n_db_uni_link">Uniprot db-entry</li>
-			 <li id="n_db_frn_link">Frnadb db-entry</li>
         </ul>
     </div>
     <div id="loader"><img src="../static/images/loader.gif" alt="Loading..."/></div>
@@ -118,7 +112,6 @@
 			<div id="right-container">
 
 				<div id="inner-details"></div>
-				<div id="names"></div>
 
 			</div>
 

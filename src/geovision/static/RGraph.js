@@ -95,9 +95,8 @@ $.empty = function() {
   (end code)
 */
 $.extend = function(original, extended) {
-  for ( var key in (extended || {})) {
+  for ( var key in (extended || {}))
     original[key] = extended[key];
-  }
   return original;
 };
 
@@ -829,7 +828,6 @@ var Animation = new Class( {
   },
 
   step: function(){
-	if (this.opt.moo == "foo") console.log("step");
     var time = $.time(), opt = this.opt;
     if (time < this.time + opt.duration) {
       var delta = opt.transition((time - this.time) / opt.duration);
@@ -842,29 +840,21 @@ var Animation = new Class( {
   },
 
   start: function(){
-	if (this.opt.moo == "foo") console.log("animation starting");
     if (!this.check())
       return this;
     this.time = 0;
     this.startTimer();
-	if (this.opt.moo == "foo") console.log("animation started");
     return this;
   },
 
   startTimer: function(){
     var that = this, fps = this.opt.fps;
-    if (this.timer) {
-		console.log("Failed, this.timer: ", this.timer);
+    if (this.timer)
       return false;
-	}
     this.time = $.time() - this.time;
-	if (this.opt.moo == "foo") console.log("starting timer, time " + this.time );
-	if (this.opt.moo == "foo") console.log("Math.round 1000/fps"+ Math.round(1000 / fps));
-	if (this.opt.moo == "foo") console.log("that" + that.step);
     this.timer = setInterval((function(){
       that.step();
     }), Math.round(1000 / fps));
-	if (this.opt.moo == "foo") console.log("started timer " + this.timer);
     return true;
   },
 
@@ -6809,27 +6799,21 @@ Graph.Plot = {
       
       //animate
       if(opt.hideLabels) this.labels.hideLabels(true);
-	  if (opt.moo == "foo") console.log("animating " + opt.type);
       animation.setOptions($.extend(opt, {
         $animating: false,
         compute: function(delta) {
-		if (opt.moo == "foo") console.log("compute started");
           graph.eachNode(function(node) { 
             for(var p in m) {
               interp[p](node, m[p], delta, versor);
             }
           });
-		if (opt.moo == "foo") console.log("compute done");
           that.plot(opt, this.$animating, delta);
-		  if (opt.moo == "foo") console.log("plot done");
           this.$animating = true;
         },
         complete: function() {
-		  if (opt.moo == "foo") console.log("complete");
           if(opt.hideLabels) that.labels.hideLabels(false);
           that.plot(opt);
           opt.onComplete();
-		  if (opt.moo == "foo") console.log("opt.onComplete called");
           //TODO(nico): This shouldn't be here!
           //opt.onAfterCompute();
         }       

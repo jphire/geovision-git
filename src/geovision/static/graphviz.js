@@ -67,8 +67,6 @@ $jit.RGraph.Plot.NodeTypes.implement({
 
         },
         'contains': function(node, pos){
-	  if(node == currentNode)
-		return true;
           var npos = node.pos.getc(true),
               radius = node.getData('dim');
           var diffx = npos.x - pos.x,
@@ -173,13 +171,7 @@ function init(){
 			'n_tagsubnodes': function() { rgraph.op.tagSubnodes(currentNode)},
 			'n_tagsubgraph': function() { rgraph.op.tagSubgraph(currentNode)},
 			'n_untagsubgraph': function() { untagSubgraph(currentNode)},
-			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))},
-			'n_en_names': function() { showNames(currentNode.data.names, currentNode.id); },
-			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
-			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); },
-			'n_db_uni_link': function() { window.open('http://www.uniprot.org/uniprot/' + currentNode.id); },
-			'n_db_frn_link': function() { window.open('http://www.ncrna.org/frnadb/detail.html?i_name=' + currentNode.id); }
-
+			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))}
 		},
 		'onContextMenu': function(event)
 		{
@@ -196,20 +188,7 @@ function init(){
 				$('li[id^=e_]', menu).remove();
 			if(!currentNode)
 				$('li[id^=n_]', menu).remove();
-			else
-			{
-				if(currentNode.data.type != 'enzyme')
-					$('li[id^=n_en_]', menu).remove();
-				if(currentNode.data.type != 'dbentry')
-					$('li[id^=n_db_]', menu).remove();
-				else
-				{
-					if(currentNode.data.source != 'uniprot')
-						$('li[id^=n_db_uni]', menu).remove();
-					if(currentNode.data.source != 'frnadb')
-						$('li[id^=n_db_frn]', menu).remove();
-				}
-			}
+
 			return menu;
 		},
 		'onHideMenu': hideCtxMenu
@@ -356,14 +335,12 @@ function initGraph(json)
                     {
                         busy = 'contracting';
                         rgraph.op.contractForTraversal(node, 
-                                { moo: "foo", type: 'animate', 
+                                { type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() { console.log("contracting onComplete 1");colorEdges(); busy = false; console.log("contracting onComplete");}});
-						console.log("Past the contractForTraversal call");
+                                onComplete: function() {colorEdges(); busy = false}});
     				}
-
 				}
 			},
 
@@ -484,7 +461,7 @@ function initGraph(json)
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
-					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name;
+					tip.innerHTML = tip.innerHTML + "<br/>" + node.names;
 				}
 			}
 		},
@@ -509,10 +486,6 @@ function initGraph(json)
 			if(node.name)
 				domElement.innerHTML = node.name.substr(0, 10);
 			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
-			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
-			//domElement.onmouseout = function() { rgraph.config.Events.onMouseLeave(node); };
-			domElement.onmouseover = function() { if(!ctxMenuOpen) currentNode = node; };
-			domElement.onmouseout = function() { if(!ctxMenuOpen) currentNode = null; };
 		},
 		//Change some label dom properties.
 		//This method is called each time a label is plotted.
@@ -678,7 +651,6 @@ function contractForTraversal(node, opt) {
 		'modes': ['node-property:alpha:span', 'linear']
 	});
 	node.collapsed = true;
-	console.log("First anonymous function");
 	(function subn(n) {
 		n.eachSubnode(function(ch) {
 			if (!ch.traversalTag) {
@@ -693,7 +665,6 @@ function contractForTraversal(node, opt) {
 		if(viz.rotated) {
 			viz.rotate(viz.rotated, 'none', { 'property':'end' });
 		}
-		console.log("Second anonymous function");
 		(function subn(n) {
 			n.eachSubnode(function(ch) {
 				if (!ch.traversalTag) {
@@ -702,10 +673,7 @@ function contractForTraversal(node, opt) {
 				}
 			});
 		})(node);
-		console.log("Second anonymous function complete, calling viz.fx.animate");
-		console.log(opt);
 		viz.fx.animate(opt);
-		console.log("past viz.fx.animate");
 	} 
 	else if(opt.type == 'replot') {
 		viz.refresh();
@@ -759,15 +727,6 @@ function tagSubgraph(node) {
 	});
 	node.traversalTag = true;
 }
-
-function showNames (names, ec){
-	var html = '<strong>Other names of ' + ec + ':</strong><br/>';
-	for (name in names){
-		html = html + names[name] + '<br/>';
-	}
-	$('#names').html(html);
-	return;
- }
 
 function untagNode(node) {
 	node.traversalTag = false;
