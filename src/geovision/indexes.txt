@@ -12,3 +12,8 @@ CREATE INDEX viz_result__db_entry ON viz_result USING hash (db_entry);
 CREATE INDEX viz_result__ec_number ON viz_result USING btree (ec_number);
 CREATE INDEX viz_result__read ON viz_result USING btree (read);
 CREATE INDEX viz_result__bitscore ON viz_result USING btree (bitscore);
+---
+CREATE INDEX viz_blast_bitscore_uniprot ON viz_blast(bitscore) WITH (fillfactor = 100) WHERE database_name = 'uniprot';
+CREATE INDEX viz_blast_db_entry_id_uniprot ON viz_blast(db_entry_id) WITH (fillfactor = 100) WHERE database_name = 'uniprot';
+CREATE INDEX viz_dbuniprotecs_ec ON viz_dbuniprotecs(ec) WITH (fillfactor = 100) WHERE ec != '?';
+CREATE INDEX viz_blastecs_bitscore ON viz_blastecs (bitscore) WITH (fillfactor = 100);
