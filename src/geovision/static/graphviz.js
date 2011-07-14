@@ -504,7 +504,7 @@ function initGraph(json)
 		//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
-			if(node.name)
+			if(node.name && node.name.substr)
 				domElement.innerHTML = node.name.substr(0, 10);
 			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
