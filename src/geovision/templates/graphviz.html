@@ -38,10 +38,10 @@
 	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
 	<div class="error" id="error">{{ error_message }}</div>
 {% else %}
-	<div class="error" id="error"></div>
+	<!--<div class="error" id="error"></div>-->
 {% endif %}
 
-
+<a style="float:left; border: 2px white solid; background-color: #F2F2F2; margin-left: 10px;" href="logging_out">Logout</a><br/><br/>
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
     <p>Input only one of the three following:</p>
     <label>Enzyme</label>
@@ -73,7 +73,8 @@
 		$( "#ec" ).autocomplete(
 		{
 			source: '/autocomplete',
-			appendTo: '#navicontainer'
+			appendTo: '#navicontainer',
+			position: { my : "center top", at: "center bottom"}
 		});
 	});
 </script>
