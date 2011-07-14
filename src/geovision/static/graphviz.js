@@ -356,12 +356,14 @@ function initGraph(json)
                     {
                         busy = 'contracting';
                         rgraph.op.contractForTraversal(node, 
-                                { type: 'animate', 
+                                { moo: "foo", type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false}});
+                                onComplete: function() { console.log("contracting onComplete 1");colorEdges(); busy = false; console.log("contracting onComplete");}});
+						console.log("Past the contractForTraversal call");
     				}
+
 				}
 			},
 
@@ -676,6 +678,7 @@ function contractForTraversal(node, opt) {
 		'modes': ['node-property:alpha:span', 'linear']
 	});
 	node.collapsed = true;
+	console.log("First anonymous function");
 	(function subn(n) {
 		n.eachSubnode(function(ch) {
 			if (!ch.traversalTag) {
@@ -690,6 +693,7 @@ function contractForTraversal(node, opt) {
 		if(viz.rotated) {
 			viz.rotate(viz.rotated, 'none', { 'property':'end' });
 		}
+		console.log("Second anonymous function");
 		(function subn(n) {
 			n.eachSubnode(function(ch) {
 				if (!ch.traversalTag) {
@@ -698,7 +702,10 @@ function contractForTraversal(node, opt) {
 				}
 			});
 		})(node);
+		console.log("Second anonymous function complete, calling viz.fx.animate");
+		console.log(opt);
 		viz.fx.animate(opt);
+		console.log("past viz.fx.animate");
 	} 
 	else if(opt.type == 'replot') {
 		viz.refresh();
