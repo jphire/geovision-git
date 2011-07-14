@@ -54,6 +54,12 @@ class Blast(models.Model):
 	def deferred(cls):
 		return Blast.objects.all().only('read', 'database_name', 'db_entry', 'error_value', 'bitscore', 'length')
 
+class BlastEcs(models.Model):
+	ec = models.CharField(max_length=13)
+	db_entry = models.ForeignKey(DbEntry)
+	bitscore = models.FloatField()
+	error_value = models.FloatField()
+
 class Result(models.Model): # Query_seq_id Target_seq_id Evident_type E.C._number p_value Bit_score
 	read = models.CharField(max_length=64)
 	db_entry = models.CharField(max_length=32)

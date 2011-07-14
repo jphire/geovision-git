@@ -1,0 +1,1 @@
+INSERT INTO viz_blastecs (ec, db_entry_id, bitscore, error_value) SELECT e.ec, b.db_entry_id, MIN(b.bitscore), MAX(b.error_value) FROM viz_dbuniprotecs e INNER JOIN viz_blast b ON (b.db_entry_id = e.db_id) WHERE e.ec != '?' AND b.database_name = 'uniprot' GROUP BY e.ec, b.db_entry_id;
