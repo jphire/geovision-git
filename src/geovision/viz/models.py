@@ -88,6 +88,7 @@ class Enzyme(models.Model):
 class Reaction(models.Model):
 	id = models.CharField(max_length=6, primary_key=True)
 	name = models.CharField(max_length=128)
-	equation = models.CharField(max_length=128)
-	enzymes = models.ManyToManyField(Enzyme, related_name='reactions')
+#	equation = models.CharField(max_length=128)
+	reactants = models.ManyToManyField(Enzyme, related_name='reactants')
+	products = models.ManyToManyField(Enzyme, related_name='reactions')
 	compounds = models.ManyToManyField(Pathway, related_name='reactions')
