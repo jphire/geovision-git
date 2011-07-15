@@ -36,10 +36,6 @@ class Node:
 		elif isinstance(dataobject, DbUniprotEcs):
 			self.type = 'enzyme'
 			self.dict['id'] = self.dict['name'] = dataobject.ec
-#			try:
-#				self.dict['data']['name'] = EnzymeName.objects.filter(ec_number=self.dict['id']).order_by('id')[0].enzyme_name
-#			except IndexError:
-#				pass
 			self.dict['data']['type'] = 'enzyme'
 		else:
 			raise Exception("parameter class must be Read, DbEntry or DbUniProtEcs")
