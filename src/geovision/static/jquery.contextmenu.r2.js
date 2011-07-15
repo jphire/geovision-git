@@ -118,7 +118,7 @@
       });
     });
 
-    var winHeight = $(window).height(), winWidth = $(window).width(); // ADDED this block to prevent the menu from going off-screen on small displays
+    var winHeight = $(window).height() + $(window).scrollTop(), winWidth = $(window).width() + $(window).scrollLeft(); // ADDED this block to prevent the menu from going off-screen on small displays
     var menuHeight = menu.height(), menuWidth = menu.width();
     var x = e[cur.eventPosX], y = e[cur.eventPosY];
     if(x + menuWidth > winWidth)

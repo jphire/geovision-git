@@ -103,12 +103,14 @@ h4 {
     height:600px;
     margin:auto;
     overflow:hidden;
+    font-size: 7pt;
 }
 
 /*TOOLTIPS*/
 .tip {
     color: #111;
     width: 139px;
+    word-wrap: break-word;
     background-color: white;
     border:1px solid #ccc;
     -moz-box-shadow:#555 2px 2px 8px;
