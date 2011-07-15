@@ -21,7 +21,8 @@ import urllib
 
 def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits):
 	# for testing only
-	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits)
+#	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits)
+#	qtj.write_to_json(PROJECT_PATH + '/static/json_file.js')
 
 	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits}.items()),
 		urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth}.items()))
