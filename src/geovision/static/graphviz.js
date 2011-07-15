@@ -360,7 +360,7 @@ function initGraph(json)
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false}});
+                                onComplete: function() { busy = false}});
     				}
 				}
 			},
