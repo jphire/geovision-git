@@ -67,6 +67,8 @@ $jit.RGraph.Plot.NodeTypes.implement({
 
         },
         'contains': function(node, pos){
+          if(node.ignore)
+              return false;
 	  if(overLabel && node == currentNode) // disgusting hack for making label tooltips appear
 		return true;
           var npos = node.pos.getc(true),
