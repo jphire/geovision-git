@@ -201,7 +201,7 @@ function init(){
 			rgraph.config.Tips.enable = false;
 			rgraph.tips.hide();
 
-			if(!currentEdge)
+			if(!currentEdge || !currentEdge.data.bitscore )
 				$('li[id^=e_]', menu).remove();
 			if(!currentNode)
 				$('li[id^=n_]', menu).remove();
