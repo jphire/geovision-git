@@ -5001,6 +5001,8 @@ Graph.Util = {
         var ans = [];
         this.eachAdjacency(node, function(adj) {
             var n = adj.nodeTo;
+            if(n == node)
+		n = adj.nodeFrom;
             if(n._depth < node._depth) ans.push(n);
         });
         return ans;

@@ -69,8 +69,8 @@ $jit.RGraph.Plot.NodeTypes.implement({
         'contains': function(node, pos){
           if(node.ignore)
               return false;
-	  if(overLabel && node == currentNode) // disgusting hack for making label tooltips appear
-		return true;
+//	  if(overLabel && node == currentNode) // disgusting hack for making label tooltips appear
+//		return true;
           var npos = node.pos.getc(true),
               radius = node.getData('dim');
           var diffx = npos.x - pos.x,
@@ -510,8 +510,8 @@ function initGraph(json)
 			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
 			//domElement.onmouseout = function() { rgraph.config.Events.onMouseLeave(node); };
-			domElement.onmouseover = function() { overLabel = true; if(!ctxMenuOpen) currentNode = node; };
-			domElement.onmouseout = function() { overLabel = false; if(!ctxMenuOpen) currentNode = null; };
+//			domElement.onmouseover = function() { overLabel = true; if(!ctxMenuOpen) currentNode = node; };
+//			domElement.onmouseout = function() { overLabel = false; if(!ctxMenuOpen) currentNode = null; };
 		},
 		//Change some label dom properties.
 		//This method is called each time a label is plotted.
