@@ -201,7 +201,7 @@ function init(){
 			rgraph.config.Tips.enable = false;
 			rgraph.tips.hide();
 
-			if(!currentEdge || !currentEdge.data.bitscore )
+			if(!currentEdge || !currentEdge.data.bitscore ) //TODO
 				$('li[id^=e_]', menu).remove();
 			if(!currentNode)
 				$('li[id^=n_]', menu).remove();
@@ -323,6 +323,7 @@ function initGraph(json)
 
 				if(busy)
 					return;
+					//loading....! TODO
 
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {

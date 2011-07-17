@@ -36,6 +36,7 @@ def registering(request):
 		user.email = request.POST['email']
 		user.is_staff = False
 		user.save()
+		user.is_active = False
 		return render_to_response('login.html', {
 				'error_message': "Account succesfully created.",
 		}, context_instance=RequestContext(request)) 
