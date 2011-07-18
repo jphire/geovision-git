@@ -349,22 +349,26 @@ function initGraph(json)
 					if(node.collapsed) 
                     {
                         busy = 'expanding';
+						$('#load').html("Loading...");
                         rgraph.op.expand(node, 
                                 { type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false}});
+						$('#load').html("");
                     }
                     else 
                     {
                         busy = 'contracting';
+						$('#load').html("Contracting...");
                         rgraph.op.contractForTraversal(node, 
                                 { type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false}});
+						$('#load').html("");
     				}
 				}
 			},
