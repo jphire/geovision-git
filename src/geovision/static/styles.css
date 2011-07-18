@@ -186,3 +186,9 @@ div#filter{
 #filtererror{
 	color: red;
 }
+span#load{
+	z-index:100;
+	width:600px;
+	text-align: center;
+	color:red;
+}

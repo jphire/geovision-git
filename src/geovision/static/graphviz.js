@@ -325,8 +325,8 @@ function initGraph(json)
 
 				if(busy)
 					return;
-					//loading....! TODO
 
+				$('#load').html("Loading...");
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {
 					if(adj.nodeFrom == node && adj.data.bitscore)
@@ -366,6 +366,7 @@ function initGraph(json)
                                 onComplete: function() {colorEdges(); busy = false}});
     				}
 				}
+				$('#load').html("");
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
@@ -782,12 +783,12 @@ function untagSubgraph(node) {
 }
 
 function filter(bitscore) {
-	//if (BITSCORE EI JÄRKEVÄ) {
-		//($('#filtererror').html("epäjärkevä bitscore, laita uus");
-	//}
-	//else {
+	if (bitscore < 0) {
+		($('#filtererror').html("Not a valid bitscore.");
+	}
+	else {
 		console.log(bitscore);
 		($('#filtererror').html();
 		return;
-	//}
+	}
 }
