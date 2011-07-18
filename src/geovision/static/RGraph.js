@@ -1996,10 +1996,11 @@ Extras.Classes.Events = new Class({
   onMouseOut: function(e, win, event) {
    //mouseout a label
    var evt = $.event.get(e, win), label;
-   if(this.dom && (label = this.isLabel(e, win, true))) {
+   if((label = this.isLabel(e, win, true))) {
      this.config.onMouseLeave(this.viz.graph.getNode(label.id),
                               event, evt);
      this.hovered = false;
+     this.hoverLabel = false;
      return;
    }
    //mouseout canvas
@@ -2019,8 +2020,9 @@ Extras.Classes.Events = new Class({
   onMouseOver: function(e, win, event) {
     //mouseover a label
     var evt = $.event.get(e, win), label;
-    if(this.dom && (label = this.isLabel(e, win, true))) {
+    if((label = this.isLabel(e, win, true))) {
       this.hovered = this.viz.graph.getNode(label.id);
+      this.hoverLabel = true;
       this.config.onMouseEnter(this.hovered,
                                event, evt);
     }
@@ -2033,15 +2035,14 @@ Extras.Classes.Events = new Class({
      this.config.onDragMove(this.pressed, event, evt);
      return;
    }
-   if(this.dom) {
-	   //original is commented out:
-     this.config.onMouseMove(this.hovered,
-         event, evt);
+//     this.config.onMouseMove(this.hovered,
+//         event, evt);
+   if(false) {
    } else {
      if(this.hovered) {
        var hn = this.hovered;
        var geom = hn.nodeFrom? this.etypes[hn.getData('type')] : this.ntypes[hn.getData('type')];
-       var contains = geom && geom.contains
+       var contains = this.hoverLabel || geom && geom.contains
          && geom.contains.call(this.fx, hn, event.getPos());
        if(contains) {
          this.config.onMouseMove(hn, event, evt);
@@ -2065,19 +2066,17 @@ Extras.Classes.Events = new Class({
   
   onMouseDown: function(e, win, event) {
     var evt = $.event.get(e, win), label;
-    if(this.dom) {
       if(label = this.isLabel(e, win)) {
         this.pressed = this.viz.graph.getNode(label.id);
+      } else {
+        this.pressed = event.getNode() || (this.config.enableForEdges && event.getEdge());
       }
-    } else {
-      this.pressed = event.getNode() || (this.config.enableForEdges && event.getEdge());
-    }
     this.pressed && this.config.onDragStart(this.pressed, event, evt);
   },
   
   onTouchStart: function(e, win, event) {
     var evt = $.event.get(e, win), label;
-    if(this.dom && (label = this.isLabel(e, win))) {
+    if((label = this.isLabel(e, win))) {
       this.touched = this.viz.graph.getNode(label.id);
     } else {
       this.touched = event.getNode() || (this.config.enableForEdges && event.getEdge());
@@ -2179,7 +2178,7 @@ Extras.Classes.Tips = new Class({
     if(this.isLabel(e, win)) { // removed this.dom check
       this.setTooltipPosition($.event.getPos(e, win));
     }
-    if(false) { // CHANGED from !this.dom
+    else { // CHANGED from !this.dom
       var node = opt.getNode();
       var edge = opt.getEdge();
 	  if(!node && !edge) {
