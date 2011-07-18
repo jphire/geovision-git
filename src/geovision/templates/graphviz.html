@@ -114,7 +114,7 @@
 			<div id="filter">
 				<!--TODO: välitä suoraan javascriptille-->
 				<form id="filterform" action="" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
-					<p>Filter graph with bitscore:</p>
+					<br/><p>Filter graph with bitscore:</p>
 					<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value=""/><br/>
 					<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
 				</form>
