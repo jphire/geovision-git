@@ -1,4 +1,5 @@
 var opened = false;
+var filteropen = false;
 
 function openSearch()
 {
