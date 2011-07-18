@@ -34,7 +34,7 @@ jQuery(function($) {
 		$('#filter').slideDown();
 	})
 	$('#filterform').submit(function() {
-		filter(('#bitscorefilter').val());
+		filter($('#bitscorefilter').val());
 		return false;
 	})
     $('#graphnavi').mouseenter(openSearch);
