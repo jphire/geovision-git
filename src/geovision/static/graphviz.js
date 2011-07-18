@@ -323,9 +323,10 @@ function initGraph(json)
 				if(!node || node.nodeFrom)
 					return;
 
-				if(busy)
+				if(busy){
 					console.log("busy");
 					return;
+				}
 
 				$('#load').html("Loading...");
 				console.log("asdfasdf");
