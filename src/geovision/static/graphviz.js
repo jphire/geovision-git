@@ -780,3 +780,8 @@ function untagSubgraph(node) {
 		sn.traversalTag = false;
 	});
 }
+
+fuction filter(bitscore) {
+	console.log(bitscore);
+	return;
+}
