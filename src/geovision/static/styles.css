@@ -181,4 +181,5 @@ div#filter{
 	height:0px;
 	width:150px;
 	text-align: center;
+	display: none;
 }
