@@ -28,7 +28,7 @@ function closeSearch(e)
 	}
 }
 jQuery(function($) {
-/*! Functions to open the graph-option-navigation with a nice animation.
+/*! Function to open the graph-option-navigation and the alignment with a nice animation.
  */
     $('#graphnavi').mouseenter(openSearch);
 	$('#graphnavi').mouseleave(closeSearch);
