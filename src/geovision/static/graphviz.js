@@ -781,7 +781,7 @@ function untagSubgraph(node) {
 	});
 }
 
-fuction filter(bitscore) {
+function filter(bitscore) {
 	console.log(bitscore);
 	return;
 }
