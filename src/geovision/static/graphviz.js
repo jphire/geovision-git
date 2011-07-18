@@ -324,9 +324,11 @@ function initGraph(json)
 					return;
 
 				if(busy)
+					console.log("busy");
 					return;
 
 				$('#load').html("Loading...");
+				console.log("asdfasdf");
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {
 					if(adj.nodeFrom == node && adj.data.bitscore)
@@ -788,7 +790,7 @@ function filter(bitscore) {
 	}
 	else {
 		console.log(bitscore);
-		$('#filtererror').html();
+		$('#filtererror').html("");
 		return;
 	}
 }

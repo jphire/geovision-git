@@ -191,4 +191,6 @@ span#load{
 	width:600px;
 	text-align: center;
 	color:red;
+	background-color: white;
+	font-weight: bold;
 }
