@@ -782,6 +782,12 @@ function untagSubgraph(node) {
 }
 
 function filter(bitscore) {
-	console.log(bitscore);
-	return;
+	//if (BITSCORE EI JÄRKEVÄ) {
+		//($('#filtererror').html("epäjärkevä bitscore, laita uus");
+	//}
+	//else {
+		console.log(bitscore);
+		($('#filtererror').html();
+		return;
+	//}
 }

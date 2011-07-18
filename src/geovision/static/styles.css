@@ -183,3 +183,6 @@ div#filter{
 	text-align: center;
 	display: none;
 }
+#filtererror{
+	color: red;
+}
