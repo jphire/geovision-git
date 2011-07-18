@@ -1,4 +1,5 @@
-from geovision.text_to_db.enzyme_list_parser import enzyme_parser, run
+from geovision.text_to_db.kegg_parser import KeggParser as enzyme_parser
+from geovision.text_to_db.enzyme_parser import run
 from viz.models import EnzymeName
 from settings import TEST_FILE_PATH
 import unittest
