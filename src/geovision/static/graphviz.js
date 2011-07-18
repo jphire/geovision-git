@@ -323,13 +323,9 @@ function initGraph(json)
 				if(!node || node.nodeFrom)
 					return;
 
-				if(busy){
-					console.log("busy");
+				if(busy)
 					return;
-				}
-
-				$('#load').html("Loading...");
-				console.log("asdfasdf");
+				
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {
 					if(adj.nodeFrom == node && adj.data.bitscore)
@@ -339,10 +335,12 @@ function initGraph(json)
 				if (numSubnodes <= 1)
 				{
 					busy = 'expanding';
+					$('#load').html("Loading...");
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;}})
+							$('#load').html("");
 						}
 					);
 				}
@@ -369,7 +367,6 @@ function initGraph(json)
                                 onComplete: function() {colorEdges(); busy = false}});
     				}
 				}
-				$('#load').html("");
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
