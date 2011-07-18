@@ -784,11 +784,11 @@ function untagSubgraph(node) {
 
 function filter(bitscore) {
 	if (bitscore < 0) {
-		($('#filtererror').html("Not a valid bitscore.");
+		$('#filtererror').html("Not a valid bitscore.");
 	}
 	else {
 		console.log(bitscore);
-		($('#filtererror').html();
+		$('#filtererror').html();
 		return;
 	}
 }
