@@ -152,13 +152,15 @@ var overLabel;
 
 function hideCtxMenu()
 {
+	if(!ctxMenuOpen) return;
 	ctxMenuOpen = false;
 	busy = false;
-	rgraph.config.Events.onMouseLeave(currentNode || currentEdge); // XXX does this work completely?
+	if(currentNode) rgraph.config.Events.onMouseLeave(currentNode)
+	if(currentEdge) rgraph.config.Events.onMouseLeave(currentEdge); // XXX does this work completely?
 	currentEdge = currentNode = false;
 	rgraph.config.Navigation.panning = true;
 	rgraph.config.Tips.enable = true;
-	rgraph.events.pressed = undefined;
+//	rgraph.events.pressed = undefined;
 }
 
 function init(){
@@ -331,7 +333,6 @@ function initGraph(json)
 						numSubnodes++;
 				});
 
-				console.log(numSubnodes);
 				if (numSubnodes <= 1)
 				{
 					busy = 'expanding';
@@ -384,7 +385,7 @@ function initGraph(json)
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
-						duration: 500
+						duration: 1
 					});
 				}
 				else if(node)
@@ -392,14 +393,14 @@ function initGraph(json)
 					currentNode = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
-					node.data.$dim = node.getData('dim') + 3;
+					node.data.$dim = rgraph.config.Node.dim + 3;
 					
 					if(busy)
 						return;
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
-						duration: 500
+						duration: 1
 					});
 
 				}
