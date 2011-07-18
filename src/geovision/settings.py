@@ -199,4 +199,3 @@ DEBUG_TOOLBAR_CONFIG = {
 	'SHOW_TOOLBAR_CALLBACK': (lambda _: True),
 	'HIDE_DJANGO_SQL': True,
 }
-
