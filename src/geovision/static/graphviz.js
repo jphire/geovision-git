@@ -382,14 +382,14 @@ function initGraph(json)
 					return;
 				if (node.nodeTo)
 				{
+					if(busy)
+						return;
 					currentEdge = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('lineWidth_hover');
 					node.data.$dim = node.getData('dim_hover');
 					
-					if(busy)
-						return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -398,13 +398,13 @@ function initGraph(json)
 				}
 				else if(node)
 				{
+					if(busy)
+						return;
 					currentNode = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = rgraph.config.Node.dim + 3;
 					
-					if(busy)
-						return;
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -417,17 +417,17 @@ function initGraph(json)
 			{
 				if(ctxMenuOpen)
 					return;
+				if(busy)
+					return;
 				currentNode = currentEdge = undefined;
 				if(!object) return;
 				if(object.nodeTo)
 				{
 					rgraph.canvas.getElement().style.cursor = '';
-					
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
 
-					if(busy)
-						return;
+					
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -436,12 +436,11 @@ function initGraph(json)
 
 				}
 				else if(object){
-					
+					if(busy)
+						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					
-					if(busy)
-						return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:dim'],
