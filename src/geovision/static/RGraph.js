@@ -2035,8 +2035,8 @@ Extras.Classes.Events = new Class({
      this.config.onDragMove(this.pressed, event, evt);
      return;
    }
-     this.config.onMouseMove(this.hovered,
-         event, evt);
+//     this.config.onMouseMove(this.hovered,
+//         event, evt);
    if(false) {
    } else {
      if(this.hovered) {
