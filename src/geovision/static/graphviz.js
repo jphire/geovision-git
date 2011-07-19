@@ -430,8 +430,9 @@ function initGraph(json)
 				
 				if(object.nodeTo)
 				{
-//					if(busy)
-//						return;
+					while(busy)
+						;
+						
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
@@ -444,8 +445,8 @@ function initGraph(json)
 
 				}
 				else if(object){
-//					if(busy)
-//						return;
+					while(busy)
+						;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					
