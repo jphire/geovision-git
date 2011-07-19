@@ -342,6 +342,9 @@ function initGraph(json)
 						function(newdata)
 						{
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
+							if(currentNode != undefined || currentEdge != undefined){
+								rgraph.config.Events.onMouseLeave(currentNode);
+							}
 							$('#load').html("");
 						}
 					);
@@ -362,7 +365,11 @@ function initGraph(json)
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';}});
+                                onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';
+									if(currentNode != undefined || currentEdge != undefined){
+										rgraph.config.Events.onMouseLeave(currentNode);
+									}
+								}});
 						$('#load').html("");
                     }
                     else 
@@ -378,12 +385,13 @@ function initGraph(json)
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';}});
+                                onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';
+										if(currentNode != undefined || currentEdge != undefined){
+											rgraph.config.Events.onMouseLeave(currentNode);
+										}
+							}});
 						$('#load').html("");
     				}
-				}
-				if(currentNode != undefined || currentEdge != undefined){
-					rgraph.config.Events.onMouseLeave(currentNode);
 				}
 			},
 
