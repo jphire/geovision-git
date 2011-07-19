@@ -802,23 +802,22 @@ function filter(bitscore) {
 	else {
 		$('#load').html("Filtering...");
 
+		rgraph.op.contractForTraversal(rgraph.graph.getNode(rgraph.root), {type: "replot"});
+
+
 		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
-			if (edge.data.bitscore < bitscore){
-				rgraph.op.contractForTraversal(edge.nodeTo,
-						{ type: 'animate',
-						duration: 1000,
-						hideLabels: true,
-						transition: $jit.Trans.Quart.easeOut,
-						onComplete: function() {colorEdges(); busy = false;}});
-			}
-			else {
-				edge.nodeTo.eachAdjacency(function(edgenow){
+			if (edge.data.bitscore >= bitscore){
+				var node = edge.nodeTo;
+				node.setData('alpha', node.Node.alpha, "current");
+				node.eachAdjacency(function(edgenow){
 					if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth && edgenow.nodeTo != edge.nodeTo){
 						helper(edgenow);
 					}
 				})
 			}
 		})
+		rgraph.op.viz.refresh();
+
 		$('#load').html("");
 		$('#filtererror').html("");
 		return;
