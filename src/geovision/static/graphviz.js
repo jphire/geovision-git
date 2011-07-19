@@ -808,6 +808,7 @@ function filter(bitscore) {
 		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
 			if (edge.data.bitscore >= bitscore){
 				var node = edge.nodeTo;
+				node.ignore = false;
 				node.setData('alpha', node.Node.alpha, "current");
 				node.eachAdjacency(function(edgenow){
 					if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth && edgenow.nodeTo != edge.nodeTo){
