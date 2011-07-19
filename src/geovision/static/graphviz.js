@@ -804,7 +804,6 @@ function filter(bitscore) {
 	}
 	else {
 		$('#load').html("Filtering...");
-		var root = rgraph.graph.getNode(rgraph.root).id;
 
 		root.eachAdjancency(function helper(edge){
 			//if (!edge.traversalTag) {
