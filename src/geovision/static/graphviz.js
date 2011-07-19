@@ -802,11 +802,11 @@ function filter(bitscore) {
 	else {
 		$('#load').html("Filtering...");
 
-		rgraph.op.contractForTraversal(rgraph.graph.getNode(rgraph.root), {type: "replot"});
+		rgraph.op.contractForTraversal2(rgraph.graph.getNode(rgraph.root), {type: "replot"});
 
 
 		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
-			if (edge.data.bitscore >= bitscore){ //+  || !(egde.data.bitscore)
+			if ( typeof(edge.data.bitscore) != "undefined" || edge.data.bitscore >= bitscore ){ //+  || !(egde.data.bitscore)
 				var node = edge.nodeTo;
 				node.ignore = false;
 				node.setData('alpha', node.Node.alpha, "current");
@@ -822,5 +822,41 @@ function filter(bitscore) {
 		$('#load').html("");
 		$('#filtererror').html("");
 		return;
+	}
+}
+
+function contractForTraversal2(node, opt) {
+	console.log("contractForTraversal");
+	var viz = this.viz;
+	opt = $jit.util.merge(this.options, viz.config, opt || {}, {
+		'modes': ['node-property:alpha:span', 'linear']
+	});
+	node.collapsed = true;
+	(function subn(n) {
+		n.eachSubnode(function(ch) {
+			if (!ch.traversalTag) {
+				ch.ignore = true;
+				ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
+				subn(ch);
+			}
+		});
+	})(node);
+	if(opt.type == 'animate') {
+		viz.compute('end');
+		if(viz.rotated) {
+			viz.rotate(viz.rotated, 'none', { 'property':'end' });
+		}
+		(function subn(n) {
+			n.eachSubnode(function(ch) {
+				if (!ch.traversalTag) {
+					ch.setPos(node.getPos('end'), 'end');
+					subn(ch);
+				}
+			});
+		})(node);
+		viz.fx.animate(opt);
+	}
+	else if(opt.type == 'replot') {
+		viz.refresh();
 	}
 }
