@@ -325,8 +325,7 @@ function initGraph(json)
 
 				if(busy)
 					return;
-					//loading....! TODO
-
+				
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {
 					if(adj.nodeFrom == node && adj.data.bitscore)
@@ -336,10 +335,12 @@ function initGraph(json)
 				if (numSubnodes <= 1)
 				{
 					busy = 'expanding';
+					$('#load').html("Loading...");
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;}})
+							$('#load').html("");
 						}
 					);
 				}
@@ -348,22 +349,26 @@ function initGraph(json)
 					if(node.collapsed) 
                     {
                         busy = 'expanding';
+						$('#load').html("Loading...");
                         rgraph.op.expand(node, 
                                 { type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false}});
+						$('#load').html("");
                     }
                     else 
                     {
                         busy = 'contracting';
+						$('#load').html("Contracting...");
                         rgraph.op.contractForTraversal(node, 
                                 { type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false}});
+						$('#load').html("");
     				}
 				}
 			},
@@ -782,6 +787,12 @@ function untagSubgraph(node) {
 }
 
 function filter(bitscore) {
-	console.log(bitscore);
-	return;
+	if (bitscore < 0) {
+		$('#filtererror').html("Not a valid bitscore.");
+	}
+	else {
+		console.log(bitscore);
+		$('#filtererror').html("");
+		return;
+	}
 }

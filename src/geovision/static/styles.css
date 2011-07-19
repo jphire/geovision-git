@@ -183,3 +183,17 @@ div#filter{
 	text-align: center;
 	display: none;
 }
+#filtererror{
+	color: red;
+}
+span#load{
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index:100;
+	width:600px;
+	text-align: center;
+	color:red;
+	background-color: silver;
+	font-weight: bold;
+}
