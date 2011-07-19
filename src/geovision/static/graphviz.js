@@ -323,9 +323,6 @@ function initGraph(json)
 				if(!node || node.nodeFrom)
 					return;
 
-				if(busy)
-					return;
-				
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {
 					if(adj.nodeFrom == node && adj.data.bitscore)
@@ -335,6 +332,9 @@ function initGraph(json)
 				//if clicked a leaf-node
 				if (numSubnodes <= 1)
 				{
+					if(busy)
+						return;
+
 					busy = 'expanding';
 					rgraph.canvas.getElement().style.cursor = 'wait';
 					$('#load').html("Loading...");
@@ -351,6 +351,9 @@ function initGraph(json)
 				{
 					if(node.collapsed) 
                     {
+						if(busy)
+							return;
+
                         busy = 'expanding';
 						rgraph.canvas.getElement().style.cursor = 'wait';
 						$('#load').html("Loading...");
@@ -364,6 +367,9 @@ function initGraph(json)
                     }
                     else 
                     {
+						if(busy)
+							return;
+
                         busy = 'contracting';
 						rgraph.canvas.getElement().style.cursor = 'wait';
 						$('#load').html("Contracting...");
@@ -424,12 +430,11 @@ function initGraph(json)
 				
 				if(object.nodeTo)
 				{
-					if(busy)
-						return;
+//					if(busy)
+//						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
-
 					
 					rgraph.fx.animate(
 					{
@@ -439,8 +444,8 @@ function initGraph(json)
 
 				}
 				else if(object){
-					if(busy)
-						return;
+//					if(busy)
+//						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					
