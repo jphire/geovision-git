@@ -347,6 +347,7 @@ function initGraph(json)
 									rgraph.config.Events.onMouseLeave(currentNode);
 								}
 								}})
+							rgraph.loadJSON(prepareJSON(json), 0);
 							$('#load').html("");
 						}
 					);
