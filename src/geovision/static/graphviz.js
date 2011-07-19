@@ -347,7 +347,6 @@ function initGraph(json)
 									rgraph.config.Events.onMouseLeave(currentNode);
 								}
 								}})
-							rgraph.refresh()
 							$('#load').html("");
 						}
 					);
@@ -415,6 +414,7 @@ function initGraph(json)
 					if(busy)
 						return;
 					currentNode = node;
+					console.log(node.data.hidden_nodes_count);
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = rgraph.config.Node.dim + 3;
