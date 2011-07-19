@@ -517,8 +517,6 @@ function initGraph(json)
 		//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
-			if(busy)
-				return;
 			if(node.name && node.name.substr)
 				domElement.innerHTML = node.name.substr(0, 10);
 			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
@@ -531,6 +529,8 @@ function initGraph(json)
 		//This method is called each time a label is plotted.
 		onPlaceLabel: function(domElement, node)
 		{
+			if(busy)return;
+			
 			var style = domElement.style;
 			style.display = '';
 			style.cursor = 'pointer';
