@@ -569,7 +569,7 @@ function initGraph(json)
 	$jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b><br/>";
 	$jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
 	//set root for use in other functions
-	root = rgraph.root;
+	root = rgraph.graph.getNode(rgraph.root);
 
 	rgraph.refresh();
 	colorEdges();
