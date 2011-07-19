@@ -336,11 +336,13 @@ function initGraph(json)
 				{
 					busy = 'expanding';
 					$('#load').html("Loading...");
+					rgraph.canvas.getElement().style.cursor = 'wait';
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;}})
 							$('#load').html("");
+							rgraph.canvas.getElement().style.cursor = '';
 						}
 					);
 				}
