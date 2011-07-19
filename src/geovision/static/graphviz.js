@@ -366,13 +366,8 @@ function initGraph(json)
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';
-									if(currentNode != undefined || currentEdge != undefined){
-										console.log("node clicked");
-										rgraph.config.Events.onMouseLeave(currentNode);
-									}
-								}});
-						$('#load').html("");
+                                onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';}});
+								$('#load').html("");
                     }
                     else 
                     {
@@ -387,12 +382,7 @@ function initGraph(json)
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';
-										if(currentNode != undefined || currentEdge != undefined){
-											console.log("node clicked");
-											rgraph.config.Events.onMouseLeave(currentNode);
-										}
-							}});
+                                onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';}});
 						$('#load').html("");
     				}
 				}
@@ -460,6 +450,8 @@ function initGraph(json)
 				else if(object){
 					if(busy)
 						return;
+
+					console.log("changin node style..");
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					
