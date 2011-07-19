@@ -199,17 +199,6 @@ class QueryToJSON:
 				return n
 		raise KeyError(repr(id))
 
-#	def make_enzyme_query(self, param = None):
-#
-#		db_list = []
-#		db_query = DbUniprotEcs.objects.filter(ec = param.dict["id"], db_id__in = DbEntry.deferred())
-#		for line in db_query:
-#			node = DbEntry.objects.filter(db_id = line.db_id_id)
-#			db_list.append(line.db_id_id)
-#
-#		db_entrys = Blast.deferred().filter(db_entry__in = db_list, database_name='uniprot')
-#		return db_entrys
-
 	def make_blast_queryset(self, param = None):
 		"""
 		Function for making the blast table QuerySet. Takes only one parameter,
