@@ -1,5 +1,5 @@
 var labelType, useGradients, nativeTextSupport, animate;
-var root;
+var rgraph;
 
 (function() {
   var ua = navigator.userAgent,
@@ -568,8 +568,6 @@ function initGraph(json)
 	//append information about the root relations in the right column
 	$jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b><br/>";
 	$jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
-	//set root for use in other functions
-	root = rgraph.graph.getNode(rgraph.root);
 
 	rgraph.refresh();
 	colorEdges();
@@ -804,9 +802,9 @@ function filter(bitscore) {
 	else {
 		$('#load').html("Filtering...");
 
-		root.eachAdjacency(function helper(edge){
+		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
 			if (edge.data.bitscore < bitscore){
-				contractForTraversal(edge.nodeTo,
+				rgraph.op.contractForTraversal(edge.nodeTo,
 						{ type: 'animate',
 						duration: 1000,
 						hideLabels: true,
