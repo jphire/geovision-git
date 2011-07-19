@@ -572,7 +572,7 @@ function initGraph(json)
 	rgraph.refresh();
 	colorEdges();
     rgraph.op.contractForTraversal = contractForTraversal;
-	rgraph.op.contractForTraversal2 = contractForTraversal2;
+	rgraph.op.filterContract = filterContract;
 	rgraph.op.tagParents = tagParents;
 	rgraph.op.tagSubgraph = tagSubgraph;
 	rgraph.op.tagSubnodes = tagSubnodes;
@@ -803,8 +803,7 @@ function filter(bitscore) {
 	else {
 		$('#load').html("Filtering...");
 
-		rgraph.op.contractForTraversal2(rgraph.graph.getNode(rgraph.root), {type: "replot"});
-
+		rgraph.op.filterContract(rgraph.graph.getNode(rgraph.root), {type: "replot"});
 
 		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
 			if (typeof(edge.data.bitscore) == "undefined" || edge.data.bitscore >= bitscore ){ //+  || !(egde.data.bitscore)
@@ -826,8 +825,7 @@ function filter(bitscore) {
 	}
 }
 
-function contractForTraversal2(node, opt) {
-	console.log("contractForTraversal");
+function filterContract(node, opt) {
 	var viz = this.viz;
 	opt = $jit.util.merge(this.options, viz.config, opt || {}, {
 		'modes': ['node-property:alpha:span', 'linear']
