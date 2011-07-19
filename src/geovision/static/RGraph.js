@@ -2037,8 +2037,8 @@ Extras.Classes.Events = new Class({
    }
      this.config.onMouseMove(this.hovered,
          event, evt);
-//   if(false) {
-   //} else {
+   if(false) {
+   } else {
      if(this.hovered) {
        var hn = this.hovered;
        var geom = hn.nodeFrom? this.etypes[hn.getData('type')] : this.ntypes[hn.getData('type')];
