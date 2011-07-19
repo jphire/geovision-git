@@ -366,7 +366,7 @@ function initGraph(json)
 						rgraph.canvas.getElement().style.cursor = 'wait';
 						$('#load').html("Contracting...");
                         rgraph.op.contractForTraversal(node, 
-                                { type: 'animate', 
+                                { type: 'animate',
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
@@ -791,13 +791,37 @@ function untagSubgraph(node) {
 		sn.traversalTag = false;
 	});
 }
+
  /*function to filter graph by a bitscore inputted by the user*/
 function filter(bitscore) {
 	if (bitscore < 0) { /*bitscores must make sence*/
 		$('#filtererror').html("Not a valid bitscore.");
 	}
 	else {
-		console.log(bitscore);
+		$('#load').html("Filtering...");
+		rgraph.canvas.getElement().style.cursor = 'wait';
+		var root = rgraph.graph.getNode(rgraph.root).id;
+
+		root.eachAdjancency(function helper(edge){
+			//if (!edge.traversalTag) {
+				if (edge.data.bitscore < bitscore){
+					rgraph.op.contractForTraversal(edge.nodeTo,
+							{ type: 'animate',
+							duration: 1000,
+							hideLabels: true,
+							transition: $jit.Trans.Quart.easeOut,
+							onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';}});
+				}
+				else {
+					edge.nodeTo.eachAdjancency(function(edgenow){
+						if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth){
+							helper(edgenow);
+						})
+					})
+				}
+			//}
+		})
+		$('#load').html("");
 		$('#filtererror').html("");
 		return;
 	}
