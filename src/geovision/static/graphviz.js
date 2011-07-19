@@ -572,6 +572,7 @@ function initGraph(json)
 	rgraph.refresh();
 	colorEdges();
     rgraph.op.contractForTraversal = contractForTraversal;
+	rgraph.op.contractForTraversal2 = contractForTraversal2;
 	rgraph.op.tagParents = tagParents;
 	rgraph.op.tagSubgraph = tagSubgraph;
 	rgraph.op.tagSubnodes = tagSubnodes;
