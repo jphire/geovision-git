@@ -1,4 +1,5 @@
 var labelType, useGradients, nativeTextSupport, animate;
+var root;
 
 (function() {
   var ua = navigator.userAgent,
@@ -567,6 +568,9 @@ function initGraph(json)
 	//append information about the root relations in the right column
 	$jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b><br/>";
 	$jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
+	//set root for use in other functions
+	root = rgraph.root;
+
 	rgraph.refresh();
 	colorEdges();
     rgraph.op.contractForTraversal = contractForTraversal;
@@ -800,18 +804,17 @@ function filter(bitscore) {
 	}
 	else {
 		$('#load').html("Filtering...");
-		rgraph.canvas.getElement().style.cursor = 'wait';
 		var root = rgraph.graph.getNode(rgraph.root).id;
 
 		root.eachAdjancency(function helper(edge){
 			//if (!edge.traversalTag) {
 				if (edge.data.bitscore < bitscore){
-					rgraph.op.contractForTraversal(edge.nodeTo,
+					contractForTraversal(edge.nodeTo,
 							{ type: 'animate',
 							duration: 1000,
 							hideLabels: true,
 							transition: $jit.Trans.Quart.easeOut,
-							onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';}});
+							onComplete: function() {colorEdges(); busy = false;}});
 				}
 				else {
 					edge.nodeTo.eachAdjancency(function(edgenow){
