@@ -443,7 +443,7 @@ function initGraph(json)
 					
 					rgraph.fx.animate(
 					{
-						modes: ['edge-property:dim'],
+						modes: ['node-property:dim'],
 						duration: 1
 					});
 
