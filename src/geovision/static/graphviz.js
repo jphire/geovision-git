@@ -576,12 +576,13 @@ function initGraph(json)
 }
 
 var alignmentopen = false;
+/*Function for showing the alignment of the read and the db-entry*/
 function alignmentfunction(thisid) {
 	if (alignmentopen) {
 		closealignment();
 	}
 	if (alignmentopen == false){
-		$.getJSON('/show_alignment', {id: thisid}, function (data) {
+		$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
 			if(data == null){
 				return false;
 			}
@@ -621,9 +622,11 @@ function alignmentfunction(thisid) {
 		return false;
 	}
 }
+/*when the close button appears, it's se to work*/
 $('#closealign').live('click', function() {
 	closealignment();
 });
+/*Function to close the div-element showing the alignment*/
 function closealignment () {
 	if (alignmentopen == true){
 		alignmentopen = false;
@@ -763,12 +766,13 @@ function tagSubgraph(node) {
 	node.traversalTag = true;
 }
 
+/*Function to list all names of the rightclicked enzyme (known to the local database) in the right container*/
 function showNames (names, ec){
 	var html = '<strong>Other names of ' + ec + ':</strong><br/>';
 	for (name in names){
 		html = html + names[name] + '<br/>';
 	}
-	$('#names').html(html);
+	$('#names').html(html); /*#names is replaced fully when this is called for a new node*/
 	return;
  }
 
@@ -787,9 +791,9 @@ function untagSubgraph(node) {
 		sn.traversalTag = false;
 	});
 }
-
+ /*function to filter graph by a bitscore inputted by the user*/
 function filter(bitscore) {
-	if (bitscore < 0) {
+	if (bitscore < 0) { /*bitscores must make sence*/
 		$('#filtererror').html("Not a valid bitscore.");
 	}
 	else {
