@@ -234,7 +234,8 @@ class QueryToJSON:
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
-		return (query.count(), query[:self.max_amount])
+		count = query.count() + 0
+		return (count, query[:self.max_amount])
 
 	def add_edges(self, startnode, queryset):
 		"""
