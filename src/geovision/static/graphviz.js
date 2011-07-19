@@ -341,13 +341,12 @@ function initGraph(json)
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
+							rgraph.op.sum(prepareJSON(newdata), { type: 'replot', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
 								if(currentNode != undefined || currentEdge != undefined){
 									console.log("leaf node clicked");
 									rgraph.config.Events.onMouseLeave(currentNode);
 								}
 								}})
-							rgraph.loadJSON(prepareJSON(json), 0);
 							$('#load').html("");
 						}
 					);
