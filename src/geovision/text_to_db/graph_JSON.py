@@ -175,7 +175,7 @@ class QueryToJSON:
 		if depth <= maxdepth:
 			for node in nodes:
 				(count, queryset) = self.make_blast_queryset(node)
-				node.dict['data']['hidden'] = count
+				node.dict['data']['hidden_nodes_count'] = count
 				next_level_nodes = self.add_edges(node, queryset)
 				self.build_graph_level(next_level_nodes, depth + 1, maxdepth)
 
@@ -234,8 +234,7 @@ class QueryToJSON:
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
-		count = query.count() + 0
-		print count
+		count = query.count()
 		return (count, query[:self.max_amount])
 
 	def add_edges(self, startnode, queryset):
