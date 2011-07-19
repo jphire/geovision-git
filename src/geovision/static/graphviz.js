@@ -343,6 +343,7 @@ function initGraph(json)
 						{
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
 							if(currentNode != undefined || currentEdge != undefined){
+								console.log("leaf node clicked");
 								rgraph.config.Events.onMouseLeave(currentNode);
 							}
 							$('#load').html("");
@@ -367,6 +368,7 @@ function initGraph(json)
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';
 									if(currentNode != undefined || currentEdge != undefined){
+										console.log("node clicked");
 										rgraph.config.Events.onMouseLeave(currentNode);
 									}
 								}});
@@ -387,6 +389,7 @@ function initGraph(json)
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';
 										if(currentNode != undefined || currentEdge != undefined){
+											console.log("node clicked");
 											rgraph.config.Events.onMouseLeave(currentNode);
 										}
 							}});
