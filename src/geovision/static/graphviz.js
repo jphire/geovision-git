@@ -382,6 +382,9 @@ function initGraph(json)
 						$('#load').html("");
     				}
 				}
+				if(currentNode != undefined || currentEdge != undefined){
+					rgraph.config.onMouseLeave(currentNode);
+				}
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
@@ -430,9 +433,8 @@ function initGraph(json)
 				
 				if(object.nodeTo)
 				{
-					while(busy)
-						;
-						
+					if(busy)
+						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
@@ -445,8 +447,8 @@ function initGraph(json)
 
 				}
 				else if(object){
-					while(busy)
-						;
+					if(busy)
+						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					
@@ -523,8 +525,8 @@ function initGraph(json)
 		//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
-//			if(node.name && node.name.substr)
-//				domElement.innerHTML = node.name.substr(0, 10);
+			if(node.name && node.name.substr)
+				domElement.innerHTML = node.name.substr(0, 10);
 //			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
 			//domElement.onmouseout = function() { rgraph.config.Events.onMouseLeave(node); };
