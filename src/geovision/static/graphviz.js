@@ -794,7 +794,8 @@ function untagSubgraph(node) {
 
  /*function to filter graph by a bitscore inputted by the user*/
 function filter(bitscore) {
-	if (bitscore < 0) { /*bitscores must make sence*/
+	bitscore = Number(bitscore);
+	if (bitscore == NaN || bitscore < 0) { /*bitscores must make sence*/
 		$('#filtererror').html("Not a valid bitscore.");
 	}
 	else {
