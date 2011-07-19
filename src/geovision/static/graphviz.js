@@ -383,7 +383,7 @@ function initGraph(json)
     				}
 				}
 				if(currentNode != undefined || currentEdge != undefined){
-					rgraph.config.onMouseLeave(currentNode);
+					rgraph.config.Events.onMouseLeave(currentNode);
 				}
 			},
 
