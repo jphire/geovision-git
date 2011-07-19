@@ -806,23 +806,21 @@ function filter(bitscore) {
 		$('#load').html("Filtering...");
 
 		root.eachAdjacency(function helper(edge){
-			//if (!edge.traversalTag) {
-				if (edge.data.bitscore < bitscore){
-					contractForTraversal(edge.nodeTo,
-							{ type: 'animate',
-							duration: 1000,
-							hideLabels: true,
-							transition: $jit.Trans.Quart.easeOut,
-							onComplete: function() {colorEdges(); busy = false;}});
-				}
-				else {
-					edge.nodeTo.eachAdjacency(function(edgenow){
-						if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth){
-							helper(edgenow);
-						}
-					})
-				}
-			//}
+			if (edge.data.bitscore < bitscore){
+				contractForTraversal(edge.nodeTo,
+						{ type: 'animate',
+						duration: 1000,
+						hideLabels: true,
+						transition: $jit.Trans.Quart.easeOut,
+						onComplete: function() {colorEdges(); busy = false;}});
+			}
+			else {
+				edge.nodeTo.eachAdjacency(function(edgenow){
+					if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth && edgenow.nodeTo != edge.nodeTo){
+						helper(edgenow);
+					}
+				})
+			}
 		})
 		$('#load').html("");
 		$('#filtererror').html("");
