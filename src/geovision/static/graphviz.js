@@ -517,9 +517,9 @@ function initGraph(json)
 		//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
-			if(node.name && node.name.substr)
-				domElement.innerHTML = node.name.substr(0, 10);
-			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
+//			if(node.name && node.name.substr)
+//				domElement.innerHTML = node.name.substr(0, 10);
+//			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
 			//domElement.onmouseout = function() { rgraph.config.Events.onMouseLeave(node); };
 //			domElement.onmouseover = function() { overLabel = true; if(!ctxMenuOpen) currentNode = node; };
@@ -529,8 +529,6 @@ function initGraph(json)
 		//This method is called each time a label is plotted.
 		onPlaceLabel: function(domElement, node)
 		{
-			if(busy)return;
-			
 			var style = domElement.style;
 			style.display = '';
 			style.cursor = 'pointer';
