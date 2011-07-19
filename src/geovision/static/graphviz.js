@@ -332,6 +332,7 @@ function initGraph(json)
 						numSubnodes++;
 				});
 
+				//if clicked a leaf-node
 				if (numSubnodes <= 1)
 				{
 					busy = 'expanding';
@@ -345,6 +346,7 @@ function initGraph(json)
 						}
 					);
 				}
+				//the clicked node is not a leaf node
 				else
 				{
 					if(node.collapsed) 
@@ -417,12 +419,13 @@ function initGraph(json)
 			{
 				if(ctxMenuOpen)
 					return;
-				if(busy)
-					return;
-				currentNode = currentEdge = undefined;
 				if(!object) return;
+				currentNode = currentEdge = undefined;
+				
 				if(object.nodeTo)
 				{
+					if(busy)
+						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
@@ -514,6 +517,8 @@ function initGraph(json)
 		//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
+			if(busy)
+				return;
 			if(node.name && node.name.substr)
 				domElement.innerHTML = node.name.substr(0, 10);
 			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
