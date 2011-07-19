@@ -805,7 +805,7 @@ function filter(bitscore) {
 	else {
 		$('#load').html("Filtering...");
 
-		root.eachAdjancency(function helper(edge){
+		root.eachAdjacency(function helper(edge){
 			//if (!edge.traversalTag) {
 				if (edge.data.bitscore < bitscore){
 					contractForTraversal(edge.nodeTo,
@@ -816,7 +816,7 @@ function filter(bitscore) {
 							onComplete: function() {colorEdges(); busy = false;}});
 				}
 				else {
-					edge.nodeTo.eachAdjancency(function(edgenow){
+					edge.nodeTo.eachAdjacency(function(edgenow){
 						if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth){
 							helper(edgenow);
 						}
