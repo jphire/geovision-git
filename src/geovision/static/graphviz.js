@@ -816,7 +816,7 @@ function filter(bitscore) {
 					edge.nodeTo.eachAdjancency(function(edgenow){
 						if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth){
 							helper(edgenow);
-						})
+						}
 					})
 				}
 			//}
