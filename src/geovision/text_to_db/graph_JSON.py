@@ -179,7 +179,8 @@ class QueryToJSON:
 	def build_graph_level(self, nodes, depth, maxdepth):
 		if depth <= maxdepth:
 			for node in nodes:
-				queryset = self.make_blast_queryset(node)
+				(count, queryset) = self.make_blast_queryset(node)
+				node.dict['data']['hidden_nodes_count'] = count
 				next_level_nodes = self.add_edges(node, queryset)
 				self.build_graph_level(next_level_nodes, depth + 1, maxdepth)
 
@@ -203,17 +204,6 @@ class QueryToJSON:
 				return n
 		raise KeyError(repr(id))
 
-#	def make_enzyme_query(self, param = None):
-#
-#		db_list = []
-#		db_query = DbUniprotEcs.objects.filter(ec = param.dict["id"], db_id__in = DbEntry.deferred())
-#		for line in db_query:
-#			node = DbEntry.objects.filter(db_id = line.db_id_id)
-#			db_list.append(line.db_id_id)
-#
-#		db_entrys = Blast.deferred().filter(db_entry__in = db_list, database_name='uniprot')
-#		return db_entrys
-
 	def make_blast_queryset(self, param = None):
 		"""
 		Function for making the blast table QuerySet. Takes only one parameter,
@@ -231,14 +221,15 @@ class QueryToJSON:
 		elif param.type == "read":
 			query = query.filter(read = param.dict["id"])
 		elif param.type == "enzyme":
-			query = BlastEcs.objects.filter(ec=param.dict["id"])
+			query = BlastEcs.objects.filter(ec = param.dict["id"])
 		else:
 			raise RuntimeError('bad param type "%s"' % (param.type,))
 			
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')
-		return query[:self.max_amount]
+		count = query.count() - self.max_amount
+		return (count, query[:self.max_amount])
 
 	def add_edges(self, startnode, queryset):
 		"""
@@ -252,7 +243,7 @@ class QueryToJSON:
 		next_level_nodes = set()
 		startnode_id = self.get_node_id(startnode)
 		if startnode.type == "db_entry":
-			reads = Read.deferred().filter(pk__in=map(lambda blast: blast.read_id, queryset))
+			reads = Read.deferred().filter(pk__in = map(lambda blast: blast.read_id, queryset))
 
 			for (read, blast) in zip(reads, queryset):
 				readnode = Node(read)
@@ -263,7 +254,7 @@ class QueryToJSON:
 				startnode.dict["adjacencies"].append(Edge(readid, blast))
 
 		elif startnode.type in ("read", "enzyme"):
-			db_entries = DbEntry.deferred().filter(pk__in=map(lambda blast: blast.db_entry_id, queryset))
+			db_entries = DbEntry.deferred().filter(pk__in = map(lambda blast: blast.db_entry_id, queryset))
 
 			for (dbentry, blast) in zip(db_entries, queryset):
 				dbnode = Node(dbentry)
