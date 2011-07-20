@@ -343,7 +343,7 @@ function initGraph(json)
 						{
 							graph = rgraph.construct(newdata)
 							//ADDED TO UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
-							viz.graph.eachNode(function(elem) {
+							rgraph.graph.eachNode(function(elem) {
 								var graphNode = graph.getNode(elem.id);
 								//Update node data information
 
