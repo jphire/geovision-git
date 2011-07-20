@@ -806,7 +806,14 @@ function filter(bitscore) {
 		rgraph.op.filterContract(rgraph.graph.getNode(rgraph.root), {type: "replot"});
 
 		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
-			if (typeof(edge.data.bitscore) == "undefined" || edge.data.bitscore >= bitscore ){ //+  || !(egde.data.bitscore)
+			var target;
+			if (edge.nodeTo._depth > edge.nodeFrom._depth) {
+				target = edge.nodeTo;
+			}
+			else {
+				target = edge.nodeFrom;
+			}
+			if (typeof(edge.data.bitscore) == "undefined" || edge.data.bitscore >= bitscore || target.traversalTag){
 				var node = edge.nodeTo;
 				node.ignore = false;
 				node.setData('alpha', node.Node.alpha, "current");
@@ -833,11 +840,11 @@ function filterContract(node, opt) {
 	node.collapsed = true;
 	(function subn(n) {
 		n.eachSubnode(function(ch) {
-			if (!ch.traversalTag) {
+		//	if (!ch.traversalTag) {
 				ch.ignore = true;
 				ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
 				subn(ch);
-			}
+		//	}
 		});
 	})(node);
 	if(opt.type == 'animate') {
@@ -847,10 +854,10 @@ function filterContract(node, opt) {
 		}
 		(function subn(n) {
 			n.eachSubnode(function(ch) {
-				if (!ch.traversalTag) {
+		//		if (!ch.traversalTag) {
 					ch.setPos(node.getPos('end'), 'end');
 					subn(ch);
-				}
+		//		}
 			});
 		})(node);
 		viz.fx.animate(opt);
