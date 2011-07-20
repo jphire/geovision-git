@@ -1,5 +1,6 @@
 var opened = false;
 var filteropen = false;
+var helpopen = false;
 
 function openSearch()
 {
@@ -39,6 +40,16 @@ jQuery(function($) {
 		else{
 			$('#filter').fadeIn();
 			filteropen = true;
+		}
+	})
+	$('#helplink').click(function() {
+		if (helpopen){
+			$('#help').fadeOut();
+			helpopen = false;
+		}
+		else{
+			$('#help').fadeIn();
+			helpopen = true;
 		}
 	})
 	$('#filterform').submit(function() {
