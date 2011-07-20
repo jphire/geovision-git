@@ -185,7 +185,7 @@ function init(){
 			'n_tagsubgraph': function() { rgraph.op.tagSubgraph(currentNode)},
 			'n_untagsubgraph': function() { untagSubgraph(currentNode)},
 			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))},
-			'n_en_names': function() { showNames(currentNode.data.names, currentNode.id); },
+			'n_en_names': function() { showEnzymeData(currentNode); },
 			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
 			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); },
 			'n_db_uni_link': function() { window.open('http://www.uniprot.org/uniprot/' + currentNode.id); },
@@ -756,8 +756,26 @@ function tagSubgraph(node) {
 	node.traversalTag = true;
 }
 
-function showNames (names, ec){
-	var html = '<strong>Other names of ' + ec + ':</strong><br/>';
+function showEnzymeData (node){
+	ec = node.id;
+
+	var html = '<br/>';
+	if(node.data.reactions)
+	{
+		html += '<strong>Reactions of ' + ec + '</strong><br/>';
+		html += $.map(node.data.reactions, function(reac){
+			return 'R' + reac.id + ': ' + reac.name + ' <a target="_blank" href="http://www.genome.jp/dbget-bin/www_bget?r' + reac.id + '">[KEGG]</a><br/>'; }).join('');
+	}
+	if(node.data.pathways)
+	{
+		html += '<strong>Pathways of ' + ec + '</strong><br/>';
+		html += $.map(node.data.pathways, function(pw){
+			return pw.id + ': ' + pw.name + ' <a target="_blank" href="http://www.genome.jp/dbget-bin/www_bget?pathway:' + pw.id + '">[KEGG]</a><br/>'; }).join('');
+	}
+
+	names = node.data.names;
+
+	html += '<strong>Other names of ' + ec + ':</strong><br/>';
 	for (name in names){
 		html = html + names[name] + '<br/>';
 	}

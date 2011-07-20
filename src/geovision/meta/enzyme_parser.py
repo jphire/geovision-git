@@ -1,5 +1,4 @@
-from viz.models import EnzymeName
-from meta.models import Enzyme, Pathway
+from meta.models import Enzyme, Pathway, EnzymeName
 from meta.kegg_parser import *
 from text_to_db.bulk_inserter import BulkInserter
 

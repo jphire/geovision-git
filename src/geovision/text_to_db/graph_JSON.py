@@ -164,6 +164,11 @@ class QueryToJSON:
 		for node in self.nodes:
 			if node.dict['data']['type'] == 'enzyme':
 				try:
+					enzyme = Enzyme.objects.get(pk=node.dict['id'])
+
+					pathways = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.pathways.all())
+					node.dict['data']['pathways'] = pathways
+					node.dict['data']['reactions'] = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.reactions.all())
 					names = map(lambda x: x.enzyme_name, EnzymeName.objects.filter(ec_number=node.dict['id']).order_by('id'))
 					node.dict['data']['name'] = names[0]
 					node.dict['data']['names'] = names

@@ -20,3 +20,9 @@ class Reaction(models.Model):
 	reactants = models.ManyToManyField(Compound, related_name='reactants')
 	products = models.ManyToManyField(Compound, related_name='reactions')
 	pathways = models.ManyToManyField(Pathway, related_name='reactions')
+	enzymes = models.ManyToManyField(Enzyme, related_name='reactions')
+
+class EnzymeName(models.Model):
+	ec_number = models.CharField(max_length=13)
+	enzyme_name = models.CharField(max_length=128)
+

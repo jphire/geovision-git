@@ -68,7 +68,3 @@ class Result(models.Model): # Query_seq_id Target_seq_id Evident_type E.C._numbe
 	ec_number = models.CharField(max_length = 32)
 	error_value = models.FloatField()
 	bitscore = models.FloatField()
-
-class EnzymeName(models.Model):
-	ec_number = models.CharField(max_length=13)
-	enzyme_name = models.CharField(max_length=128)
