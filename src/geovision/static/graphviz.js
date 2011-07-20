@@ -354,10 +354,8 @@ function initGraph(json)
 							});
 							//END OF ADDED LINES
 
-
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
 								if(currentNode != undefined || currentEdge != undefined){
-									console.log("leaf node clicked");
 									rgraph.config.Events.onMouseLeave(currentNode);
 								}
 								}})
@@ -466,7 +464,6 @@ function initGraph(json)
 					if(busy)
 						return;
 
-					console.log("changin node style..");
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					
@@ -518,7 +515,7 @@ function initGraph(json)
 					//it's a read or db entry
 					tip.innerHTML += "<b>" + node.id + "</b><br/>";
 					tip.innerHTML += node.data.description + "<br/>";
-					tip.innerHTML += "hidden nodes: " + node.data.hidden_nodes_count + "<br/>";
+					tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 				else
 				{
