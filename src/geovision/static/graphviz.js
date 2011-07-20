@@ -338,7 +338,7 @@ function initGraph(json)
 					busy = 'expanding';
 					rgraph.canvas.getElement().style.cursor = 'wait';
 					$('#load').html("Loading...");
-					$.getJSON(json_base_url + '&depth=3&' + node.data.type + '=' + node.name,
+					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';

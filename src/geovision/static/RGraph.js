@@ -5408,6 +5408,17 @@ Graph.Op = {
                 //set alpha to 0 for nodes to add.
                 var fadeEdges = this.preprocessSum(graph);
 
+		//ADDED TO UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
+		viz.graph.eachNode(function(elem) {
+			var graphNode = graph.getNode(elem.id);
+			//Update node data information
+			var graphNodeData = graphNode.data;
+			if(graphNode){
+				elem.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
+			}
+		});
+
+		//END OF ADDED LINES
 		if (options.onMerge) // ADDED TO SIMPLIFY NODE COLORING
 			options.onMerge();
 
