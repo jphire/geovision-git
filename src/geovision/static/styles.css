@@ -197,3 +197,6 @@ span#load{
 	background-color: silver;
 	font-weight: bold;
 }
+span#helplink{
+	text-decoration: underline;
+}
