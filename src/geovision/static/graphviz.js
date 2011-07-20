@@ -756,6 +756,7 @@ function tagSubgraph(node) {
 	node.traversalTag = true;
 }
 
+/* Function to list all names, reactions and pathways related to an enzyme in the right container */
 function showEnzymeData (node){
 	ec = node.id;
 
