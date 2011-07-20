@@ -199,4 +199,5 @@ span#load{
 }
 span#helplink{
 	text-decoration: underline;
+	cursor: pointer;
 }

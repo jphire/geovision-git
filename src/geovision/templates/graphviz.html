@@ -109,15 +109,14 @@
 			</div>
 
 			<div id="right-container">
+				<div id="inner-details"></div>
 				<span id="helplink">Help</span>
 				<div id="help">
 					Right click on an edge to show alignment of read sequence and database sequence (upper is read). The data opens under the graph and only one alignment can be visible at the same time.
-				<!--<div id="id-list"></div>
-				<div style="text-align:center;"><a href="{{ STATIC_URL }}graphviz.js">See the Example Code</a></div>
-				-->
 				<br/><br/>
 				</div>
 				<br/>
+				<div id="names"></div>
 				<span id="filterlink">Filter graph</span>
 				<div id="filter">
 					<form id="filterform" action="" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
@@ -127,8 +126,6 @@
 						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
 					</form>
 				</div>
-				<div id="inner-details"></div>
-				<div id="names"></div>
 
 			</div>
 
