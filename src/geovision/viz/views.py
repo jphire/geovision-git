@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.context_processors import csrf
 from django.db.models import Q
-from geovision.viz.models import EnzymeName
+from meta.models import EnzymeName
 from geovision.viz.models import Blast
 from geovision.settings import STATIC_URL
 import json

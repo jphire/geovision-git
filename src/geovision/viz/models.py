@@ -1,5 +1,6 @@
 from django.db import models
 from geovision.userdb.models import Sample
+from meta.models import *
 
 class Read(models.Model):
 	sample = models.CharField(max_length=32)
@@ -67,28 +68,3 @@ class Result(models.Model): # Query_seq_id Target_seq_id Evident_type E.C._numbe
 	ec_number = models.CharField(max_length = 32)
 	error_value = models.FloatField()
 	bitscore = models.FloatField()
-
-class EnzymeName(models.Model):
-	ec_number = models.CharField(max_length=13)
-	enzyme_name = models.CharField(max_length=128)
-
-class Pathway(models.Model):
-	id = models.CharField(max_length=8, primary_key=True)
-	name = models.CharField(max_length=128)
-
-class Compound(models.Model):
-	id = models.CharField(max_length=5, primary_key=True)
-	name = models.CharField(max_length=100)
-	pathways = models.ManyToManyField(Pathway, related_name='compounds')
-
-class Enzyme(models.Model):
-	ec_number = models.CharField(max_length=13, primary_key=True)
-	pathways = models.ManyToManyField(Pathway, related_name='enzymes')
-
-class Reaction(models.Model):
-	id = models.CharField(max_length=6, primary_key=True)
-	name = models.CharField(max_length=128)
-#	equation = models.CharField(max_length=128)
-	reactants = models.ManyToManyField(Enzyme, related_name='reactants')
-	products = models.ManyToManyField(Enzyme, related_name='reactions')
-	compounds = models.ManyToManyField(Pathway, related_name='reactions')

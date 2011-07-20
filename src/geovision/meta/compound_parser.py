@@ -1,4 +1,4 @@
-from viz.models import Compound, Pathway
+from meta.models import Compound, Pathway
 from text_to_db.kegg_parser import *
 
 def run(args):
@@ -12,7 +12,9 @@ def run(args):
 
 		compound = Compound.objects.create(pk=cnum, name=entry['NAME'][0])
 		try:
-			(compound.pathways.add(pw) for pw in get_pathways(entry['PATHWAY']))
+			for pw in get_pathways(entry['PATHWAY']):
+				compound.pathways.add(pw)
+
 		except KeyError:
 			pass
 		compound.save()
