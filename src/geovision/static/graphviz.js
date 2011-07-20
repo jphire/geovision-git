@@ -350,7 +350,7 @@ function initGraph(json)
 
 							if(graphNode){
 								var graphNodeData = graphNode.data;
-								elem.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
+								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 							}
 							//});
 							//END OF ADDED LINES
