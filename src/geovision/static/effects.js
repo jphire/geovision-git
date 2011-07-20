@@ -1,5 +1,4 @@
 var opened = false;
-var filteropen = false;
 
 function openSearch()
 {
@@ -31,20 +30,6 @@ function closeSearch(e)
 jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment with a nice animation.
  */
-	$('#filterlink').click(function() {
-		if (filteropen){
-			$('#filter').fadeOut();
-			filteropen = false;
-		}
-		else{
-			$('#filter').fadeIn();
-			filteropen = true;
-		}
-	})
-	$('#filterform').submit(function() {
-		filter($('#bitscorefilter').val());
-		return false;
-	})
     $('#graphnavi').mouseenter(openSearch);
 	$('#graphnavi').mouseleave(closeSearch);
     $('#graphrefresh').click(function(){

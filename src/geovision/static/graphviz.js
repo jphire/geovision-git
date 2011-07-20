@@ -1,5 +1,4 @@
 var labelType, useGradients, nativeTextSupport, animate;
-var rgraph;
 
 (function() {
   var ua = navigator.userAgent,
@@ -186,7 +185,7 @@ function init(){
 			'n_tagsubgraph': function() { rgraph.op.tagSubgraph(currentNode)},
 			'n_untagsubgraph': function() { untagSubgraph(currentNode)},
 			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))},
-			'n_en_names': function() { showNames(currentNode.data.names, currentNode.id); },
+			'n_en_names': function() { showEnzymeData(currentNode); },
 			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
 			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); },
 			'n_db_uni_link': function() { window.open('http://www.uniprot.org/uniprot/' + currentNode.id); },
@@ -326,7 +325,8 @@ function initGraph(json)
 
 				if(busy)
 					return;
-				
+					//loading....! TODO
+
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {
 					if(adj.nodeFrom == node && adj.data.bitscore)
@@ -336,13 +336,10 @@ function initGraph(json)
 				if (numSubnodes <= 1)
 				{
 					busy = 'expanding';
-					rgraph.canvas.getElement().style.cursor = 'wait';
-					$('#load').html("Loading...");
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
-							$('#load').html("");
+							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;}})
 						}
 					);
 				}
@@ -351,28 +348,22 @@ function initGraph(json)
 					if(node.collapsed) 
                     {
                         busy = 'expanding';
-						rgraph.canvas.getElement().style.cursor = 'wait';
-						$('#load').html("Loading...");
                         rgraph.op.expand(node, 
                                 { type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';}});
-						$('#load').html("");
+                                onComplete: function() {colorEdges(); busy = false}});
                     }
                     else 
                     {
                         busy = 'contracting';
-						rgraph.canvas.getElement().style.cursor = 'wait';
-						$('#load').html("Contracting...");
                         rgraph.op.contractForTraversal(node, 
-                                { type: 'animate',
+                                { type: 'animate', 
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';}});
-						$('#load').html("");
+                                onComplete: function() {colorEdges(); busy = false}});
     				}
 				}
 			},
@@ -383,14 +374,14 @@ function initGraph(json)
 					return;
 				if (node.nodeTo)
 				{
-					if(busy)
-						return;
 					currentEdge = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('lineWidth_hover');
 					node.data.$dim = node.getData('dim_hover');
 					
+					if(busy)
+						return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -399,13 +390,13 @@ function initGraph(json)
 				}
 				else if(node)
 				{
-					if(busy)
-						return;
 					currentNode = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = rgraph.config.Node.dim + 3;
 					
+					if(busy)
+						return;
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -418,17 +409,17 @@ function initGraph(json)
 			{
 				if(ctxMenuOpen)
 					return;
-				if(busy)
-					return;
 				currentNode = currentEdge = undefined;
 				if(!object) return;
 				if(object.nodeTo)
 				{
 					rgraph.canvas.getElement().style.cursor = '';
+					
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
 
-					
+					if(busy)
+						return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -437,14 +428,15 @@ function initGraph(json)
 
 				}
 				else if(object){
-					if(busy)
-						return;
+					
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 					
+					if(busy)
+						return;
 					rgraph.fx.animate(
 					{
-						modes: ['node-property:dim'],
+						modes: ['edge-property:dim'],
 						duration: 1
 					});
 
@@ -568,24 +560,21 @@ function initGraph(json)
 	//append information about the root relations in the right column
 	$jit.id('inner-details').innerHTML += "<b>" + rgraph.graph.getNode(rgraph.root).id + "</b><br/>";
 	$jit.id('inner-details').innerHTML += rgraph.graph.getNode(rgraph.root).data.description;
-
 	rgraph.refresh();
 	colorEdges();
     rgraph.op.contractForTraversal = contractForTraversal;
-	rgraph.op.filterContract = filterContract;
 	rgraph.op.tagParents = tagParents;
 	rgraph.op.tagSubgraph = tagSubgraph;
 	rgraph.op.tagSubnodes = tagSubnodes;
 }
 
 var alignmentopen = false;
-/*Function for showing the alignment of the read and the db-entry*/
 function alignmentfunction(thisid) {
 	if (alignmentopen) {
 		closealignment();
 	}
 	if (alignmentopen == false){
-		$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
+		$.getJSON('/show_alignment', {id: thisid}, function (data) {
 			if(data == null){
 				return false;
 			}
@@ -625,11 +614,9 @@ function alignmentfunction(thisid) {
 		return false;
 	}
 }
-/*when the close button appears, it's se to work*/
 $('#closealign').live('click', function() {
 	closealignment();
 });
-/*Function to close the div-element showing the alignment*/
 function closealignment () {
 	if (alignmentopen == true){
 		alignmentopen = false;
@@ -769,13 +756,30 @@ function tagSubgraph(node) {
 	node.traversalTag = true;
 }
 
-/*Function to list all names of the rightclicked enzyme (known to the local database) in the right container*/
-function showNames (names, ec){
-	var html = '<strong>Other names of ' + ec + ':</strong><br/>';
+function showEnzymeData (node){
+	ec = node.id;
+
+	var html = '<br/>';
+	if(node.data.reactions)
+	{
+		html += '<strong>Reactions of ' + ec + '</strong><br/>';
+		html += $.map(node.data.reactions, function(reac){
+			return 'R' + reac.id + ': ' + reac.name + ' <a target="_blank" href="http://www.genome.jp/dbget-bin/www_bget?r' + reac.id + '">[KEGG]</a><br/>'; }).join('');
+	}
+	if(node.data.pathways)
+	{
+		html += '<strong>Pathways of ' + ec + '</strong><br/>';
+		html += $.map(node.data.pathways, function(pw){
+			return pw.id + ': ' + pw.name + ' <a target="_blank" href="http://www.genome.jp/dbget-bin/www_bget?pathway:' + pw.id + '">[KEGG]</a><br/>'; }).join('');
+	}
+
+	names = node.data.names;
+
+	html += '<strong>Other names of ' + ec + ':</strong><br/>';
 	for (name in names){
 		html = html + names[name] + '<br/>';
 	}
-	$('#names').html(html); /*#names is replaced fully when this is called for a new node*/
+	$('#names').html(html);
 	return;
  }
 
@@ -793,76 +797,4 @@ function untagSubgraph(node) {
 	node.eachSubgraph(function(sn) {
 		sn.traversalTag = false;
 	});
-}
-
- /*function to filter graph by a bitscore inputted by the user*/
-function filter(bitscore) {
-	if (!(bitscore > 0)) { /*bitscores must make sence*/
-		$('#filtererror').html("Not a valid bitscore.");
-	}
-	else {
-		$('#load').html("Filtering...");
-
-		rgraph.op.filterContract(rgraph.graph.getNode(rgraph.root), {type: "replot"});
-
-		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
-			var target;
-			if (edge.nodeTo._depth > edge.nodeFrom._depth) {
-				target = edge.nodeTo;
-			}
-			else {
-				target = edge.nodeFrom;
-			}
-			if (typeof(edge.data.bitscore) == "undefined" || edge.data.bitscore >= bitscore || target.traversalTag){
-				var node = edge.nodeTo;
-				node.ignore = false;
-				node.setData('alpha', node.Node.alpha, "current");
-				node.eachAdjacency(function(edgenow){
-					if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth && edgenow.nodeTo != edge.nodeTo){
-						helper(edgenow);
-					}
-				})
-			}
-		})
-		rgraph.op.viz.refresh();
-
-		$('#load').html("");
-		$('#filtererror').html("");
-		return;
-	}
-}
-
-function filterContract(node, opt) {
-	var viz = this.viz;
-	opt = $jit.util.merge(this.options, viz.config, opt || {}, {
-		'modes': ['node-property:alpha:span', 'linear']
-	});
-	node.collapsed = true;
-	(function subn(n) {
-		n.eachSubnode(function(ch) {
-		//	if (!ch.traversalTag) {
-				ch.ignore = true;
-				ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
-				subn(ch);
-		//	}
-		});
-	})(node);
-	if(opt.type == 'animate') {
-		viz.compute('end');
-		if(viz.rotated) {
-			viz.rotate(viz.rotated, 'none', { 'property':'end' });
-		}
-		(function subn(n) {
-			n.eachSubnode(function(ch) {
-		//		if (!ch.traversalTag) {
-					ch.setPos(node.getPos('end'), 'end');
-					subn(ch);
-		//		}
-			});
-		})(node);
-		viz.fx.animate(opt);
-	}
-	else if(opt.type == 'replot') {
-		viz.refresh();
-	}
 }

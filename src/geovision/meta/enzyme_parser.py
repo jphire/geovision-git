@@ -1,5 +1,5 @@
-from viz.models import EnzymeName, Enzyme, Pathway
-from text_to_db.kegg_parser import *
+from meta.models import Enzyme, Pathway, EnzymeName
+from meta.kegg_parser import *
 from text_to_db.bulk_inserter import BulkInserter
 
 def run(args):
@@ -19,7 +19,9 @@ def run(args):
 			pass
 		enzyme = Enzyme.objects.create(pk=ecnum)
 		try:
-			(enzyme.pathways.add(pw) for pw in get_pathways(entry['PATHWAY']))
+			for pw in get_pathways(entry['PATHWAY']):
+				enzyme.pathways.add(pw)
+
 		except KeyError:
 			pass
 		enzyme.save()
