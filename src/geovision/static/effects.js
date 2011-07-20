@@ -34,21 +34,21 @@ jQuery(function($) {
  */
 	$('#filterlink').click(function() {
 		if (filteropen){
-			$('#filter').fadeOut();
+			$('#filter').slideDown();
 			filteropen = false;
 		}
 		else{
-			$('#filter').fadeIn();
+			$('#filter').slideUp();
 			filteropen = true;
 		}
 	})
 	$('#helplink').click(function() {
 		if (helpopen){
-			$('#help').fadeOut();
+			$('#help').slideDown();
 			helpopen = false;
 		}
 		else{
-			$('#help').fadeIn();
+			$('#help').slideUp();
 			helpopen = true;
 		}
 	})
