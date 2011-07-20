@@ -173,3 +173,27 @@ div#closealign{
 	font-size: 10px;
 	cursor: pointer;
 }
+span#filterlink{
+	text-decoration: underline;
+	cursor: pointer;
+}
+div#filter{
+	height:0px;
+	width:150px;
+	text-align: center;
+	display: none;
+}
+#filtererror{
+	color: red;
+}
+span#load{
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index:100;
+	width:600px;
+	text-align: center;
+	color:red;
+	background-color: silver;
+	font-weight: bold;
+}
