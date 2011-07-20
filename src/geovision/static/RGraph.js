@@ -5412,8 +5412,9 @@ Graph.Op = {
 		viz.graph.eachNode(function(elem) {
 			var graphNode = graph.getNode(elem.id);
 			//Update node data information
-			var graphNodeData = graphNode.data;
+			
 			if(graphNode){
+				var graphNodeData = graphNode.data;
 				elem.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 			}
 		});
