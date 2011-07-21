@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.context_processors import csrf
 from django.db.models import Q
-from meta.models import EnzymeName
+from meta.models import EnzymeName, Enzyme
 from geovision.viz.models import Blast
 from geovision.settings import STATIC_URL
 import json
@@ -135,10 +135,17 @@ def show_alignment(request):
 	return HttpResponse(json.dumps({'readseq': '%s' % (data.read_seq), 'dbseq': '%s' % (data.db_seq)}), mimetype='text/plain')
 
 @login_required
-def enzyme_names(request):
+def enzyme_data(request):
 	try:
 		searchterm = request.GET['id']
 	except KeyError:
 		return HttpResponse('')
-	data = EnzymeName.objects.filter(id = searchterm).order_by('enzyme_name')
-	return HttpResponse(json.dumps([{'name': '%s' % (en.enzyme_name)} for en in data]), mimetype='text/plain')
+
+	enzyme = Enzyme.objects.get(pk=searchterm)
+
+	pathways = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.pathways.all())
+	reactions = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.reactions.all())
+	names = map(lambda x: x.enzyme_name, EnzymeName.objects.filter(ec_number=searchterm).order_by('id'))
+
+	return HttpResponse(json.dumps({'id': searchterm, 'names': names, 'pathways': pathways, 'reactions': reactions}), mimetype='text/plain')
+

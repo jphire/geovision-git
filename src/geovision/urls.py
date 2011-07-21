@@ -19,7 +19,8 @@ urlpatterns = patterns('',
 	(r'^graphjson$', 'viz.views.graphjson'),
 	(r'^show_alignment$', 'viz.views.show_alignment'),
 	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
-	(r'^enzyme_names$', 'viz.views.enzyme_names'),
+
+	(r'^enzyme_data$', 'viz.views.enzyme_data'),
 
 	(r'^metaboly_json$', 'meta.views.metaboly_json'),
     # Uncomment the admin/doc line below to enable admin documentation:
