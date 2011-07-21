@@ -1,5 +1,5 @@
 from meta.models import Compound, Pathway
-from text_to_db.kegg_parser import *
+from meta.kegg_parser import *
 
 def run(args):
 	import sys

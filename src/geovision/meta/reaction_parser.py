@@ -11,7 +11,7 @@ def extract_compounds(equ):
 
 def run(args):
 	import sys
-	ep = KeggParser(open(args[1], 'r'), ['ENTRY', 'NAME', 'EQUATION', 'ENZYME', 'DEFINITION'])
+	ep = KeggParser(open(args[1], 'r'), ['ENTRY', 'NAME', 'EQUATION', 'ENZYME', 'DEFINITION', 'PATHWAY'])
 
 	while True:
 		entry =  ep.get_entry()
@@ -29,27 +29,21 @@ def run(args):
 			name = entry['NAME'][0]
 		except KeyError:
 			name = entry['DEFINITION'][0]
-
 		reaction = Reaction.objects.create(pk=rnum, name=name) #, equation=entry['DEFINITION'][0])
 		reaction.enzymes = Enzyme.objects.filter(pk__in=enzyme.split())
+
+		try:
+			for pw in get_pathways(entry['PATHWAY']):
+				reaction.pathways.add(pw)
+
+		except KeyError:
+			pass
 
 		(reactants, products) = extract_compounds(equ)
 		reaction.reactants = map(lambda x: x[1:6], reactants)
 		reaction.products = map(lambda x: x[1:6], products)
 
 		reaction.save()
-#		try:
-#			for pathway in entry['PATHWAY']:
-#				id = pathway[2:7]
-#				name = pathway[9:]
-#				try:
-#					pw = Pathway.objects.get(pk=id)
-#				except Pathway.DoesNotExist:
-#					pw = Pathway.objects.create(pk=id, name=name)
-#				compound.pathways.add(pw)
-#		except KeyError:
-#			pass
-#		compound.save()
 
 if __name__ == '__main__':
 	import sys

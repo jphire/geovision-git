@@ -37,6 +37,7 @@ def get_pathways(entry):
 			pw += ' ' + entry[i+1].lstrip()
 			i += 1
 		(id, name) = pw.split(None, 1)
+		id = filter(str.isdigit, id)
 		pwobj = Pathway.objects.get_or_create(id=id, name=name)[0]
 		pwobj.save()
 		elems.append(pwobj)

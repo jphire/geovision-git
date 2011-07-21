@@ -1,6 +1,8 @@
 var labelType, useGradients, nativeTextSupport, animate;
 var rgraph;
 
+var RGraph = $jit.RGraph;
+
 (function() {
   var ua = navigator.userAgent,
 	  iStuff = ua.match(/iPhone/i) || ua.match(/iPad/i),
@@ -45,7 +47,7 @@ dotLineLength = function( x, y, x0, y0, x1, y1, o ){
 	}
 };
 
-$jit.RGraph.Plot.NodeTypes.implement({
+RGraph.Plot.NodeTypes.implement({
     'customCircle': {
       'render': function(node, canvas){
           var pos = node.pos.getc(),
@@ -70,8 +72,6 @@ $jit.RGraph.Plot.NodeTypes.implement({
         'contains': function(node, pos){
           if(node.ignore)
               return false;
-//	  if(overLabel && node == currentNode) // disgusting hack for making label tooltips appear
-//		return true;
           var npos = node.pos.getc(true),
               radius = node.getData('dim');
           var diffx = npos.x - pos.x,
@@ -82,7 +82,7 @@ $jit.RGraph.Plot.NodeTypes.implement({
     }
 });
 
-$jit.RGraph.Plot.EdgeTypes.implement({  
+RGraph.Plot.EdgeTypes.implement({  
 	'customArrow':{
 	    'render': function(adj, canvas) {
             var from = adj.nodeFrom.pos.getc(),
@@ -256,7 +256,7 @@ function initGraph(json)
 
 	$('#infovis').disableSelection();
 
-	rgraph = new $jit.RGraph({
+	rgraph = new RGraph({
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
@@ -390,7 +390,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$lineWidth = node.getData('lineWidth_hover');
 					node.data.$dim = node.getData('dim_hover');
-					
+
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -405,7 +405,7 @@ function initGraph(json)
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = rgraph.config.Node.dim + 3;
-					
+
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -428,7 +428,6 @@ function initGraph(json)
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
 
-					
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -441,7 +440,7 @@ function initGraph(json)
 						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
-					
+
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -649,6 +648,7 @@ function formatHex(num)
 }
 
 function colorEdges(){
+
 	maxScore = 0;
 	minScore = 100000;
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {

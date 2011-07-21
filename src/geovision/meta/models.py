@@ -1,7 +1,7 @@
 from django.db import models
 
 class Pathway(models.Model):
-	id = models.CharField(max_length=8, primary_key=True)
+	id = models.CharField(max_length=5, primary_key=True)
 	name = models.CharField(max_length=128)
 
 class Compound(models.Model):
@@ -17,8 +17,8 @@ class Reaction(models.Model):
 	id = models.CharField(max_length=6, primary_key=True)
 	name = models.CharField(max_length=128)
 #	equation = models.CharField(max_length=128)
-	reactants = models.ManyToManyField(Compound, related_name='reactants')
-	products = models.ManyToManyField(Compound, related_name='reactions')
+	reactants = models.ManyToManyField(Compound, related_name='reactant_reactions')
+	products = models.ManyToManyField(Compound, related_name='product_reactions')
 	pathways = models.ManyToManyField(Pathway, related_name='reactions')
 	enzymes = models.ManyToManyField(Enzyme, related_name='reactions')
 

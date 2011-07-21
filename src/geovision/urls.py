@@ -21,6 +21,7 @@ urlpatterns = patterns('',
 	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
 	(r'^enzyme_names$', 'viz.views.enzyme_names'),
 
+	(r'^metaboly_json$', 'meta.views.metaboly_json'),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/', include(admin.site.urls)),
