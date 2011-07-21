@@ -343,18 +343,14 @@ function initGraph(json)
 						function(newdata)
 						{
 							graph = rgraph.construct(newdata)
-							//ADDED TO UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
-							//rgraph.graph.eachNode(function(elem) {
+							//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
 							var graphNode = graph.getNode(node.id);
-								//Update node data information
-
+							
 							if(graphNode){
 								var graphNodeData = graphNode.data;
 								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 							}
-							//});
-							//END OF ADDED LINES
-
+							
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
 								if(currentNode != undefined || currentEdge != undefined){
 									rgraph.config.Events.onMouseLeave(currentNode);
