@@ -33,12 +33,12 @@ class Node:
 			self.dict["name"] = dataobject.read_id
 			self.dict["data"]["description"] = dataobject.description
 			self.dict["data"]["type"] = "read"
-		elif isinstance(dataobject, DbUniprotEcs):
+		elif isinstance(dataobject, DbUniprotEcs) or isinstance(dataobject, BlastEcs):
 			self.type = 'enzyme'
 			self.dict['id'] = self.dict['name'] = dataobject.ec
 			self.dict['data']['type'] = 'enzyme'
 		else:
-			raise Exception("parameter class must be Read, DbEntry or DbUniProtEcs")
+			raise Exception("parameter class must be Read, DbEntry, BlastEcs or DbUniprotEcs")
 		self.dict["adjacencies"] = []
 
 
@@ -67,7 +67,7 @@ class Edge:
 			self.dict["data"]["database_name"] = blastobject.database_name
 			self.dict["data"]["db_entry"] = blastobject.db_entry_id
 			self.dict["data"]["length"] = blastobject.length
-			self.dict["data"]["id"] = blastobject.id
+			self.dict["data"]["blast_id"] = blastobject.id
 #			self.dict["data"]["pident"] = blastobject.pident
 #			self.dict["data"]["mismatch"] = blastobject.mismatch
 #			self.dict["data"]["gapopen"] = blastobject.gapopen
@@ -84,8 +84,10 @@ class Edge:
 #			self.dict["data"]["$lineWidth"] = 2
 #			self.dict["data"]["$alpha"] = 1
 #			self.dict["data"]["$epsilon"] = 7
-		elif isinstance(blastobject, DbUniprotEcs) or isinstance(blastobject, BlastEcs):
+		elif isinstance(blastobject, BlastEcs):
 			self.dict['nodeTo'] = nodeTo.id
+			self.dict['data']['bitscore'] = blastobject.bitscore
+			self.dict['data']['error_value'] = blastobject.error_value
 		else:
 			raise Exception("Second parameter must be a blast or uniprot ecs object, is " + str(blastobject.__class__))
 
@@ -188,13 +190,13 @@ class QueryToJSON:
 			if node.dict['data']['type'] == 'dbentry':
 				db_ids.append(node.dict['id'])
 
-		ecs = DbUniprotEcs.objects.filter(db_id__in=db_ids).filter(~Q(ec='?'))
+		ecs = BlastEcs.objects.filter(db_entry__in=db_ids)
 		for ec in ecs:
 			ecnode = Node(ec)
 			ecid = self.get_node_id(ecnode)
 			if ecnode not in self.nodes:
 				self.nodes.append(ecnode)
-			self.find_node_by_id(ec.db_id_id).dict["adjacencies"].append(Edge(ecid, ec))
+			self.find_node_by_id(ec.db_entry_id).dict["adjacencies"].append(Edge(ecid, ec))
 
 	def find_node_by_id(self, id): # XXX - linear search, change self.nodes to a dict!
 		for n in self.nodes:

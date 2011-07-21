@@ -18,16 +18,6 @@ var RGraph = $jit.RGraph;
   animate = !(iStuff || !nativeCanvasSupport);
 })();
 
-var Log = {
-  elem: false,
-  write: function(text){
-	if (!this.elem) 
-		this.elem = document.getElementById('log');
-	this.elem.innerHTML = text;
-	this.elem.style.left = (500 - this.elem.offsetWidth / 2) + 'px';
-  }
-};
-
 dotLineLength = function( x, y, x0, y0, x1, y1, o ){
 	function lineLength( x, y, x0, y0 ){
 		return Math.sqrt( ( x -= x0 ) * x + ( y -= y0 ) * y );
@@ -204,7 +194,7 @@ function init(){
 			rgraph.config.Tips.enable = false;
 			rgraph.tips.hide();
 
-			if(!currentEdge || !currentEdge.data.bitscore ) 
+			if(!currentEdge || !currentEdge.data.blast_id ) 
 				$('li[id^=e_]', menu).remove();
 			if(!currentNode)
 				$('li[id^=n_]', menu).remove();
@@ -326,7 +316,7 @@ function initGraph(json)
 
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {
-					if(adj.nodeFrom == node && adj.data.bitscore)
+					if(adj.nodeFrom == node && adj.data.blast_id)
 						numSubnodes++;
 				});
 
@@ -497,15 +487,15 @@ function initGraph(json)
 
 				if(node.nodeFrom)
 				{
-					if(node.data.bitscore)
-					{
+					//if(node.data.bitscore)
+					//{
 						//it's an edge
 						tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
 						tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
 
-					}
-					else
-						tip.innerHTML = 'enzyme edge';
+					//}
+					//else
+					//	tip.innerHTML = 'enzyme edge';
 				}
 				else if(node.data.type != 'enzyme')
 				{
@@ -539,13 +529,8 @@ function initGraph(json)
 		//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
-			if(node.name && node.name.substr)
+			if(node.name)
 				domElement.innerHTML = node.name.substr(0, 10);
-//			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
-			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
-			//domElement.onmouseout = function() { rgraph.config.Events.onMouseLeave(node); };
-//			domElement.onmouseover = function() { overLabel = true; if(!ctxMenuOpen) currentNode = node; };
-//			domElement.onmouseout = function() { overLabel = false; if(!ctxMenuOpen) currentNode = null; };
 		},
 		//Change some label dom properties.
 		//This method is called each time a label is plotted.
@@ -664,14 +649,6 @@ function closealignment () {
 	}
 }
 
-function formatHex(num)
-{
-	str = num.toString(16);
-	if(str.length == 1)
-		str = "0" + str;
-	return str;
-}
-
 function colorEdges(){
 
 	maxScore = 0;
@@ -688,18 +665,8 @@ function colorEdges(){
 	});
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
-			if(adj.data.bitscore) // XXX - is a blast
-			{
-				grncol = (minScore == maxScore) ? 255 : Math.floor((1.0 * (adj.data.bitscore - minScore) / (maxScore - minScore)) * 255);
-				col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
-				adj.data.$color = col;
-				//adj.data.color = col;
-			}
-			else
-			{
-				adj.data.$color = '#0000ff';
-				//adj.data.color = '#0000ff';
-			}
+			grncol = (minScore == maxScore) ? 255 : Math.floor((1.0 * (adj.data.bitscore - minScore) / (maxScore - minScore)) * 255);
+			adj.data.$color = $jit.util.rgbToHex([255 - grncol, grncol, 0]);
 		});
 	});
 }
