@@ -42,7 +42,6 @@ h4 {
 }
 
 #left-container, #right-container {
-    width:198px;
     color:#686c70;
     text-align: left;
     overflow: auto;
@@ -64,6 +63,7 @@ h4 {
     background-position:center left;
     border-right:1px solid #ddd;
 	float:right;
+	width:398px;
 }
 
 #right-container h4{
@@ -79,8 +79,9 @@ h4 {
 	position:relative;
 }
 
-.text {
+#help {
     margin: 7px;
+	display: none;
 }
 
 #inner-details {

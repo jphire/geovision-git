@@ -179,7 +179,6 @@ span#filterlink{
 }
 div#filter{
 	height:0px;
-	width:150px;
 	text-align: center;
 	display: none;
 }
@@ -196,4 +195,8 @@ span#load{
 	color:red;
 	background-color: silver;
 	font-weight: bold;
+}
+span#helplink{
+	text-decoration: underline;
+	cursor: pointer;
 }
