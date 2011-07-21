@@ -2174,7 +2174,7 @@ Extras.Classes.Tips = new Class({
   
   onMouseMove: function(e, win, opt) {
     if(!this.isEnabled()) // ADDED
-	return;
+		return;
     if(this.isLabel(e, win)) { // removed this.dom check
       this.setTooltipPosition($.event.getPos(e, win));
     }

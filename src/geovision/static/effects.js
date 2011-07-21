@@ -1,5 +1,6 @@
 var opened = false;
 var filteropen = false;
+var helpopen = false;
 
 function openSearch()
 {
@@ -33,12 +34,22 @@ jQuery(function($) {
  */
 	$('#filterlink').click(function() {
 		if (filteropen){
-			$('#filter').fadeOut();
+			$('#filter').slideDown();
 			filteropen = false;
 		}
 		else{
-			$('#filter').fadeIn();
+			$('#filter').slideUp();
 			filteropen = true;
+		}
+	})
+	$('#helplink').click(function() {
+		if (helpopen){
+			$('#help').slideDown();
+			helpopen = false;
+		}
+		else{
+			$('#help').slideUp();
+			helpopen = true;
 		}
 	})
 	$('#filterform').submit(function() {

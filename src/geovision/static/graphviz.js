@@ -324,32 +324,50 @@ function initGraph(json)
 				if(!node || node.nodeFrom)
 					return;
 
-				if(busy)
-					return;
-				
 				numSubnodes = 0;
 				$jit.Graph.Util.eachAdjacency(node, function(adj) {
 					if(adj.nodeFrom == node && adj.data.bitscore)
 						numSubnodes++;
 				});
 
+				//if clicked a leaf-node
 				if (numSubnodes <= 1)
 				{
+					if(busy)
+						return;
+
 					busy = 'expanding';
 					rgraph.canvas.getElement().style.cursor = 'wait';
 					$('#load').html("Loading...");
 					$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 						function(newdata)
 						{
-							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
+							graph = rgraph.construct(newdata)
+							//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
+							var graphNode = graph.getNode(node.id);
+							
+							if(graphNode){
+								var graphNodeData = graphNode.data;
+								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
+							}
+							
+							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
+								if(currentNode != undefined || currentEdge != undefined){
+									rgraph.config.Events.onMouseLeave(currentNode);
+								}
+								}})
 							$('#load').html("");
 						}
 					);
 				}
+				//the clicked node is not a leaf node
 				else
 				{
 					if(node.collapsed) 
                     {
+						if(busy)
+							return;
+
                         busy = 'expanding';
 						rgraph.canvas.getElement().style.cursor = 'wait';
 						$('#load').html("Loading...");
@@ -359,10 +377,13 @@ function initGraph(json)
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';}});
-						$('#load').html("");
+								$('#load').html("");
                     }
                     else 
                     {
+						if(busy)
+							return;
+
                         busy = 'contracting';
 						rgraph.canvas.getElement().style.cursor = 'wait';
 						$('#load').html("Contracting...");
@@ -418,12 +439,13 @@ function initGraph(json)
 			{
 				if(ctxMenuOpen)
 					return;
-				if(busy)
-					return;
-				currentNode = currentEdge = undefined;
 				if(!object) return;
+				currentNode = currentEdge = undefined;
+				
 				if(object.nodeTo)
 				{
+					if(busy)
+						return;
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
@@ -438,6 +460,7 @@ function initGraph(json)
 				else if(object){
 					if(busy)
 						return;
+
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 
@@ -479,6 +502,7 @@ function initGraph(json)
 						//it's an edge
 						tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
 						tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
+
 					}
 					else
 						tip.innerHTML = 'enzyme edge';
@@ -488,6 +512,7 @@ function initGraph(json)
 					//it's a read or db entry
 					tip.innerHTML += "<b>" + node.id + "</b><br/>";
 					tip.innerHTML += node.data.description + "<br/>";
+					tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 				else
 				{
@@ -516,7 +541,7 @@ function initGraph(json)
 		{
 			if(node.name && node.name.substr)
 				domElement.innerHTML = node.name.substr(0, 10);
-			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
+//			domElement.onclick = function() { rgraph.config.Events.onClick(node); };
 			//domElement.onmouseover = function() { rgraph.config.Events.onMouseEnter(node); };
 			//domElement.onmouseout = function() { rgraph.config.Events.onMouseLeave(node); };
 //			domElement.onmouseover = function() { overLabel = true; if(!ctxMenuOpen) currentNode = node; };
