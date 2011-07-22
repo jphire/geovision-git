@@ -331,11 +331,11 @@ function initGraph(json)
 				});
 
 				if(currentEdge != undefined){
-					Console.log("in current edge");
+					
 					rgraph.config.Events.onMouseLeave(currentEdge);
 				}
 				if(currentNode != undefined){
-					Console.log("in current node");
+					
 					rgraph.config.Events.onMouseLeave(currentNode);
 				}
 
@@ -415,11 +415,11 @@ function initGraph(json)
 					return;
 
 				if(currentEdge != undefined){
-					Console.log("in current edge");
+					
 					rgraph.config.Events.onMouseLeave(currentEdge);
 				}
 				if(currentNode != undefined){
-					Console.log("in current node");
+					
 					rgraph.config.Events.onMouseLeave(currentNode);
 				}
 
