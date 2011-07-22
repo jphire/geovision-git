@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from meta.models import Pathway
+from viz.views import render
 import json
+from geovision.settings import STATIC_URL
 
 def metaboly_json(request):
 	pwid = request.GET['pathway']
@@ -26,3 +28,7 @@ def metaboly_json(request):
 			if False or c.id in c_ids:
 				r_dict['adjacencies'].append({'nodeTo': c.id})
 	return HttpResponse(json.dumps(result,indent=True), mimetype='text/plain')
+
+def show_metaboly(request):
+	pathway_id = request.GET['pathway']
+	return render(request, 'show_metaboly.html', { 'pathway_id': pathway_id })

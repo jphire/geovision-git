@@ -1,0 +1,22 @@
+{% extends "sitebase.html" %}
+{% block additional_head %}
+<!--[if IE]><script language="javascript" type="text/javascript" src="{{ STATIC_URL }}excanvas.js"></script><![endif]-->
+
+<link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
+
+<!-- JIT Library File -->
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
+
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}metaviz.js"></script>
+
+<script language="javascript" type="text/javascript">
+        jQuery(function($) { $.getJSON('/metaboly_json?pathway={{ pathway_id|safe }}', function(data) { init(data); })});
+</script>
+
+{% endblock %}
+
+{% block content %}
+<body>
+	<div id="infovis"></div>
+</body>
+{% endblock %}

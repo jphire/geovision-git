@@ -8,10 +8,10 @@ class Read(models.Model):
 	description = models.TextField()
 	data = models.TextField()
 
+	deferred_fields = ('data',)
 	@classmethod
 	def deferred(cls):
-#		return cls.objects
-		return Read.objects.all().defer('data')
+		return cls.objects.all().defer(*cls.deferred_fields)
 
 class DbEntry(models.Model):
 	source_file = models.CharField(max_length=32)
@@ -24,10 +24,10 @@ class DbEntry(models.Model):
 	os_field = models.CharField(max_length=128, blank=True)
 	other_info = models.TextField(blank=True)
 
+	deferred_fields = ('data',)
 	@classmethod
 	def deferred(cls):
-#		return cls.objects
-		return DbEntry.objects.all().defer('data')
+		return cls.objects.all().defer(*cls.deferred_fields)
 
 class DbUniprotEcs(models.Model):
 	db_id = models.ForeignKey(DbEntry, db_column='db_id', related_name='uniprot_ecs')
@@ -51,9 +51,10 @@ class Blast(models.Model):
 	read_seq = models.TextField()
 	db_seq = models.TextField()
 
+	deferred_fields = ('pident', 'mismatch', 'gapopen', 'qstart', 'qend', 'sstart', 'send', 'read_seq', 'db_seq')
 	@classmethod
 	def deferred(cls):
-		return Blast.objects.all().only('read', 'database_name', 'db_entry', 'error_value', 'bitscore', 'length')
+		return cls.objects.all().defer(*cls.deferred_fields)
 
 class BlastEcs(models.Model):
 	ec = models.CharField(max_length=13)

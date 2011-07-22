@@ -2,6 +2,7 @@ DROP INDEX "viz_blast_read_id";
 DROP INDEX "viz_blast_read_id_like";
 DROP INDEX "viz_blast_db_entry_id";
 DROP INDEX "viz_blast_db_entry_id_like";
+DROP INDEX "viz_blastecs_db_entry_id_like";
 --
 CREATE INDEX "viz_blast_read_id" ON "viz_blast" ("read_id");
 CREATE INDEX "viz_blast_read_id_like" ON "viz_blast" ("read_id" varchar_pattern_ops);
@@ -17,3 +18,4 @@ CREATE INDEX viz_blast_bitscore_uniprot ON viz_blast(bitscore) WITH (fillfactor 
 CREATE INDEX viz_blast_db_entry_id_uniprot ON viz_blast(db_entry_id) WITH (fillfactor = 100) WHERE database_name = 'uniprot';
 CREATE INDEX viz_dbuniprotecs_ec ON viz_dbuniprotecs(ec) WITH (fillfactor = 100) WHERE ec != '?';
 CREATE INDEX viz_blastecs_bitscore ON viz_blastecs (bitscore) WITH (fillfactor = 100);
+CREATE INDEX viz_blastecs_ec ON viz_blastecs (ec) WITH (fillfactor=100);

@@ -217,11 +217,12 @@ class QueryToJSON:
 		query = Blast.deferred()
 
 		if param.type == "db_entry":
-			query = query.filter(db_entry = param.dict["id"])
+			query = query.filter(db_entry=param.dict["id"]).select_related('read').defer(*('read__' + x for x in Read.deferred_fields))
 		elif param.type == "read":
-			query = query.filter(read = param.dict["id"])
+			query = query.filter(read=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
+
 		elif param.type == "enzyme":
-			query = BlastEcs.objects.filter(ec = param.dict["id"])
+			query = BlastEcs.objects.filter(ec=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
 		else:
 			raise RuntimeError('bad param type "%s"' % (param.type,))
 			
@@ -245,9 +246,11 @@ class QueryToJSON:
 		next_level_nodes = set()
 		startnode_id = self.get_node_id(startnode)
 		if startnode.type == "db_entry":
-			reads = Read.deferred().filter(pk__in = map(lambda blast: blast.read_id, queryset))
+#			reads = Read.deferred().filter(pk__in = map(lambda blast: blast.read_id, queryset))
 
-			for (read, blast) in zip(reads, queryset):
+#			for (read, blast) in zip(reads, queryset):
+			for blast in queryset:
+				read = blast.read
 				readnode = Node(read)
 				readid = self.get_node_id(readnode)
 				if readnode not in self.nodes:
@@ -256,9 +259,11 @@ class QueryToJSON:
 				startnode.dict["adjacencies"].append(Edge(readid, blast))
 
 		elif startnode.type in ("read", "enzyme"):
-			db_entries = DbEntry.deferred().filter(pk__in = map(lambda blast: blast.db_entry_id, queryset))
+#			db_entries = DbEntry.deferred().filter(pk__in = map(lambda blast: blast.db_entry_id, queryset))
 
-			for (dbentry, blast) in zip(db_entries, queryset):
+#			for (dbentry, blast) in zip(db_entries, queryset):
+			for blast in queryset:
+				dbentry = blast.db_entry
 				dbnode = Node(dbentry)
 				db_id = self.get_node_id(dbnode)
 				if dbnode not in self.nodes:
