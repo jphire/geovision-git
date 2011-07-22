@@ -343,6 +343,15 @@ function initGraph(json)
 						numSubnodes++;
 				});
 
+				if(currentEdge != undefined){
+					
+					rgraph.config.Events.onMouseLeave(currentEdge);
+				}
+				if(currentNode != undefined){
+					
+					rgraph.config.Events.onMouseLeave(currentNode);
+				}
+
 				//if clicked a leaf-node
 				if (numSubnodes <= 1)
 				{
@@ -364,11 +373,8 @@ function initGraph(json)
 								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 							}
 							
-							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
-								if(currentNode != undefined || currentEdge != undefined){
-									rgraph.config.Events.onMouseLeave(currentNode);
-								}
-								}})
+							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges,
+								onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
 							$('#load').html("");
 						}
 					);
@@ -414,12 +420,27 @@ function initGraph(json)
 						$('#load').html("");
     				}
 				}
+				//show clicked node's info in the right column
+				$jit.id('inner-details').innerHTML = ""
+				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
+				$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+				
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
 			{
 				if(ctxMenuOpen)
 					return;
+
+				if(currentEdge != undefined){
+					
+					rgraph.config.Events.onMouseLeave(currentEdge);
+				}
+				if(currentNode != undefined){
+					
+					rgraph.config.Events.onMouseLeave(currentNode);
+				}
+
 				if (node.nodeTo)
 				{
 					if(busy)
@@ -427,14 +448,14 @@ function initGraph(json)
 					currentEdge = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
-					node.data.$lineWidth = node.getData('lineWidth_hover');
-					node.data.$dim = node.getData('dim_hover');
-					
-					rgraph.fx.animate(
-					{
-						modes: ['edge-property:lineWidth'],
-						duration: 1
-					});
+//					node.data.$lineWidth = node.getData('lineWidth_hover');
+//					node.data.$dim = node.getData('dim_hover');
+//
+//					rgraph.fx.animate(
+//					{
+//						modes: ['edge-property:lineWidth'],
+//						duration: 1
+//					});
 				}
 				else if(node)
 				{
@@ -443,20 +464,22 @@ function initGraph(json)
 					currentNode = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
-					node.data.$dim = rgraph.config.Node.dim + 3;
-					
-					rgraph.fx.animate(
-					{
-						modes: ['node-property:dim'],
-						duration: 1
-					});
+//					node.data.$dim = rgraph.config.Node.dim + 3;
+//
+//					rgraph.fx.animate(
+//					{
+//						modes: ['node-property:dim'],
+//						duration: 1
+//					});
+
 				}
 			},
 			onMouseLeave: function(object, eventInfo, e)
 			{
 				if(ctxMenuOpen)
 					return;
-				if(!object) return;
+				if(!object)
+					return;
 				currentNode = currentEdge = undefined;
 				
 				if(object.nodeTo)
@@ -464,14 +487,14 @@ function initGraph(json)
 					if(busy)
 						return;
 					rgraph.canvas.getElement().style.cursor = '';
-					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
-					object.data.$dim = rgraph.config.Edge.dim;
-					
-					rgraph.fx.animate(
-					{
-						modes: ['edge-property:lineWidth'],
-						duration: 1
-					});
+//					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
+//					object.data.$dim = rgraph.config.Edge.dim;
+//
+//					rgraph.fx.animate(
+//					{
+//						modes: ['edge-property:lineWidth'],
+//						duration: 1
+//					});
 
 				}
 				else if(object){
@@ -479,13 +502,13 @@ function initGraph(json)
 						return;
 
 					rgraph.canvas.getElement().style.cursor = '';
-					object.data.$dim = rgraph.config.Node.dim;
-					
-					rgraph.fx.animate(
-					{
-						modes: ['node-property:dim'],
-						duration: 1
-					});
+//					object.data.$dim = rgraph.config.Node.dim;
+//
+//					rgraph.fx.animate(
+//					{
+//						modes: ['node-property:dim'],
+//						duration: 1
+//					});
 
 				}
 			}
@@ -510,7 +533,7 @@ function initGraph(json)
 				if(ctxMenuOpen)
 					return false;
 				tip.innerHTML = "";
-				if (!node) return;
+				if (!node) return false;
 
 				if(node.nodeFrom)
 				{
@@ -540,22 +563,21 @@ function initGraph(json)
 		},
 		onBeforeCompute: function(node)
 		{
-			if (node) {
-				//Add the relation list in the right column.
-				//This list is taken from the data property of each JSON node.
-				$jit.id('inner-details').innerHTML = ""
-				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
-				if(node.data.bitscore){
-					$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
-				}
+			//This method is called only when centering a node
+			//Add the relation list in the right column.
+			//This list is taken from the data property of each JSON node.
+			$jit.id('inner-details').innerHTML = ""
+			$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
+			if(node.data.bitscore){
+				$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
 			}
 		},
 		
 		onAfterCompute: function() {},
 
-		//Add the name of the node in the correponding label
-		//and a click handler to move the graph.
-		//This method is called once, on label creation.
+			//Add the name of the node in the correponding label
+			//and a click handler to move the graph.
+			//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
 			if(node.name && node.name.substr)
@@ -662,6 +684,7 @@ function alignmentfunction(thisid) {
 								$('#alignment').before(close);
 								$('#alignment').css('margin-bottom', '10px');
 			});
+			return true;
 		});
 		return false;
 	}
