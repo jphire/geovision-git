@@ -351,11 +351,9 @@ function initGraph(json)
 								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 							}
 							
-							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
-								if(currentNode != undefined || currentEdge != undefined){
-									rgraph.config.Events.onMouseLeave(currentNode);
-								}
-								}})
+							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges,
+								onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
+							rgraph.config.Events.onMouseLeave(node);
 							$('#load').html("");
 						}
 					);
@@ -377,6 +375,7 @@ function initGraph(json)
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';}});
+								rgraph.config.Events.onMouseLeave(node);
 								$('#load').html("");
                     }
                     else 
@@ -393,6 +392,7 @@ function initGraph(json)
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
                                 onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';}});
+						rgraph.config.Events.onMouseLeave(node);
 						$('#load').html("");
     				}
 				}
@@ -425,7 +425,7 @@ function initGraph(json)
 				}
 				else if(node)
 				{
-					if(busy || currentEdge)
+					if(busy)
 						return;
 					currentNode = node;
 
@@ -444,7 +444,8 @@ function initGraph(json)
 			{
 				if(ctxMenuOpen)
 					return;
-				if(!object) return;
+				if(!object)
+					return;
 				currentNode = currentEdge = undefined;
 				
 				if(object.nodeTo)
