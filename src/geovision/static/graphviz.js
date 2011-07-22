@@ -398,9 +398,8 @@ function initGraph(json)
 				}
 				$jit.id('inner-details').innerHTML = ""
 				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
-				if(node.data.bitscore){
-					$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
-				}
+				$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+				
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
@@ -482,7 +481,7 @@ function initGraph(json)
 		Label:
 		{
 			$extend: true,
-			type: 'HTML',
+			type: 'Native',
 			overridable: true,
 		},
 
