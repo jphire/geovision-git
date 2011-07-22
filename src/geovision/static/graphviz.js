@@ -396,6 +396,11 @@ function initGraph(json)
 						$('#load').html("");
     				}
 				}
+				$jit.id('inner-details').innerHTML = ""
+				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
+				if(node.data.bitscore){
+					$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+				}
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
@@ -493,7 +498,7 @@ function initGraph(json)
 				if(ctxMenuOpen)
 					return false;
 				tip.innerHTML = "";
-				if (!node) return;
+				if (!node) return false;
 
 				if(node.nodeFrom)
 				{
@@ -642,6 +647,7 @@ function alignmentfunction(thisid) {
 								$('#alignment').before(close);
 								$('#alignment').css('margin-bottom', '10px');
 			});
+			return true;
 		});
 		return false;
 	}
