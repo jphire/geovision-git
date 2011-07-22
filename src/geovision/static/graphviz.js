@@ -227,7 +227,7 @@ function init(){
 						$('li[id^=n_db_uni]', menu).remove();
 					if(currentNode.data.source != 'frnadb')
 						$('li[id^=n_db_frn]', menu).remove();
-					if(currentNode.data.source.find('silva') == -1)
+					if(currentNode.data.source.indexOf('silva') == -1)
 						$('li[id^=n_db_silva]', menu).remove();
 				}
 			}
