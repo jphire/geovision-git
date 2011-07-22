@@ -365,7 +365,7 @@ function initGraph(json)
 						function(newdata)
 						{
 							graph = rgraph.construct(newdata)
-							//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
+							//UPDATING HIDDEN NODE INFO IN ALREADY EXISTING NODES
 							var graphNode = graph.getNode(node.id);
 							
 							if(graphNode){
@@ -558,6 +558,7 @@ function initGraph(json)
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
 					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name;
+					tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 			}
 		},
@@ -735,12 +736,11 @@ function colorEdges(){
 				grncol = (minScore == maxScore) ? 255 : Math.floor((1.0 * (adj.data.bitscore - minScore) / (maxScore - minScore)) * 255);
 				col = "#" + formatHex(255 - grncol) + formatHex(grncol) + "00";
 				adj.data.$color = col;
-				//adj.data.color = col;
 			}
 			else
 			{
 				adj.data.$color = '#0000ff';
-				//adj.data.color = '#0000ff';
+
 			}
 		});
 	});
