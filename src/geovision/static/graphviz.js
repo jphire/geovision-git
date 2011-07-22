@@ -197,6 +197,7 @@ function init(){
 			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); },
 			'n_db_uni_link': function() { window.open('http://www.uniprot.org/uniprot/' + currentNode.id); },
 			'n_db_frn_link': function() { window.open('http://www.ncrna.org/frnadb/detail.html?i_name=' + currentNode.id); }
+			'n_db_silva_link': function() { window.open('http://www.ebi.ac.uk/ena/data/view/' + currentNode.id); }
 
 		},
 		'onContextMenu': function(event)
@@ -226,6 +227,8 @@ function init(){
 						$('li[id^=n_db_uni]', menu).remove();
 					if(currentNode.data.source != 'frnadb')
 						$('li[id^=n_db_frn]', menu).remove();
+					if(currentNode.data.source != 'silva')
+						$('li[id^=n_db_silva]', menu).remove();
 				}
 			}
 			return menu;
