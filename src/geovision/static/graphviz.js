@@ -330,6 +330,15 @@ function initGraph(json)
 						numSubnodes++;
 				});
 
+				if(currentEdge != undefined){
+					Console.log("in current edge");
+					rgraph.config.Events.onMouseLeave(currentEdge);
+				}
+				if(currentNode != undefined){
+					Console.log("in current node");
+					rgraph.config.Events.onMouseLeave(currentNode);
+				}
+
 				//if clicked a leaf-node
 				if (numSubnodes <= 1)
 				{
@@ -406,9 +415,11 @@ function initGraph(json)
 					return;
 
 				if(currentEdge != undefined){
+					Console.log("in current edge");
 					rgraph.config.Events.onMouseLeave(currentEdge);
 				}
 				if(currentNode != undefined){
+					Console.log("in current node");
 					rgraph.config.Events.onMouseLeave(currentNode);
 				}
 
