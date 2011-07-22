@@ -54,7 +54,7 @@ def logging_in(request):
 					}, context_instance=RequestContext(request))
 	else:
 		return render_to_response('login.html', {
-			'error_message': "The username or password was incorrect.",
+			'error_message': "Username or password was incorrect.",
 		}, context_instance=RequestContext(request))
 
 def logging_out(request):
