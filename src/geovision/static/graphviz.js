@@ -420,6 +420,7 @@ function initGraph(json)
 				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
 				if(node.data.type != 'enzyme')
 					$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+				$jit.id('inner-details').innerHTML += "Matching hidden nodes:" + node.data.hidden_nodes_count
 				
 			},
 
@@ -542,15 +543,9 @@ function initGraph(json)
 
 				if(node.nodeFrom)
 				{
-					//if(node.data.bitscore)
-					//{
-						//it's an edge
-						tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
-						tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
+					tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
+					tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
 
-					//}
-					//else
-					//	tip.innerHTML = 'enzyme edge';
 				}
 				else if(node.data.type != 'enzyme')
 				{
