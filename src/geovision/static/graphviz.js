@@ -402,6 +402,7 @@ function initGraph(json)
 					node.data.$lineWidth = node.getData('lineWidth_hover');
 					node.data.$dim = node.getData('dim_hover');
 
+					return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -417,6 +418,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = 'pointer';
 					node.data.$dim = rgraph.config.Node.dim + 3;
 
+					return;
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -440,6 +442,7 @@ function initGraph(json)
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
 
+					return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -454,6 +457,7 @@ function initGraph(json)
 					rgraph.canvas.getElement().style.cursor = '';
 					object.data.$dim = rgraph.config.Node.dim;
 
+					return;
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -654,6 +658,7 @@ function colorEdges(){
 	maxScore = 0;
 	minScore = 100000;
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
+		var nodeMaxScore = 0;
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			var bs = adj.data.bitscore;
 			if(!bs) return;
@@ -661,13 +666,23 @@ function colorEdges(){
 				maxScore = bs;
 			if(bs < minScore)
 				minScore = bs;
+			if(bs > nodeMaxScore)
+				nodeMaxScore = bs;
 		});
+		if(node.data.type == 'enzyme')
+			node.data.bitscore = nodeMaxScore;
 	});
+	function color(bitscore)
+	{
+		grncol = (minScore == maxScore) ? 255 : Math.floor((1.0 * (bitscore - minScore) / (maxScore - minScore)) * 255);
+		return $jit.util.rgbToHex([255 - grncol, grncol, 0]);
+	}
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
-			grncol = (minScore == maxScore) ? 255 : Math.floor((1.0 * (adj.data.bitscore - minScore) / (maxScore - minScore)) * 255);
-			adj.data.$color = $jit.util.rgbToHex([255 - grncol, grncol, 0]);
+			adj.data.$color = color(adj.data.bitscore);
 		});
+		if(node.data.type == 'enzyme')
+			node.data.color = color(node.data.bitscore);
 	});
 }
 
@@ -763,6 +778,11 @@ function tagSubgraph(node) {
 
 /* Function to list all names, reactions and pathways related to an enzyme in the right container */
 function showEnzymeData (json){
+	enzymes = {};
+	rgraph.graph.eachNode(function(n) {
+		if(n.data.type == 'enzyme')
+			enzymes[n.id] = n;
+	});
 	ec = json.id;
 
 	var html = '<br/>';
@@ -772,11 +792,14 @@ function showEnzymeData (json){
 		html += $.map(json.reactions, function(reac){
 			return 'R' + reac.id + ': ' + reac.name + ' <a target="_blank" href="http://www.genome.jp/dbget-bin/www_bget?r' + reac.id + '">[KEGG]</a><br/>'; }).join('');
 	}
+	// KEGG pathway url coloring params: pwnumber / ecnumber <TAB> #bgcol,#fgcol / ecnumber <TAB> #bgcol,fgcol ....
 	if(json.pathways)
 	{
 		html += '<strong>Pathways of ' + ec + '</strong><br/>';
 		html += $.map(json.pathways, function(pw){
-			return pw.id + ': ' + pw.name + ' <a target="_blank" href="http://www.genome.jp/dbget-bin/www_bget?pathway:' + pw.id + '">[KEGG]</a><br/>'; }).join('');
+			var pathwayEnzymes = $.grep(pw.enzymes, function(x) { return enzymes[x]; });
+			var colorUrl = escape($.map(pathwayEnzymes, function(ec) { return ec + "\t" + enzymes[ec].data.color + ',#000000'; }).join('/'));
+			return pw.id + ': ' + pw.name + '<a target="_blank" href="http://www.genome.jp/kegg-bin/show_pathway?map' + pw.id + '/' + colorUrl + '">[KEGG]</a><br/>'; }).join('');
 	}
 
 	names = json.names;

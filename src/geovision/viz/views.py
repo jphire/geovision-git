@@ -143,7 +143,7 @@ def enzyme_data(request):
 
 	enzyme = Enzyme.objects.get(pk=searchterm)
 
-	pathways = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.pathways.all())
+	pathways = map(lambda x: {'id': x.id, 'name': x.name, 'enzymes': map(lambda y: y.pk, x.enzymes.all())}, enzyme.pathways.all())
 	reactions = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.reactions.all())
 	names = map(lambda x: x.enzyme_name, EnzymeName.objects.filter(ec_number=searchterm).order_by('id'))
 
