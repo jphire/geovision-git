@@ -147,9 +147,9 @@ function hideCtxMenu()
 {
 	if(!ctxMenuOpen) return;
 	ctxMenuOpen = false;
-	busy = false;
 	if(currentNode) rgraph.config.Events.onMouseLeave(currentNode)
 	if(currentEdge) rgraph.config.Events.onMouseLeave(currentEdge); // XXX does this work completely?
+	busy = false;
 	currentEdge = currentNode = false;
 	rgraph.config.Navigation.panning = true;
 	rgraph.config.Tips.enable = true;
@@ -164,6 +164,20 @@ function init(){
 		'shadow': false,
 		'bindings': {
 			'close': function() { },
+			'n_center': function() {
+				console.log(currentNode.id);
+				var id = currentNode.id;
+				busy = true;
+				rgraph.onClick(id, { 
+					type: 'fade:con', 
+					fps:30, duration: 500, 
+					hideLabels: false, 
+					onComplete: function() { 
+						busy = false;
+						rgraph.canvas.getElement().style.cursor = '';
+					}
+				});
+			},
 			'e_align': function() { alignmentfunction(currentEdge.data.id); },
 			'n_tag': function() { 
 				if (currentNode.traversalTag != true) {
@@ -218,7 +232,6 @@ function init(){
 		},
 		'onHideMenu': hideCtxMenu
 	});
-		
 }
 
 function prepareJSON(json)
@@ -322,6 +335,15 @@ function initGraph(json)
 						numSubnodes++;
 				});
 
+				if(currentEdge != undefined){
+					
+					rgraph.config.Events.onMouseLeave(currentEdge);
+				}
+				if(currentNode != undefined){
+					
+					rgraph.config.Events.onMouseLeave(currentNode);
+				}
+
 				//if clicked a leaf-node
 				if (numSubnodes <= 1)
 				{
@@ -343,11 +365,8 @@ function initGraph(json)
 								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 							}
 							
-							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges, onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
-								if(currentNode != undefined || currentEdge != undefined){
-									rgraph.config.Events.onMouseLeave(currentNode);
-								}
-								}})
+							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges,
+								onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
 							$('#load').html("");
 						}
 					);
@@ -368,7 +387,12 @@ function initGraph(json)
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';}});
+                                onComplete: function() 
+									{colorEdges(); 
+									busy = false; 
+									rgraph.canvas.getElement().style.cursor = '';
+									}
+								});
 								$('#load').html("");
                     }
                     else 
@@ -388,12 +412,27 @@ function initGraph(json)
 						$('#load').html("");
     				}
 				}
+				//show clicked node's info in the right column
+				$jit.id('inner-details').innerHTML = ""
+				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
+				$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+				
 			},
 
 			onMouseEnter: function(node, eventInfo, e)
 			{
 				if(ctxMenuOpen)
 					return;
+
+				if(currentEdge != undefined){
+					
+					rgraph.config.Events.onMouseLeave(currentEdge);
+				}
+				if(currentNode != undefined){
+					
+					rgraph.config.Events.onMouseLeave(currentNode);
+				}
+
 				if (node.nodeTo)
 				{
 					if(busy)
@@ -435,7 +474,8 @@ function initGraph(json)
 			{
 				if(ctxMenuOpen)
 					return;
-				if(!object) return;
+				if(!object)
+					return;
 				currentNode = currentEdge = undefined;
 				
 				if(object.nodeTo)
@@ -494,7 +534,7 @@ function initGraph(json)
 				if(ctxMenuOpen)
 					return false;
 				tip.innerHTML = "";
-				if (!node) return;
+				if (!node) return false;
 
 				if(node.nodeFrom)
 				{
@@ -524,6 +564,7 @@ function initGraph(json)
 		},
 		onBeforeCompute: function(node)
 		{
+			//This method is called only when centering a node
 			//Add the relation list in the right column.
 			//This list is taken from the data property of each JSON node.
 			$jit.id('inner-details').innerHTML = ""
@@ -535,9 +576,9 @@ function initGraph(json)
 		
 		onAfterCompute: function() {},
 
-		//Add the name of the node in the correponding label
-		//and a click handler to move the graph.
-		//This method is called once, on label creation.
+			//Add the name of the node in the correponding label
+			//and a click handler to move the graph.
+			//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
 			if(node.name)
@@ -596,6 +637,7 @@ function initGraph(json)
 	rgraph.op.tagParents = tagParents;
 	rgraph.op.tagSubgraph = tagSubgraph;
 	rgraph.op.tagSubnodes = tagSubnodes;
+	rgraph.centerToNode = centerToNode;
 }
 
 var alignmentopen = false;
@@ -638,6 +680,7 @@ function alignmentfunction(thisid) {
 								$('#alignment').before(close);
 								$('#alignment').css('margin-bottom', '10px');
 			});
+			return true;
 		});
 		return false;
 	}
@@ -729,9 +772,6 @@ function contractForTraversal(node, opt) {
 	})(node);
 	if(opt.type == 'animate') {
 		viz.compute('end');
-		if(viz.rotated) {
-			viz.rotate(viz.rotated, 'none', { 'property':'end' });
-		}
 		(function subn(n) {
 			n.eachSubnode(function(ch) {
 				if (!ch.traversalTag) {
@@ -767,6 +807,9 @@ function tagNode(node) {
 	node.traversalTag = true;
 }
 
+/* 
+ * Function for tagging a path from node to root, always tags first node in parents list
+ */
 function tagParents(node) {
 	var parents = node.getParents();
 	while (parents.length > 0) {
@@ -831,6 +874,9 @@ function showEnzymeData (json){
 	return;
  }
 
+/*
+ * Untags a node and all nodes in it's subgraph without tagged path to root.
+ */
 function untagNode(node) {
 	node.traversalTag = false;
 	(function subn(n) {
@@ -849,7 +895,7 @@ function untagSubgraph(node) {
 
  /*function to filter graph by a bitscore inputted by the user*/
 function filter(bitscore) {
-	if (!(bitscore > 0)) { /*bitscores must make sence*/
+	if (!(bitscore > 0)) { /*bitscores must make sense*/
 		$('#filtererror').html("Not a valid bitscore.");
 	}
 	else {
@@ -892,24 +938,17 @@ function filterContract(node, opt) {
 	node.collapsed = true;
 	(function subn(n) {
 		n.eachSubnode(function(ch) {
-		//	if (!ch.traversalTag) {
-				ch.ignore = true;
-				ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
-				subn(ch);
-		//	}
+			ch.ignore = true;
+			ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
+			subn(ch);
 		});
 	})(node);
 	if(opt.type == 'animate') {
 		viz.compute('end');
-		if(viz.rotated) {
-			viz.rotate(viz.rotated, 'none', { 'property':'end' });
-		}
 		(function subn(n) {
 			n.eachSubnode(function(ch) {
-		//		if (!ch.traversalTag) {
-					ch.setPos(node.getPos('end'), 'end');
-					subn(ch);
-		//		}
+				ch.setPos(node.getPos('end'), 'end');
+				subn(ch);
 			});
 		})(node);
 		viz.fx.animate(opt);
@@ -918,3 +957,41 @@ function filterContract(node, opt) {
 		viz.refresh();
 	}
 }
+
+
+  function centerToNode(id, opt){
+    if (this.root != id && !this.busy) {
+      this.busy = true;
+      this.root = id;
+      var that = this;
+      var obj = that.getNodeAndParentAngle(id);
+
+      // second constraint
+      this.tagChildren(obj.parent, id);
+      this.parent = obj.parent;
+      this.compute('end');
+
+      // first constraint
+      var thetaDiff = obj.theta - obj.parent.endPos.theta;
+      this.graph.eachNode(function(elem){
+        elem.endPos.set(elem.endPos.getp().add($P(thetaDiff, 0)));
+      });
+
+      var mode = this.config.interpolation;
+      opt = $.merge( {
+        onComplete: $.empty
+      }, opt || {});
+
+      this.fx.animate($.merge( {
+        hideLabels: true,
+        modes: [
+          mode
+        ]
+      }, opt, {
+        onComplete: function(){
+          that.busy = false;
+          opt.onComplete();
+        }
+      }));
+    }
+  }

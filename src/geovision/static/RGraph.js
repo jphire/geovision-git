@@ -2018,14 +2018,15 @@ Extras.Classes.Events = new Class({
   },
   
   onMouseOver: function(e, win, event) {
-    //mouseover a label
-    var evt = $.event.get(e, win), label;
-    if((label = this.isLabel(e, win, true))) {
-      this.hovered = this.viz.graph.getNode(label.id);
-      this.hoverLabel = true;
-      this.config.onMouseEnter(this.hovered,
-                               event, evt);
-    }
+//COMMENTED OUT TO ALLOW onMouseLeave for edges BEFORE onMouseOver for label
+//    //mouseover a label
+//    var evt = $.event.get(e, win), label;
+//    if((label = this.isLabel(e, win, true))) {
+//      this.hovered = this.viz.graph.getNode(label.id);
+//      this.hoverLabel = true;
+//      this.config.onMouseEnter(this.hovered,
+//                               event, evt);
+//    }
   },
   
   onMouseMove: function(e, win, event) {
@@ -2162,7 +2163,7 @@ Extras.Classes.Tips = new Class({
   
   onMouseOver: function(e, win, event) {
     if(!this.isEnabled()) // ADDED
-	return;
+		return;
     //mouseover a label
 	var evt = $.event.get(e, win);
     var label;
@@ -4715,12 +4716,11 @@ Graph.Util = {
           var a = adj[id];
           if(filter(a)) {
 
-// REMOVED: iterating over a graph *changes* it??? fixes arrows pointing to wrong direction in chrome, HOPEFULLY doesn't break anything else...
-//            if(a.nodeFrom != node) {
-//              var tmp = a.nodeFrom;
-//              a.nodeFrom = a.nodeTo;
-//              a.nodeTo = tmp;
-//            }
+            if(a.nodeFrom != node) {
+              var tmp = a.nodeFrom;
+              a.nodeFrom = a.nodeTo;
+              a.nodeTo = tmp;
+            }
 
             action(a, id);
           }
@@ -8312,6 +8312,7 @@ $jit.RGraph = new Class( {
     
   */
   onClick: function(id, opt){
+	  console.log("Before getNodeAndPa... " + id);
     if (this.root != id && !this.busy) {
       this.busy = true;
       this.root = id;
