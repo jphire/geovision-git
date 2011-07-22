@@ -360,7 +360,7 @@ function initGraph(json)
 						function(newdata)
 						{
 							graph = rgraph.construct(newdata)
-							//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
+							//UPDATING HIDDEN NODE INFO IN ALREADY EXISTING NODES
 							var graphNode = graph.getNode(node.id);
 							
 							if(graphNode){
@@ -418,7 +418,8 @@ function initGraph(json)
 				//show clicked node's info in the right column
 				$jit.id('inner-details').innerHTML = ""
 				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
-				$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+				if(node.data.type != 'enzyme')
+					$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
 				
 			},
 
@@ -561,7 +562,8 @@ function initGraph(json)
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
-					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name;
+					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name + "</br>";
+					tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 			}
 		},
