@@ -396,6 +396,7 @@ function initGraph(json)
 						$('#load').html("");
     				}
 				}
+				//show clicked node's info in the right column
 				$jit.id('inner-details').innerHTML = ""
 				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
 				$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
@@ -408,7 +409,7 @@ function initGraph(json)
 					return;
 				if (node.nodeTo)
 				{
-					if(busy)
+					if(busy || currentNode)
 						return;
 					currentEdge = node;
 
@@ -424,7 +425,7 @@ function initGraph(json)
 				}
 				else if(node)
 				{
-					if(busy)
+					if(busy || currentEdge)
 						return;
 					currentNode = node;
 
@@ -527,6 +528,7 @@ function initGraph(json)
 		},
 		onBeforeCompute: function(node)
 		{
+			//This funtion is called only when centering a node
 			//Add the relation list in the right column.
 			//This list is taken from the data property of each JSON node.
 			$jit.id('inner-details').innerHTML = ""
