@@ -481,7 +481,7 @@ function initGraph(json)
 		Label:
 		{
 			$extend: true,
-			type: 'Native',
+			type: 'HTML',
 			overridable: true,
 		},
 
