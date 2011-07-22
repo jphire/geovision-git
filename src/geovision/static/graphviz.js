@@ -409,7 +409,7 @@ function initGraph(json)
 					return;
 				if (node.nodeTo)
 				{
-					if(busy || currentNode)
+					if(busy)
 						return;
 					currentEdge = node;
 
@@ -528,7 +528,7 @@ function initGraph(json)
 		},
 		onBeforeCompute: function(node)
 		{
-			//This funtion is called only when centering a node
+			//This method is called only when centering a node
 			//Add the relation list in the right column.
 			//This list is taken from the data property of each JSON node.
 			$jit.id('inner-details').innerHTML = ""
@@ -540,9 +540,9 @@ function initGraph(json)
 		
 		onAfterCompute: function() {},
 
-		//Add the name of the node in the correponding label
-		//and a click handler to move the graph.
-		//This method is called once, on label creation.
+			//Add the name of the node in the correponding label
+			//and a click handler to move the graph.
+			//This method is called once, on label creation.
 		onCreateLabel: function(domElement, node)
 		{
 			if(node.name && node.name.substr)

@@ -2018,14 +2018,14 @@ Extras.Classes.Events = new Class({
   },
   
   onMouseOver: function(e, win, event) {
-    //mouseover a label
-    var evt = $.event.get(e, win), label;
-    if((label = this.isLabel(e, win, true))) {
-      this.hovered = this.viz.graph.getNode(label.id);
-      this.hoverLabel = true;
-      this.config.onMouseEnter(this.hovered,
-                               event, evt);
-    }
+//    //mouseover a label
+//    var evt = $.event.get(e, win), label;
+//    if((label = this.isLabel(e, win, true))) {
+//      this.hovered = this.viz.graph.getNode(label.id);
+//      this.hoverLabel = true;
+//      this.config.onMouseEnter(this.hovered,
+//                               event, evt);
+//    }
   },
   
   onMouseMove: function(e, win, event) {
