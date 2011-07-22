@@ -3,6 +3,8 @@ var rgraph;
 
 var RGraph = $jit.RGraph;
 
+var bitscoreColorMin, bitscoreColorMax;
+
 (function() {
   var ua = navigator.userAgent,
 	  iStuff = ua.match(/iPhone/i) || ua.match(/iPad/i),
@@ -399,10 +401,10 @@ function initGraph(json)
 					currentEdge = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
+					return; // highlighting slows everything down way too much
 					node.data.$lineWidth = node.getData('lineWidth_hover');
 					node.data.$dim = node.getData('dim_hover');
 
-					return;
 					rgraph.fx.animate(
 					{
 						modes: ['edge-property:lineWidth'],
@@ -416,6 +418,8 @@ function initGraph(json)
 					currentNode = node;
 
 					rgraph.canvas.getElement().style.cursor = 'pointer';
+					return; // highlighting slows everything down way too much
+
 					node.data.$dim = rgraph.config.Node.dim + 3;
 
 					return;
@@ -439,6 +443,8 @@ function initGraph(json)
 					if(busy)
 						return;
 					rgraph.canvas.getElement().style.cursor = '';
+					return; // highlighting slows everything down way too much
+
 					object.data.$lineWidth = rgraph.config.Edge.lineWidth;
 					object.data.$dim = rgraph.config.Edge.dim;
 
@@ -455,6 +461,7 @@ function initGraph(json)
 						return;
 
 					rgraph.canvas.getElement().style.cursor = '';
+					return; // highlighting slows everything down way too much
 					object.data.$dim = rgraph.config.Node.dim;
 
 					return;
@@ -672,8 +679,20 @@ function colorEdges(){
 		if(node.data.type == 'enzyme')
 			node.data.bitscore = nodeMaxScore;
 	});
+	if(bitscoreColorMin)
+	{
+		minScore = bitscoreColorMin;
+		maxScore = bitscoreColorMax;
+	}
 	function color(bitscore)
 	{
+		if(bitscoreColorMin)
+		{
+			if(bitscore > bitscoreColorMax)
+				return '#00ff00';
+			if(bitscore < bitscoreColorMin)
+				return '#ff0000';
+		}
 		grncol = (minScore == maxScore) ? 255 : Math.floor((1.0 * (bitscore - minScore) / (maxScore - minScore)) * 255);
 		return $jit.util.rgbToHex([255 - grncol, grncol, 0]);
 	}

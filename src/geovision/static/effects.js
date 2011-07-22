@@ -56,6 +56,29 @@ jQuery(function($) {
 		filter($('#bitscorefilter').val());
 		return false;
 	})
+	$('#colorform').submit(function(){
+		$('#colorErrorMsg').text('');
+		if($('#colortypeDynamic').attr('checked'))
+			setBitscoreColoring();
+		else
+		{
+			var min = parseFloat($('#colorMin').val()), max = parseFloat($('#colorMax').val());
+			if(min > 0 && max > min)
+				setBitscoreColoring(min, max);
+			else
+				$('#colorErrorMsg').text('Enter valid numbers');
+		}
+		return false;
+	});
+
+	$('#colortypeCustom').click(function(n){
+		$('#colorMin, #colorMax').removeAttr('disabled');
+	});
+	$('#colortypeDynamic').click(function(n){
+		$('#colorErrorMsg').text('');
+		$('#colorMin, #colorMax').attr('disabled', 'disabled');
+	});
+
     $('#graphnavi').mouseenter(openSearch);
 	$('#graphnavi').mouseleave(closeSearch);
     $('#graphrefresh').click(function(){
@@ -67,3 +90,15 @@ jQuery(function($) {
 	})
 }); //jquery close
 
+function setBitscoreColoring(min, max)
+{
+	if(!min)
+		bitscoreColorMin = bitscoreColorMax = null;
+	else
+	{
+		bitscoreColorMin = min;
+		bitscoreColorMax = max;
+	}
+	colorEdges();
+	rgraph.refresh();
+}
