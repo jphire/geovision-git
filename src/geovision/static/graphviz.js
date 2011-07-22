@@ -352,8 +352,7 @@ function initGraph(json)
 							}
 							
 							rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges,
-								onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
-							rgraph.config.Events.onMouseLeave(node);
+								onComplete: function() { rgraph.config.Events.onMouseLeave(node); busy = false;rgraph.canvas.getElement().style.cursor = '';}})
 							$('#load').html("");
 						}
 					);
@@ -374,8 +373,7 @@ function initGraph(json)
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false; rgraph.canvas.getElement().style.cursor = '';}});
-								rgraph.config.Events.onMouseLeave(node);
+                                onComplete: function() {colorEdges(); rgraph.config.Events.onMouseLeave(node); busy = false; rgraph.canvas.getElement().style.cursor = '';}});
 								$('#load').html("");
                     }
                     else 
@@ -391,8 +389,7 @@ function initGraph(json)
                                 duration: 1000, 
                                 hideLabels: true, 
                                 transition: $jit.Trans.Quart.easeOut, 
-                                onComplete: function() {colorEdges(); busy = false;rgraph.canvas.getElement().style.cursor = '';}});
-						rgraph.config.Events.onMouseLeave(node);
+                                onComplete: function() {colorEdges(); rgraph.config.Events.onMouseLeave(node); busy = false;rgraph.canvas.getElement().style.cursor = '';}});
 						$('#load').html("");
     				}
 				}
@@ -407,6 +404,14 @@ function initGraph(json)
 			{
 				if(ctxMenuOpen)
 					return;
+
+				if(currentEdge != undefined){
+					rgraph.config.Events.onMouseLeave(currentEdge);
+				}
+				if(currentNode != undefined){
+					rgraph.config.Events.onMouseLeave(currentNode);
+				}
+
 				if (node.nodeTo)
 				{
 					if(busy)
