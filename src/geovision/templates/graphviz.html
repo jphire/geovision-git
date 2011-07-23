@@ -5,20 +5,20 @@
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 
-
+<!--
 <script language="javascript" type="text/javascript">
 	var staticurl = "{{ STATIC_URL }}";
 </script>
-
+-->
 <link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
 <link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />	
 
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
 
-<!-- Example File -->
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/styles.js"></script>
 
-<!-- JSON File -->
 {% if json_base_url %}
 <script language="javascript" type="text/javascript">
 	var json_base_url = "{{ json_base_url|safe }}";
