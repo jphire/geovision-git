@@ -1,8 +1,6 @@
-
 var currentNode;
 var currentEdge;
 var ctxMenuOpen;
-var overLabel;
 
 function hideCtxMenu()
 {
@@ -14,7 +12,6 @@ function hideCtxMenu()
 	currentEdge = currentNode = false;
 	rgraph.config.Navigation.panning = true;
 	rgraph.config.Tips.enable = true;
-//	rgraph.events.pressed = undefined;
 }
 function initContextMenu()
 {
@@ -36,7 +33,7 @@ function initContextMenu()
 					}
 				});
 			},
-			'e_align': function() { alignmentfunction(currentEdge.data.id); },
+			'e_align': function() { alignmentfunction(currentEdge.id); },
 			'n_tag': function() { 
 				if (currentNode.traversalTag != true) {
 					tagNode(currentNode);
@@ -59,7 +56,7 @@ function initContextMenu()
 		},
 		'onContextMenu': function(event)
 		{
-			return currentNode || currentEdge;
+			return (currentNode || currentEdge) && !busy;
 		},
 		'onShowMenu': function(evt, menu)
 		{
