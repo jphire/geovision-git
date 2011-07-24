@@ -9,7 +9,7 @@ class SamplefileParser:
 	def __init__(self, source_file, sample=None):
 		self.filename = source_file
 		self.textfile = open(self.filename, 'r')
-		self.sample = sample or self.filename[self.filename.rfind('/')+1:]
+		self.sample = sample or self.filename[self.filename.rfind('/')+1:][:-6]
 		self.nextline = self.textfile.readline()
 		self.dnadata = ''
 		self.infoline = []
