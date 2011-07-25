@@ -337,14 +337,14 @@ function initGraph(json)
 						numSubnodes++;
 				});
 
-				if(currentEdge != undefined){
-					
-					rgraph.config.Events.onMouseLeave(currentEdge);
-				}
-				if(currentNode != undefined){
-					
-					rgraph.config.Events.onMouseLeave(currentNode);
-				}
+//				if(currentEdge != undefined){
+//
+//					rgraph.config.Events.onMouseLeave(currentEdge);
+//				}
+//				if(currentNode != undefined){
+//
+//					rgraph.config.Events.onMouseLeave(currentNode);
+//				}
 
 				//if clicked a leaf-node
 				if (numSubnodes <= 1)
