@@ -63,11 +63,13 @@ h4 {
     background-position:center left;
     border-right:1px solid #ddd;
 	float:right;
-	width:398px;
+	width:388px;
 }
 
 #right-container h4{
     text-indent:8px;
+	padding-left:5px;
+	padding-right:5px;
 }
 
 #center-container {
