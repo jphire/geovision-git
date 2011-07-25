@@ -169,7 +169,7 @@ div#alignment{
 	background-color: #E6F2EA;
 }
 div#closealign{
-	text-align: right;
+	text-align: left;
 	font-size: 10px;
 	cursor: pointer;
 }
