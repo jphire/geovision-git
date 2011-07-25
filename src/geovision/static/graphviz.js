@@ -427,13 +427,13 @@ function initGraph(json)
 			{
 				if(ctxMenuOpen)
 					return;
-
-				if(currentEdge != undefined){
-					rgraph.config.Events.onMouseLeave(currentEdge);
-				}
-				if(currentNode != undefined){					
-					rgraph.config.Events.onMouseLeave(currentNode);
-				}
+//
+//				if(currentEdge != undefined){
+//					rgraph.config.Events.onMouseLeave(currentEdge);
+//				}
+//				if(currentNode != undefined){
+//					rgraph.config.Events.onMouseLeave(currentNode);
+//				}
 
 				if (node.nodeTo)
 				{
