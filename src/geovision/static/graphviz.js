@@ -378,7 +378,7 @@ function initGraph(json)
 				{
 					if(node.collapsed) 
                     {
-						if(busy)
+						if(busy)if(node.data.type != 'enzyme')
 							return;
 
                         busy = 'expanding';
@@ -414,7 +414,10 @@ function initGraph(json)
 						$('#load').html("");
     				}
 				}
-				//show clicked node's info in the right column
+				if(node.data.type == 'enzyme'){
+					$.getJSON('/enzyme_data?id=' + currentNode.id, showEnzymeData);
+				}
+			//show clicked node's info in the right column
 				$jit.id('inner-details').innerHTML = ""
 				$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
 				if(node.data.type != 'enzyme')
