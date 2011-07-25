@@ -127,7 +127,11 @@
 						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
 					</form>
 				</div>
-
+				<div id="removenodes">
+					<form id="removeform" action="" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
+						<input id="removebutton" type="submit" value="Remove untagged nodes" size="10"/><br/>
+					</form>
+				</div>
 			</div>
 
 			<div id="log"></div>
