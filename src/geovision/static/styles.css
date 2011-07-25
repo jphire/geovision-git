@@ -169,7 +169,8 @@ div#alignment{
 	background-color: #E6F2EA;
 }
 div#closealign{
-	text-align: left;
+	text-align: right;
+	clear:both;
 	font-size: 10px;
 	cursor: pointer;
 }
