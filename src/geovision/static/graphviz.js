@@ -945,7 +945,7 @@ function filter(bitscore) {
 			else {
 				target = edge.nodeFrom;
 			}
-			if (typeof(edge.data.bitscore) == "undefined" || edge.data.bitscore >= bitscore || target.traversalTag){
+			if (typeof(edge.data.bitscore) == "undefined" || edge.data.bitscore >= bitscore || target.traversalTag){ //we don't want to hide enzyme edges, as they don't have a bitscore
 				var node = edge.nodeTo;
 				node.ignore = false;
 				node.setData('alpha', node.Node.alpha, "current");
@@ -964,6 +964,7 @@ function filter(bitscore) {
 	}
 }
 
+/*helper function for filtering*/
 function filterContract(node, opt) {
 	var viz = this.viz;
 	opt = $jit.util.merge(this.options, viz.config, opt || {}, {
