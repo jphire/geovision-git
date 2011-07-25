@@ -35,12 +35,12 @@ class RegistrationTests(TestCase):
 		self.assertEqual(r.status_code, 200)
 	def test_logging_in_nonexistent_user(self):
 		r = self.client.post('/logging_in', {'username': 'quux', 'csrfmiddlewaretoken': '380af29ce1b6e7b00f6a0aa750e48dc8', 'password': 'quux', })
-		self.assertContains(r, 'The username or password was incorrect')
+		self.assertContains(r, 'Username or password was incorrect.')
 	def test_logging_in_wrong_password(self):
 		self.test_registering_succesful()
 		r = self.client.post('/logging_in', {'username': 'def', 'csrfmiddlewaretoken': '380af29ce1b6e7b00f6a0aa750e48dc8', 'password': "' OR 1=1;--", })
-		self.assertContains(r, 'The username or password was incorrect')
+		self.assertContains(r, 'Username or password was incorrect.')
 	def test_logging_in_succesfully(self):
 		self.test_registering_succesful()
 		r = self.client.post('/logging_in', {'username': 'def', 'csrfmiddlewaretoken': '380af29ce1b6e7b00f6a0aa750e48dc8', 'password': 'def', })
-		self.assertNotContains(r, 'The username or password was incorrect', status_code=302)
+		self.assertNotContains(r, 'Username or password was incorrect.', status_code=302)
