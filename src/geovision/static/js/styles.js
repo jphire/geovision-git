@@ -59,8 +59,7 @@ RGraph.Plot.EdgeTypes.implement({
                 to = adj.nodeTo.pos.getc(),
                 dim = adj.getData('dim'),
                 direction = adj.data.$direction,
-//                swap = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
-                swap = false; // XXX - may cause bugs
+                swap = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
 
             var ctx = canvas.getCtx();
             Complex = $jit.Complex;

@@ -19,12 +19,12 @@ import json
 import re
 import urllib
 
-def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits):
+def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits, offset):
 	# for testing only
-	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits)
+	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits, offset)
 
 	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits}.items()),
-		urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth}.items()))
+					urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth, 'offset': offset}.items()))
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
@@ -43,7 +43,7 @@ def testgraph(request):
 
 @login_required
 def graphjson(request):
-	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': ''}
+	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset': '0'}
 #	p = dict(map(lambda k: (k, request.GET[k]), ('enzyme', 'read', 'dbentry', 'bitscore', 'evalue', 'depth', 'hits')))
 	for (k,v) in request.GET.items():
 		p[k] = v
@@ -52,7 +52,7 @@ def graphjson(request):
 		if p[k] == '':
 			p[k] = None
 	try:
-		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']))
+		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), int(p['offset']))
 	except Exception as e:
 		out = json.dumps({'error_message': str(e)})
 	return HttpResponse(out, mimetype='text/plain')
@@ -74,7 +74,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			elif num_results == 1: return enzyme.ec_number
 			else: return ec_numbers
 
-	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10, 'enzyme': '', 'read': '', 'dbentry': ''}
+	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0}
 	for k in condition_dict.keys():
 		try:
 			if request.POST[k] != '':
@@ -85,6 +85,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	evalue = float(condition_dict['evalue'])
 	depth = int(condition_dict['depth'])
 	hits = int(condition_dict['hits'])
+	offset = int(condition_dict['offset'])
 
 	json_url = ('', '')
 	search_fields = filter(lambda k: condition_dict[k] != '', ['enzyme', 'read', 'dbentry'])
@@ -93,11 +94,11 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			'error_message': "Error: You can only enter one of the following: Enzyme, DB entry id, Read id.",
 		}, condition_dict))
 	if condition_dict['dbentry'] != '':
-		json_url = create_json(None, None, condition_dict['dbentry'], bitscore, evalue, depth, hits)
+		json_url = create_json(None, None, condition_dict['dbentry'], bitscore, evalue, depth, hits, offset)
 	elif condition_dict['enzyme'] != '':
 		result = lookup_enzyme(condition_dict['enzyme'])
 		if isinstance(result, basestring):
-			json_url = create_json(result, None, None, bitscore, evalue, depth, hits)
+			json_url = create_json(result, None, None, bitscore, evalue, depth, hits, offset)
 		elif result == None:
 			return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
 		else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': result}))
