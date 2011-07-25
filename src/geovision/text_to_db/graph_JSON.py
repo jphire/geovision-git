@@ -132,7 +132,7 @@ class QueryToJSON:
 	"""
 	def __init__(self, enzyme=None, db_entry=None, read=None,
 				e_value_limit=1, bitscore_limit=0, depth_limit=2,
-				max_amount=5):
+				max_amount=5, samples=[]):
 		self.enzyme = enzyme
 		self.db_entry = db_entry
 		self.read = read
@@ -140,6 +140,7 @@ class QueryToJSON:
 		self.bitscore_limit = bitscore_limit
 		self.depth_limit = depth_limit
 		self.max_amount = max_amount
+		self.samples = samples
 		self.nodes = []
 		if db_entry is None:
 			if read is None:
@@ -218,6 +219,7 @@ class QueryToJSON:
 
 		if param.type == "db_entry":
 			query = query.filter(db_entry=param.dict["id"]).select_related('read').defer(*('read__' + x for x in Read.deferred_fields))
+			query = query.filter(read__sample__in=self.samples)
 		elif param.type == "read":
 			query = query.filter(read=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
 
@@ -225,7 +227,7 @@ class QueryToJSON:
 			query = BlastEcs.objects.filter(ec=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
 		else:
 			raise RuntimeError('bad param type "%s"' % (param.type,))
-			
+		
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')

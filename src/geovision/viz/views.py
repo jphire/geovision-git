@@ -43,7 +43,7 @@ def testgraph(request):
 
 @login_required
 def graphjson(request):
-	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': ''}
+	p = { 'samples': '', 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': ''}
 #	p = dict(map(lambda k: (k, request.GET[k]), ('enzyme', 'read', 'dbentry', 'bitscore', 'evalue', 'depth', 'hits')))
 	for (k,v) in request.GET.items():
 		p[k] = v
@@ -52,7 +52,7 @@ def graphjson(request):
 		if p[k] == '':
 			p[k] = None
 	try:
-		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']))
+		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits'], p['samples']))
 	except Exception as e:
 		out = json.dumps({'error_message': str(e)})
 	return HttpResponse(out, mimetype='text/plain')
@@ -74,7 +74,17 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			elif num_results == 1: return enzyme.ec_number
 			else: return ec_numbers
 
-	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10, 'enzyme': '', 'read': '', 'dbentry': ''}
+	user_collections = []
+	all_collections = Collection.objects.all()
+	for collection in all_collections:
+		if request.user in collection.users:
+			user_collections.append(collection)
+	
+	user_samples = []
+	for obj in user_collections:
+		user_samples.extend(obj.samples)
+
+	condition_dict = { 'samples': user_samples, 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10, 'enzyme': '', 'read': '', 'dbentry': ''}
 	for k in condition_dict.keys():
 		try:
 			if request.POST[k] != '':
