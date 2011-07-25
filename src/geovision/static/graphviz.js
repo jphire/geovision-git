@@ -164,11 +164,10 @@ function init(){
 		'shadow': false,
 		'bindings': {
 			'close': function() { },
-			'n_center': function() {
-				console.log(currentNode.id);
-				var id = currentNode.id;
+			'n_center': function() { 
 				busy = true;
-				rgraph.onClick(id, { 
+				var id = currentNode.id;
+				rgraph.op.centerNode(id, { 
 					type: 'fade:con', 
 					fps:30, duration: 500, 
 					hideLabels: false, 
@@ -633,7 +632,8 @@ function initGraph(json)
 	rgraph.op.tagParents = tagParents;
 	rgraph.op.tagSubgraph = tagSubgraph;
 	rgraph.op.tagSubnodes = tagSubnodes;
-	rgraph.centerToNode = centerToNode;
+	rgraph.op.centerNode = centerNode;
+//	irgraph.op.removeSubgraphNodes = removeSubgraphNodes;
 }
 
 var alignmentopen = false;
@@ -744,6 +744,25 @@ function colorEdges(){
 	});
 }
 
+//function removeSubgraphNodes(node, opt) {
+//	var viz = this.viz;
+//	if (!node || node.id === viz.root) return;
+//	busy = true;
+//	(function remsubn(n) {
+//		n.eachSubnode(function(child) {
+//			if (!checkRootTagpath(child)) {
+//				remsubn(child);
+//			}
+//		});
+//		if (!node.traversalTag) {
+//			viz.op.removeNode(n.id, opt);
+//		}
+//	})(node);
+//	busy = false;
+//}
+
+
+
 /*
  * Modified version of the original contract function for removing unnecessary
  * nodes while traversing the graph.
@@ -798,8 +817,23 @@ function checkRootTagpath(node) {
 	return false;
 }
 
+function removeUntaggedNodes(opt) {
+	var nodesToRemove = new Array();
+	rgraph.graph.eachNode(function(node) {
+				if (!node.traversalTag) {
+					nodesToRemove.push(node.id);
+				}
+			});
+	rgraph.op.removeNode(nodesToRemove, opt);
+}
+
+function centerNode(nodeId, opt) {
+	tagNode(rgraph.graph.getNode(nodeId));
+	rgraph.onClick(nodeId, opt);
+}
+
 function tagNode(node) {
-	if (!checkRootTagpath(node)) tagParents(node);
+	if (!checkRootTagpath(node)) rgraph.op.tagParents(node);
 	node.traversalTag = true;
 	rgraph.op.viz.refresh();
 }
