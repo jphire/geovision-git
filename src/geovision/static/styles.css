@@ -174,7 +174,7 @@ div#closealign{
 	font-size: 11px;
 	cursor: pointer;
 }
-span#filterlink{
+span#filtertext{
 	text-decoration: underline;
 }
 div#filter{
@@ -197,4 +197,11 @@ span#load{
 span#helplink{
 	text-decoration: underline;
 	cursor: pointer;
+}
+span#settingslink{
+	text-decoration: underline;
+	cursor: pointer;
+}
+div#settings{
+	display:none;
 }

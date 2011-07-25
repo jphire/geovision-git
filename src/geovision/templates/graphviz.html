@@ -119,6 +119,14 @@ $(function() {
 
 			<div id="right-container">
 				<div id="inner-details"></div>
+				<span id="settingslink">Your settings</span>
+				<div id="settings">
+					<form id="settingsform" action="" method="post">
+						<span id="settingserror"></span>
+						<input size="10" type="text" name="bitscorefilter" id="asdf" value=""/><br/>
+						<input id="settingsbutton" type="submit" value="Save your settings" size="10"/><br/>
+					</form>
+				</div>
 				<span id="helplink">Help</span>
 				<div id="help">
 					Right click on an edge to show alignment of read sequence and database sequence (upper is read). The data opens under the graph and only one alignment can be visible at the same time.
@@ -136,7 +144,7 @@ $(function() {
 					</form>
 				</div>
 				<br/>
-				<span id="filterlink">Filter graph</span>
+				<span id="filtertext">Filter graph</span>
 				<div id="filter">
 					<form id="filterform" action="" method="post">
 						<span id="filtererror"></span>

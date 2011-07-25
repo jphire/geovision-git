@@ -1,5 +1,5 @@
 var opened = false;
-var filteropen = false;
+var settingsopen = false;
 var helpopen = false;
 
 function openSearch()
@@ -32,14 +32,14 @@ function closeSearch(e)
 jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.
  */
-/*	$('#filterlink').click(function() {
-		if (filteropen){
-			$('#filter').slideDown();
-			filteropen = false;
+	$('#settingslink').click(function() {
+		if (settingsopen){
+			$('#settings').slideDown();
+			settingsopen = false;
 		}
 		else{
-			$('#filter').slideUp();
-			filteropen = true;
+			$('#settings').slideUp();
+			settingsopen = true;
 		}
 	})
 */
