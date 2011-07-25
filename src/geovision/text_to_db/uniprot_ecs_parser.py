@@ -1,5 +1,5 @@
 import os
-
+import sys
 from geovision.viz.models import DbUniprotEcs as EcsEntry
 
 class EcsFileParser:

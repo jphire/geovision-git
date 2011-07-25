@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 BASE=/home/group/urenzyme/geoviz
 EXCLUDE=toy
 

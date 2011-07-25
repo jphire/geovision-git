@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 BASE=/home/group/urenzyme/geoviz/databases/
 
 for f in uniprot silva/lsu silva/ssu frnadb

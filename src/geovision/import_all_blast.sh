@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 BASE=/home/group/urenzyme/geoviz/blast/results
 EXCLUDE="silva-all|SRR|AAFX"
 

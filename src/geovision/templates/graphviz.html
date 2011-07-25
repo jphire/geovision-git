@@ -5,26 +5,33 @@
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 
-
-<script language="javascript" type="text/javascript">
-	var staticurl = "{{ STATIC_URL }}";
-</script>
-
 <link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
 <link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />	
 
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
 
-<!-- Example File -->
+<!-- RGraph configuration settings -->
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/events.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/labels.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/moreinfo.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/styles.js"></script>
+<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/tips.js"></script>
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
 
-<!-- JSON File -->
-{% if json_base_url %}
 <script language="javascript" type="text/javascript">
-	var json_base_url = "{{ json_base_url|safe }}";
+$(function() {
+{% if json_base_url %}
+	json_base_url = "{{ json_base_url|safe }}";
  	$.getJSON(json_base_url + "&{{ json_query_url_part|safe }}", function(data) { initGraph(data); });
-</script>
+{% else %}
+	initGraph(null);
 {% endif %}
+});
+</script>
 <!-- jQuery-UI, for autocomplete -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
 
@@ -81,7 +88,7 @@
 
 {% endblock %}
 {% block content %}
-<body onload="init();">
+<body>
     <div class="contextMenu" id="nodeMenu">
         <ul> 
              <li id="close">Close menu</li>
