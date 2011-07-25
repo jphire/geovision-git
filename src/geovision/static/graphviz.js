@@ -430,11 +430,9 @@ function initGraph(json)
 					return;
 
 				if(currentEdge != undefined){
-					
 					rgraph.config.Events.onMouseLeave(currentEdge);
 				}
-				if(currentNode != undefined){
-					
+				if(currentNode != undefined){					
 					rgraph.config.Events.onMouseLeave(currentNode);
 				}
 
@@ -466,7 +464,6 @@ function initGraph(json)
 
 					node.data.$dim = rgraph.config.Node.dim + 3;
 
-					return;
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -509,7 +506,6 @@ function initGraph(json)
 					return; // highlighting slows everything down way too much
 					object.data.$dim = rgraph.config.Node.dim;
 
-					return;
 					rgraph.fx.animate(
 					{
 						modes: ['node-property:dim'],
@@ -805,6 +801,7 @@ function checkRootTagpath(node) {
 function tagNode(node) {
 	if (!checkRootTagpath(node)) tagParents(node);
 	node.traversalTag = true;
+	rgraph.op.viz.refresh();
 }
 
 /* 
@@ -818,6 +815,7 @@ function tagParents(node) {
 		parents = parents[0].getParents();
 	}
 	node.traversalTag = true;
+	rgraph.op.viz.refresh();
 }
 
 function tagSubnodes(node) {
@@ -827,6 +825,7 @@ function tagSubnodes(node) {
 		console.log("Child " + child.id + " tagged");
 	});
 	node.traversalTag = true;
+	rgraph.op.viz.refresh();
 }
 
 function tagSubgraph(node) {
@@ -836,6 +835,7 @@ function tagSubgraph(node) {
 		console.log("Child " + child.id + " tagged");
 	});
 	node.traversalTag = true;
+	rgraph.op.viz.refresh();
 }
 
 /* Function to list all names, reactions and pathways related to an enzyme in the right container */
