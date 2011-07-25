@@ -175,12 +175,9 @@ div#closealign{
 }
 span#filterlink{
 	text-decoration: underline;
-	cursor: pointer;
 }
 div#filter{
-	height:0px;
-	text-align: center;
-	display: none;
+	text-align: left;
 }
 #filtererror{
 	color: red;

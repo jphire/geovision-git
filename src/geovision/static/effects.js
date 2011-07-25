@@ -32,7 +32,7 @@ function closeSearch(e)
 jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.
  */
-	$('#filterlink').click(function() {
+/*	$('#filterlink').click(function() {
 		if (filteropen){
 			$('#filter').slideDown();
 			filteropen = false;
@@ -42,6 +42,7 @@ jQuery(function($) {
 			filteropen = true;
 		}
 	})
+*/
 	$('#helplink').click(function() {
 		if (helpopen){
 			$('#help').slideDown();
