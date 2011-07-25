@@ -177,7 +177,7 @@ function init(){
 					}
 				});
 			},
-			'e_align': function() { alignmentfunction(currentEdge.data.id); },
+			'e_align': function() { alignmentfunction(currentEdge.data.blast_id); },
 			'n_tag': function() { 
 				if (currentNode.traversalTag != true) {
 					tagNode(currentNode);
