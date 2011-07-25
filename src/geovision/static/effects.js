@@ -30,7 +30,7 @@ function closeSearch(e)
 	}
 }
 jQuery(function($) {
-/*! Function to open the graph-option-navigation and the alignment with a nice animation.
+/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.
  */
 	$('#filterlink').click(function() {
 		if (filteropen){
