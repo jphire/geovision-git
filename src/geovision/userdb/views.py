@@ -66,6 +66,6 @@ def about(request):
 @login_required
 def savesettings(request):
 	if request.POST['defaultsettings'] is None:
-		//get settings from POST and save
-	else: //must be restoring defaults then...
-		//set users settings to default
+		#get settings from POST and save
+	else: #must be restoring defaults then...
+		#set users settings to default
