@@ -30,8 +30,7 @@ function closeSearch(e)
 	}
 }
 jQuery(function($) {
-/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.
- */
+/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
 	$('#settingslink').click(function() {
 		if (settingsopen){
 			$('#settings').slideDown();
@@ -42,7 +41,6 @@ jQuery(function($) {
 			settingsopen = true;
 		}
 	})
-*/
 	$('#helplink').click(function() {
 		if (helpopen){
 			$('#help').slideDown();
