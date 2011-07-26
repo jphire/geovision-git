@@ -121,11 +121,14 @@ $(function() {
 				<div id="inner-details"></div>
 				<span id="settingslink">Your settings</span><br/>
 				<div id="settings">
-					<form id="settingsform" action="" method="post">
-						<span id="settingserror"></span>
-						<input size="10" type="text" name="bitscorefilter" id="asdf" value=""/><br/>
-						<input id="settingsbutton" type="submit" value="Save your settings" size="10"/><br/>
+					<form id="settingsform" action="savesettings" method="post">
+						<label>Animations:</label><br/>
+						<input type="radio" name="group1" value="animations_on"> On<br/>
+						<input type="radio" name="group1" value="animations_off"> Off<br/>
+						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10"/><br/>
+						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
 					</form>
+					<br/><br/>
 				</div>
 				<span id="helplink">Help</span>
 				<div id="help">

@@ -63,3 +63,9 @@ def logging_out(request):
 
 def about(request):
 	return render_to_response("about.html")
+@login_required
+def savesettings:
+	if request.POST['savesettings'] is None:
+
+	else: //must be restoring defaults then...
+		

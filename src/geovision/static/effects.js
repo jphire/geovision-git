@@ -32,7 +32,7 @@ function closeSearch(e)
 jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
 	$('#settingslink').click(function() {
-		if (settingsopen){
+		if (!settingsopen){
 			$('#settings').slideDown();
 			settingsopen = false;
 		}
@@ -42,7 +42,7 @@ jQuery(function($) {
 		}
 	})
 	$('#helplink').click(function() {
-		if (helpopen){
+		if (!helpopen){
 			$('#help').slideDown();
 			helpopen = false;
 		}
