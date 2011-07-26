@@ -2,11 +2,11 @@
     {% block additional_title %}- Login{% endblock %}
     {% block allcontent %}
     {% if error_message %}<div class="error">{{ error_message }}</div>{% endif %}
-	<script>
+	<script type="javascript" >
 		if ($.browser.msie || $.browser.opera || $.browser.mozilla && $.browser.version.slice(0,3) > "1.9"){
-			document.write("<div class='error'>Your browser might not be supported by this software<br/>
-			Please try the latest version of <a href='http://www.google.com/chrome'>chrome</a> or <a href='http://mozilla.org'>firefox</a>.
-			</div>")
+			document.write("<div class='error'>Your browser might not be supported by this software<br/>"+
+			Please try the latest version of <a href='http://www.google.com/chrome'>chrome</a> or <a href='http://mozilla.org'>firefox</a>."+
+			"</div>")
 		}
 	</script>
     <div  class="greenbox" id="login">
