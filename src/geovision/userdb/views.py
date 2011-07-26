@@ -67,5 +67,5 @@ def about(request):
 def savesettings(request):
 	if request.POST['defaultsettings'] is None:
 		#get settings from POST and save
-	else: #must be restoring defaults then...
+	#else: #must be restoring defaults then...
 		#set users settings to default
