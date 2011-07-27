@@ -151,3 +151,12 @@ def enzyme_data(request):
 
 	return HttpResponse(json.dumps({'id': searchterm, 'names': names, 'pathways': pathways, 'reactions': reactions}), mimetype='text/plain')
 
+@login_required
+def save_settings(request):
+		try:
+				profile = request.user.get_profile()
+				profile.settings = request.POST['settings']
+				profile.save()
+				return HttpResponse('ok')
+		except KeyError:
+			return HttpResponse('missing "settings" parameter')
