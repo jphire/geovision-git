@@ -33,6 +33,7 @@ function initGraph(json)
 
 	colorEdges();
 	rgraph.refresh();
+	rgraph.op.options = $jit.util.merge(rgraph.op.options, (settings.animationSettings || {}));
 
     rgraph.op.contractForTraversal = contractForTraversal;
 	rgraph.op.filterContract = filterContract;

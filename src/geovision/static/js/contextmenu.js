@@ -23,11 +23,8 @@ function initContextMenu()
 				console.log(currentNode.id);
 				var id = currentNode.id;
 				busy = true;
-				rgraph.onClick(id, { 
-					type: 'fade:con', 
-					fps:30, duration: 500, 
-					hideLabels: false, 
-					onComplete: function() { 
+				rgraph.onClick(id, {
+                    onComplete: function() {
 						busy = false;
 						rgraph.canvas.getElement().style.cursor = '';
 					}
