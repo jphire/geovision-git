@@ -22,6 +22,7 @@ urlpatterns = patterns('',
 	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
 
 	(r'^enzyme_data$', 'viz.views.enzyme_data'),
+	(r'^save_settings$', 'viz.views.save_settings'),
 
 	(r'^metaboly_json$', 'meta.views.metaboly_json'),
 	(r'^show_metaboly$', 'meta.views.show_metaboly'),
