@@ -11,7 +11,7 @@ class MyUserAdmin(UserAdmin):
 	fieldsets = (
 		(None, {'fields': ('username', 'password')}),
 		(_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
-		(_('Permissions'), {'fields': ('is_active', 'is_staff','is_superuser')}),
+		(_('Permissions'), {'fields': ('is_active', 'is_staff',)}),
 	)
 def setup_admin():
 	admin.site.unregister(Group)
