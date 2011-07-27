@@ -71,12 +71,14 @@ function showEnzymeData (json){
 	ec = json.id;
 
 	var html = '<br/>';
+	/*
 	if(json.reactions)
 	{
 		html += '<strong>Reactions of ' + ec + '</strong><br/>';
 		html += $.map(json.reactions, function(reac){
 			return 'R' + reac.id + ': ' + reac.name + ' <a target="_blank" href="http://www.genome.jp/dbget-bin/www_bget?r' + reac.id + '">[KEGG]</a><br/>'; }).join('');
 	}
+	*/
 	// KEGG pathway url coloring params: pwnumber / ecnumber <TAB> #bgcol,#fgcol / ecnumber <TAB> #bgcol,fgcol ....
 	if(json.pathways)
 	{
@@ -84,7 +86,7 @@ function showEnzymeData (json){
 		html += $.map(json.pathways, function(pw){
 			var pathwayEnzymes = $.grep(pw.enzymes, function(x) { return enzymes[x]; });
 			var colorUrl = escape($.map(pathwayEnzymes, function(ec) { return ec + "\t" + enzymes[ec].data.color + ',#000000'; }).join('/'));
-			return pw.id + ': ' + pw.name + '<a target="_blank" href="http://www.genome.jp/kegg-bin/show_pathway?map' + pw.id + '/' + colorUrl + '">[KEGG]</a><br/>'; }).join('');
+			return  '<a target="_blank" href="http://www.genome.jp/kegg-bin/show_pathway?map' + pw.id + '/' + colorUrl + '">' + pw.id + ': ' + pw.name + '</a><br/>'; }).join('');
 	}
 
 	names = json.names;
