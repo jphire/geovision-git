@@ -226,7 +226,7 @@ class QueryToJSON:
 			query = BlastEcs.objects.filter(ec=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
 		else:
 			raise RuntimeError('bad param type "%s"' % (param.type,))
-			
+		
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gte = self.bitscore_limit)
 		query = query.order_by('-bitscore')

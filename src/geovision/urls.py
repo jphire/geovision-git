@@ -13,6 +13,7 @@ urlpatterns = patterns('',
 	(r'^logging_in$', 'userdb.views.logging_in'),
 	(r'^logging_out$', 'userdb.views.logging_out'),
 	(r'^about$', 'userdb.views.about'),
+	(r'^savesettings$', 'userdb.views.savesettings'),
 
 	(r'^testgraph$', 'viz.views.testgraph'),
 	(r'^graphrefresh$', 'viz.views.graphrefresh'),
@@ -21,12 +22,13 @@ urlpatterns = patterns('',
 	(r'^autocomplete$', 'viz.views.enzyme_autocompletion'),
 
 	(r'^enzyme_data$', 'viz.views.enzyme_data'),
+	(r'^save_settings$', 'viz.views.save_settings'),
 
 	(r'^metaboly_json$', 'meta.views.metaboly_json'),
 	(r'^show_metaboly$', 'meta.views.show_metaboly'),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-	(r'^admin/?', include(admin.site.urls)),
+	(r'^admin/', include(admin.site.urls)),
 
-	(r'', 'userdb.views.loginpage'), #everything else regirects to login for now
+	#(r'', 'userdb.views.loginpage'), #everything else regirects to login for now
 )

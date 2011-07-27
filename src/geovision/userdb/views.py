@@ -15,6 +15,7 @@ def loginpage(request):
 		return render_to_response("login.html", { }, context_instance=RequestContext(request) )
 def register(request):
 	return render_to_response("register.html", { }, context_instance=RequestContext(request) )
+
 def registering(request):
 	datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
 	for data in datatable:
@@ -63,3 +64,16 @@ def logging_out(request):
 
 def about(request):
 	return render_to_response("about.html")
+@login_required
+def savesettings(request):
+		profile = request.user.get_profile()
+		if 'settings' in request.POST:
+				profile.settings = request.POST['settings']
+				profile.save()
+				return redirect('graphrefresh?settingsmessage="settings saved"')
+		elif 'defaultsettings' in request.POST:
+			profile.settings = '{}'
+			profile.save()
+			return redirect('graphrefresh?settingsmessage="defaults restored"')
+		else:
+			return redirect('graphrefresh?settingsmessage="error"')

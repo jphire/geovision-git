@@ -20,13 +20,18 @@ var labelType, useGradients, nativeTextSupport, animate;
 var rgraph;
 var RGraph = $jit.RGraph;
 var busy = false;
+var settings = {
+			canvaswidth: 600,
+			canvasheight: 600
+};
+			
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width: 600,
-		height: 600,
+		width: settings.canvaswidth,
+		height: settings.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
