@@ -67,10 +67,24 @@ def about(request):
 @login_required
 def savesettings(request):
 		profile = request.user.get_profile()
-		if 'settings' in request.POST:
-				profile.settings = request.POST['settings']
-				profile.save()
-				return redirect('graphrefresh?settingsmessage="settings saved"')
+		numericsMakeSense = False;
+		if (request.POST['canvas_x'].isdigit() and request.POST['canvas_y'].isdigit() and request.POST['duration'].isdigit()):
+			numericsMakeSense = True;
+		if 'savesettings' in request.POST and numericsMakeSense:
+			type = ''
+			transition = ''
+			if request.POST['group1']==animation_on:
+				type = 'animate'
+			else:
+				type = 'replot'
+			if request.POST['animationtype']=='linear':
+				transition = '$jit.Trans.linear'
+			else:
+				transition = '$jit.Trans.'+'request.POST["animationtype"]'+'.'+'request.POST["animationsubtype"]'
+			settings = json.dumps({'settings': {'canvaswidth': request.POST['canvas_x'], 'canvasheight': request.POST['canvas_y']}, 'animationsettings': {'type': type, 'duration': request.POST['duration'], 'transition': transition}})
+			profile.settings = settings
+			profile.save()
+			return redirect('graphrefresh?settingsmessage="settings saved"')
 		elif 'defaultsettings' in request.POST:
 			profile.settings = '{}'
 			profile.save()
