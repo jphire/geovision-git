@@ -74,7 +74,7 @@ def savesettings(request):
 		duration = request.POST['duration']
 		canvas_x = request.POST['canvas_x']
 		canvas_y = request.POST['canvas_y']
-		if ((canvas_x.isdigit() or canvas_x=='') and (canvas_y.isdigit() or canvas_y=='') and (duration.isdigit()) or duration==''):
+		if ((canvas_x.isdigit() or canvas_x=='') and (canvas_y.isdigit() or canvas_y=='') and (duration.isdigit() or duration=='')):
 			numericsMakeSense = True;
 		if (duration==''):
 			duration=1000;
