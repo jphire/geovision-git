@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 	(r'^logging_in$', 'userdb.views.logging_in'),
 	(r'^logging_out$', 'userdb.views.logging_out'),
 	(r'^about$', 'userdb.views.about'),
-	#(r'^savesettings$', 'userdb.views.savesettings'),
+	(r'^savesettings$', 'userdb.views.savesettings'),
 
 	(r'^testgraph$', 'viz.views.testgraph'),
 	(r'^graphrefresh$', 'viz.views.graphrefresh'),

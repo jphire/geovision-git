@@ -34,21 +34,21 @@ jQuery(function($) {
 	$('#settingslink').click(function() {
 		if (!settingsopen){
 			$('#settings').slideDown();
-			settingsopen = false;
+			settingsopen = true;
 		}
 		else{
 			$('#settings').slideUp();
-			settingsopen = true;
+			settingsopen = false;
 		}
 	})
 	$('#helplink').click(function() {
 		if (!helpopen){
 			$('#help').slideDown();
-			helpopen = false;
+			helpopen = true;
 		}
 		else{
 			$('#help').slideUp();
-			helpopen = true;
+			helpopen = false;
 		}
 	})
 	$('#filterform').submit(function() {
