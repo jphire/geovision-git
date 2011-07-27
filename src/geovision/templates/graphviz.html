@@ -125,13 +125,13 @@ var settings = {{user_settings}}
 					{%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}
 					<form id="settingsform" action="savesettings" method="post">
 						<label>Canvas size:</label><br/>
-						<input type="text" size="10" name="canvas_x" value=""> x <input type="text" size="10" name="canvas_y" value=""><br/>
+						<input type="text" size="6" name="canvas_x" value=""> x <input type="text" size="6" name="canvas_y" value=""><br/>
 						<label>Animations:</label><br/>
 						<input type="radio" name="group1" value="animations_on"> On<br/>
 						<input type="radio" name="group1" value="animations_off"> Off<br/>
-						<label>Animation speed:</label>
-						<input size="10" type="text" name="duration" value="" />
-						<label>Animation type:</label>
+						<label>Animation speed:</label><br/>
+						<input size="7" type="text" name="duration" value="" />
+						<label>Animation type:</label><br/>
 						<select id="animationtype">
 						  <option value="linear">Linear</option>
 						  <option value="quadratic">Quadratic</option>
