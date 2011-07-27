@@ -160,6 +160,8 @@ INSTALLED_APPS = (
 				  # Uncomment this to enable Testmaker (http://ericholscher.com/blog/2008/jul/26/testmaker-002-even-easier-automated-testing-django/)
 				  # 'test_utils',
 				  )
+AUTH_PROFILE_MODULE = "userdb.UserProfile"
+
 if RUNNING_ON_USERS:
 	INSTALLED_APPS += ('debug_toolbar',)
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
