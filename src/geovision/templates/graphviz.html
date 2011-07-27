@@ -124,6 +124,7 @@ var settings = "{{user_settings}}";
 				<div id="settings">
 					{%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}
 					<form id="settingsform" action="savesettings" method="post">
+						{% csrf_token %}
 						<label>Canvas size:</label><br/>
 						<input type="text" size="6" name="canvas_x" value=""> x <input type="text" size="6" name="canvas_y" value=""><br/>
 						<label>Animations:</label><br/>
