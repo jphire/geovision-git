@@ -70,14 +70,17 @@ def about(request):
 def savesettings(request):
 		profile = request.user.get_profile()
 		numericsMakeSense = False;#check to see if numeric values make sense. Empty strings are ok, then we just asume they want the defaults
-		if ((request.POST['canvas_x'].isdigit() or request.POST['canvas_x']=='') and (request.POST['canvas_y'].isdigit() or request.POST['canvas_y']=='') and (request.POST['duration'].isdigit()) or request.POST['duration']==''):
+		duration = request.POST['duration']
+		canvas_x = request.POST['canvas_x']
+		canvas_y = request.POST['canvas_y']
+		if ((canvas_x.isdigit() or canvas_x=='') and (canvas_y.isdigit() or canvas_y=='') and (duration.isdigit()) or duration==''):
 			numericsMakeSense = True;
-		if (request.POST['duration']==''):
-			request.POST['duration']=1000;
-		if (request.POST['canvas_x']==''):
-			request.POST['canvas_x']=600
-		if (request.POST['canvas_y']==''):
-			request.POST['canvas_y']=600
+		if (duration==''):
+			duration=1000;
+		if (canvas_x==''):
+			canvas_x=600
+		if (canvas_y==''):
+			canvas_y=600
 		if 'savesettings' in request.POST and numericsMakeSense:
 			type = ''
 			transition = ''
@@ -89,7 +92,7 @@ def savesettings(request):
 				transition = '$jit.Trans.linear'
 			else:
 				transition = '$jit.Trans.'+'request.POST["animationtype"]'+'.'+'request.POST["animationsubtype"]'
-			settings = json.dumps({'settings': {'canvaswidth': request.POST['canvas_x'], 'canvasheight': request.POST['canvas_y']}, 'animationsettings': {'type': type, 'duration': request.POST['duration'], 'transition': transition}})
+			settings = json.dumps({'settings': {'canvaswidth': canvas_x, 'canvasheight': canvas_y}, 'animationsettings': {'type': type, 'duration': duration, 'transition': transition}})
 			profile.settings = settings
 			profile.save()
 			return HttpResponseRedirect('/graphrefresh?settingsmessage=settings saved')
