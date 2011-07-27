@@ -11,3 +11,7 @@ class Collection(models.Model):
 	users = models.ManyToManyField(User, related_name='collections')
 	samples = models.ManyToManyField(Sample, related_name='collections')
 	owner = models.ForeignKey(User, related_name='own_collections')
+
+class UserProfile(models.Model):
+	user = models.ForeignKey(User, unique=True)
+	settings = models.TextField()
