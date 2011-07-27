@@ -86,10 +86,10 @@ def savesettings(request):
 			settings = json.dumps({'settings': {'canvaswidth': request.POST['canvas_x'], 'canvasheight': request.POST['canvas_y']}, 'animationsettings': {'type': type, 'duration': request.POST['duration'], 'transition': transition}})
 			profile.settings = settings
 			profile.save()
-			return redirect('graphrefresh?settingsmessage="settings saved"')
+			return HttpResponseRedirect('/graphrefresh?settingsmessage=settings saved')
 		elif 'defaultsettings' in request.POST:
 			profile.settings = '{}'
 			profile.save()
-			return HttpResponseRedirect(reverse('graphrefresh', kwargs={'settingsmessage': "defaults restored"}))
+			return HttpResponseRedirect('/graphrefresh?settingsmessage=defaults restored')
 		else:
-			return redirect('graphrefresh?settingsmessage="error"')
+			return HttpResponseRedirect('/graphrefresh?settingsmessage=error')
