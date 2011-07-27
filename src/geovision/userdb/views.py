@@ -70,10 +70,10 @@ def savesettings(request):
 		if 'settings' in request.POST:
 				profile.settings = request.POST['settings']
 				profile.save()
-				return HttpResponse('ok')
+				return redirect('graphrefresh?settingsmessage="settings saved"')
 		elif 'defaultsettings' in request.POST:
 			profile.settings = '{}'
 			profile.save()
-			return HttpResponse('restored to default')
+			return redirect('graphrefresh?settingsmessage="defaults restored"')
 		else:
-			return HttpResponse('error')
+			return redirect('graphrefresh?settingsmessage="error"')
