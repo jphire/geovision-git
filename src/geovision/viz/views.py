@@ -30,7 +30,7 @@ def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits, offset):
 # TODO: move somewhere else
 def render(request, template, dict={}):
 	user_settings = request.user.get_profile().settings
-	if request.GET['settingsmessage'] is None:
+	if settingsmessage in request.GET:
 		return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': user_settings})))
 	else:
 		return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': user_settings}, {'settingsmessage': request.GET['settingsmessage']})))
