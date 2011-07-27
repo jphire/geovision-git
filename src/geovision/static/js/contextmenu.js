@@ -23,12 +23,13 @@ function initContextMenu()
 				console.log(currentNode.id);
 				var id = currentNode.id;
 				busy = true;
-				rgraph.onClick(id, {
-                    onComplete: function() {
-						busy = false;
-						rgraph.canvas.getElement().style.cursor = '';
-					}
-				});
+				rgraph.onClick(id, $jit.util.merge(
+						rgraph.op.options,{
+						onComplete: function() {
+							busy = false;
+							rgraph.canvas.getElement().style.cursor = '';
+						}
+				}));
 			},
 			'e_align': function() { alignmentfunction(currentEdge.data.blast_id); },
 			'n_tag': function() { 

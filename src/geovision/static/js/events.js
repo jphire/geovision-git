@@ -45,10 +45,12 @@ Config.Events =
 						node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 					}
 					
-					rgraph.op.sum(prepareJSON(newdata), { 
-                        onMerge: colorEdges,
-						onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
-						}});
+					rgraph.op.sum(prepareJSON(newdata), $jit.util.merge(
+						rgraph.op.options,
+						{
+							onMerge: colorEdges,
+							onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
+						}}));
 					$('#load').html("");
 				}
 			);
@@ -65,13 +67,14 @@ Config.Events =
 				rgraph.canvas.getElement().style.cursor = 'wait';
 				$('#load').html("Loading...");
 				rgraph.op.expand(
-					node, 
-					{ onComplete: function() {
+					node, $jit.util.merge(
+						rgraph.op.options, 
+						{ onComplete: function() {
 							colorEdges(); 
 							busy = false; 
 							rgraph.canvas.getElement().style.cursor = ''; 
-							}});
-						$('#load').html("");
+						}}));
+				$('#load').html("");
 			}
 			else 
 			{
@@ -82,12 +85,13 @@ Config.Events =
 				rgraph.canvas.getElement().style.cursor = 'wait';
 				$('#load').html("Contracting...");
 				rgraph.op.contractForTraversal(
-                    node, 
-                    { onComplete: function() {
-							colorEdges();
-							busy = false;
-							rgraph.canvas.getElement().style.cursor = ''; 
-							}});
+                    node, $jit.util.merge(
+						rgraph.op.options, 
+						{ onComplete: function() {
+								colorEdges();
+								busy = false;
+								rgraph.canvas.getElement().style.cursor = ''; 
+								}}));
 				$('#load').html("");
 			}
 		}
