@@ -130,7 +130,7 @@ var settings = "{{user_settings}}";
 						<input type="radio" name="group1" value="animations_on"> On<br/>
 						<input type="radio" name="group1" value="animations_off"> Off<br/>
 						<label>Animation speed:</label><br/>
-						<input size="7" type="text" name="duration" value="" />
+						<input size="7" type="text" name="duration" value="" /><br/>
 						<label>Animation type:</label><br/>
 						<select name="animationtype">
 						  <option value="linear">Linear</option>
@@ -144,16 +144,16 @@ var settings = "{{user_settings}}";
 						  <option value="Bounce">Bounce</option>
 						  <option value="Back">Back</option>
 						  <option value="Elastic">Elastic</option>
-						</select>
+						</select><br/>
 						<label>Animation subtype:<br/>
-						Note: does not effect linear transitions</label>
+						Note: does not effect linear transitions</label><br/>
 						<select name="animationsubtype">
 							<option value="easeIn">Ease in</option>
 							<option value="easeOut">Ease out</option>
 							<option value="easeInOut">Ease in and out</option>
-						</select>
+						</select><br/>
 						<p><strong>Warning</strong>: changing settings refreshes the page</p>
-						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10"/><br/>
+						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10" style="margin-bottom:4px;"/><br/>
 						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
 					</form>
 					<br/>
