@@ -69,8 +69,8 @@ def about(request):
 @login_required
 def savesettings(request):
 		profile = request.user.get_profile()
-		numericsMakeSense = False;
-		if (request.POST['canvas_x'].isdigit() and request.POST['canvas_y'].isdigit() and request.POST['duration'].isdigit()):
+		numericsMakeSense = False;#check to see if numeric values make sense or are not inputted
+		if ((request.POST['canvas_x'].isdigit() or request.POST['canvas_x'] == '') and (request.POST['canvas_y'].isdigit() or request.POST['canvas_y']=='') and (request.POST['duration'].isdigit()) or request.POST['duration']==''):
 			numericsMakeSense = True;
 		if 'savesettings' in request.POST and numericsMakeSense:
 			type = ''
