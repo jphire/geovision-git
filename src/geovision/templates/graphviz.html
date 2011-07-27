@@ -124,18 +124,40 @@ var settings = {{user_settings}}
 				<div id="settings">
 					<form id="settingsform" action="savesettings" method="post">
 						<label>Canvas size:</label><br/>
-						<input type="text" name="canvas_x" value=""> x <input type="text" name="canvas_y" value=""><br/>
+						<input type="text" size="10" name="canvas_x" value=""> x <input type="text" size="10" name="canvas_y" value=""><br/>
 						<label>Animations:</label><br/>
 						<input type="radio" name="group1" value="animations_on"> On<br/>
 						<input type="radio" name="group1" value="animations_off"> Off<br/>
 						<label>Animation speed:</label>
 						<input size="10" type="text" name="duration" value="" />
+						<label>Animation type:</label>
+						<select id="animationtype">
+						  <option value="linear">Linear</option>
+						  <option value="quadratic">Quadratic</option>
+						  <option value="cubic">Cubic</option>
+						  <option value="quartetic">Quartetic</option>
+						  <option value="quintic">Quintic</option>
+						  <option value="exponential">Exponential</option>
+						  <option value="circular">Circular</option>
+						  <option value="sineousidal">Sineousidal</option>
+						  <option value="bounce">Bounce</option>
+						  <option value="back">Back</option>
+						  <option value="elastic">Elastic</option>
+						</select>
+						<label>Animation subtype:<br/>
+						Note: does not effect linear transitions</label>
+						<select>
+							<option value="easeIn">Ease in</option>
+							<option value="easeOut">Ease out</option>
+							<option value="easeInOut">Ease in and out</option>
+						</select>
 						<p><strong>Warning</strong>: changing settings refreshes the page</p>
 						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10"/><br/>
 						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
 					</form>
-					<br/><br/>
+					<br/>
 				</div>
+				<br/>
 				<span id="helplink">Help</span>
 				<div id="help">
 					Right click on an edge to show alignment of read sequence and database sequence (upper is read). The data opens under the graph and only one alignment can be visible at the same time.
