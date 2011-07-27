@@ -15,6 +15,7 @@ def loginpage(request):
 		return render_to_response("login.html", { }, context_instance=RequestContext(request) )
 def register(request):
 	return render_to_response("register.html", { }, context_instance=RequestContext(request) )
+
 def registering(request):
 	datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
 	for data in datatable:
