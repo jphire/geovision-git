@@ -67,6 +67,6 @@ def about(request):
 @login_required
 def savesettings(request):
 	if request.POST['defaultsettings'] is None:
-		return #get settings from POST and save
+		return redirect('graphrefresh')
 	else: #must be restoring defaults then...
-		return #set users settings to default
+		return redirect('graphrefresh')
