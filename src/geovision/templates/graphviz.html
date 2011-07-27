@@ -30,6 +30,7 @@ $(function() {
 {% else %}
 	initGraph(null);
 {% endif %}
+var settings = {{user_settings}}
 });
 </script>
 <!-- jQuery-UI, for autocomplete -->
@@ -127,7 +128,9 @@ $(function() {
 						<label>Animations:</label><br/>
 						<input type="radio" name="group1" value="animations_on"> On<br/>
 						<input type="radio" name="group1" value="animations_off"> Off<br/>
-						<p>Warning: changing settings refreshes the page</p>
+						<label>Animation speed:</label>
+						<input size="10" type="text" name="duration" value="" />
+						<p><strong>Warning</strong>: changing settings refreshes the page</p>
 						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10"/><br/>
 						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
 					</form>

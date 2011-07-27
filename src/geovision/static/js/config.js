@@ -25,8 +25,8 @@ var Config =
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width: 600,
-		height: 600,
+		width: settings.canvaswidth,
+		height: settings.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
