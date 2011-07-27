@@ -47,7 +47,8 @@ Config.Events =
 					
 					rgraph.op.sum(prepareJSON(newdata), { 
                         onMerge: colorEdges,
-						onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
+						onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
+						}});
 					$('#load').html("");
 				}
 			);
