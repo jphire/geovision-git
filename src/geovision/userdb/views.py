@@ -64,16 +64,9 @@ def logging_out(request):
 
 def about(request):
 	return render_to_response("about.html")
-
+@login_required
 def savesettings(request):
-		profile = request.user.get_profile()
-		if 'settings' in request.POST:
-				profile.settings = request.POST['settings']
-				profile.save()
-				return HttpResponse('ok')
-		elif 'defaultsettings' in request.POST:
-			profile.settings = '{}'
-			profile.save()
-			return HttpResponse('restored to default')
-		else:
-			return HttpResponse('error')
+	if request.POST['defaultsettings'] is None: #is setting settings
+		return redirect('graphrefresh')
+	else: #must be restoring defaults then...
+		return redirect('graphrefresh')
