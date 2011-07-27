@@ -1,5 +1,6 @@
 # encoding= utf-8
 # Django settings for geovision project.
+# asd
 import os
 import sys
 from socket import gethostname
