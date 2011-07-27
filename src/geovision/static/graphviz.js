@@ -33,9 +33,8 @@ function initGraph(json)
 
 	colorEdges();
 	rgraph.refresh();
-	rgraph.op.options = $jit.util.merge(
-		rgraph.op.options,
-		{ type: 'replot'},
+	rgraph.op.userOptions = $jit.util.merge(
+		{ type: 'fade:seq'},
 		((typeof settings != "undefined" && settings.animationSettings) || {}));
 
     rgraph.op.contractForTraversal = contractForTraversal;

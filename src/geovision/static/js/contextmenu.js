@@ -24,8 +24,8 @@ function initContextMenu()
 				var id = currentNode.id;
 				busy = true;
 				rgraph.onClick(id, $jit.util.merge(
-						rgraph.op.options,{
-						onComplete: function() {
+						rgraph.op.userOptions,
+						{ onComplete: function() {
 							busy = false;
 							rgraph.canvas.getElement().style.cursor = '';
 						}

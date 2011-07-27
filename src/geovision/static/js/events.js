@@ -46,10 +46,12 @@ Config.Events =
 					}
 					
 					rgraph.op.sum(prepareJSON(newdata), $jit.util.merge(
-						rgraph.op.options,
+						rgraph.op.userOptions,
 						{
 							onMerge: colorEdges,
-							onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';
+							onComplete: function() { 
+								busy = false;
+								rgraph.canvas.getElement().style.cursor = '';
 						}}));
 					$('#load').html("");
 				}
@@ -68,7 +70,7 @@ Config.Events =
 				$('#load').html("Loading...");
 				rgraph.op.expand(
 					node, $jit.util.merge(
-						rgraph.op.options, 
+						rgraph.op.userOptions, 
 						{ onComplete: function() {
 							colorEdges(); 
 							busy = false; 
@@ -86,7 +88,7 @@ Config.Events =
 				$('#load').html("Contracting...");
 				rgraph.op.contractForTraversal(
                     node, $jit.util.merge(
-						rgraph.op.options, 
+						rgraph.op.userOptions, 
 						{ onComplete: function() {
 								colorEdges();
 								busy = false;
