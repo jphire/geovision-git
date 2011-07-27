@@ -69,9 +69,15 @@ def about(request):
 @login_required
 def savesettings(request):
 		profile = request.user.get_profile()
-		numericsMakeSense = False;#check to see if numeric values make sense or are not inputted
-		if ((request.POST['canvas_x'].isdigit() or request.POST['canvas_x'] == '') and (request.POST['canvas_y'].isdigit() or request.POST['canvas_y']=='') and (request.POST['duration'].isdigit()) or request.POST['duration']==''):
+		numericsMakeSense = False;#check to see if numeric values make sense. Empty strings are ok, then we just asume they want the defaults
+		if ((request.POST['canvas_x'].isdigit() or request.POST['canvas_x']=='') and (request.POST['canvas_y'].isdigit() or request.POST['canvas_y']=='') and (request.POST['duration'].isdigit()) or request.POST['duration']==''):
 			numericsMakeSense = True;
+		if (request.POST['duration']==''):
+			request.POST['duration']=1000;
+		if (request.POST['canvas_x']==''):
+			request.POST['canvas_x']=600
+		if (request.POST['canvas_y']==''):
+			request.POST['canvas_y']=600
 		if 'savesettings' in request.POST and numericsMakeSense:
 			type = ''
 			transition = ''
