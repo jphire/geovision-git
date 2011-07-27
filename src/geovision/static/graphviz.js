@@ -12,6 +12,28 @@ function prepareJSON(json)
 	}
 	return json;
 }
+function fetchJSON(nodeId)
+{
+	busy = 'expanding';
+	rgraph.canvas.getElement().style.cursor = 'wait';
+	$('#load').html("Loading...");
+	$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
+		function(newdata)
+		{
+			graph = rgraph.construct(newdata)
+			//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
+			var graphNode = graph.getNode(node.id);
+			
+			if(graphNode){
+				var graphNodeData = graphNode.data;
+				node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
+			}
+			
+			rgraph.op.sum(prepareJSON(newdata), { type: 'fade:con', fps:30, duration: 500, hideLabels: false, onMerge: colorEdges,
+				onComplete: function() { busy = false;rgraph.canvas.getElement().style.cursor = '';}})
+			$('#load').html("");
+				}
+});
 
 
 function initGraph(json)
