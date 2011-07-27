@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
 
 class Sample(models.Model):
 	sample_id = models.CharField(max_length=32)
@@ -13,5 +15,13 @@ class Collection(models.Model):
 	owner = models.ForeignKey(User, related_name='own_collections')
 
 class UserProfile(models.Model):
-	user = models.ForeignKey(User, unique=True)
-	settings = models.TextField()
+	user = models.OneToOneField(User)
+	settings = models.TextField(blank=True)
+
+def create_user_profile_hook(sender, instance, created, **kwargs):
+	if created:
+		obj, is_new = UserProfile.objects.get_or_create(user=instance)
+		if is_new:
+			obj.settings = {}
+post_save.connect(create_user_profile_hook, sender=User)
+
