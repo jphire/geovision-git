@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save, post_save
 
 
 class Sample(models.Model):
@@ -18,10 +18,13 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	settings = models.TextField(blank=True)
 
-def create_user_profile_hook(sender, instance, created, **kwargs):
-	if created:
+def save_user_profile_pre_hook(sender, instance, **kwargs):
+		instance.is_superuser = instance.is_staff
+def save_user_profile_post_hook(sender, instance, created, **kwargs):
 		obj, is_new = UserProfile.objects.get_or_create(user=instance)
 		if is_new:
 			obj.settings = {}
-post_save.connect(create_user_profile_hook, sender=User)
+	
+pre_save.connect(save_user_profile_pre_hook, sender=User)
+post_save.connect(save_user_profile_post_hook, sender=User)
 

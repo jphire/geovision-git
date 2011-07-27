@@ -28,7 +28,7 @@ urlpatterns = patterns('',
 	(r'^show_metaboly$', 'meta.views.show_metaboly'),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-	(r'^admin/?', include(admin.site.urls)),
+	(r'^admin/', include(admin.site.urls)),
 
-	(r'', 'userdb.views.loginpage'), #everything else regirects to login for now
+	#(r'', 'userdb.views.loginpage'), #everything else regirects to login for now
 )
