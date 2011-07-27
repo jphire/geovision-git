@@ -90,6 +90,6 @@ def savesettings(request):
 		elif 'defaultsettings' in request.POST:
 			profile.settings = '{}'
 			profile.save()
-			return HttpResponseRedirect(reverse('graphrefresh?settingsmessage="defaults restored"'))
+			return HttpResponseRedirect(reverse('graphrefresh', kwargs={'settingsmessage': "defaults restored"}))
 		else:
 			return redirect('graphrefresh?settingsmessage="error"')
