@@ -28,7 +28,8 @@ def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits, offset):
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
-	return render_to_response(template, context_instance=RequestContext(request, dict))
+	user_settings = request.user.get_profile().settings
+	return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': user_settings})))
 def merge_dict(d1, d2):
 	d = {}
 	d.update(d1)
