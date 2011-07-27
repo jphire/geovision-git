@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse 
+from django.core.urlresolvers import reverse
+import json
 
 def loginpage(request):
 	if request.user.is_authenticated():
