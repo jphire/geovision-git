@@ -5492,6 +5492,7 @@ Graph.Op = {
     morph: function(json, opt, extraModes) {
         extraModes = extraModes || {};
         var viz = this.viz;
+		console.log(opt);
         var options = $.merge(this.options, viz.controller, opt), root = viz.root;
         var graph;
         //TODO(nico) this hack makes morphing work with the Hypertree. 
