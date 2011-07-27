@@ -4714,13 +4714,11 @@ Graph.Util = {
         for(var id in adj) {
           var a = adj[id];
           if(filter(a)) {
-
-// REMOVED: iterating over a graph *changes* it??? fixes arrows pointing to wrong direction in chrome, HOPEFULLY doesn't break anything else...
-//            if(a.nodeFrom != node) {
-//              var tmp = a.nodeFrom;
-//              a.nodeFrom = a.nodeTo;
-//              a.nodeTo = tmp;
-//            }
+            if(a.nodeFrom != node) {
+              var tmp = a.nodeFrom;
+              a.nodeFrom = a.nodeTo;
+              a.nodeTo = tmp;
+            }
 
             action(a, id);
           }

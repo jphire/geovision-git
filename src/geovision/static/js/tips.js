@@ -33,7 +33,8 @@ Config.Tips =
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
-					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name;
+					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name + "</br>";
+					tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 			}
 };

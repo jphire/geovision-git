@@ -119,6 +119,18 @@ $(function() {
 
 			<div id="right-container">
 				<div id="inner-details"></div>
+				<span id="settingslink">Your settings</span><br/>
+				<div id="settings">
+					<form id="settingsform" action="savesettings" method="post">
+						<label>Animations:</label><br/>
+						<input type="radio" name="group1" value="animations_on"> On<br/>
+						<input type="radio" name="group1" value="animations_off"> Off<br/>
+						<p>Warning: changing settings refreshes the page</p>
+						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10"/><br/>
+						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
+					</form>
+					<br/><br/>
+				</div>
 				<span id="helplink">Help</span>
 				<div id="help">
 					Right click on an edge to show alignment of read sequence and database sequence (upper is read). The data opens under the graph and only one alignment can be visible at the same time.
@@ -136,11 +148,11 @@ $(function() {
 					</form>
 				</div>
 				<br/>
-				<span id="filterlink">Filter graph</span>
+				<span id="filtertext">Filter graph</span>
 				<div id="filter">
 					<form id="filterform" action="" method="post">
 						<span id="filtererror"></span>
-						<br/><p>Filter now visible graph with bitscore:</p>
+						<p>Filter now visible graph with bitscore:</p>
 						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value=""/><br/>
 						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
 					</form>

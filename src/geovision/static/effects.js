@@ -1,5 +1,5 @@
 var opened = false;
-var filteropen = false;
+var settingsopen = false;
 var helpopen = false;
 
 function openSearch()
@@ -7,7 +7,7 @@ function openSearch()
 	elem = $('#graphnavi')
         if (!opened){
             elem.find('#optiontag').hide();
-            elem.animate({width: "30%"}, {complete:
+            elem.animate({width: "25%"}, {complete:
 			function() { $('#navicontainer').fadeIn('fast', function() { opened = true; } ); }});
 	}
 }
@@ -30,27 +30,25 @@ function closeSearch(e)
 	}
 }
 jQuery(function($) {
-/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.
- */
-/*	$('#filterlink').click(function() {
-		if (filteropen){
-			$('#filter').slideDown();
-			filteropen = false;
+/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
+	$('#settingslink').click(function() {
+		if (!settingsopen){
+			$('#settings').slideDown();
+			settingsopen = true;
 		}
 		else{
-			$('#filter').slideUp();
-			filteropen = true;
+			$('#settings').slideUp();
+			settingsopen = false;
 		}
 	})
-*/
 	$('#helplink').click(function() {
-		if (helpopen){
+		if (!helpopen){
 			$('#help').slideDown();
-			helpopen = false;
+			helpopen = true;
 		}
 		else{
 			$('#help').slideUp();
-			helpopen = true;
+			helpopen = false;
 		}
 	})
 	$('#filterform').submit(function() {
