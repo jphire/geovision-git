@@ -84,10 +84,10 @@ def savesettings(request):
 		if 'savesettings' in request.POST and numericsMakeSense:
 			type = ''
 			transition = ''
-			if request.POST['group1']==animation_on:
-				type = 'animate'
-			else:
+			if request.POST['group1']=='animations_off':
 				type = 'replot'
+			else:
+				type = 'animate'
 			if request.POST['animationtype']=='linear':
 				transition = '$jit.Trans.linear'
 			else:
