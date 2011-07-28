@@ -20,18 +20,33 @@ var labelType, useGradients, nativeTextSupport, animate;
 var rgraph;
 var RGraph = $jit.RGraph;
 var busy = false;
-/* var settings = {
-			canvaswidth: 600,
-			canvasheight: 600
-};*/
+var defaultsettings = {
+		animationsettings:
+			{duration:"1000",
+			transition:"$jit.Trans.linear",
+			type:"animate"}
+		settings:
+			{canvaswidth: 600,
+			canvasheight: 600}
+};
 			
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width: settings.canvaswidth,
-		height: settings.canvasheight,
+		if (settings.settings.canvaswidth!=undefined){
+			width: settings.settings.canvaswidth,
+		}
+		else {
+			width: defaultsettings.settings.canvaswidth,
+		}
+		if (settings.settings.canvasheight!=undefined){
+			height: settings.settings.canvasheight,
+		}
+		else {
+			height: defaultsettings.settings.canvaswidth,
+		}
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },

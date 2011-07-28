@@ -70,7 +70,8 @@ Config.Events =
 				$('#load').html("Loading...");
 				rgraph.op.expand(
 					node, $jit.util.merge(
-						rgraph.op.userOptions, 
+						defaultsettings.animationsettings,
+						settings.animationsetting,
 						{ onComplete: function() {
 							colorEdges(); 
 							busy = false; 
