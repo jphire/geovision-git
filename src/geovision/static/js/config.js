@@ -32,16 +32,16 @@ var defaultsettings = {
 var w = 0;
 var h = 0;
 		if (settings.settings.canvaswidth!=undefined){
-			w: settings.settings.canvaswidth,
+			w = settings.settings.canvaswidth
 		}
 		else {
-			w: defaultsettings.settings.canvaswidth,
+			w = defaultsettings.settings.canvaswidth
 		}
 		if (settings.settings.canvasheight!=undefined){
-			h: settings.settings.canvasheight,
+			h = settings.settings.canvasheight
 		}
 		else {
-			h: defaultsettings.settings.canvaswidth,
+			h = defaultsettings.settings.canvaswidth
 		}
 var Config = 
 {
