@@ -2,11 +2,11 @@
 
 {% block additional_head %}
 <!--It seems it has to be before anything else-->
-{%endautoescape%}
+{%autoescape off%}
 <script language="javascript" type="text/javascript">
 var settings = "{{user_settings}}";
 </script>
-{%autoescape on%}
+{%endautoescape%}
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 
