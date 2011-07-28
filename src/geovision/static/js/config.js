@@ -23,7 +23,7 @@ var busy = false;
 var defaultsettings = {
 		animationsettings:
 			{duration:"1000",
-			transition:"$jit.Trans.linear",
+			transition: $jit.Trans.linear,
 			type:"fade:seq"},
 		settings:
 			{canvaswidth: 600,

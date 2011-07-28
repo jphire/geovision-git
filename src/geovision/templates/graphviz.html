@@ -2,16 +2,16 @@
 
 {% block additional_head %}
 <!--It seems it has to be before anything else-->
-{%autoescape off%}
+{% autoescape off %}
 <script language="javascript" type="text/javascript">
 var settings = 
 {% if user_settings %}
-{{user_settings}};
+	{{ user_settings }};
 {% else %}
- {};
+	{};
 {% endif %}
 </script>
-{%endautoescape%}
+{% endautoescape %}
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 
@@ -157,7 +157,7 @@ $(function() {
 					</form>
 				</div>
 				<div id="names"></div>
-<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
+<span id="settingslink">Your settings</span>  {% if settingsmessage %}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
 				<div id="settings">
 					<form id="settingsform" action="savesettings" method="post">
 						{% csrf_token %}
