@@ -30,7 +30,7 @@ var defaultsettings = {
 			canvasheight: 600}
 };
 
-var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
+var anim_opts = $jit.util.merge({ type: 'fade:seq'}, defaultsettings.animationsettings, settings.animationsettings);
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
 
 //var w = 0;
