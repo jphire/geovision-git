@@ -1,7 +1,10 @@
 {% extends "sitebase.html" %}
 
 {% block additional_head %}
-
+<!--It seems it has to be before anything else-->
+<script language="javascript" type="text/javascript">
+var settings = "{{user_settings}}";
+<script>
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 
@@ -30,7 +33,6 @@ $(function() {
 {% else %}
 	initGraph(null);
 {% endif %}
-var settings = "{{user_settings}}";
 });
 </script>
 <!-- jQuery-UI, for autocomplete -->
