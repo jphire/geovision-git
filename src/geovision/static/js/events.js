@@ -37,6 +37,7 @@ Config.Events =
 
 					//add subnodes to the clicked node
 					rgraph.op.sum(prepareJSON(newdata), $jit.util.merge(
+						{ type: 'fade:seq'},
 						rgraph.op.userOptions,
 						{
 							onMerge: colorEdges,
