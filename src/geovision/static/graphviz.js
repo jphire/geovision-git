@@ -8,7 +8,7 @@ function prepareJSON(json)
 		else if (data.type == "dbentry")
 			data.$color = '#00FF00';
 		for(adj in data.adjacencies)
-				data.adjacencies[adj].data.$direction = data.adjacenction[adj].nodeTo;
+				data.adjacencies[adj].data.$direction = data.adjacencies[adj].nodeTo;
 	}
 	return json;
 }
