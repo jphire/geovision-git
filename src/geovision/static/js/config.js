@@ -58,6 +58,7 @@ var h = 0;
 		else {
 			t = defaultsettings.animationsettings.transition
 		}
+		t = eval(t);
 
 var Config = 
 {
