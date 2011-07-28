@@ -15,7 +15,16 @@ Config.Events =
 				numSubnodes++;
 		});
 
-		//if clicked a leaf-node, construct subgraph 
+		if(currentEdge != undefined){
+			
+			rgraph.config.Events.onMouseLeave(currentEdge);
+		}
+		if(currentNode != undefined){
+			
+			rgraph.config.Events.onMouseLeave(currentNode);
+		}
+
+		//if clicked a leaf-node
 		if (numSubnodes <= 1)
 		{
 			if(busy)
@@ -27,17 +36,16 @@ Config.Events =
 			$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 				function(newdata)
 				{
-					//updating hidden nodes count in already existing nodes
 					graph = rgraph.construct(newdata)
-					var graphNode = graph.getNode(node.id);					
+					//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
+					var graphNode = graph.getNode(node.id);
+					
 					if(graphNode){
 						var graphNodeData = graphNode.data;
 						node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 					}
-
-					//add subnodes to the clicked node
+					
 					rgraph.op.sum(prepareJSON(newdata), $jit.util.merge(
-						{ type: 'fade:seq'},
 						rgraph.op.userOptions,
 						{
 							onMerge: colorEdges,
@@ -63,7 +71,7 @@ Config.Events =
 				rgraph.op.expand(
 					node, $jit.util.merge(
 						defaultsettings.animationsettings,
-						settings.animationsettings,
+						settings.animationsetting,
 						{ onComplete: function() {
 							colorEdges(); 
 							busy = false; 
@@ -80,7 +88,7 @@ Config.Events =
 				rgraph.canvas.getElement().style.cursor = 'wait';
 				$('#load').html("Contracting...");
 				rgraph.op.contractForTraversal(
-                    node, $jit.util.merge({ type: 'fade:seq'},
+                    node, $jit.util.merge(
 						rgraph.op.userOptions, 
 						{ onComplete: function() {
 								colorEdges();
@@ -98,26 +106,24 @@ Config.Events =
 			$.getJSON('/enzyme_data?id=' + node.id, showEnzymeData);
 		}
 	},
-	onMouseEnter: function(object, eventInfo, e)
+	onMouseEnter: function(node, eventInfo, e)
 	{
 		if(ctxMenuOpen)
 			return;
 
-		//if object is edge
-		if (object.nodeTo)
+		if (node.nodeTo)
 		{
 			if(busy)
 				return;
-			currentEdge = object;
+			currentEdge = node;
 
 			rgraph.canvas.getElement().style.cursor = 'pointer';
 		}
-		//object is node
-		else if(object)
+		else if(node)
 		{
 			if(busy)
 				return;
-			currentNode = object;
+			currentNode = node;
 
 			rgraph.canvas.getElement().style.cursor = 'pointer';
 		}
@@ -129,15 +135,13 @@ Config.Events =
 		if(!object)
 			return;
 		currentNode = currentEdge = undefined;
-
-		//object is edge
+		
 		if(object.nodeTo)
 		{
 			if(busy)
 				return;
 			rgraph.canvas.getElement().style.cursor = '';
 		}
-		//object is node
 		else if(object){
 			if(busy)
 				return;
