@@ -21,15 +21,33 @@ var rgraph;
 var RGraph = $jit.RGraph;
 var busy = false;
 var settings = {
-			canvaswidth: 600,
-			canvasheight: 600
+			canvaswidth: "{{ settings.settings.canvaswidth }}",
+			canvasheight: "{{ settings.settings.canvasheight }}"
 };
-			
+
+//function getUrlVars()
+//{
+//    var vars = [], hash;
+//    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+//
+//    for(var i = 0; i < hashes.length; i++)
+//    {
+//        hash = hashes[i].split('=');
+//        vars.push(hash[0]);
+//        vars[hash[0]] = hash[1];
+//    }
+//
+//    return vars;
+//}
+//
+//var hash = getUrlVars();
+
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
+
 		width: settings.canvaswidth,
 		height: settings.canvasheight,
 		//Optional: create a background canvas that plots
