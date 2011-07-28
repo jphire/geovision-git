@@ -30,7 +30,6 @@ function initGraph(json)
 	rgraph = new RGraph(Config);
 	rgraph.loadJSON(prepareJSON(json), 0);
 
-
 	colorEdges();
 	rgraph.refresh();
 	rgraph.op.userOptions = $jit.util.merge(

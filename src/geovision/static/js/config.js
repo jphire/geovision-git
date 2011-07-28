@@ -112,7 +112,7 @@ var Config =
 		}
 };
 jQuery(function($) {
-/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
+
 	/*setting stuff in css to the prefered size*/
 	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
 	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));

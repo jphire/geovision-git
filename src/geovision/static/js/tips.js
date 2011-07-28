@@ -13,15 +13,10 @@ Config.Tips =
 
 				if(node.nodeFrom)
 				{
-					//if(node.data.bitscore)
-					//{
-						//it's an edge
-						tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
-						tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
+					//it's an edge
+					tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
+					tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
 
-					//}
-					//else
-					//	tip.innerHTML = 'enzyme edge';
 				}
 				else if(node.data.type != 'enzyme')
 				{
