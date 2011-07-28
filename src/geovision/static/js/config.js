@@ -32,17 +32,30 @@ var defaultsettings = {
 var w = 0;
 var h = 0;
 		if (settings.settings.canvaswidth!=undefined){
-			w = settings.settings.canvaswidth
+			w = parseInt(settings.settings.canvaswidth)
 		}
 		else {
 			w = defaultsettings.settings.canvaswidth
 		}
 		if (settings.settings.canvasheight!=undefined){
-			h = settings.settings.canvasheight
+			h = parseInt(settings.settings.canvasheight)
 		}
 		else {
 			h = defaultsettings.settings.canvaswidth
 		}
+		if (settings.animationsettings.duration!=undefined){
+			d = parseInt(settings.animationsettings.duration)
+		}
+		else {
+			d = defaultsettings.animationsettings.duration
+		}
+		if (settings.animationsettings.transition!=undefined){
+			t = settings.animationsettings.transition
+		}
+		else {
+			t = defaultsettings.animationsettings.transition
+		}
+
 var Config = 
 {
 		//Where to append the visualization
@@ -56,10 +69,10 @@ var Config =
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
-		duration: 500,
+		duration: d,
 		fps: 40,
 		//set transformation style
-		transition: $jit.Trans.Circ,
+		transition: t,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
