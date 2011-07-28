@@ -29,24 +29,27 @@ var defaultsettings = {
 			{canvaswidth: 600,
 			canvasheight: 600}
 };
-			
+var w = 0;
+var h = 0;
+		if (settings.settings.canvaswidth!=undefined){
+			w: settings.settings.canvaswidth,
+		}
+		else {
+			w: defaultsettings.settings.canvaswidth,
+		}
+		if (settings.settings.canvasheight!=undefined){
+			h: settings.settings.canvasheight,
+		}
+		else {
+			h: defaultsettings.settings.canvaswidth,
+		}
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		if (settings.settings.canvaswidth!=undefined){
-			width: settings.settings.canvaswidth,
-		}
-		else {
-			width: defaultsettings.settings.canvaswidth,
-		}
-		if (settings.settings.canvasheight!=undefined){
-			height: settings.settings.canvasheight,
-		}
-		else {
-			height: defaultsettings.settings.canvaswidth,
-		}
+		width:w,
+		height:h,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
