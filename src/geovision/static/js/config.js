@@ -31,6 +31,7 @@ var defaultsettings = {
 };
 var w = 0;
 var h = 0;
+		if (settings  == undefined) settings = defaultsettings;
 		if (settings.settings.canvaswidth!=undefined){
 			w = parseInt(settings.settings.canvaswidth)
 		}
