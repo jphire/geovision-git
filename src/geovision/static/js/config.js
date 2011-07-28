@@ -24,13 +24,13 @@ var defaultsettings = {
 		animationsettings:
 			{duration:"1000",
 			transition:"$jit.Trans.linear",
-			type:"animate"},
+			type:"nothing"},
 		settings:
 			{canvaswidth: 600,
 			canvasheight: 600}
 };
 
-var anim_opts = $jit.util.merge({ type: 'fade:seq'}, defaultsettings.animationsettings, settings.animationsettings);
+var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
 
 //var w = 0;

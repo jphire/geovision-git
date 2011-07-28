@@ -37,7 +37,6 @@ Config.Events =
 
 					//add subnodes to the clicked node
 					rgraph.op.sum(prepareJSON(newdata), $jit.util.merge(
-						{ type: 'fade:seq'},
 						rgraph.op.userOptions,
 						{
 							onMerge: colorEdges,
@@ -80,7 +79,7 @@ Config.Events =
 				rgraph.canvas.getElement().style.cursor = 'wait';
 				$('#load').html("Contracting...");
 				rgraph.op.contractForTraversal(
-                    node, $jit.util.merge({ type: 'fade:seq'},
+                    node, $jit.util.merge(
 						rgraph.op.userOptions, 
 						{ onComplete: function() {
 								colorEdges();
