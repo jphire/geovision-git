@@ -92,7 +92,7 @@ def savesettings(request):
 			if request.POST['animationtype']=='linear':
 				transition = '$jit.Trans.linear'
 			else:
-				transition = '$jit.Trans.'+'request.POST["animationtype"]'+'.'+'request.POST["animationsubtype"]'
+				transition = '$jit.Trans.'+request.POST["animationtype"]+'.'+request.POST["animationsubtype"]
 			settings = json.dumps({'settings': {'canvaswidth': canvas_x, 'canvasheight': canvas_y}, 'animationsettings': {'type': type, 'duration': duration, 'transition': transition}})
 			profile.settings = settings
 			profile.save()
