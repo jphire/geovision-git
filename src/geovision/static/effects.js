@@ -33,13 +33,13 @@ jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
 
 	/*setting stuff in css to the prefered size*/
-	$('#infovis').css('height', settings.settings.canvasheight);
-	$('#infovis').css('width', settings.settings.canvaswidth);
-	$('#center-container').css('width', settings.settings.canvaswidth);
-	$('#center-container').css('height', settings.settings.canvasheight);
-	$('#right-container').css('height', settings.settings.canvasheight);
-	$('#container').css('width', settings.settings.canvaswidth+400);
-	$('#container').css('height', settings.settings.canvasheight);
+	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
+	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
+	$('#center-container').css('width', parseInt(settings.settings.canvaswidth));
+	$('#center-container').css('height', parseInt(settings.settings.canvasheight));
+	$('#right-container').css('height', parseInt(settings.settings.canvasheight));
+	$('#container').css('width', parseInt(settings.settings.canvaswidth)+400);
+	$('#container').css('height', parseInt(settings.settings.canvasheight));
 
 	$('#settingslink').click(function() {
 		if (!settingsopen){
