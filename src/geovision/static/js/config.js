@@ -69,18 +69,18 @@ var Config =
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width:w,
-		height:h,
+		width:opts.canvaswidth,
+		height:opts.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
-		duration: d,
+		duration: anim_opts.duration,
 		fps: 40,
 		//set transformation style
-		transition: t,
+		transition: anim_opts.transition,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
