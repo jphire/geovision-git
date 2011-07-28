@@ -6,7 +6,6 @@ $.extend(Config, {
 			type: 'HTML',
 			overridable: true,
 		},
-		//This method is called only once, when creating a label
 		onCreateLabel: function(domElement, node)
 		{
 			if(node.name)

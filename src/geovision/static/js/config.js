@@ -69,18 +69,18 @@ var Config =
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width:opts.canvaswidth,
-		height:opts.canvasheight,
+		width:w,
+		height:h,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
-		duration: anim_opts.duration,
+		duration: d,
 		fps: 40,
 		//set transformation style
-		transition: anim_opts.transition,
+		transition: t,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
@@ -116,8 +116,8 @@ var Config =
 		}
 };
 jQuery(function($) {
-
-	/*setting stuff in css to the preferred size*/
+/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
+	/*setting stuff in css to the prefered size*/
 	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
 	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
 	$('#center-container').css('width', parseInt(settings.settings.canvaswidth));
