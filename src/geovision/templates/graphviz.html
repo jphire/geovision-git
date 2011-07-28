@@ -4,7 +4,12 @@
 <!--It seems it has to be before anything else-->
 {%autoescape off%}
 <script language="javascript" type="text/javascript">
-var settings = {{user_settings}};
+var settings = 
+{% if user_settings %}
+{{user_settings}};
+{% else %}
+ {};
+{% endif %}
 </script>
 {%endautoescape%}
 <!-- JIT Library File -->
