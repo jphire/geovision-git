@@ -53,7 +53,7 @@ jQuery(function($) {
 		}
 	})
 	$('#filterform').submit(function() {
-		filter($('#bitscorefilter').val());
+		filter($('#bitscorefilter').val(), $('#masterbitscorefilter').val());
 		return false;
 	})
 	$('#colorform').submit(function(){

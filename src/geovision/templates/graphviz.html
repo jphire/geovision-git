@@ -129,7 +129,35 @@ var settings = {{user_settings}};
 
 			<div id="right-container">
 				<div id="inner-details"></div>
-				<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
+				<span id="helplink">Help</span>
+				<div id="help">
+					Right click on an edge to show alignment of read sequence and database sequence (upper is read). The data opens under the graph and only one alignment can be visible at the same time.
+				<br/>
+				</div>
+				<br/>
+				<br/>
+				<div id="coloring">
+					<form id="colorform">
+						<input type="radio" name="colortype" id="colortypeDynamic" value="dynamic" checked>Dynamic</input><br/>
+						<input type="radio" name="colortype" id="colortypeCustom" value="custom">Custom: </input>
+						<input type="text" id="colorMin" size="4" disabled/>-<input type="text" id="colorMax" size="4" disabled/><br/>
+						<input type="submit" id="colorizeSubmit" value="Colorize"/>
+						<span id="colorErrorMsg" class="error"></span>
+					</form>
+				</div>
+				<br/>
+				<span id="filtertext">Filter graph</span>
+				<div id="filter">
+					<form id="filterform" action="" method="post">
+						<span id="filtererror"></span>
+						<p>Filter now visible graph with bitscore:</p>
+						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value="{{ bitscore }}"/><br/>
+						<input type="hidden" name="masterbitscorefilter" value="{{ bitscore }}"/>
+						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
+					</form>
+				</div>
+				<div id="names"></div>
+<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
 				<div id="settings">
 					<form id="settingsform" action="savesettings" method="post">
 						{% csrf_token %}
@@ -167,35 +195,6 @@ var settings = {{user_settings}};
 					</form>
 					<br/>
 				</div>
-				<br/>
-				<span id="helplink">Help</span>
-				<div id="help">
-					Right click on an edge to show alignment of read sequence and database sequence (upper is read). The data opens under the graph and only one alignment can be visible at the same time.
-				<br/>
-				</div>
-				<br/>
-				<br/>
-				<div id="coloring">
-					<form id="colorform">
-						<input type="radio" name="colortype" id="colortypeDynamic" value="dynamic" checked>Dynamic</input><br/>
-						<input type="radio" name="colortype" id="colortypeCustom" value="custom">Custom: </input>
-						<input type="text" id="colorMin" size="4" disabled/>-<input type="text" id="colorMax" size="4" disabled/><br/>
-						<input type="submit" id="colorizeSubmit" value="Colorize"/>
-						<span id="colorErrorMsg" class="error"></span>
-					</form>
-				</div>
-				<br/>
-				<span id="filtertext">Filter graph</span>
-				<div id="filter">
-					<form id="filterform" action="" method="post">
-						<span id="filtererror"></span>
-						<p>Filter now visible graph with bitscore:</p>
-						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value="{{ bitscore }}"/><br/>
-						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
-					</form>
-				</div>
-				<div id="names"></div>
-
 			</div>
 
 			<div id="log"></div>
