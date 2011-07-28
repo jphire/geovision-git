@@ -35,7 +35,7 @@ function initGraph(json)
 	rgraph.refresh();
 	rgraph.op.userOptions = $jit.util.merge(
 		{ type: 'fade:seq'},
-		((typeof settings != "undefined" && typeof settings.animationsettings != "undefined" && settings.animationsettings) || {}));
+		((typeof settings != "undefined" && settings.animationsettings) || {}));
 
     rgraph.op.contractForTraversal = contractForTraversal;
 	rgraph.op.filterContract = filterContract;
