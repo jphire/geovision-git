@@ -30,7 +30,7 @@ $(function() {
 {% else %}
 	initGraph(null);
 {% endif %}
-var settings = "{{user_settings}}";
+var settings = "{{ user_settings }}";
 });
 </script>
 <!-- jQuery-UI, for autocomplete -->
@@ -122,7 +122,7 @@ var settings = "{{user_settings}}";
 				<div id="inner-details"></div>
 				<span id="settingslink">Your settings</span><br/>
 				<div id="settings">
-					{%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}
+					{% if settingsmessage %}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{% endif %}
 					<form id="settingsform" action="savesettings" method="post">
 						<label>Canvas size:</label><br/>
 						<input type="text" size="6" name="canvas_x" value=""> x <input type="text" size="6" name="canvas_y" value=""><br/>
