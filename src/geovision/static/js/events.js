@@ -15,16 +15,7 @@ Config.Events =
 				numSubnodes++;
 		});
 
-		if(currentEdge != undefined){
-			
-			rgraph.config.Events.onMouseLeave(currentEdge);
-		}
-		if(currentNode != undefined){
-			
-			rgraph.config.Events.onMouseLeave(currentNode);
-		}
-
-		//if clicked a leaf-node
+		//if clicked a leaf-node, construct subgraph 
 		if (numSubnodes <= 1)
 		{
 			if(busy)
@@ -36,15 +27,15 @@ Config.Events =
 			$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
 				function(newdata)
 				{
+					//updating hidden nodes count in already existing nodes
 					graph = rgraph.construct(newdata)
-					//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
-					var graphNode = graph.getNode(node.id);
-					
+					var graphNode = graph.getNode(node.id);					
 					if(graphNode){
 						var graphNodeData = graphNode.data;
 						node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 					}
-					
+
+					//add subnodes to the clicked node
 					rgraph.op.sum(prepareJSON(newdata), $jit.util.merge(
 						rgraph.op.userOptions,
 						{
@@ -106,24 +97,26 @@ Config.Events =
 			$.getJSON('/enzyme_data?id=' + node.id, showEnzymeData);
 		}
 	},
-	onMouseEnter: function(node, eventInfo, e)
+	onMouseEnter: function(object, eventInfo, e)
 	{
 		if(ctxMenuOpen)
 			return;
 
-		if (node.nodeTo)
+		//if object is edge
+		if (object.nodeTo)
 		{
 			if(busy)
 				return;
-			currentEdge = node;
+			currentEdge = object;
 
 			rgraph.canvas.getElement().style.cursor = 'pointer';
 		}
-		else if(node)
+		//object is node
+		else if(object)
 		{
 			if(busy)
 				return;
-			currentNode = node;
+			currentNode = object;
 
 			rgraph.canvas.getElement().style.cursor = 'pointer';
 		}
@@ -135,13 +128,15 @@ Config.Events =
 		if(!object)
 			return;
 		currentNode = currentEdge = undefined;
-		
+
+		//object is edge
 		if(object.nodeTo)
 		{
 			if(busy)
 				return;
 			rgraph.canvas.getElement().style.cursor = '';
 		}
+		//object is node
 		else if(object){
 			if(busy)
 				return;

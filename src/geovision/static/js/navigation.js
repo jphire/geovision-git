@@ -42,18 +42,32 @@ function contractForTraversal(node, opt) {
  */
 function checkRootTagpath(node) {
 	var parentNodes = node.getParents();
-	if (!node.traversalTag) return false;
-	if (parentNodes.length == 0) return true;
+	if (!node.traversalTag){
+		return false;
+	}
+	if (parentNodes.length == 0){
+		return true;
+	}
 	for (var i = 0; i < parentNodes.length; i++) {
 		pnode = parentNodes[i]
-		if (pnode.traversalTag != true) continue;
-		if (checkRootTagpath(pnode)) return true;
+		if (pnode.traversalTag != true){
+			continue;
+		}
+		if (checkRootTagpath(pnode)){
+			return true;
+		}
 	}
 	return false;
 }
 
+/*
+ * Function for tagging a node and it's parents
+ *
+ */
 function tagNode(node) {
-	if (!checkRootTagpath(node)) tagParents(node);
+	if (!checkRootTagpath(node)){
+		tagParents(node);
+	}
 	node.traversalTag = true;
 	rgraph.refresh()
 }
@@ -73,7 +87,9 @@ function tagParents(node) {
 }
 
 function tagSubnodes(node) {
-	if (!checkRootTagpath(node)) tagParents(node);
+	if (!checkRootTagpath(node)){
+		tagParents(node);
+	}
 	node.eachSubnode(function(child) {
 		child.traversalTag = true;
 		console.log("Child " + child.id + " tagged");
@@ -83,7 +99,9 @@ function tagSubnodes(node) {
 }
 
 function tagSubgraph(node) {
-	if (!checkRootTagpath(node)) tagParents(node);
+	if (!checkRootTagpath(node)){
+		tagParents(node);
+	}
 	node.eachSubgraph(function(child) {
 		child.traversalTag = true;
 		console.log("Child " + child.id + " tagged");
@@ -113,7 +131,7 @@ function untagSubgraph(node) {
 	rgraph.refresh()
 }
 
-  function centerToNode(id, opt){
+function centerToNode(id, opt){
     if (this.root != id && !this.busy) {
       this.busy = true;
       this.root = id;
@@ -148,4 +166,4 @@ function untagSubgraph(node) {
         }
       }));
     }
-  }
+}

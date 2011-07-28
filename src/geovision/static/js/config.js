@@ -30,8 +30,11 @@ var defaultsettings = {
 			canvasheight: 600}
 };
 
-o = $jit.util.merge(defaultsettings.animationsettings,
+anim_opts = $jit.util.merge(defaultsettings.animationsettings,
 						settings.animationsettings);
+opts = $jit.util.merge(defaultsettings.settings,
+						settings.settings);
+
 var w = 0;
 var h = 0;
 //		if (settings == undefined) settings = defaultsettings;
@@ -68,18 +71,18 @@ var Config =
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width:o.settings.width,
-		height:h,
+		width:opts.canvaswidth,
+		height:opts.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
-		duration: d,
+		duration: anim_opts.duration,
 		fps: 40,
 		//set transformation style
-		transition: t,
+		transition: anim_opts.transition,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
@@ -116,7 +119,7 @@ var Config =
 };
 jQuery(function($) {
 
-	/*setting stuff in css to the prefered size*/
+	/*setting stuff in css to the preferred size*/
 	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
 	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
 	$('#center-container').css('width', parseInt(settings.settings.canvaswidth));

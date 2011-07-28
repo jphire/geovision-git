@@ -79,8 +79,8 @@ function initContextMenu()
 						$('li[id^=n_db_uni]', menu).remove();
 					if(currentNode.data.source != 'frnadb')
 						$('li[id^=n_db_frn]', menu).remove();
-                                       if(currentNode.data.source.indexOf('silva') == -1)
-                                               $('li[id^=n_db_silva]', menu).remove();
+					if(currentNode.data.source.indexOf('silva') == -1)
+						$('li[id^=n_db_silva]', menu).remove();
 
 				}
 			}
