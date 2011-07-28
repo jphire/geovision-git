@@ -89,7 +89,7 @@ def savesettings(request):
 			if request.POST['group1']=='animations_off':
 				type = 'replot'
 			else:
-				type = 'fade:seq'
+				type = 'animate'
 			if request.POST['animationtype']=='linear':
 				transition = '$jit.Trans.linear'
 			else:

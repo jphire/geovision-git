@@ -46,7 +46,7 @@ Config.Events =
 					}
 					
 					rgraph.op.sum(prepareJSON(newdata), $jit.util.merge(
-						rgraph.op.userOptions,
+						rgraph.op.userOptions, {type: 'fade:seq'},
 						{
 							onMerge: colorEdges,
 							onComplete: function() { 
