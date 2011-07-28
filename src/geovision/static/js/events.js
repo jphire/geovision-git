@@ -79,7 +79,7 @@ Config.Events =
 				rgraph.canvas.getElement().style.cursor = 'wait';
 				$('#load').html("Contracting...");
 				rgraph.op.contractForTraversal(
-                    node, $jit.util.merge(
+                    node, $jit.util.merge({ type: 'fade:seq'},
 						rgraph.op.userOptions, 
 						{ onComplete: function() {
 								colorEdges();
