@@ -30,57 +30,57 @@ var defaultsettings = {
 			canvasheight: 600}
 };
 
-//var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
-//var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
+var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
+var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
 
-var w = 0;
-var h = 0;
-		if (settings == undefined) settings = defaultsettings;
-		if (settings.settings == undefined) settings.settings = defaultsettings.settings;
-		if (settings.animationsettings == undefined) settings.animationsettings = defaultsettings.animationsettings;
-		if (settings.settings.canvaswidth!=undefined){
-			w = parseInt(settings.settings.canvaswidth)
-		}
-		else {
-			w = defaultsettings.settings.canvaswidth
-		}
-		if (settings.settings.canvasheight!=undefined){
-			h = parseInt(settings.settings.canvasheight)
-		}
-		else {
-			h = defaultsettings.settings.canvaswidth
-		}
-		if (settings.animationsettings.duration!=undefined){
-			d = parseInt(settings.animationsettings.duration)
-		}
-		else {
-			d = defaultsettings.animationsettings.duration
-		}
-		if (settings.animationsettings.transition!=undefined){
-			t = settings.animationsettings.transition
-		}
-		else {
-			t = defaultsettings.animationsettings.transition
-		}
-		t = eval(t);
+//var w = 0;
+//var h = 0;
+//		if (settings == undefined) settings = defaultsettings;
+//		if (settings.settings == undefined) settings.settings = defaultsettings.settings;
+//		if (settings.animationsettings == undefined) settings.animationsettings = defaultsettings.animationsettings;
+//		if (settings.settings.canvaswidth!=undefined){
+//			w = parseInt(settings.settings.canvaswidth)
+//		}
+//		else {
+//			w = defaultsettings.settings.canvaswidth
+//		}
+//		if (settings.settings.canvasheight!=undefined){
+//			h = parseInt(settings.settings.canvasheight)
+//		}
+//		else {
+//			h = defaultsettings.settings.canvaswidth
+//		}
+//		if (settings.animationsettings.duration!=undefined){
+//			d = parseInt(settings.animationsettings.duration)
+//		}
+//		else {
+//			d = defaultsettings.animationsettings.duration
+//		}
+//		if (settings.animationsettings.transition!=undefined){
+//			t = settings.animationsettings.transition
+//		}
+//		else {
+//			t = defaultsettings.animationsettings.transition
+//		}
+//		t = eval(t);
 
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width:w,
-		height:h,
+		width:opts.width,
+		height:opts.height,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
-		duration: d,
+		duration: anim_opts.duration,
 		fps: 40,
 		//set transformation style
-		transition: t,
+		transition: anim_opts.transition,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:

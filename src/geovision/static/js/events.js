@@ -15,15 +15,6 @@ Config.Events =
 				numSubnodes++;
 		});
 
-		if(currentEdge != undefined){
-			
-			rgraph.config.Events.onMouseLeave(currentEdge);
-		}
-		if(currentNode != undefined){
-			
-			rgraph.config.Events.onMouseLeave(currentNode);
-		}
-
 		//if clicked a leaf-node
 		if (numSubnodes <= 1)
 		{
