@@ -71,7 +71,7 @@ Config.Events =
 				rgraph.op.expand(
 					node, $jit.util.merge(
 						defaultsettings.animationsettings,
-						settings.animationsetting,
+						settings.animationsettings,
 						{ onComplete: function() {
 							colorEdges(); 
 							busy = false; 
