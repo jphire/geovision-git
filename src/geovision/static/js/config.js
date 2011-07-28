@@ -30,13 +30,11 @@ var defaultsettings = {
 			canvasheight: 600}
 };
 
-anim_opts = $jit.util.merge(defaultsettings.animationsettings,
-						settings.animationsettings);
-opts = $jit.util.merge(defaultsettings.settings,
-						settings.settings);
+var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
+var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
 
-var w = 0;
-var h = 0;
+//var w = 0;
+//var h = 0;
 //		if (settings == undefined) settings = defaultsettings;
 //		if (settings.settings == undefined) settings.settings = defaultsettings.settings;
 //		if (settings.animationsettings == undefined) settings.animationsettings = defaultsettings.animationsettings;
