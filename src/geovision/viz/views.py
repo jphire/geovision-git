@@ -108,7 +108,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
 		else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': result}))
 
-	elif condition_dict['read']!='':
+	elif condition_dict['read'] != '':
 		json_url = create_json(None, condition_dict['read'], None, bitscore, evalue, depth, hits)
 	if (json_url == 'error_no_children'):
 		return render(request, 'graphviz.html', merge_dict({
