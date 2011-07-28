@@ -31,6 +31,16 @@ function closeSearch(e)
 }
 jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
+
+	/*setting stuff in css to the prefered size*/
+	$('#infovis').css('height', settings.settings.canvasheight);
+	$('#infovis').css('width', settings.settings.canvaswidth);
+	$('#center-container').css('width', settings.settings.canvaswidth);
+	$('#center-container').css('height', settings.settings.canvasheight);
+	$('#right-container').css('height', settings.settings.canvasheight);
+	$('#container').css('width', settings.settings.canvaswidth+400);
+	$('#container').css('height', settings.settings.canvasheight);
+
 	$('#settingslink').click(function() {
 		if (!settingsopen){
 			$('#settings').slideDown();
