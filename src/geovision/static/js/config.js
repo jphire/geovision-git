@@ -20,10 +20,10 @@ var labelType, useGradients, nativeTextSupport, animate;
 var rgraph;
 var RGraph = $jit.RGraph;
 var busy = false;
-var settings = {
+/* var settings = {
 			canvaswidth: 600,
 			canvasheight: 600
-};
+};*/
 			
 var Config = 
 {
