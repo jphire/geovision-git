@@ -90,7 +90,7 @@ $(function() {
 		});
 	});
 </script>
-
+var settings = {{user_settings}};
 {% endblock %}
 {% block content %}
 <body>
@@ -133,7 +133,7 @@ $(function() {
 						<label>Animations:</label><br/>
 						<input type="radio" name="group1" value="animations_on" checked> On<br/>
 						<input type="radio" name="group1" value="animations_off"> Off<br/>
-						<label>Animation speed:</label><br/>
+						<label>Animation speed in ms:</label><br/>
 						<input size="7" type="text" name="duration" value="{{ user_settings.animationsettings.duration }}" /><br/>
 						<label>Animation type:</label><br/>
 						<select name="animationtype">
