@@ -47,7 +47,7 @@ a#register{
 table#registerform{
     margin:auto;
 }
-input#register{
+input#registerbutton{
     margin-top: 10px;
 }
 a#back{
