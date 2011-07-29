@@ -24,7 +24,7 @@ var defaultsettings = {
 		animationsettings:
 			{duration:"1000",
 			transition: $jit.Trans.linear,
-			type:"fade:seq"},
+			type:"animate"},
 		settings:
 			{canvaswidth: 600,
 			canvasheight: 600}
