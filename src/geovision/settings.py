@@ -1,6 +1,6 @@
 # encoding= utf-8
 # Django settings for geovision project.
-# asd
+# added this line just for fucking mercurial
 import os
 import sys
 from socket import gethostname
