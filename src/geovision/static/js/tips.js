@@ -28,13 +28,13 @@ Config.Tips =
 					//it's a read or db entry
 					tip.innerHTML += "<b>" + node.id + "</b><br/>";
 					tip.innerHTML += node.data.description + "<br/>";
-					tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
+					if(node.data.hidden_nodes_count) tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
 					tip.innerHTML = tip.innerHTML + "<br/>" + node.data.name + "</br>";
-					tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
+					if(node.data.hidden_nodes_count) tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 			}
 };

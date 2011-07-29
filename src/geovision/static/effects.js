@@ -31,6 +31,7 @@ function closeSearch(e)
 }
 jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
+
 	$('#settingslink').click(function() {
 		if (!settingsopen){
 			$('#settings').slideDown();
@@ -52,7 +53,7 @@ jQuery(function($) {
 		}
 	})
 	$('#filterform').submit(function() {
-		filter($('#bitscorefilter').val());
+		filter($('#bitscorefilter').val(), $('#masterbitscorefilter').val());
 		return false;
 	})
 	$('#colorform').submit(function(){

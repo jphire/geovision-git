@@ -45,9 +45,12 @@ function colorEdges(){
 	});
 }
  /*function to filter graph by a bitscore inputted by the user*/
-function filter(bitscore) {
+function filter(bitscore, masterbitscore) {
 	if (!(bitscore > 0)) { /*bitscores must make sense*/
 		$('#filtererror').html("Not a valid bitscore.<br/>");
+	}
+	if (bitscore > 0 && bitscore < masterbitscore){
+		$('#filtererror').html("You cannot filter by bitscores lower than the bitscore you used to search the database.<br/>");
 	}
 	else {
 		$('#load').html("Filtering...");

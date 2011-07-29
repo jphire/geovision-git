@@ -20,28 +20,63 @@ var labelType, useGradients, nativeTextSupport, animate;
 var rgraph;
 var RGraph = $jit.RGraph;
 var busy = false;
-var settings = {
-			canvaswidth: 600,
-			canvasheight: 600
+var defaultsettings = {
+		animationsettings:
+			{duration:"1000",
+			transition:"$jit.Trans.linear",
+			type:"animate"},
+		settings:
+			{canvaswidth: 600,
+			canvasheight: 600}
 };
-			
+var w = 0;
+var h = 0;
+		if (settings == undefined) settings = defaultsettings;
+		if (settings.settings == undefined) settings.settings = defaultsettings.settings;
+		if (settings.animationsettings == undefined) settings.animationsettings = defaultsettings.animationsettings;
+		if (settings.settings.canvaswidth!=undefined){
+			w = parseInt(settings.settings.canvaswidth)
+		}
+		else {
+			w = defaultsettings.settings.canvaswidth
+		}
+		if (settings.settings.canvasheight!=undefined){
+			h = parseInt(settings.settings.canvasheight)
+		}
+		else {
+			h = defaultsettings.settings.canvaswidth
+		}
+		if (settings.animationsettings.duration!=undefined){
+			d = parseInt(settings.animationsettings.duration)
+		}
+		else {
+			d = defaultsettings.animationsettings.duration
+		}
+		if (settings.animationsettings.transition!=undefined){
+			t = settings.animationsettings.transition
+		}
+		else {
+			t = defaultsettings.animationsettings.transition
+		}
+		t = eval(t);
+
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width: settings.canvaswidth,
-		height: settings.canvasheight,
+		width:w,
+		height:h,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
-		duration: 500,
+		duration: d,
 		fps: 40,
 		//set transformation style
-		transition: $jit.Trans.Circ,
+		transition: t,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
@@ -76,3 +111,14 @@ var Config =
 		//	dim_hover: 15
 		}
 };
+jQuery(function($) {
+/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
+	/*setting stuff in css to the prefered size*/
+	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
+	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
+	$('#center-container').css('width', parseInt(settings.settings.canvaswidth));
+	$('#center-container').css('height', parseInt(settings.settings.canvasheight));
+	$('#right-container').css('height', parseInt(settings.settings.canvasheight));
+	$('#container').css('width', parseInt(settings.settings.canvaswidth)+400);
+	$('#container').css('height', parseInt(settings.settings.canvasheight));
+});

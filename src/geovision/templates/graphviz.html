@@ -1,7 +1,17 @@
 {% extends "sitebase.html" %}
 
 {% block additional_head %}
-
+<!--It seems it has to be before anything else-->
+{%autoescape off%}
+<script language="javascript" type="text/javascript">
+var settings = 
+{% if user_settings %}
+{{user_settings}};
+{% else %}
+ {};
+{% endif %}
+</script>
+{%endautoescape%}
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 
@@ -30,7 +40,6 @@ $(function() {
 {% else %}
 	initGraph(null);
 {% endif %}
-var settings = "{{user_settings}}";
 });
 </script>
 <!-- jQuery-UI, for autocomplete -->
@@ -86,7 +95,7 @@ var settings = "{{user_settings}}";
 		});
 	});
 </script>
-
+var settings = {{user_settings}};
 {% endblock %}
 {% block content %}
 <body>
@@ -94,6 +103,7 @@ var settings = "{{user_settings}}";
         <ul> 
              <li id="close">Close menu</li>
              <li id="n_center">Center Node</li>
+			 <li id="n_more">More connections</li>
              <li id="e_align">Show Alignment</li>
              <li id="n_tag">Tag/Untag Node</li>
              <li id="n_tagparents">Tag Parents</li>
@@ -120,45 +130,6 @@ var settings = "{{user_settings}}";
 
 			<div id="right-container">
 				<div id="inner-details"></div>
-				<span id="settingslink">Your settings</span><br/>
-				<div id="settings">
-					{%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}
-					<form id="settingsform" action="savesettings" method="post">
-						<label>Canvas size:</label><br/>
-						<input type="text" size="10" name="canvas_x" value=""> x <input type="text" size="10" name="canvas_y" value=""><br/>
-						<label>Animations:</label><br/>
-						<input type="radio" name="group1" value="animations_on"> On<br/>
-						<input type="radio" name="group1" value="animations_off"> Off<br/>
-						<label>Animation speed:</label>
-						<input size="10" type="text" name="duration" value="" />
-						<label>Animation type:</label>
-						<select id="animationtype">
-						  <option value="linear">Linear</option>
-						  <option value="quadratic">Quadratic</option>
-						  <option value="cubic">Cubic</option>
-						  <option value="quartetic">Quartetic</option>
-						  <option value="quintic">Quintic</option>
-						  <option value="exponential">Exponential</option>
-						  <option value="circular">Circular</option>
-						  <option value="sineousidal">Sineousidal</option>
-						  <option value="bounce">Bounce</option>
-						  <option value="back">Back</option>
-						  <option value="elastic">Elastic</option>
-						</select>
-						<label>Animation subtype:<br/>
-						Note: does not effect linear transitions</label>
-						<select>
-							<option value="easeIn">Ease in</option>
-							<option value="easeOut">Ease out</option>
-							<option value="easeInOut">Ease in and out</option>
-						</select>
-						<p><strong>Warning</strong>: changing settings refreshes the page</p>
-						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10"/><br/>
-						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
-					</form>
-					<br/>
-				</div>
-				<br/>
 				<span id="helplink">Help</span>
 				<div id="help">
 					Right click on an edge to show alignment of read sequence and database sequence (upper is read). The data opens under the graph and only one alignment can be visible at the same time.
@@ -181,12 +152,50 @@ var settings = "{{user_settings}}";
 					<form id="filterform" action="" method="post">
 						<span id="filtererror"></span>
 						<p>Filter now visible graph with bitscore:</p>
-						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value=""/><br/>
+						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value="{{ bitscore }}"/><br/>
+						<input type="hidden" name="masterbitscorefilter" value="{{ bitscore }}"/>
 						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
 					</form>
 				</div>
 				<div id="names"></div>
-
+<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
+				<div id="settings">
+					<form id="settingsform" action="savesettings" method="post">
+						{% csrf_token %}
+						<label>Canvas size:</label><br/>
+						<input type="text" size="6" name="canvas_x" value="{{ user_settings.canvaswidth }}"> x <input type="text" size="6" name="canvas_y" value="{{ user_settings.canvasheight }}"><br/>
+						<label>Animations:</label><br/>
+						<input type="radio" name="group1" value="animations_on" checked> On<br/>
+						<input type="radio" name="group1" value="animations_off"> Off<br/>
+						<label>Animation speed in ms:</label><br/>
+						<input size="7" type="text" name="duration" value="{{ user_settings.animationsettings.duration }}" /><br/>
+						<label>Animation type:</label><br/>
+						<select name="animationtype">
+						  <option value="linear">Linear</option>
+						  <option value="Quad">Quadratic</option>
+						  <option value="Cubic">Cubic</option>
+						  <option value="Quart">Quartetic</option>
+						  <option value="Quint">Quintic</option>
+						  <option value="Expo">Exponential</option>
+						  <option value="Circ">Circular</option>
+						  <option value="Sine">Sineousidal</option>
+						  <option value="Bounce">Bounce</option>
+						  <option value="Back">Back</option>
+						  <option value="Elastic">Elastic</option>
+						</select><br/>
+						<label>Animation subtype:<br/>
+						Note: does not effect linear transitions</label><br/>
+						<select name="animationsubtype">
+							<option value="easeIn">Ease in</option>
+							<option value="easeOut">Ease out</option>
+							<option value="easeInOut">Ease in and out</option>
+						</select><br/>
+						<p><strong>Warning</strong>: changing settings refreshes the page</p>
+						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10" style="margin-bottom:4px;"/><br/>
+						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
+					</form>
+					<br/>
+				</div>
 			</div>
 
 			<div id="log"></div>
