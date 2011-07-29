@@ -80,7 +80,7 @@ var Config =
 		duration: anim_opts.duration,
 		fps: 40,
 		//set transformation style
-		transition: '$jit.Trans.linear',
+		transition: eval('$jit.Trans.linear'),
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
