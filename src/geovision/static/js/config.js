@@ -124,5 +124,5 @@ jQuery(function($) {
 	$('#center-container').css('height', parseInt(opts.canvasheight));
 	$('#right-container').css('height', parseInt(opts.canvasheight));
 	$('#container').css('width', parseInt(opts.canvaswidth)+400);
-	$('#container').css('height', parseInt(opts.settings.canvasheight));
+	$('#container').css('height', parseInt(opts.canvasheight));
 });
