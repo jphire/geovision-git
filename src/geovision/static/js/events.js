@@ -29,33 +29,7 @@ Config.Events =
 		{
 			if(busy)
 				return;
-
-			busy = 'expanding';
-			rgraph.canvas.getElement().style.cursor = 'wait';
-			$('#load').html("Loading...");
-			$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
-				function(newdata)
-				{
-					graph = rgraph.construct(newdata)
-					//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
-					var graphNode = graph.getNode(node.id);
-					
-					if(graphNode){
-						var graphNodeData = graphNode.data;
-						node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
-					}
-					
-					rgraph.op.sum(prepareJSON(newdata), $jit.util.merge(
-						rgraph.op.userOptions,
-						{
-							onMerge: colorEdges,
-							onComplete: function() { 
-								busy = false;
-								rgraph.canvas.getElement().style.cursor = '';
-						}}));
-					$('#load').html("");
-				}
-			);
+			fetchJSON(node);
 		}
 		//the clicked node is not a leaf node
 		else

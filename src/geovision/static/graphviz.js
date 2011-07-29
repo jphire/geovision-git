@@ -12,7 +12,43 @@ function prepareJSON(json)
 	}
 	return json;
 }
+function fetchJSON(node)
+{
 
+			busy = 'expanding';
+			rgraph.canvas.getElement().style.cursor = 'wait';
+			$('#load').html("Loading...");
+			$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
+				function(newdata)
+				{
+					graph = rgraph.construct(newdata)
+					//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
+					var graphNode = graph.getNode(node.id);
+					
+					if(graphNode){
+						var graphNodeData = graphNode.data;
+						node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
+					}
+					
+					var settings = $jit.util.merge(
+						rgraph.op.userOptions,
+						{
+						///////// remove these when everything works
+							type: 'fade:con',
+							transition: $jit.Trans.linear,
+							duration: 60,
+						/////////
+							fps: 40,
+							onMerge: colorEdges,
+							onComplete: function() { 
+								busy = false;
+								rgraph.canvas.getElement().style.cursor = '';
+						}});
+					console.log(settings);
+					rgraph.op.sum(prepareJSON(newdata), settings);
+					$('#load').html("");
+				});
+}
 
 function initGraph(json)
 {
