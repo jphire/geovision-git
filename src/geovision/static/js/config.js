@@ -32,7 +32,7 @@ var defaultsettings = {
 
 var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
-
+var trans = defaultsettings.animationsettings.transition;
 //var w = 0;
 //var h = 0;
 //		if (settings == undefined) settings = defaultsettings;
@@ -80,7 +80,8 @@ var Config =
 		duration: anim_opts.duration,
 		fps: 40,
 		//set transformation style
-		transition: '$jit.Trans.linear',
+
+		transition: window[anim_opts.transition],
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
