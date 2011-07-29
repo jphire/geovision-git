@@ -37,14 +37,13 @@ function fetchJSON(node)
 							type: 'fade:con',
 							transition: $jit.Trans.linear,
 							duration: 60,
-						/////////
 							fps: 40,
+						/////////
 							onMerge: colorEdges,
 							onComplete: function() { 
 								busy = false;
 								rgraph.canvas.getElement().style.cursor = '';
 						}});
-					console.log(settings);
 					rgraph.op.sum(prepareJSON(newdata), settings);
 					$('#load').html("");
 				});
