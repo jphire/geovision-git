@@ -23,14 +23,15 @@ var busy = false;
 var defaultsettings = {
 		animationsettings:
 			{duration:"1000",
-			transition: $jit.Trans.linear,
+			transition: '$jit.Trans.linear',
 			type:"animate"},
 		settings:
 			{canvaswidth: 600,
 			canvasheight: 600}
 };
 
-var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
+var tmpFunc = new Function(settings.animationsettings.transition);
+var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings, {transition: tmpFunc});
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
 
 //var w = 0;
