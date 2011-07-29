@@ -118,11 +118,11 @@ var Config =
 jQuery(function($) {
 /*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
 	/*setting stuff in css to the prefered size*/
-	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
-	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
-	$('#center-container').css('width', parseInt(settings.settings.canvaswidth));
-	$('#center-container').css('height', parseInt(settings.settings.canvasheight));
-	$('#right-container').css('height', parseInt(settings.settings.canvasheight));
-	$('#container').css('width', parseInt(settings.settings.canvaswidth)+400);
-	$('#container').css('height', parseInt(settings.settings.canvasheight));
+	$('#infovis').css('height', parseInt(opts.canvasheight));
+	$('#infovis').css('width', parseInt(opts.canvaswidth));
+	$('#center-container').css('width', parseInt(opts.canvaswidth));
+	$('#center-container').css('height', parseInt(opts.canvasheight));
+	$('#right-container').css('height', parseInt(opts.canvasheight));
+	$('#container').css('width', parseInt(opts.canvaswidth)+400);
+	$('#container').css('height', parseInt(opts.settings.canvasheight));
 });
