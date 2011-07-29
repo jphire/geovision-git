@@ -30,7 +30,7 @@ var defaultsettings = {
 			canvasheight: 600}
 };
 
-var tmpFunc = new Function(settings.animationsettings.transition);
+var tmpFunc = new Function(defaultsettings.animationsettings.transition);
 var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings, {transition: tmpFunc});
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
 
