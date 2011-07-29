@@ -30,8 +30,7 @@ var defaultsettings = {
 			canvasheight: 600}
 };
 
-var tmpFunc = new Function(defaultsettings.animationsettings.transition);
-var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings, {transition: tmpFunc});
+var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
 
 //var w = 0;
@@ -81,7 +80,7 @@ var Config =
 		duration: anim_opts.duration,
 		fps: 40,
 		//set transformation style
-		transition: anim_opts.transition,
+		transition: $jit.Trans.linear,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
