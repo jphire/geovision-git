@@ -192,6 +192,8 @@ class QueryToJSON:
 				db_ids.append(node.dict['id'])
 
 		ecs = BlastEcs.objects.filter(db_entry__in=db_ids)
+		if self.enzyme:
+			ecs = ecs.filter(~(Q(ec=self.enzyme)))
 		for ec in ecs:
 			ecnode = Node(ec)
 			ecid = self.get_node_id(ecnode)
@@ -228,12 +230,14 @@ class QueryToJSON:
 			raise RuntimeError('bad param type "%s"' % (param.type,))
 		
 		query = query.filter(error_value__lte = self.e_value_limit)
-		query = query.filter(bitscore__gte = self.bitscore_limit)
+		query = query.filter(bitscore__gt = self.bitscore_limit)
+		if self.offset != 0:
+				query = query.filter(bitscore__lt = self.offset)
 		query = query.order_by('-bitscore')
 		count = query.count() - self.max_amount
 		if count < 0:
 			count = 0
-		return (count, query[self.offset:self.max_amount])
+		return (count, query[:self.max_amount])
 
 	def add_edges(self, startnode, queryset):
 		"""

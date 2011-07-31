@@ -2,32 +2,40 @@ function prepareJSON(json)
 {
 	for (i in json)
 	{
-		var data = json[i].data;
+		var node = json[i];
+		var data = node.data;
 		if(data.type == "enzyme")
 			data.$color = '#0000FF';
 		else if (data.type == "dbentry")
 			data.$color = '#00FF00';
-		for(adj in data.adjacencies)
-				data.adjacencies[adj].data.$direction = data.adjacenction[adj].nodeTo;
+		for(var adj in node.adjacencies)
+		{
+				node.adjacencies[adj].data.$direction = node.adjacencies[adj].nodeTo;
+		}
 	}
 	return json;
 }
-function fetchJSON(node)
+function fetchJSON(node, addToExisting)
 {
 
 			busy = 'expanding';
 			rgraph.canvas.getElement().style.cursor = 'wait';
 			$('#load').html("Loading...");
-			$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name,
+
+			var bitscoreArgs = '&offset=' + (addToExisting ? node.data.min_bitscore : 0); 
+			$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name + bitscoreArgs,
 				function(newdata)
 				{
-					graph = rgraph.construct(newdata)
-					//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
-					var graphNode = graph.getNode(node.id);
-					
-					if(graphNode){
-						var graphNodeData = graphNode.data;
-						node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
+					if(true)
+					{
+							graph = rgraph.construct(newdata)
+							//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
+							var graphNode = graph.getNode(node.id);
+							
+							if(graphNode){
+								var graphNodeData = graphNode.data;
+								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
+							}
 					}
 					
 					var settings = $jit.util.merge(

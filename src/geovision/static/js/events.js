@@ -8,13 +8,13 @@ Config.Events =
 	{
 		if(!node || node.nodeFrom)
 			return;
-
-		numSubnodes = 0;
+/*
+		var numSubnodes = 0;
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			if(adj.nodeFrom == node && adj.data.blast_id)
 				numSubnodes++;
 		});
-
+*/
 		if(currentEdge != undefined){
 			
 			rgraph.config.Events.onMouseLeave(currentEdge);
@@ -25,10 +25,11 @@ Config.Events =
 		}
 
 		//if clicked a leaf-node
-		if (numSubnodes <= 1)
+		if (!node.data.opened)
 		{
 			if(busy)
 				return;
+			node.data.opened = true;
 			fetchJSON(node);
 		}
 		//the clicked node is not a leaf node

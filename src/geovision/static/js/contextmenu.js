@@ -40,6 +40,7 @@ function initContextMenu()
 					untagNode(currentNode);
 				}
 			},
+			'n_more': function() { fetchJSON(currentNode, true); },
 			'n_tagparents': function() { rgraph.op.tagParents(currentNode)},
 			'n_tagsubnodes': function() { rgraph.op.tagSubnodes(currentNode)},
 			'n_tagsubgraph': function() { rgraph.op.tagSubgraph(currentNode)},

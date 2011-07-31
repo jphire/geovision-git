@@ -79,7 +79,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			elif num_results == 1: return enzyme.ec_number
 			else: return ec_numbers
 
-	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 10, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0}
+	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0}
 	for k in condition_dict.keys():
 		try:
 			if request.POST[k] != '':
