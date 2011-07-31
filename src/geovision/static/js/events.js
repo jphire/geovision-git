@@ -137,7 +137,6 @@ Config.Events =
 		else if(object){
 			if(busy)
 				return;
-
 			rgraph.canvas.getElement().style.cursor = '';
 		}
 	}

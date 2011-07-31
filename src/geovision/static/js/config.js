@@ -24,7 +24,7 @@ var defaultsettings = {
 		animationsettings:
 			{duration: "1000",
 			type: "fade:seq",
-			transition: $jit.Trans.linear
+			transition: '$jit.Trans.linear'
 			},
 		settings:
 			{canvaswidth: 600,
@@ -33,7 +33,7 @@ var defaultsettings = {
 
 var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
-
+var trans = new Function(anim_opts.transition);
 //var w = 0;
 //var h = 0;
 //		if (settings == undefined) settings = defaultsettings;
@@ -82,7 +82,7 @@ var Config =
 		fps: 40,
 		//set transformation style
 
-		transition: anim_opts.transition,
+		transition: trans(),
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
