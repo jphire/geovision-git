@@ -23,7 +23,7 @@ var busy = false;
 var defaultsettings = {
 		animationsettings:
 			{duration:"1000",
-			transition: '$jit.Trans.linear',
+			transition: $jit.Trans.linear,
 			type:"animate"},
 		settings:
 			{canvaswidth: 600,
@@ -32,7 +32,7 @@ var defaultsettings = {
 
 var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
-var trans = defaultsettings.animationsettings.transition;
+
 //var w = 0;
 //var h = 0;
 //		if (settings == undefined) settings = defaultsettings;
@@ -69,8 +69,8 @@ var Config =
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width:opts.width,
-		height:opts.height,
+		width:opts.canvaswidth,
+		height:opts.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
@@ -81,7 +81,7 @@ var Config =
 		fps: 40,
 		//set transformation style
 
-		transition: window[anim_opts.transition],
+		transition: anim_opts.transition,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
