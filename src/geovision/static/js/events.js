@@ -63,7 +63,7 @@ Config.Events =
 				rgraph.op.expand(
 					node, $jit.util.merge(
 						defaultsettings.animationsettings,
-						settings.animationsetting,
+						settings.animationsetting, {type:'animate'},
 						{ onComplete: function() {
 							colorEdges(); 
 							busy = false; 
@@ -81,7 +81,7 @@ Config.Events =
 				$('#load').html("Contracting...");
 				rgraph.op.contractForTraversal(
                     node, $jit.util.merge(
-						rgraph.op.userOptions, 
+						rgraph.op.userOptions, {type:'animate'},
 						{ onComplete: function() {
 								colorEdges();
 								busy = false;
