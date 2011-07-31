@@ -22,9 +22,9 @@ var RGraph = $jit.RGraph;
 var busy = false;
 var defaultsettings = {
 		animationsettings:
-			{duration:"1000",
-			type:"fade:seq",
-			transition: $jit.Trans.linear,
+			{duration: "1000",
+			type: "animate",
+			transition: $jit.Trans.linear
 			},
 		settings:
 			{canvaswidth: 600,
@@ -70,8 +70,8 @@ var Config =
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width:opts.canvaswidth,
-		height:opts.canvasheight,
+		width: opts.canvaswidth,
+		height: opts.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
