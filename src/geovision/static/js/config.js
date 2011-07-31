@@ -23,8 +23,9 @@ var busy = false;
 var defaultsettings = {
 		animationsettings:
 			{duration:"1000",
+			type:"fade:seq",
 			transition: $jit.Trans.linear,
-			type:"animate"},
+			},
 		settings:
 			{canvaswidth: 600,
 			canvasheight: 600}

@@ -43,7 +43,8 @@ Config.Events =
 							onComplete: function() { 
 								busy = false;
 								rgraph.canvas.getElement().style.cursor = '';
-						}}));
+						},
+						}));
 					$('#load').html("");
 				}
 			);
