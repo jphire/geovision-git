@@ -23,7 +23,7 @@ var busy = false;
 var defaultsettings = {
 		animationsettings:
 			{duration: 1000,
-			type: "fade:con",
+			type: "fade:seq",
 			transition: 'linear'
 			},
 		settings:
