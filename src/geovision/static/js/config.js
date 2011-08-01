@@ -153,8 +153,6 @@ jQuery(function($) {
 	if (settings.animationsettings.transitionname != undefined){
 		$('#animationtype').val(settings.animationsettings.transitionname);
 	}
-	if (settings.animationsettings.subtype != undefined){
-		$('#animationsubtype').val(settings.animationsettings.subtype);
-	}
+	$('#subtype').val(settings.animationsettings.subtype);
 });
 
