@@ -206,7 +206,8 @@ span#settingslink{
 div#settings{
 	display:none;
 }
-#container a #logoutbutton{
+a#logoutbutton{
+	padding: 5px;
 	color:gray;
 	float:right;
 	border: 2px #AAAAAA solid;
