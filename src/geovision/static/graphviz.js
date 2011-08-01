@@ -32,7 +32,7 @@ function initGraph(json)
 
 	colorEdges();
 	rgraph.refresh();
-	rgraph.op.userOptions = $jit.util.merge({type:'fade:seq'},
+	rgraph.op.userOptions = $jit.util.merge({type:'fade:con'},
 		((typeof settings != "undefined" && settings.animationsettings) || {}));
 
     rgraph.op.contractForTraversal = contractForTraversal;
