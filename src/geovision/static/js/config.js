@@ -75,6 +75,7 @@ for (var key1 in numericFields)
 		settings[key1][key2] = isNaN(num) ? defaultsettings[key1][key2] : num;
 	}
 }
+settings.animationsettings.transitionname = settings.animationsettings.transition;
 var type = $jit.Trans[settings.animationsettings.transition];
 if(!type)
 	type = $jit.Trans[defaultsettings.animationsettings.transition]; 
@@ -134,7 +135,6 @@ var Config =
 		}
 };
 jQuery(function($) {
-/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
 	/*setting stuff in css to the prefered size*/
 	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
 	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
@@ -144,6 +144,15 @@ jQuery(function($) {
 	$('#container').css('width', parseInt(settings.settings.canvaswidth)+400);
 	$('#container').css('height', parseInt(settings.settings.canvasheight));
 	$('#deleteUntagged').click(function(e) { e.preventDefault(); rgraph.op.deleteUntagged(); });
-
+	$('#canvas_x').val(settings.settings.canvaswidth);
+	$('#canvas_y').val(settings.settings.canvasheight);
+	if (settings.animationsettings.type == 'replot'){
+		$('#animations_off').attr('checked', 'checked');
+	}
+	$('#duration').val(settings.animationsettings.duration);
+	if (settings.animationsettings.transitionname != undefined){
+		$('#animationtype').val(settings.animationsettings.transitionname);
+	}
+	$('#animationsubtype').val(settings.animationsettings.subtype);
 });
 
