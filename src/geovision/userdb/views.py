@@ -66,7 +66,7 @@ def logging_out(request):
 	return redirect('/')
 
 def about(request):
-	render_to_response("about.html", { }, context_instance=RequestContext(request) )
+	return render_to_response("about.html", { }, context_instance=RequestContext(request) )
 
 @login_required
 def savesettings(request):
