@@ -206,10 +206,11 @@ span#settingslink{
 div#settings{
 	display:none;
 }
-a#logoutbutton{
+#container a #logoutbutton{
 	color:gray;
 	float:right;
 	border: 2px #AAAAAA solid;
 	background-color: #F2F2F2;
-	margin-right: 10px;
+	margin-right: 15px;
+	margin-top: 15px;
 }
