@@ -23,7 +23,7 @@ var busy = false;
 var defaultsettings = {
 		animationsettings:
 			{duration: "1000",
-			type: "fade:con",
+			type: "fade:seq",
 			transition: '$jit.Trans.linear'
 			},
 		settings:
@@ -34,36 +34,36 @@ var defaultsettings = {
 var anim_opts = $jit.util.merge(defaultsettings.animationsettings, settings.animationsettings);
 var opts = $jit.util.merge(defaultsettings.settings, settings.settings);
 var trans = new Function(anim_opts.transition);
-//var w = 0;
-//var h = 0;
-//		if (settings == undefined) settings = defaultsettings;
-//		if (settings.settings == undefined) settings.settings = defaultsettings.settings;
-//		if (settings.animationsettings == undefined) settings.animationsettings = defaultsettings.animationsettings;
-//		if (settings.settings.canvaswidth!=undefined){
-//			w = parseInt(settings.settings.canvaswidth)
-//		}
-//		else {
-//			w = defaultsettings.settings.canvaswidth
-//		}
-//		if (settings.settings.canvasheight!=undefined){
-//			h = parseInt(settings.settings.canvasheight)
-//		}
-//		else {
-//			h = defaultsettings.settings.canvaswidth
-//		}
-//		if (settings.animationsettings.duration!=undefined){
-//			d = parseInt(settings.animationsettings.duration)
-//		}
-//		else {
-//			d = defaultsettings.animationsettings.duration
-//		}
-//		if (settings.animationsettings.transition!=undefined){
-//			t = settings.animationsettings.transition
-//		}
-//		else {
-//			t = defaultsettings.animationsettings.transition
-//		}
-//		t = eval(t);
+var w = 0;
+var h = 0;
+		if (settings == undefined) settings = defaultsettings;
+		if (settings.settings == undefined) settings.settings = defaultsettings.settings;
+		if (settings.animationsettings == undefined) settings.animationsettings = defaultsettings.animationsettings;
+		if (settings.settings.canvaswidth!=undefined){
+			w = parseInt(settings.settings.canvaswidth)
+		}
+		else {
+			w = defaultsettings.settings.canvaswidth
+		}
+		if (settings.settings.canvasheight!=undefined){
+			h = parseInt(settings.settings.canvasheight)
+		}
+		else {
+			h = defaultsettings.settings.canvaswidth
+		}
+		if (settings.animationsettings.duration!=undefined){
+			d = parseInt(settings.animationsettings.duration)
+		}
+		else {
+			d = defaultsettings.animationsettings.duration
+		}
+		if (settings.animationsettings.transition!=undefined){
+			t = settings.animationsettings.transition
+		}
+		else {
+			t = defaultsettings.animationsettings.transition
+		}
+		t = eval(t);
 
 var Config = 
 {
@@ -82,7 +82,7 @@ var Config =
 		fps: 40,
 		//set transformation style
 
-		transition: trans,
+		transition: t,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
