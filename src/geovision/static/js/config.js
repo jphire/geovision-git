@@ -22,8 +22,8 @@ var RGraph = $jit.RGraph;
 var busy = false;
 var defaultsettings = {
 		animationsettings:
-			{duration: "1000",
-			type: "fade:seq",
+			{duration: 1000,
+			type: "fade:con",
 			transition: 'linear'
 			},
 		settings:
