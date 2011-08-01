@@ -75,26 +75,29 @@ def savesettings(request):
 		duration = request.POST['duration']
 		canvas_x = request.POST['canvas_x']
 		canvas_y = request.POST['canvas_y']
-		if ((canvas_x.isdigit() or canvas_x=='') and (canvas_y.isdigit() or canvas_y=='') and (duration.isdigit() or duration=='')):
-			numericsMakeSense = True;
-		if (duration==''):
-			duration=1000;
-		if (canvas_x==''):
-			canvas_x=600
-		if (canvas_y==''):
-			canvas_y=600
-		if 'savesettings' in request.POST and numericsMakeSense:
+#		if ((canvas_x.isdigit() or canvas_x=='') and (canvas_y.isdigit() or canvas_y=='') and (duration.isdigit() or duration=='')):
+#			numericsMakeSense = True;
+#		if (duration==''):
+#			duration=1000;
+#		if (canvas_x==''):
+#			canvas_x=600
+#		if (canvas_y==''):
+#			canvas_y=600
+		if 'savesettings' in request.POST: #and numericsMakeSense:
 			type = ''
 			transition = ''
 			if request.POST['group1']=='animations_off':
 				type = 'replot'
 			else:
-				type = 'animate'
-			if request.POST['animationtype']=='linear':
-				transition = '$jit.Trans.linear'
-			else:
-				transition = '$jit.Trans.'+request.POST["animationtype"]+'.'+request.POST["animationsubtype"]
-			settings = json.dumps({'settings': {'canvaswidth': canvas_x, 'canvasheight': canvas_y}, 'animationsettings': {'type': type, 'duration': duration, 'transition': transition}})
+					type = 'fade:con'
+#			if request.POST['animationtype']=='linear':
+#				transition = '$jit.Trans.linear'
+#			else:
+#				transition = '$jit.Trans.'+request.POST["animationtype"]+'.'+request.POST["animationsubtype"]
+			transition = request.POST['animationtype']
+			subtype = request.POST['animationsubtype']
+			
+			settings = json.dumps({'settings': {'canvaswidth': canvas_x, 'canvasheight': canvas_y}, 'animationsettings': {'type': type, 'duration': duration, 'subtype': subtype, 'transition': transition}})
 			profile.settings = settings
 			profile.save()
 			return HttpResponseRedirect('/graphrefresh?settingsmessage=settings saved')
