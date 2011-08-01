@@ -86,6 +86,7 @@ function initGraph(json)
 	rgraph.op.tagSubgraph = tagSubgraph;
 	rgraph.op.tagSubnodes = tagSubnodes;
 	rgraph.centerToNode = centerToNode;
+	rgraph.op.deleteUntagged = deleteUntagged;
 }
 
 

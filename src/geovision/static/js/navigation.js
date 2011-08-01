@@ -38,6 +38,18 @@ function contractForTraversal(node, opt) {
 }
 
 */
+
+function deleteUntagged() {
+	var nodesArray = [];
+	rgraph.graph.eachBFS(rgraph.root, function(n) { nodesArray.push(n) });
+	while (nodesArray.length > 0) {
+		var node = nodesArray.pop();
+		if (!node.traversalTag) {
+			rgraph.op.removeNode(node.id, rgraph.op.userOptions);
+		}
+	}
+}
+
 function addTemporaryTags()
 {
 	rgraph.graph.eachNode(function(n) {
