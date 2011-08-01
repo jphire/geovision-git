@@ -157,9 +157,9 @@ $(function() {
 				<br/>
 				<br/>
 				<div id="coloring">
-					<form id="colorform">
-						<input type="radio" name="colortype" id="colortypeDynamic" value="dynamic" checked>Dynamic</input><br/>
-						<input type="radio" name="colortype" id="colortypeCustom" value="custom">Custom: </input>
+					<form action=""  id="colorform">
+						<input type="radio" name="colortype" id="colortypeDynamic" value="dynamic" checked/>Dynamic</input><br/>
+						<input type="radio" name="colortype" id="colortypeCustom" value="custom"/>Custom: </input>
 						<input type="text" id="colorMin" size="4" disabled/>-<input type="text" id="colorMax" size="4" disabled/><br/>
 						<input type="submit" id="colorizeSubmit" value="Colorize"/>
 						<span id="colorErrorMsg" class="error"></span>
@@ -176,7 +176,9 @@ $(function() {
 						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
 					</form>
 				</div>
+				<br/>
 				<div id="names"></div>
+				<br/>
 <span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
 				<div id="settings">
 					<form id="settingsform" action="savesettings" method="post">

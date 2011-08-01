@@ -176,7 +176,7 @@ div#closealign{
 	cursor: pointer;
 }
 span#filtertext{
-	text-decoration: underline;
+	font-weight: bold;
 }
 div#filter{
 	text-align: left;
