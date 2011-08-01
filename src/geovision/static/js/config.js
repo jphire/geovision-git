@@ -22,15 +22,17 @@ var RGraph = $jit.RGraph;
 var busy = false;
 var defaultsettings = {
 		animationsettings:
-			{duration:"1000",
-			transition:"$jit.Trans.linear",
-			type:"animate"},
+			{duration: 1000,
+			transition: 'linear',
+			subtype: 'EaseIn',
+			type:"fade:con"},
 		settings:
 			{canvaswidth: 600,
 			canvasheight: 600}
 };
 var w = 0;
 var h = 0;
+/*
 		if (settings == undefined) settings = defaultsettings;
 		if (settings.settings == undefined) settings.settings = defaultsettings.settings;
 		if (settings.animationsettings == undefined) settings.animationsettings = defaultsettings.animationsettings;
@@ -59,24 +61,44 @@ var h = 0;
 			t = defaultsettings.animationsettings.transition
 		}
 		t = eval(t);
+		settings.animationsettings.transition = t; // XXX
+*/
+settings = $jit.util.merge(defaultsettings, settings);
+var numericFields = {settings: ['canvaswidth', 'canvasheight'], animationsettings: ['duration']}
 
+for (var key1 in numericFields)
+{
+	for (var i in numericFields[key1])
+	{
+		var key2 = numericFields[key1][i];
+		var num = parseInt(settings[key1][key2]);
+		settings[key1][key2] = isNaN(num) ? defaultsettings[key1][key2] : num;
+	}
+}
+var type = $jit.Trans[settings.animationsettings.transition];
+if(!type)
+	type = $jit.Trans[defaultsettings.animationsettings.transition]; 
+var subtype = type[settings.animationsettings.subtype];
+if(subtype)
+	type = subtype;
+settings.animationsettings.transition = type;
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
-		width:w,
-		height:h,
+		width: settings.settings.canvaswidth,
+		height:settings.settings.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
 		background: { CanvasStyles: { strokeStyle: '#555' } },
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
-		duration: d,
+		duration: settings.animationsettings.duration,
 		fps: 40,
 		//set transformation style
-		transition: t,
+		transition: settings.animationsettings.transition,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:

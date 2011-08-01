@@ -42,7 +42,7 @@ function fetchJSON(node, addToExisting)
 						rgraph.op.userOptions,
 						{
 						///////// remove these when everything works
-							type: 'fade:con',
+							//type: 'fade:con',
 							transition: $jit.Trans.linear,
 							duration: 60,
 							fps: 40,
@@ -77,10 +77,10 @@ function initGraph(json)
 	colorEdges();
 	rgraph.refresh();
 	rgraph.op.userOptions = $jit.util.merge(
-		{ type: 'fade:seq'},
-		((typeof settings != "undefined" && typeof settings.animationsettings != "undefined" && settings.animationsettings) || {}));
+		//((typeof settings != "undefined" && typeof settings.animationsettings != "undefined" && settings.animationsettings) || {}
+		settings.animationsettings);
 
-    rgraph.op.contractForTraversal = contractForTraversal;
+    //rgraph.op.contractForTraversal = contractForTraversal;
 	rgraph.op.filterContract = filterContract;
 	rgraph.op.tagParents = tagParents;
 	rgraph.op.tagSubgraph = tagSubgraph;

@@ -2,7 +2,7 @@
  * Modified version of the original contract function for removing unnecessary
  * nodes while traversing the graph.
  */
-
+/*
 function contractForTraversal(node, opt) {
 	console.log("contractForTraversal");
 	var viz = this.viz;
@@ -37,6 +37,14 @@ function contractForTraversal(node, opt) {
 	}
 }
 
+*/
+function addTemporaryTags()
+{
+	rgraph.graph.eachNode(function(n) {
+		if(n.traversalTag === true)
+			tagParents(n, 'temp');
+	});
+}
 /*
  * Function for checking if node has a tagged path to the root node.
  */
@@ -46,25 +54,25 @@ function checkRootTagpath(node) {
 	if (parentNodes.length == 0) return true;
 	for (var i = 0; i < parentNodes.length; i++) {
 		pnode = parentNodes[i]
-		if (pnode.traversalTag != true) continue;
+		if (!pnode.traversalTag) continue;
 		if (checkRootTagpath(pnode)) return true;
 	}
 	return false;
 }
 
-function tagNode(node) {
+function tagNode(node, value) {
 	if (!checkRootTagpath(node)) tagParents(node);
-	node.traversalTag = true;
+	node.traversalTag = value ? value : true;
 	rgraph.refresh()
 }
 
 /* 
  * Function for tagging a path from node to root, always tags first node in parents list
  */
-function tagParents(node) {
+function tagParents(node, value) {
 	var parents = node.getParents();
 	while (parents.length > 0) {
-		parents[0].traversalTag = true;
+		parents[0].traversalTag = value ? value : true;
 		console.log("Parent " + parents[0].id + " tagged");
 		parents = parents[0].getParents();
 	}
