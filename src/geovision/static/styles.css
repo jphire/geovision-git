@@ -145,6 +145,9 @@ div#graphnavi #optiontag {
     left: 7px;
     display: block;
 }
+#graphnavi td{
+	vertical-align: middle;
+}
 div#close{
     float:right;
     font-size:20px;
