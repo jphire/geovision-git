@@ -147,7 +147,7 @@ jQuery(function($) {
 	$('#canvas_x').val(settings.settings.canvaswidth);
 	$('#canvas_y').val(settings.settings.canvasheight);
 	if (settings.animationsettings.type == 'replot'){
-		$('#animations_off').attr(checked, 'checked');
+		$('#animations_off').attr('checked', 'checked');
 	}
 	$('#canvas_y').val(settings.animationsettings.duration);
 	if (settings.animationsettings.transitionname != undefined){
