@@ -2,7 +2,6 @@
  * Modified version of the original contract function for removing unnecessary
  * nodes while traversing the graph.
  */
-/*
 function contractForTraversal(node, opt) {
 	console.log("contractForTraversal");
 	var viz = this.viz;
@@ -36,8 +35,6 @@ function contractForTraversal(node, opt) {
 		viz.refresh();
 	}
 }
-
-*/
 
 function deleteUntagged() {
 	var nodesArray = [];

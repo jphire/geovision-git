@@ -26,6 +26,12 @@ function fetchJSON(node, addToExisting)
 			$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name + bitscoreArgs,
 				function(newdata)
 				{
+					if(newdata.error_message)
+					{
+						console.log('Server error while loading JSON', newdata.error_message);
+						newdata = {};
+						return;
+					}
 					if(true)
 					{
 							graph = rgraph.construct(newdata)
@@ -41,12 +47,6 @@ function fetchJSON(node, addToExisting)
 					var settings = $jit.util.merge(
 						rgraph.op.userOptions,
 						{
-						///////// remove these when everything works
-							//type: 'fade:con',
-							transition: $jit.Trans.linear,
-							duration: 60,
-							fps: 40,
-						/////////
 							onMerge: colorEdges,
 							onComplete: function() { 
 								busy = false;
@@ -77,10 +77,8 @@ function initGraph(json)
 	colorEdges();
 	rgraph.refresh();
 	rgraph.op.userOptions = $jit.util.merge(
-		//((typeof settings != "undefined" && typeof settings.animationsettings != "undefined" && settings.animationsettings) || {}
 		settings.animationsettings);
 
-    //rgraph.op.contractForTraversal = contractForTraversal;
 	rgraph.op.filterContract = filterContract;
 	rgraph.op.tagParents = tagParents;
 	rgraph.op.tagSubgraph = tagSubgraph;
