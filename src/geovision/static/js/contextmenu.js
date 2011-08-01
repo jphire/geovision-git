@@ -23,6 +23,7 @@ function initContextMenu()
 				console.log(currentNode.id);
 				var id = currentNode.id;
 				busy = true;
+				tagNode(rgraph.graph.getNode(id), false);
 				rgraph.onClick(id, $jit.util.merge(
 						rgraph.op.userOptions,
 						{ onComplete: function() {
