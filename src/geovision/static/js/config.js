@@ -75,7 +75,7 @@ for (var key1 in numericFields)
 		settings[key1][key2] = isNaN(num) ? defaultsettings[key1][key2] : num;
 	}
 }
-settings.animationsettings.animationname = settings.animationsettings.transitionname;
+settings.animationsettings.transitionname = settings.animationsettings.transition;
 var type = $jit.Trans[settings.animationsettings.transition];
 if(!type)
 	type = $jit.Trans[defaultsettings.animationsettings.transition]; 
