@@ -8,13 +8,6 @@ Config.Events =
 	{
 		if(!node || node.nodeFrom)
 			return;
-/*
-		var numSubnodes = 0;
-		$jit.Graph.Util.eachAdjacency(node, function(adj) {
-			if(adj.nodeFrom == node && adj.data.blast_id)
-				numSubnodes++;
-		});
-*/
 		if(currentEdge != undefined){
 			
 			rgraph.config.Events.onMouseLeave(currentEdge);
@@ -24,7 +17,7 @@ Config.Events =
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
 
-		//if clicked a leaf-node
+		//if clicked an unopened node
 		if (!node.data.opened)
 		{
 			if(busy)
@@ -32,46 +25,9 @@ Config.Events =
 			node.data.opened = true;
 			fetchJSON(node);
 		}
-		//the clicked node is not a leaf node
 		else
 		{
-			if(node.collapsed) 
-			{
-				if(busy)
-					return;
-
-				busy = 'expanding';
-				rgraph.canvas.getElement().style.cursor = 'wait';
-				$('#load').html("Loading...");
-				rgraph.op.expand(
-					node, $jit.util.merge(
-						defaultsettings.animationsettings,
-						settings.animationsetting,
-						{ onComplete: function() {
-							colorEdges(); 
-							busy = false; 
-							rgraph.canvas.getElement().style.cursor = ''; 
-						}}));
-				$('#load').html("");
-			}
-			else 
-			{
-				if(busy)
-					return;
-
-				busy = 'contracting';
-				rgraph.canvas.getElement().style.cursor = 'wait';
-				$('#load').html("Contracting...");
-				rgraph.op.contractForTraversal(
-                    node, $jit.util.merge(
-						rgraph.op.userOptions, 
-						{ onComplete: function() {
-								colorEdges();
-								busy = false;
-								rgraph.canvas.getElement().style.cursor = ''; 
-								}}));
-				$('#load').html("");
-			}
+			fetchJSON(node, true);
 		}
 		//show clicked node's info in the right column
 		$jit.id('inner-details').innerHTML = ""
