@@ -58,7 +58,7 @@ $(function() {
 	<!--<div class="error" id="error"></div>-->
 {% endif %}
 
-<form id="graphrefreshform" action="graphrefresh" method="post">{% csr_token %} <!--protects from cross site request forgery-->
+<form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
 	<table><tr><td colspan="2">
 		<h4>Get a new graph:</h4>
 	</td></tr><tr><td colspan="2">
