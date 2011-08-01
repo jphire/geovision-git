@@ -58,30 +58,48 @@ $(function() {
 	<!--<div class="error" id="error"></div>-->
 {% endif %}
 
-<a style="float:left; border: 2px white solid; background-color: #F2F2F2; margin-left: 10px;" href="logging_out">Logout</a><br/><br/>
-<form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
-    <p>Input only one of the three following:</p>
-    <label>Enzyme</label>
-    <input size="10" type="text" name="enzyme" id="ec" value="{{ enzyme }}"/><br/><br/>
-	{% if enzyme_list %}
-	Multiple enzymes matched, pick one:
-	{% for e in enzyme_list %}
-	<p class="submitForm" id='{{ e.enzyme }}'>{{ e.enzyme_name }} ({{ e.enzyme }})</p>
-	{% endfor %}
-	{% endif %}
-    <label>Read id</label>
-    <input size="10" type="text" name="read" value="{{ read }}"/><br/><br/>
-    <label>DB entry id</label>
-    <input size="10" type="text" name="dbentry" value="{{ dbentry }}"/><br/><br/>
-    <label>Bitscore</label>
-    <input size="10" type="text" name="bitscore" value="{{ bitscore }}"/><br/><br/>
-    <label>E-value</label>
-    <input size="10" type="text" name="e-value" value="{{ evalue }}"/><br/><br/>
-    <label>Depth</label>
-    <input size="10" type="text" name="depth" value="{{ depth }}"/><br/><br/>
-    <label>Hits</label>
-    <input size="10" type="text" name="hits" value="{{ hits }}" /><br/><br/>
-    <input id="graphrefresh" type="submit" value="Refresh page" size="10"/><br/>
+<form id="graphrefreshform" action="graphrefresh" method="post">{% csr_token %} <!--protects from cross site request forgery-->
+	<table><tr><td colspan="2">
+		<h4>Get a new graph:</h4>
+	</td></tr><tr><td colspan="2">
+		<p>(Input only one of the three following)</p>
+	</td></tr><tr><td>
+		<label>Enzyme</label>
+	</td><td>
+		<input size="10" type="text" name="enzyme" id="ec" value="{{ enzyme }}"/><br/><br/>
+		{% if enzyme_list %}
+		</td></tr><tr><td colspan="2">Multiple enzymes matched, pick one:
+		{% for e in enzyme_list %}
+		</td></tr><tr><td colspan="2"><p class="submitForm" id='{{ e.enzyme }}'>{{ e.enzyme_name }} ({{ e.enzyme }})</p>
+		{% endfor %}
+		{% endif %}
+	</td></tr><tr><td>
+		<label>Read id</label>
+	</td><td>
+		<input size="10" type="text" name="read" value="{{ read }}"/><br/><br/>
+	</td></tr><tr><td>
+		<label>DB entry id</label>
+	</td><td>
+		<input size="10" type="text" name="dbentry" value="{{ dbentry }}"/><br/><br/>
+	</td></tr><tr><td>
+		<label>Bitscore</label>
+	</td><td>
+		<input size="10" type="text" name="bitscore" value="{{ bitscore }}"/><br/><br/>
+	</td></tr><tr><td>
+		<label>E-value</label>
+	</td><td>
+		<input size="10" type="text" name="e-value" value="{{ evalue }}"/><br/><br/>
+	</td></tr><tr><td>
+		<label>Depth</label>
+	</td><td>
+		<input size="10" type="text" name="depth" value="{{ depth }}"/><br/><br/>
+	</td></tr><tr><td>
+		<label>Hits</label>
+	</td><td>
+		<input size="10" type="text" name="hits" value="{{ hits }}" /><br/><br/>
+	</td></tr><tr><td colspan="2">
+		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/><br/>
+	</td></tr></table>
 </form>
 
 <script language="javascript" type="text/javascript">
@@ -94,8 +112,8 @@ $(function() {
 			position: { my : "center top", at: "center bottom"}
 		});
 	});
+	var settings = {{user_settings}};
 </script>
-var settings = {{user_settings}};
 {% endblock %}
 {% block content %}
 <body>
@@ -129,6 +147,7 @@ var settings = {{user_settings}};
 			</div>
 
 			<div id="right-container">
+				<a id="logoutbutton" href="logging_out">Logout</a><br/>
 				<div id="inner-details"></div>
 				<span id="helplink">Help</span>
 				<div id="help">
