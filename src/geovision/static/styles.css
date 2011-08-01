@@ -145,6 +145,9 @@ div#graphnavi #optiontag {
     left: 7px;
     display: block;
 }
+#graphnavi td{
+	vertical-align: middle;
+}
 div#close{
     float:right;
     font-size:20px;
@@ -214,4 +217,8 @@ a#logoutbutton{
 	background-color: #F2F2F2;
 	margin-right: 15px;
 	margin-top: 15px;
+}
+p#navierror {
+	margin: 15px;
+	color: #B80000;
 }
