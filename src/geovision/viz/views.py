@@ -57,7 +57,7 @@ def graphjson(request):
 		if p[k] == '':
 			p[k] = None
 	try:
-		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), int(p['offset']))
+		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), float(p['offset']))
 	except Exception as e:
 		out = json.dumps({'error_message': str(e)})
 	return HttpResponse(out, mimetype='text/plain')
