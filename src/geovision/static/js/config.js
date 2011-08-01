@@ -149,7 +149,7 @@ jQuery(function($) {
 	if (settings.animationsettings.type == 'replot'){
 		$('#animations_off').attr('checked', 'checked');
 	}
-	$('#canvas_y').val(settings.animationsettings.duration);
+	$('#duration').val(settings.animationsettings.duration);
 	if (settings.animationsettings.transitionname != undefined){
 		$('#animationtype').val(settings.animationsettings.transitionname);
 	}
