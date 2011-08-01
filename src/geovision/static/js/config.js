@@ -87,7 +87,7 @@ var Config =
 		fps: 40,
 		//set transformation style
 
-		transition: t,
+		transition: trans,
 		//Add navigation capabilities:
 		//zooming by scrolling and panning.
 		Navigation:
