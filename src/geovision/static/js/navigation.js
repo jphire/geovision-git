@@ -122,38 +122,4 @@ function untagSubgraph(node) {
 }
 
 function centerToNode(id, opt){
-	if (this.root != id && !this.busy) {
-		  this.busy = true;
-		  this.root = id;
-		  var that = this;
-		  var obj = that.getNodeAndParentAngle(id);
-
-		  // second constraint
-		  this.tagChildren(obj.parent, id);
-		  this.parent = obj.parent;
-		  this.compute('end');
-
-		  // first constraint
-		  var thetaDiff = obj.theta - obj.parent.endPos.theta;
-		  this.graph.eachNode(function(elem){
-			elem.endPos.set(elem.endPos.getp().add($P(thetaDiff, 0)));
-		  });
-
-		  var mode = this.config.interpolation;
-		  opt = $.merge( {
-			onComplete: $.empty
-		  }, opt || {});
-
-		  this.fx.animate($.merge( {
-			hideLabels: true,
-			modes: [
-			  mode
-			]
-		  }, opt, {
-			onComplete: function(){
-			  that.busy = false;
-			  opt.onComplete();
-			}
-		  }));
-	}
 }
