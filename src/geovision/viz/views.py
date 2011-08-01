@@ -22,7 +22,7 @@ import urllib
 
 def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits, offset):
 	# for testing only
-	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits, offset)
+#	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits, offset)
 
 	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits}.items()),
 					urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth, 'offset': offset}.items()))
@@ -109,7 +109,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		else: return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': result}))
 
 	elif condition_dict['read']!='':
-		json_url = create_json(None, condition_dict['read'], None, bitscore, evalue, depth, hits)
+		json_url = create_json(None, condition_dict['read'], None, bitscore, evalue, depth, hits, offset)
 	if (json_url == 'error_no_children'):
 		return render(request, 'graphviz.html', merge_dict({
 			'error_message': "Error: No data found, input different values.",

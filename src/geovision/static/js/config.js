@@ -143,4 +143,7 @@ jQuery(function($) {
 	$('#right-container').css('height', parseInt(settings.settings.canvasheight));
 	$('#container').css('width', parseInt(settings.settings.canvaswidth)+400);
 	$('#container').css('height', parseInt(settings.settings.canvasheight));
+	$('#deleteUntagged').click(function(e) { e.preventDefault(); rgraph.op.deleteUntagged(); });
+
 });
+
