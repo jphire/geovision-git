@@ -215,3 +215,7 @@ a#logoutbutton{
 	margin-right: 15px;
 	margin-top: 15px;
 }
+p#navierror {
+	margin: 15px;
+	color: #B80000;
+}

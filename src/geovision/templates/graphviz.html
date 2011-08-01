@@ -97,9 +97,9 @@ $(function() {
 
 {% if error_message or not json_base_url %}
 	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
-	<div class="error" id="error">{{ error_message }}</div>
+	<p id="navierror">{{ error_message }}</div>
 {% else %}
-	<div class="error" id="error"></div>
+	
 {% endif %}
 
 <script language="javascript" type="text/javascript">
