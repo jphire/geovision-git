@@ -49,13 +49,16 @@ function colorEdges(){
 }
  /*function to filter graph by a bitscore inputted by the user*/
 function filter(bitscore, masterbitscore) {
-	if (!(bitscore > 0)) { /*bitscores must make sense*/
+	if (!(bitscore > 0) || isNaN(bitscore)) { /*bitscores must make sense*/
 		$('#filtererror').html("Not a valid bitscore.<br/>");
+		return false;
 	}
-	if (bitscore > 0 && bitscore < masterbitscore){ /*read below ^^*/
+	if (false && bitscore > 0 && bitscore < masterbitscore){ /*read below ^^*/
 		$('#filtererror').html("You cannot filter by bitscores lower than the bitscore you used to search the database.<br/>");
 	}
 	else {
+		rgraph.op.deleteUntagged(bitscore);
+		return false;
 		$('#load').html("Filtering..."); /*tell the user its loading*/
 		/*contract everything but the root. Uses its own contract, not the main one*/
 		rgraph.op.filterContract(rgraph.graph.getNode(rgraph.root), {type: "replot"}); 

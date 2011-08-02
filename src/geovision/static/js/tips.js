@@ -13,20 +13,15 @@ Config.Tips =
 
 				if(node.nodeFrom)
 				{
-					//if(node.data.bitscore)
-					//{
-						//it's an edge
+						tip.innerHTML += '<b>' + node.nodeFrom.id + ' <-> ' + node.nodeTo.id + '</b><br/>';
 						tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
 						tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
-
-					//}
-					//else
-					//	tip.innerHTML = 'enzyme edge';
 				}
 				else if(node.data.type != 'enzyme')
 				{
 					//it's a read or db entry
-					tip.innerHTML += "<b>" + node.id + "</b><br/>";
+					var source = node.data.source || node.data.sample;
+					tip.innerHTML += "<b>" + node.id + "<br/>(" + source + ")</b><br/>";
 					tip.innerHTML += node.data.description + "<br/>";
 					if(node.data.hidden_nodes_count) tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}

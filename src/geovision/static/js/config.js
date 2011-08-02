@@ -30,39 +30,6 @@ var defaultsettings = {
 			{canvaswidth: 600,
 			canvasheight: 600}
 };
-var w = 0;
-var h = 0;
-/*
-		if (settings == undefined) settings = defaultsettings;
-		if (settings.settings == undefined) settings.settings = defaultsettings.settings;
-		if (settings.animationsettings == undefined) settings.animationsettings = defaultsettings.animationsettings;
-		if (settings.settings.canvaswidth!=undefined){
-			w = parseInt(settings.settings.canvaswidth)
-		}
-		else {
-			w = defaultsettings.settings.canvaswidth
-		}
-		if (settings.settings.canvasheight!=undefined){
-			h = parseInt(settings.settings.canvasheight)
-		}
-		else {
-			h = defaultsettings.settings.canvaswidth
-		}
-		if (settings.animationsettings.duration!=undefined){
-			d = parseInt(settings.animationsettings.duration)
-		}
-		else {
-			d = defaultsettings.animationsettings.duration
-		}
-		if (settings.animationsettings.transition!=undefined){
-			t = settings.animationsettings.transition
-		}
-		else {
-			t = defaultsettings.animationsettings.transition
-		}
-		t = eval(t);
-		settings.animationsettings.transition = t; // XXX
-*/
 settings = $jit.util.merge(defaultsettings, settings);
 var numericFields = {settings: ['canvaswidth', 'canvasheight'], animationsettings: ['duration']}
 

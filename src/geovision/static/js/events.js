@@ -30,9 +30,11 @@ Config.Events =
 			fetchJSON(node, true);
 		}
 		//show clicked node's info in the right column
+		/*
 		$jit.id('inner-details').innerHTML = ""
 		$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
 		$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
+		*/
 		if(node.data.type == 'enzyme'){
 			$.getJSON('/enzyme_data?id=' + node.id, showEnzymeData);
 		}

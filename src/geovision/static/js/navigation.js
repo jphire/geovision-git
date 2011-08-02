@@ -36,12 +36,12 @@ function contractForTraversal(node, opt) {
 	}
 }
 
-function deleteUntagged() {
+function deleteUntagged(bitscoreLimit) {
 	var nodesArray = [];
 	rgraph.graph.eachBFS(rgraph.root, function(n) { nodesArray.push(n) });
-	while (nodesArray.length > 0) {
+	while (nodesArray.length > 1) {
 		var node = nodesArray.pop();
-		if (!node.traversalTag) {
+		if (!node.traversalTag && (!bitscoreLimit || node.data.bitscore < bitscoreLimit)) {
 			rgraph.op.removeNode(node.id, rgraph.op.userOptions);
 		}
 	}
