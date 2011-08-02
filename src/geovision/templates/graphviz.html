@@ -147,7 +147,7 @@ $(function() {
 
 			<div id="right-container">
 				<a id="logoutbutton" href="logging_out">Logout</a><br/>
-				<div id="inner-details"></div>
+				<!--<div id="inner-details"></div>--->
 				<span id="helplink">Help</span>
 				<div id="help">
 					<p><strong>Getting a graph</strong></p>
@@ -178,21 +178,19 @@ $(function() {
 						<span id="colorErrorMsg" class="error"></span>
 					</form>
 				</div>
+
 				<br/>
-				<span id="filtertext">Temporarily filter graph</span>
+				<span id="filtertext">Temporarily filter graph</span><br/>
 				<div id="filter">
 					<form id="filterform" action="" method="post">
 						<span id="filtererror"></span>
-						<p>Filter now visible graph with bitscore:</p>
-						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value="{{ bitscore }}"/><br/>
+						<p>Filter the currently visible graph with bitscore:</p>
+						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value="{{ bitscore }}"/>
 						<input type="hidden" name="masterbitscorefilter" value="{{ bitscore }}"/>
 						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
 					</form>
 				</div>
-				<br/>
-				<div id="names"></div>
-				<br/>
-<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
+				<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
 				<div id="settings">
 					<form id="settingsform" action="savesettings" method="post">
 						{% csrf_token %}
@@ -226,10 +224,12 @@ $(function() {
 						</select><br/>
 						<p><strong>Warning</strong>: changing settings refreshes the page</p>
 						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10" style="margin-bottom:4px;"/><br/>
-						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
+						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/>
 					</form>
-					<br/>
 				</div>
+				<div id="names"></div>
+				<br/>
+				<br/>
 			</div>
 
 			<div id="log"></div>

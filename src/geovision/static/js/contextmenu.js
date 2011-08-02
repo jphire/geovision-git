@@ -12,6 +12,7 @@ function hideCtxMenu()
 	currentEdge = currentNode = false;
 	rgraph.config.Navigation.panning = true;
 	rgraph.config.Tips.enable = true;
+	rgraph.events.pressed = false;
 }
 function initContextMenu()
 {

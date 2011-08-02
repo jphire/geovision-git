@@ -75,14 +75,6 @@ def savesettings(request):
 		duration = request.POST['duration']
 		canvas_x = request.POST['canvas_x']
 		canvas_y = request.POST['canvas_y']
-#		if ((canvas_x.isdigit() or canvas_x=='') and (canvas_y.isdigit() or canvas_y=='') and (duration.isdigit() or duration=='')):
-#			numericsMakeSense = True;
-#		if (duration==''):
-#			duration=1000;
-#		if (canvas_x==''):
-#			canvas_x=600
-#		if (canvas_y==''):
-#			canvas_y=600
 		if 'savesettings' in request.POST: #and numericsMakeSense:
 			type = ''
 			transition = ''
@@ -90,10 +82,6 @@ def savesettings(request):
 				type = 'replot'
 			else:
 					type = 'fade:con'
-#			if request.POST['animationtype']=='linear':
-#				transition = '$jit.Trans.linear'
-#			else:
-#				transition = '$jit.Trans.'+request.POST["animationtype"]+'.'+request.POST["animationsubtype"]
 			transition = request.POST['animationtype']
 			subtype = request.POST['animationsubtype']
 			

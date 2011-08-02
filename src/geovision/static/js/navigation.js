@@ -2,7 +2,6 @@
  * Modified version of the original contract function for removing unnecessary
  * nodes while traversing the graph.
  */
-/*
 function contractForTraversal(node, opt) {
 	console.log("contractForTraversal");
 	var viz = this.viz;
@@ -37,14 +36,12 @@ function contractForTraversal(node, opt) {
 	}
 }
 
-*/
-
-function deleteUntagged() {
+function deleteUntagged(bitscoreLimit) {
 	var nodesArray = [];
 	rgraph.graph.eachBFS(rgraph.root, function(n) { nodesArray.push(n) });
-	while (nodesArray.length > 0) {
+	while (nodesArray.length > 1) {
 		var node = nodesArray.pop();
-		if (!node.traversalTag) {
+		if (!node.traversalTag && (!bitscoreLimit || node.data.bitscore < bitscoreLimit)) {
 			rgraph.op.removeNode(node.id, rgraph.op.userOptions);
 		}
 	}
