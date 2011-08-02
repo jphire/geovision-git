@@ -33,6 +33,7 @@ class Node:
 			self.dict["name"] = dataobject.read_id
 			self.dict["data"]["description"] = dataobject.description
 			self.dict["data"]["type"] = "read"
+			self.dict["data"]["source"] = dataobject.sample
 		elif isinstance(dataobject, DbUniprotEcs) or isinstance(dataobject, BlastEcs):
 			self.type = 'enzyme'
 			self.dict['id'] = self.dict['name'] = dataobject.ec
@@ -55,7 +56,6 @@ class Node:
 			return False
 
 class Edge:
-	MAX_BITSCORE = 6000
 	def __init__(self, nodeTo, blastobject):
 		if nodeTo is None:
 			raise Exception("Must supply nodeTo parameter")
@@ -77,13 +77,6 @@ class Edge:
 #			self.dict["data"]["send"] = blastobject.send
 			self.dict["data"]["error_value"] = blastobject.error_value
 			self.dict["data"]["bitscore"] = blastobject.bitscore
-############## Graph visualization style options below ################
-# use these only to override, defaults in graphviz.js
-#			self.dict["data"]["$type"] = "arrow"
-#			self.dict["data"]["$dim"] = 15
-#			self.dict["data"]["$lineWidth"] = 2
-#			self.dict["data"]["$alpha"] = 1
-#			self.dict["data"]["$epsilon"] = 7
 		elif isinstance(blastobject, BlastEcs):
 			self.dict['nodeTo'] = nodeTo.id
 			self.dict['data']['bitscore'] = blastobject.bitscore

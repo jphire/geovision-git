@@ -52,8 +52,10 @@ jQuery(function($) {
 			helpopen = false;
 		}
 	})
-	$('#filterform').submit(function() {
-		filter($('#bitscorefilter').val(), $('#masterbitscorefilter').val());
+	$('#filterform').submit(function(e) {
+		console.log('aa');
+		e.preventDefault();
+		filter(parseFloat($('#bitscorefilter').val()), parseFloat($('#masterbitscorefilter').val()));
 		return false;
 	})
 	$('#colorform').submit(function(){

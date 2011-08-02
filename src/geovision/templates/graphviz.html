@@ -147,7 +147,7 @@ $(function() {
 
 			<div id="right-container">
 				<a id="logoutbutton" href="logging_out">Logout</a><br/>
-				<div id="inner-details"></div>
+				<!--<div id="inner-details"></div>--!>
 				<span id="helplink">Help</span>
 				<div id="help">
 					<p><strong>Getting a graph</strong></p>
@@ -178,20 +178,16 @@ $(function() {
 						<span id="colorErrorMsg" class="error"></span>
 					</form>
 				</div>
-				<br/>
 				<span id="filtertext">Filter graph</span>
 				<div id="filter">
 					<form id="filterform" action="" method="post">
 						<span id="filtererror"></span>
-						<p>Filter now visible graph with bitscore:</p>
-						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value="{{ bitscore }}"/><br/>
+						<p>Filter the currently visible graph with bitscore:</p>
+						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value="{{ bitscore }}"/>
 						<input type="hidden" name="masterbitscorefilter" value="{{ bitscore }}"/>
 						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
 					</form>
 				</div>
-				<br/>
-				<div id="names"></div>
-				<br/>
 <span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
 				<div id="settings">
 					<form id="settingsform" action="savesettings" method="post">
@@ -226,10 +222,29 @@ $(function() {
 						</select><br/>
 						<p><strong>Warning</strong>: changing settings refreshes the page</p>
 						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10" style="margin-bottom:4px;"/><br/>
-						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/><br/>
+						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/>
 					</form>
-					<br/>
 				</div>
+				<span id="helplink">Help</span>
+				<div id="help">
+					<p><strong>Getting a graph</strong></p>
+					<p>To get a graph, take your mouse to the options tag on the left side of the screen and a form will open up. Input some values and click the button under them.</p>
+					<p><strong>Navigating</strong></p>
+					<p>Klick on a node to open more connections from that node. The extra connection will come with the same terms as the original graph (like minimum bitscore). All other options are available by right clicking any node.</p>
+					<p><strong>Alignments</strong></p>
+					<p>Right click on an edge and select Alignment from the menu to show an alignment of the read sequence and the database sequence (upper is read). The data opens under the graph and only one alignment can be visible at a time.</p>
+					<p><strong>Settings</strong></p>
+					<p>Settings control some aspects of this application. They are saved on your profile.</p>
+					<p><strong>Settings</strong></p>
+					<p>Settings control some aspects of this application. They are saved on your profile.</p>
+					<p><strong>Coloring</strong></p>
+					<p>Dynamic node coloring means coloring is se so that the connection with the lowest bitscore that is still visible is red and the highest is green. Custom means you can set the values so that everything rated below the first is red and everything above the second is green.
+					<p><strong>Right hand filter</strong></p>
+					<p>This filter lets you temporarily filter out all edges under the spesified value.</p>
+				</div>
+				<div id="names"></div>
+				<br/>
+				<br/>
 			</div>
 
 			<div id="log"></div>
