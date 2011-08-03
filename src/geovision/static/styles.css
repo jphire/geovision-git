@@ -139,6 +139,9 @@ div#graphnavi{
 div#navicontainer{
     display: none;
 }
+#graphnavi table{
+	margin-left: 10px;
+}
 div#graphnavi #optiontag {
     position: fixed;
     top: 30px;
