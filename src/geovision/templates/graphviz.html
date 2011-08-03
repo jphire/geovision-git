@@ -3,7 +3,7 @@
 {% block additional_head %}
 <!--It seems it has to be before anything else-->
 {%autoescape off%}
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 var settings = 
 {% if user_settings %}
 {{user_settings}};
@@ -13,26 +13,26 @@ var settings =
 </script>
 {%endautoescape%}
 <!-- JIT Library File -->
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 
 <link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
 <link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />	
 
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
 
 <!-- RGraph configuration settings -->
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/events.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/labels.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/moreinfo.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/styles.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}js/tips.js"></script>
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/events.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/labels.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/moreinfo.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/styles.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/tips.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 $(function() {
 {% if json_base_url %}
 	json_base_url = "{{ json_base_url|safe }}";
@@ -43,7 +43,7 @@ $(function() {
 });
 </script>
 <!-- jQuery-UI, for autocomplete -->
-<script language="javascript" type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
 
 {% endblock %}
 
@@ -93,17 +93,17 @@ $(function() {
 	</td><td>
 		<input size="10" type="text" name="hits" value="{{ hits }}" />
 	</td></tr><tr><td colspan="2" class="center">
-		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
+		<input id="graphrefresh" type="submit" value="Refresh page"/>
 	</td></tr></table>
 </form>
 {% if error_message or not json_base_url %}
-	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
+	<script type="text/javascript">openSearch($('#graphnavi'));</script>
 	<p id="navierror">{{ error_message }}</p>
 {% else %}
 	
 {% endif %}
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 	$(function()
 	{
 		$( "#ec" ).autocomplete(
@@ -116,7 +116,6 @@ $(function() {
 </script>
 </div>
 </div>
-<body>
     <div class="contextMenu" id="nodeMenu">
         <ul> 
              <li id="close">Close menu</li>
@@ -148,7 +147,6 @@ $(function() {
 
 			<div id="right-container">
 				<a id="logoutbutton" href="logging_out">Logout</a><br/>
-				<!--<div id="inner-details"></div>--->
 				<span id="helplink">Help</span>
 				<div id="help">
 					<p><strong>Getting a graph</strong></p>
@@ -169,7 +167,7 @@ $(function() {
 					<button id="deleteUntagged">Delete all untagged</button>
 					<br/><br/>
 				<div id="coloring">
-					<form action=""  id="colorform">
+					<form action="/"  id="colorform">
 						<input type="radio" name="colortype" id="colortypeDynamic" value="dynamic" checked/>Dynamic<br/>
 						<input type="radio" name="colortype" id="colortypeCustom" value="custom"/>Custom: 
 						<input type="text" id="colorMin" size="4" disabled/>-<input type="text" id="colorMax" size="4" disabled/><br/>
@@ -181,12 +179,12 @@ $(function() {
 				<br/>
 				<span id="filtertext">Temporarily filter graph</span><br/>
 				<div id="filter">
-					<form id="filterform" action="" method="post">
+					<form id="filterform" action="/" method="post">
 						<span id="filtererror"></span>
 						<p>Filter the currently visible graph with bitscore:</p>
 						<input size="10" type="text" name="bitscorefilter" id="bitscorefilter" value="{{ bitscore }}"/>
 						<input type="hidden" name="masterbitscorefilter" value="{{ bitscore }}"/>
-						<input id="filterbutton" type="submit" value="Filter" size="10"/><br/>
+						<input id="filterbutton" type="submit" value="Filter"/><br/>
 					</form>
 				</div><br/>
 				<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
