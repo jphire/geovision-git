@@ -49,7 +49,7 @@ def merge_dict(d1, d2):
 @login_required
 def graphjson(request):
 	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset': '0', 'samples':[]}
-#	p = dict(map(lambda k: (k, request.GET[k]), ('enzyme', 'read', 'dbentry', 'bitscore', 'evalue', 'depth', 'hits')))
+
 	for (k,v) in request.GET.items():
 		p[k] = v
 			
@@ -75,11 +75,21 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		else:
 			ec_numbers = EnzymeName.objects.filter(enzyme_name__iexact=enzyme)
 			num_results = len(ec_numbers)
-			if num_results == 0: return None
-			elif num_results == 1: return enzyme.ec_number
-			else: return ec_numbers
+			if num_results == 0:
+				return None
+			elif num_results == 1:
+				return enzyme.ec_number
+			else:
+				return ec_numbers
 
-	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0, 'samples':[]}
+	def get_samples():
+		samples = []
+		sample_collection = Sample.objects.all()
+		for sample in sample_collection:
+			samples.append(sample.sample_id)
+		return samples
+
+	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0, 'samples':[], 'all_samples':[]}
 	for k in condition_dict.keys():
 		try:
 			if request.POST[k] != '':
@@ -92,6 +102,8 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	hits = int(condition_dict['hits'])
 	offset = int(condition_dict['offset'])
 	samples = list(condition_dict['samples'])
+	all_samples = get_samples()
+	condition_dict['all_samples'] = all_samples
 
 	json_url = ('', '')
 	search_fields = filter(lambda k: condition_dict[k] != '', ['enzyme', 'read', 'dbentry'])
@@ -118,7 +130,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		return render(request, 'graphviz.html', merge_dict({
 			'error_message': "Error: No data found, input different values.",
 		}, condition_dict))
-	#c = Context ({enzyme:request.POST['enzyme'], read:request.POST['read'], dbentry:request.POST['dbentry'], bitscore:request.POST['bitscore'], evalue:request.POST['e-value'], depth:request.POST['depth'], hits:request.POST['hits']})
+	
 	(json_base_url, json_query_url_part) = json_url
 	return render(request, "graphviz.html", merge_dict(condition_dict, {'json_base_url': json_base_url, 'json_query_url_part': json_query_url_part}))
 

@@ -102,7 +102,7 @@ var Config =
 		}
 };
 jQuery(function($) {
-	/*setting stuff in css to the prefered size*/
+	/*setting stuff in css to the preferred size*/
 	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
 	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
 	$('#center-container').css('width', parseInt(settings.settings.canvaswidth));

@@ -1,5 +1,6 @@
 import json
 from geovision.viz.models import *
+from geovision.userdb.models import *
 from django.db.models import Q
 
 

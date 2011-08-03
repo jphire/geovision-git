@@ -92,12 +92,21 @@ $(function() {
 		<input size="10" type="text" name="hits" value="{{ hits }}" />
 	</td></tr><tr><td colspan="2">
 		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
-	</td></tr></table>
+	</td></tr>
+	<tr><td>
+			<label>Samples:</label>
+		</td></tr>
+	{% for s in all_samples %}
+	<tr><td>
+		<input type="checkbox" name="samples" id="samples_id" />
+	</td></tr>
+	{% endfor %}
+	</table>
 </form>
 
 {% if error_message or not json_base_url %}
 	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
-	<p id="navierror">{{ error_message }}</div>
+	<p id="navierror">{{ error_message }}
 {% else %}
 	
 {% endif %}
@@ -153,7 +162,7 @@ $(function() {
 					<p><strong>Getting a graph</strong></p>
 					<p>To get a graph, take your mouse to the options tag on the left side of the screen and a form will open up. Input some values and click the button under them.</p>
 					<p><strong>Navigating</strong></p>
-					<p>Klick on a node to open more connections from that node. The extra connection will come with the same terms as the original graph (like minimum bitscore). All other options are available by right clicking any node.</p>
+					<p>Click on a node to open more connections from that node. The extra connection will come with the same terms as the original graph (like minimum bitscore). All other options are available by right clicking any node.</p>
 					<p><strong>Alignments</strong></p>
 					<p>Right click on an edge and select Alignment from the menu to show an alignment of the read sequence and the database sequence (upper is read). The data opens under the graph and only one alignment can be visible at a time.</p>
 					<p><strong>Settings</strong></p>
