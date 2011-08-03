@@ -7,7 +7,7 @@ function openSearch()
 	elem = $('#graphnavi')
         if (!opened){
             elem.find('#optiontag').hide();
-            elem.animate({width: "270px;"}, {complete:
+            elem.animate({width: "270;"}, {complete:
 			function() { $('#navicontainer').fadeIn('fast', function() { opened = true; } ); }});
 	}
 }
