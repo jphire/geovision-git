@@ -1,5 +1,5 @@
 body, html {
-    background-color: #E6F2EA;
+    background-color: #CBD6CF;
     height: 100%;
 	font-family: Arial;
 }
@@ -158,7 +158,7 @@ div#close{
 }
 div.alignment{
 	font-family: Courier, Consolas, 'Andale Mono', 'Everson Mono', Fixedsys, Hyperfont, Inconsolata, 'Lucida Console', Monaco, 'Pro Font';/*must be a monospace font for this to work*/
-	background-color: #E6F2EA;
+	background-color: #CBD6CF;
 	font-size: 16px;
 	position: relative;
 	border: 2px solid #265434;
@@ -166,14 +166,13 @@ div.alignment{
 	padding:5px 15px 5px 5px;
 }
 span.alignmentpart{
-	background-color: #FF636E;
+	background-color: #CBD6CF;
 	display:inline-block;
-
 	white-space: pre;
 	margin-bottom: 8px;
 }
 .alignment span.alignsimilarity{
-	background-color: #E6F2EA;
+	background-color: #FF636E;
 }
 div#closealign{
 	text-align: right;

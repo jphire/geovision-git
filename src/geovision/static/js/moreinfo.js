@@ -11,7 +11,7 @@ function alignmentfunction(thisid) {
 		for ( i = 0; i < data.readseq.length; i++){
 			var alignmentclass = "";
 			if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
-				alignmentclass = " similarity";
+				alignmentclass = " alignsimilarity";
 			}
 			else {
 				alignmentclass="";
