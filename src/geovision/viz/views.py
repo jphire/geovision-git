@@ -13,7 +13,7 @@ from django.core.context_processors import csrf
 from django.db.models import Q
 from meta.models import EnzymeName, Enzyme
 from geovision.viz.models import Blast
-from geovision.userdb.models import Sample, Collection
+from geovision.userdb.models import Sample
 from geovision.settings import STATIC_URL
 import json
 import re
