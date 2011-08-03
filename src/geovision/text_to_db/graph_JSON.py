@@ -135,7 +135,7 @@ class QueryToJSON:
 	"""
 	def __init__(self, enzyme=None, db_entry=None, read=None,
 				e_value_limit=1, bitscore_limit=0, depth_limit=2,
-				max_amount=5, offset=0):
+				max_amount=5, offset=0, samples=[]):
 		self.enzyme = enzyme
 		self.db_entry = db_entry
 		self.read = read
@@ -144,6 +144,7 @@ class QueryToJSON:
 		self.depth_limit = depth_limit
 		self.max_amount = max_amount
 		self.offset = offset
+		self.samples = samples
 		self.nodes = []
 		if db_entry is None:
 			if read is None:
@@ -158,32 +159,32 @@ class QueryToJSON:
 				raise Exception("Cannot use both read and db_entry as a starting point")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
-		self.build_graph(self.startnode, self.depth_limit)
+		self.build_graph(self.startnode)
 
-	def build_graph(self, startnode, maxdepth):
+	def build_graph(self, startnode):
 		"""
 		The top level function that uses build_graph_level to add all nodes and edges 
 		to the graph. The enzyme nodes and edges are added only after all the other nodes 
 		and connections are added.
 		"""
 		self.nodes.append(startnode)
-		self.build_graph_level([startnode], 1, maxdepth)
+		self.build_graph_level([startnode], 1)
 		self.add_ec_nodes()
 		self.populate_ec_names()
 
-	def build_graph_level(self, nodes, depth, maxdepth):
+	def build_graph_level(self, nodes, depth):
 		"""
 		Goes through all nodes given as an argument and asks make_blast_queryset for
 		connections to other nodes. Then adds these connections to the graph through add_edges.
 		Calls recursively itself until depth is greater than the maximum depth given. Thus the
 		graph is build depth first.
 		"""
-		if depth <= maxdepth:
+		if depth <= self.depth_limit:
 			for node in nodes:
 				(count, queryset) = self.make_blast_queryset(node)
 				node.dict['data']['hidden_nodes_count'] = count
 				next_level_nodes = self.add_edges(node, queryset)
-				self.build_graph_level(next_level_nodes, depth + 1, maxdepth)
+				self.build_graph_level(next_level_nodes, depth + 1)
 
 	def add_ec_nodes(self):
 		"""
@@ -240,6 +241,7 @@ class QueryToJSON:
 
 		if param.type == "db_entry":
 			query = query.filter(db_entry=param.dict["id"]).select_related('read').defer(*('read__' + x for x in Read.deferred_fields))
+			query = query.filter(sample__in=samples)
 		elif param.type == "read":
 			query = query.filter(read=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
 
