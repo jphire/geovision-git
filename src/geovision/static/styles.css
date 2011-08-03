@@ -1,5 +1,7 @@
+/* This document has passed http://jigsaw.w3.org/css-validator/*/
+
 body, html {
-    background-color: #E6F2EA;
+    background-color: #CBD6CF;
     height: 100%;
 	font-family: Arial;
 }
@@ -132,14 +134,15 @@ div#graphnavi{
     z-index: 10;
     width:7px;
     height:100%;
+	text-align: center;
     background-image: url(images/navitausta.png);
 	color: white;
 }
-#graphnavi td{
-	padding: 3px;
-}
 div#navicontainer{
     display: none;
+}
+#graphnavi table{
+	margin-left: 10px;
 }
 div#graphnavi #optiontag {
     position: fixed;
@@ -148,7 +151,12 @@ div#graphnavi #optiontag {
     display: block;
 }
 #graphnavi td{
+	padding: 5px;
 	vertical-align: middle;
+	text-align: right;
+}
+#graphnavi td.center{
+	text-align: center;
 }
 div#close{
     float:right;
@@ -160,7 +168,7 @@ div#close{
 }
 div.alignment{
 	font-family: Courier, Consolas, 'Andale Mono', 'Everson Mono', Fixedsys, Hyperfont, Inconsolata, 'Lucida Console', Monaco, 'Pro Font';/*must be a monospace font for this to work*/
-	background-color: #E6F2EA;
+	background-color: #DDEDE3;
 	font-size: 16px;
 	position: relative;
 	border: 2px solid #265434;
@@ -168,14 +176,13 @@ div.alignment{
 	padding:5px 15px 5px 5px;
 }
 span.alignmentpart{
-	background-color: #FF636E;
+	background-color: #DDEDE3;
 	display:inline-block;
-	width:1em;
-	white-space: nowrap;
+	white-space: pre;
 	margin-bottom: 8px;
 }
 .alignment span.alignsimilarity{
-	background-color: #E6F2EA;
+	background-color: #FF636E;
 }
 div#closealign{
 	text-align: right;

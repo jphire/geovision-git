@@ -1,5 +1,5 @@
 /*Function for showing the alignment of the read and the db-entry*/
-function alignmentfunction(thisid) {
+function alignmentfunction(thisid, nodeFrom, nodeTo) {
 	$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
 		if(data == null){
 			return false;
@@ -7,19 +7,19 @@ function alignmentfunction(thisid) {
 		alignment = $('<div class="alignment"></div>');
 		var close = $('<div id = "closealign">Close</div>');
 		close.appendTo(alignment);
-		$('<p>Alignmentid: '+thisid+'</p>').appendTo(alignment);
+		$('<p>Alignment for edge: <b>' + nodeFrom + ' <-> ' + nodeTo + '</b></p>').appendTo(alignment);
 		for ( i = 0; i < data.readseq.length; i++){
-			var class = "";
+			var alignmentclass = "";
 			if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
-				class = " similarity";
+				alignmentclass = " alignsimilarity";
 			}
 			else {
-				class="";
+				alignmentclass="";
 			}
-			var a = $('<span class="alignmentpart'+ class +'">' + data.readseq.charAt(i) +'\n'+ data.dbseq.charAt(i)+ '</span>');
+			var a = $('<span class="alignmentpart'+ alignmentclass +'">' + data.readseq.charAt(i) +'\n'+ data.dbseq.charAt(i)+ '</span>');
 			a.appendTo(alignment);
 		}
-		$('#alignment').before(alignment);
+		$('#alignment').after(alignment);
 		alignment.slideDown(300, function() {
 							alignment.css('margin-bottom', '10px');
 		});

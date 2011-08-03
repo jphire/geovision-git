@@ -1,4 +1,4 @@
-{% extends "sitebase.html" %}
+{% extends "base.html" %}
 
 {% block additional_head %}
 <!--It seems it has to be before anything else-->
@@ -48,23 +48,25 @@ $(function() {
 
 {% endblock %}
 
-{% block additional_title %}- graph {% endblock %}
+{% block additional_title %}{% endblock %}
 <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
-{% block sidenavi_content %}
-
+{% block content %}
+<div id="graphnavi" class="transparent">
+<img id="optiontag" src="{{ STATIC_URL }}images/options.png" alt="display options"/>
+<div id="navicontainer">
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
-	<table><tr><td colspan="2">
+	<table><tr><td colspan="2" class="center">
 		<strong>Get a new graph:</strong>
-	</td></tr><tr><td colspan="2">
+	</td></tr><tr><td colspan="2" class="center">
 		<p>(Input only one of the three following)</p>
 	</td></tr><tr><td>
 		<label>Enzyme:</label>
 	</td><td>
-		<input size="10" type="text" name="enzyme" id="ec" value="{{ enzyme }}"/><br/><br/>
+		<input size="10" type="text" name="enzyme" id="ec" value="{{ enzyme }}"/>
 		{% if enzyme_list %}
-		</td></tr><tr><td colspan="2">Multiple enzymes matched, pick one:
+		</td></tr><tr><td colspan="2" class="center">Multiple enzymes matched, pick one:
 		{% for e in enzyme_list %}
-		</td></tr><tr><td colspan="2"><p class="submitForm" id='{{ e.enzyme }}'>{{ e.enzyme_name }} ({{ e.enzyme }})</p>
+		</td></tr><tr><td colspan="2" class="center"><p class="submitForm" id='{{ e.enzyme }}'>{{ e.enzyme_name }} ({{ e.enzyme }})</p>
 		{% endfor %}
 		{% endif %}
 	</td></tr><tr><td>
@@ -91,14 +93,13 @@ $(function() {
 		<label>Hits per node:</label>
 	</td><td>
 		<input size="10" type="text" name="hits" value="{{ hits }}" />
-	</td></tr><tr><td colspan="2">
+	</td></tr><tr><td colspan="2" class="center">
 		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
 	</td></tr></table>
 </form>
-
 {% if error_message or not json_base_url %}
 	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
-	<p id="navierror">{{ error_message }}</div>
+	<p id="navierror">{{ error_message }}</p>
 {% else %}
 	
 {% endif %}
@@ -114,8 +115,8 @@ $(function() {
 		});
 	});
 </script>
-{% endblock %}
-{% block content %}
+</div>
+</div>
 <body>
     <div class="contextMenu" id="nodeMenu">
         <ul> 
