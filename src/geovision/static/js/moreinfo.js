@@ -9,14 +9,14 @@ function alignmentfunction(thisid) {
 		close.appendTo(alignment);
 		$('<p>Alignmentid: '+thisid+'</p>').appendTo(alignment);
 		for ( i = 0; i < data.readseq.length; i++){
-			var class = "";
+			var alignmentclass = "";
 			if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
-				class = " similarity";
+				alignmentclass = " similarity";
 			}
 			else {
-				class="";
+				alignmentclass="";
 			}
-			var a = $('<span class="alignmentpart'+ class +'">' + data.readseq.charAt(i) +'\n'+ data.dbseq.charAt(i)+ '</span>');
+			var a = $('<span class="alignmentpart'+ alignmentclass +'">' + data.readseq.charAt(i) +'\n'+ data.dbseq.charAt(i)+ '</span>');
 			a.appendTo(alignment);
 		}
 		$('#alignment').before(alignment);

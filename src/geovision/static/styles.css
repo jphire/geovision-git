@@ -135,9 +135,6 @@ div#graphnavi{
     background-image: url(images/navitausta.png);
 	color: white;
 }
-#graphnavi td{
-	padding: 3px;
-}
 div#navicontainer{
     display: none;
 }
@@ -148,6 +145,7 @@ div#graphnavi #optiontag {
     display: block;
 }
 #graphnavi td{
+	padding: 5px;
 	vertical-align: middle;
 }
 div#close{
