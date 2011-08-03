@@ -87,6 +87,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		sample_collection = Sample.objects.all()
 		for sample in sample_collection:
 			samples.append(sample.sample_id)
+		samples.append('ABLU')
 		return samples
 
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0, 'samples':[], 'all_samples':[]}
@@ -104,6 +105,8 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	samples = list(condition_dict['samples'])
 	all_samples = get_samples()
 	condition_dict['all_samples'] = all_samples
+	if samples == []:
+		samples = all_samples
 
 	json_url = ('', '')
 	search_fields = filter(lambda k: condition_dict[k] != '', ['enzyme', 'read', 'dbentry'])
