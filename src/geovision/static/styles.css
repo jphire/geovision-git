@@ -138,7 +138,6 @@ div#graphnavi{
 }
 div#navicontainer{
     display: none;
-	padding-left: 25px;
 }
 div#graphnavi #optiontag {
     position: fixed;
