@@ -18,6 +18,11 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	settings = models.TextField(blank=True)
 
+class SavedView(models.Model):
+	user_profile = models.ForeignKey(UserProfile, related_name='saved_views')
+	name = models.CharField(max_length=32)
+	data = models.TextField()
+
 def save_user_profile_pre_hook(sender, instance, **kwargs):
 		instance.is_superuser = instance.is_staff
 def save_user_profile_post_hook(sender, instance, created, **kwargs):

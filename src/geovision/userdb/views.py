@@ -95,3 +95,8 @@ def savesettings(request):
 			return HttpResponseRedirect('/graphrefresh?settingsmessage=defaults restored')
 		else:
 			return HttpResponseRedirect('/graphrefresh?settingsmessage=error')
+@login_required
+def save_view(request):
+	profile = request.user.get_profile()
+	profile.saved_views.create(name=request.POST['name'], data=request.POST['data'])
+	return HttpResponse('ok')
