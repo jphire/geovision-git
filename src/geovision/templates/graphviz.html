@@ -187,7 +187,7 @@ $(function() {
 						<input id="filterbutton" type="submit" value="Filter"/><br/>
 					</form>
 				</div>
-				<form action="" method="post" id="saveGraph">
+				<form action="/" method="post" id="saveGraph">
 					Save current view as:<input type="text" size="10" id="savedGraphName" />
 					<input type="submit" value="Save"/> 
 					<span id="saveGraphStatus"></span>
@@ -225,8 +225,8 @@ $(function() {
 							<option value="easeInOut">Ease in and out</option>
 						</select><br/>
 						<p><strong>Warning</strong>: changing settings refreshes the page</p>
-						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" size="10" style="margin-bottom:4px;"/><br/>
-						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults" size="10"/>
+						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" style="margin-bottom:4px;"/><br/>
+						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults"/>
 					</form>
 				</div>
 				<div id="names"></div>
@@ -238,6 +238,5 @@ $(function() {
 		</div>
 		<div id="alignment"></div>
 	</div>
-</body>
 {% endblock %}
 
