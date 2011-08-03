@@ -1,5 +1,5 @@
 /*Function for showing the alignment of the read and the db-entry*/
-function alignmentfunction(thisid) {
+function alignmentfunction(thisid, nodeFrom, nodeTo) {
 	$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
 		if(data == null){
 			return false;
@@ -7,7 +7,7 @@ function alignmentfunction(thisid) {
 		alignment = $('<div class="alignment"></div>');
 		var close = $('<div id = "closealign">Close</div>');
 		close.appendTo(alignment);
-		$('<p>Alignmentid: '+thisid+'</p>').appendTo(alignment);
+		$('<p>Alignment for edge: <b>' + nodeFrom + ' <-> ' + nodeTo + '</b></p>').appendTo(alignment);
 		for ( i = 0; i < data.readseq.length; i++){
 			var alignmentclass = "";
 			if (data.readseq.charAt(i) === data.dbseq.charAt(i)){

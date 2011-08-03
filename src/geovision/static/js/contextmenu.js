@@ -33,7 +33,7 @@ function initContextMenu()
 						}
 				}));
 			},
-			'e_align': function() { alignmentfunction(currentEdge.data.blast_id); },
+			'e_align': function() { alignmentfunction(currentEdge.data.blast_id, currentEdge.nodeFrom.id, currentEdge.nodeTo.id); },
 			'n_tag': function() { 
 				if (currentNode.traversalTag != true) {
 					tagNode(currentNode);
