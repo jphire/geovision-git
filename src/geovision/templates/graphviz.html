@@ -1,4 +1,4 @@
-{% extends "sitebase.html" %}
+{% extends "base.html" %}
 
 {% block additional_head %}
 <!--It seems it has to be before anything else-->
@@ -47,10 +47,12 @@ $(function() {
 
 {% endblock %}
 
-{% block additional_title %}- graph {% endblock %}
+{% block additional_title %}{% endblock %}
 <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
-{% block sidenavi_content %}
-
+{% block content %}
+<div id="graphnavi" class="transparent">
+<img id="optiontag" src="{{ STATIC_URL }}images/options.png" alt="display options"/>
+<div id="navicontainer">
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
 	<table><tr><td colspan="2" class="center">
 		<strong>Get a new graph:</strong>
@@ -94,10 +96,9 @@ $(function() {
 		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
 	</td></tr></table>
 </form>
-
 {% if error_message or not json_base_url %}
 	<script language="javascript" type="text/javascript">openSearch($('#graphnavi'));</script>
-	<p id="navierror">{{ error_message }}</div>
+	<p id="navierror">{{ error_message }}</p>
 {% else %}
 	
 {% endif %}
@@ -113,8 +114,8 @@ $(function() {
 		});
 	});
 </script>
-{% endblock %}
-{% block content %}
+</div>
+</div>
 <body>
     <div class="contextMenu" id="nodeMenu">
         <ul> 
