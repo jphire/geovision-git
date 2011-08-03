@@ -168,8 +168,8 @@ div.alignment{
 span.alignmentpart{
 	background-color: #FF636E;
 	display:inline-block;
-	width:1em;
-	white-space: nowrap;
+
+	white-space: pre;
 	margin-bottom: 8px;
 }
 .alignment span.alignsimilarity{
