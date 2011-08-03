@@ -52,18 +52,18 @@ $(function() {
 {% block sidenavi_content %}
 
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
-	<table><tr><td colspan="2">
+	<table><tr><td colspan="2" class="center">
 		<strong>Get a new graph:</strong>
-	</td></tr><tr><td colspan="2">
+	</td></tr><tr><td colspan="2" class="center">
 		<p>(Input only one of the three following)</p>
 	</td></tr><tr><td>
 		<label>Enzyme:</label>
 	</td><td>
 		<input size="10" type="text" name="enzyme" id="ec" value="{{ enzyme }}"/>
 		{% if enzyme_list %}
-		</td></tr><tr><td colspan="2">Multiple enzymes matched, pick one:
+		</td></tr><tr><td colspan="2" class="center">Multiple enzymes matched, pick one:
 		{% for e in enzyme_list %}
-		</td></tr><tr><td colspan="2"><p class="submitForm" id='{{ e.enzyme }}'>{{ e.enzyme_name }} ({{ e.enzyme }})</p>
+		</td></tr><tr><td colspan="2" class="center"><p class="submitForm" id='{{ e.enzyme }}'>{{ e.enzyme_name }} ({{ e.enzyme }})</p>
 		{% endfor %}
 		{% endif %}
 	</td></tr><tr><td>
@@ -90,7 +90,7 @@ $(function() {
 		<label>Hits per node:</label>
 	</td><td>
 		<input size="10" type="text" name="hits" value="{{ hits }}" />
-	</td></tr><tr><td colspan="2">
+	</td></tr><tr><td colspan="2" class="center">
 		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
 	</td></tr></table>
 </form>

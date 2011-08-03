@@ -19,7 +19,7 @@ function alignmentfunction(thisid, nodeFrom, nodeTo) {
 			var a = $('<span class="alignmentpart'+ alignmentclass +'">' + data.readseq.charAt(i) +'\n'+ data.dbseq.charAt(i)+ '</span>');
 			a.appendTo(alignment);
 		}
-		$('#alignment').before(alignment);
+		$('#alignment').after(alignment);
 		alignment.slideDown(300, function() {
 							alignment.css('margin-bottom', '10px');
 		});

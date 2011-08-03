@@ -149,6 +149,9 @@ div#graphnavi #optiontag {
 	vertical-align: middle;
 	text-align: right;
 }
+#graphnavi td.center{
+	text-align: center;
+}
 div#close{
     float:right;
     font-size:20px;
