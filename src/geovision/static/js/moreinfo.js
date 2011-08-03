@@ -16,7 +16,7 @@ function alignmentfunction(thisid) {
 			else {
 				class="";
 			}
-			var a = $('<span class="alignmentpart'+ class +'">' + data.readseq.charAt(i) +'\n'+ data.dbseq.charAt(i)+ '</span>';
+			var a = $('<span class="alignmentpart'+ class +'">' + data.readseq.charAt(i) +'\n'+ data.dbseq.charAt(i)+ '</span>');
 			a.appendTo(alignment);
 		}
 		$('#alignment').before(alignment);
