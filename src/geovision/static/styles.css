@@ -132,6 +132,7 @@ div#graphnavi{
     z-index: 10;
     width:7px;
     height:100%;
+	text-align: center;
     background-image: url(images/navitausta.png);
 	color: white;
 }
