@@ -92,7 +92,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0, 'samples':[], 'all_samples':[]}
 	for k in condition_dict.keys():
 		try:
-			if request.POST[k] != '':
+			if request.POST[k] not in ('', []):
 				condition_dict[k] = request.POST[k]
 		except KeyError:
 			pass
