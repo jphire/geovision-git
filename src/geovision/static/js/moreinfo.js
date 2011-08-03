@@ -1,64 +1,44 @@
-var alignmentopen = false;
 /*Function for showing the alignment of the read and the db-entry*/
 function alignmentfunction(thisid) {
-	if (alignmentopen) {
-		closealignment();
-	}
-	if (alignmentopen == false){
-		$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
-			if(data == null){
-				return false;
+	$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
+		if(data == null){
+			return false;
+		}
+		alignment = $('<div class="alignment"></div>');
+		var close = $('<div id = "closealign">Close</div>');
+		close.appendTo(alignment);
+		$('<p>Alignmentid: '+thisid+'</p>').appendTo(alignment);
+		for ( i = 0; i < data.readseq.length; i++){
+			var class = "";
+			if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
+				class = " similarity";
 			}
-			alignmentopen = true;
-			var part1 = $('<nobr>');
-			var part2 = $('<nobr>');
-			for ( i = 0; i < data.readseq.length; i++){
-				if (i % 95 == 0 && i>0){
-					part1.append('<br/>');
-					part1.appendTo($('#alignment'));
-					part1 = $('<nobr>');
-					part2.appendTo($('#alignment'));
-					part2 = $('<nobr>');
-					$('<br/><br/>').appendTo($('#alignment'));
-				}
-				if (data.readseq.charAt(i) === data.dbseq.charAt(i)){
-					part1 = part1.append('<span>' + data.readseq.charAt(i) + '</span>');
-					part2 = part2.append('<span>' + data.dbseq.charAt(i) + '</span>');
-				}
-				else {
-					part1 = part1.append('<span class=\'aligndifference\'>' + data.readseq.charAt(i) + '</span>');
-					part2 = part2.append('<span class=\'aligndifference\'>' + data.dbseq.charAt(i) + '</span>');
-				}
+			else {
+				class="";
 			}
-			part1.appendTo($('#alignment'));
-			$('<br/>').appendTo($('#alignment'));
-			part2.appendTo($('#alignment'));
-			$('#alignment').slideDown(300, function() { part1.fadeIn(); part2.fadeIn();
-								var close = $('<div id = "closealign">Close</div>');
-								$('#alignment').before(close);
-								$('#alignment').css('margin-bottom', '10px');
-			});
-			return true;
+			var a = $('<span class="alignmentpart'+ class +'">' + data.readseq.charAt(i) +'\n'+ data.dbseq.charAt(i)+ '</span>';
+			a.appendTo(alignment);
+		}
+		$('#alignment').before(alignment);
+		alignment.slideDown(300, function() {
+							alignment.css('margin-bottom', '10px');
 		});
-		return false;
-	}
-	else {
-		return false;
-	}
+		return true;
+	});
+	return false;
 }
 /*when the close button appears, it's se to work*/
 $('#closealign').live('click', function() {
-	closealignment();
+	closealignment(this);
 });
 /*Function to close the div-element showing the alignment*/
-function closealignment () {
-	if (alignmentopen == true){
-		alignmentopen = false;
-		$('#alignment').find('*').remove();/*!Hide all elements*/
-		$('#closealign').remove();
-		$('#alignment').css('margin-bottom', '0px');
-		$('#alignment').slideUp();
-	}
+function closealignment (button) {
+		button = $(button);
+		var alignment = button.parent();
+		$(alignment).find('*').remove();/*!Hide all elements*/
+		$(button).remove();
+		$(alignment).css('margin-bottom', '0px');
+		$(alignment).slideUp();
 }
 
 /* Function to list all names, reactions and pathways related to an enzyme in the right container */

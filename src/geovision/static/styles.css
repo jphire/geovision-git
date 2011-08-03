@@ -156,20 +156,22 @@ div#close{
 .submitForm{
 	cursor: pointer;
 }
-div#alignment{
+div.alignment{
 	font-family: Courier, Consolas, 'Andale Mono', 'Everson Mono', Fixedsys, Hyperfont, Inconsolata, 'Lucida Console', Monaco, 'Pro Font';/*must be a monospace font for this to work*/
 	background-color: #E6F2EA;
 	font-size: 16px;
-	width: 62em;
 	position: relative;
 	border: 2px solid #265434;
 	display:none;
 	padding:5px 15px 5px 5px;
 }
-#alignment span {
+span.alignmentpart{
 	background-color: #FF636E;
+	display:inline-block;
+	width:1em;
+	white-space: nowrap;
 }
-#alignment span.aligndifference{
+.alignment span.alignsimilarity{
 	background-color: #E6F2EA;
 }
 div#closealign{
@@ -192,7 +194,7 @@ span#load{
 	top:0px;
 	left:0px;
 	z-index:100;
-	width:600px;
+	width:100%;
 	text-align: center;
 	color:red;
 	background-color: silver;
