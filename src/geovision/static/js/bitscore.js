@@ -46,6 +46,7 @@ function colorEdges(){
 		if(node.data.type == 'enzyme')
 			node.data.color = color(node.data.bitscore);
 	});
+	return false;
 }
  /*function to filter graph by a bitscore inputted by the user*/
 function filter(bitscore, masterbitscore) {
