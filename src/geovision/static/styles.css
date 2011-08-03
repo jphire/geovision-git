@@ -172,6 +172,7 @@ span.alignmentpart{
 	display:inline-block;
 	width:1em;
 	white-space: nowrap;
+	margin-bottom: 8px;
 }
 .alignment span.alignsimilarity{
 	background-color: #E6F2EA;
