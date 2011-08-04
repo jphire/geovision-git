@@ -83,7 +83,7 @@ class Test_graph_JSONTestCase(unittest.TestCase):
 	def test_edge_repr_1(self):
 		b = Blast.objects.all()[:1]
 		e = Edge(NodeId("R1", "read"), b[0])
-		self.assertEquals(e.__repr__(), '{"nodeTo": "R1", "data": {"error_value": 0.0050000000000000001, "bitscore": 200.0, "read": "R1", "database_name": "uniprot", "length": 20, "db_entry": "DB1", "id": %d}}' % b[0].id)
+		self.assertEquals(e.__repr__(), '{"nodeTo": "R1", "data": {"error_value": 0.0050000000000000001, "bitscore": 200.0, "read": "R1", "database_name": "uniprot", "length": 20, "db_entry": "DB1", "blast_id": %d}}' % b[0].id)
 
 	def test_nodeid(self):
 		a = NodeId("12345", "test")
