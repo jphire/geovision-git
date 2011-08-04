@@ -26,7 +26,7 @@ def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits, offset, sa
 	# for testing only
 #	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits, offset)
 
-	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits, 'samples': 'ABLU'}.items()),
+	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits, 'samples': samples}, doseq=True),
 					urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth, 'offset': offset}.items()))
 
 def render(request, template, dict={}):
@@ -56,8 +56,10 @@ def graphjson(request):
 	for k in ('enzyme', 'read', 'dbentry'):
 		if p[k] == '':
 			p[k] = None
+
+		p['samples'] = request.POST.getlist('samples')
 	try:
-		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), float(p['offset']), ['ABLU'])
+		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), float(p['offset']), p['samples'])
 	except Exception as e:
 		out = json.dumps({'error_message': str(e)})
 	return HttpResponse(out, mimetype='text/plain')
@@ -104,9 +106,10 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	hits = int(condition_dict['hits'])
 	offset = int(condition_dict['offset'])
 	samples = request.POST.getlist('samples')
+	condition_dict['samples'] = samples
 	all_samples = get_samples()
 	condition_dict['all_samples'] = all_samples
-	condition_dict['samples'] = samples
+
 #	if samples == []:
 #		samples = all_samples
 #		condition_dict['samples'] = all_samples
