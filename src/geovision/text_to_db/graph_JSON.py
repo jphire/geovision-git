@@ -1,4 +1,3 @@
-import math
 import json
 from geovision.viz.models import *
 from django.db.models import Q
@@ -11,6 +10,16 @@ class NodeEdgeJSONEncoder(json.JSONEncoder):
 		return json.JSONEncoder.default(self, o)
 
 class Node:
+	"""
+	This class represents a node in the graph. Node can be of following types:
+	read, dbentry or enzyme. All information that a node has is put in a dictionary.
+	All the node types have an attribute called adjacencies, which is a dict containing
+	node's connections to other nodes in the graph. The information about the node is
+	retrieved from the dataobjects given as an argument to the __init__ method.
+
+	Node's certain value in dictionary can be changed as follows:
+	node.dict['data']['description'] = "something"
+	"""
 	def __init__(self, dataobject):
 		self.dict = {}
 		self.dict["data"] = {}
@@ -56,6 +65,14 @@ class Node:
 			return False
 
 class Edge:
+	"""
+	This class represents a connection between two nodes in the graph. All infromation
+	related to the edge is put in a dictionary. The information is retrieved from the blastobject
+	that is given as an argument to the __init__ method. The information in the dict can be
+	referenced as follows:
+
+	edge.dict['data']['bitscore'] = some_int_value
+	"""
 	def __init__(self, nodeTo, blastobject):
 		if nodeTo is None:
 			raise Exception("Must supply nodeTo parameter")
@@ -68,13 +85,6 @@ class Edge:
 			self.dict["data"]["db_entry"] = blastobject.db_entry_id
 			self.dict["data"]["length"] = blastobject.length
 			self.dict["data"]["blast_id"] = blastobject.id
-#			self.dict["data"]["pident"] = blastobject.pident
-#			self.dict["data"]["mismatch"] = blastobject.mismatch
-#			self.dict["data"]["gapopen"] = blastobject.gapopen
-#			self.dict["data"]["qstart"] = blastobject.qstart
-#			self.dict["data"]["qend"] = blastobject.qend
-#			self.dict["data"]["sstart"] = blastobject.sstart
-#			self.dict["data"]["send"] = blastobject.send
 			self.dict["data"]["error_value"] = blastobject.error_value
 			self.dict["data"]["bitscore"] = blastobject.bitscore
 		elif isinstance(blastobject, BlastEcs):
@@ -118,14 +128,14 @@ class NodeId:
 	
 class QueryToJSON:
 	"""
-	Makes a query according to the parameters and generates graph JSON file
+	Makes a query according to the parameters and generates a graph JSON file
 	from the fetched data.
 
 	Currently assumes that both Read.read_id and DbEntry.db_id are foreign keys.
 	"""
 	def __init__(self, enzyme=None, db_entry=None, read=None,
 				e_value_limit=1, bitscore_limit=0, depth_limit=2,
-				max_amount=5, offset=0):
+				max_amount=5, offset=0, samples=[]):
 		self.enzyme = enzyme
 		self.db_entry = db_entry
 		self.read = read
@@ -134,6 +144,7 @@ class QueryToJSON:
 		self.depth_limit = depth_limit
 		self.max_amount = max_amount
 		self.offset = offset
+		self.samples = samples
 		self.nodes = []
 		if db_entry is None:
 			if read is None:
@@ -148,43 +159,45 @@ class QueryToJSON:
 				raise Exception("Cannot use both read and db_entry as a starting point")
 			self.startpoint = NodeId(db_entry, "db_entry")
 		self.startnode = self.get_node(self.startpoint)
-		self.build_graph(self.startnode, self.depth_limit)
+		self.build_graph(self.startnode)
 
-	def build_graph(self, startnode, maxdepth):
+	def build_graph(self, startnode):
+		"""
+		The top level function that uses build_graph_level to add all nodes and edges 
+		to the graph. The enzyme nodes and edges are added only after all the other nodes 
+		and connections are added.
+		"""
 		self.nodes.append(startnode)
-		self.build_graph_level([startnode], 1, maxdepth)
+		self.build_graph_level([startnode], 1)
 		self.add_ec_nodes()
 		self.populate_ec_names()
 
-	def populate_ec_names(self):
-		for node in self.nodes:
-			if node.dict['data']['type'] == 'enzyme':
-				try:
-#					enzyme = Enzyme.objects.get(pk=node.dict['id'])
-#
-#					pathways = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.pathways.all())
-#					node.dict['data']['pathways'] = pathways
-#					node.dict['data']['reactions'] = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.reactions.all())
-					node.dict['data']['name'] = EnzymeName.objects.filter(ec_number=node.dict['id']).order_by('id')[0].enzyme_name
-				except IndexError:
-					pass
-
-
-	def build_graph_level(self, nodes, depth, maxdepth):
-		if depth <= maxdepth:
+	def build_graph_level(self, nodes, depth):
+		"""
+		Goes through all nodes given as an argument and asks make_blast_queryset for
+		connections to other nodes. Then adds these connections to the graph through add_edges.
+		Calls recursively itself until depth is greater than the maximum depth given. Thus the
+		graph is build depth first.
+		"""
+		if depth <= self.depth_limit:
 			for node in nodes:
 				(count, queryset) = self.make_blast_queryset(node)
 				node.dict['data']['hidden_nodes_count'] = count
 				next_level_nodes = self.add_edges(node, queryset)
-				self.build_graph_level(next_level_nodes, depth + 1, maxdepth)
+				self.build_graph_level(next_level_nodes, depth + 1)
 
 	def add_ec_nodes(self):
+		"""
+		Adds enzyme nodes and edges to the graph. Enzyme nodes only have connections
+		to database entry nodes.
+		"""
 		db_ids = []
 		for node in self.nodes:
 			if node.dict['data']['type'] == 'dbentry':
 				db_ids.append(node.dict['id'])
 
 		ecs = BlastEcs.objects.filter(db_entry__in=db_ids)
+		# If enzyme-query, excludes root node from results
 		if self.enzyme:
 			ecs = ecs.filter(~(Q(ec=self.enzyme)))
 		for ec in ecs:
@@ -194,7 +207,21 @@ class QueryToJSON:
 				self.nodes.append(ecnode)
 			self.find_node_by_id(ec.db_entry_id).dict["adjacencies"].append(Edge(ecid, ec))
 
-	def find_node_by_id(self, id): # XXX - linear search, change self.nodes to a dict!
+	def populate_ec_names(self):
+		"""
+		Adds enzyme's other names info to all the enzyme nodes in the graph.
+		"""
+		for node in self.nodes:
+			if node.dict['data']['type'] == 'enzyme':
+				try:
+					node.dict['data']['name'] = EnzymeName.objects.filter(ec_number=node.dict['id']).order_by('id')[0].enzyme_name
+				except IndexError:
+					pass
+
+	def find_node_by_id(self, id): 
+		"""
+		Returns a node in the graph based on it's id.
+		"""
 		for n in self.nodes:
 			if id == n.dict['id']:
 				return n
@@ -214,6 +241,7 @@ class QueryToJSON:
 
 		if param.type == "db_entry":
 			query = query.filter(db_entry=param.dict["id"]).select_related('read').defer(*('read__' + x for x in Read.deferred_fields))
+			query = query.filter(read__sample__in=self.samples)
 		elif param.type == "read":
 			query = query.filter(read=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
 
@@ -242,11 +270,7 @@ class QueryToJSON:
 		been visited.
 		"""
 		next_level_nodes = set()
-		startnode_id = self.get_node_id(startnode)
 		if startnode.type == "db_entry":
-#			reads = Read.deferred().filter(pk__in = map(lambda blast: blast.read_id, queryset))
-
-#			for (read, blast) in zip(reads, queryset):
 			for blast in queryset:
 				read = blast.read
 				readnode = Node(read)
@@ -257,9 +281,6 @@ class QueryToJSON:
 				startnode.dict["adjacencies"].append(Edge(readid, blast))
 
 		elif startnode.type in ("read", "enzyme"):
-#			db_entries = DbEntry.deferred().filter(pk__in = map(lambda blast: blast.db_entry_id, queryset))
-
-#			for (dbentry, blast) in zip(db_entries, queryset):
 			for blast in queryset:
 				dbentry = blast.db_entry
 				dbnode = Node(dbentry)
@@ -273,6 +294,9 @@ class QueryToJSON:
 		return next_level_nodes
 
 	def get_node(self, node_id):
+		"""
+		Returns a Node object based on the given node_id argument's types.
+		"""
 		if node_id.type is "read":
 			return Node(Read.objects.get(read_id = node_id.id))
 		elif node_id.type is "db_entry":
@@ -286,6 +310,9 @@ class QueryToJSON:
 			raise Exception("Invalid node_id parameter, must be tuple (type, id)")
 
 	def get_node_id(self, node):
+		"""
+		Returns node's id.
+		"""
 		if node.type == "db_entry":
 			return NodeId(node.dict["id"], "db_entry")
 		elif node.type == "read":
@@ -299,13 +326,15 @@ class QueryToJSON:
 		return str(self.nodes)
 
 	def write_to_json(self, file="/static/json_test_file.js"):
+		"""
+		Used only for testing and dumping the JSON model of the graph to a file.
+		"""
 		json_file = None
 		try:
 			json_file = open(PROJECTROOT + file, 'w')
 		except NameError:
 			json_file = open(file, 'w')
 		json_file.write(str(self.nodes))
-#		json_file.write(json.dumps(self.nodes)) # what???
 		json_file.close()
 		
 	def __repr__(self):

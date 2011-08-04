@@ -19,7 +19,7 @@ def loginpage(request):
 		return render_to_response("login.html", { }, context_instance=RequestContext(request) )
 #shows the page with the registering form
 def register(request):
-	return render_to_response("register.html", { }, context_instance=RequestContext(request) )
+	return render_to_response("register.html", { }, context_instance = RequestContext(request) )
 
 #registers a new user, is called from the registering page
 def registering(request):
@@ -61,11 +61,11 @@ def logging_in(request):
 		else:
 			return render_to_response('login.html', { #error for a not activated account
 					'error_message': "Account is not active.",
-					}, context_instance=RequestContext(request))
+					}, context_instance = RequestContext(request))
 	else:
 		return render_to_response('login.html', { #login for incorrect username and/or password
 			'error_message': "Username or password was incorrect.",
-		}, context_instance=RequestContext(request))
+		}, context_instance = RequestContext(request))
 
 #logs the user out. Is called from the logout -button
 def logging_out(request):
@@ -80,14 +80,14 @@ def about(request):
 @login_required
 def savesettings(request):
 		profile = request.user.get_profile()
-		numericsMakeSense = False;#check to see if numeric values make sense. Empty strings are ok, then we just asume they want the defaults
+		numericsMakeSense = False; #check to see if numeric values make sense. Empty strings are ok, then we just asume they want the defaults
 		duration = request.POST['duration']
 		canvas_x = request.POST['canvas_x']
 		canvas_y = request.POST['canvas_y']
 		if 'savesettings' in request.POST: #and numericsMakeSense:
 			type = ''
 			transition = ''
-			if request.POST['group1']=='animations_off':
+			if request.POST['group1'] == 'animations_off':
 				type = 'replot'
 			else:
 					type = 'fade:con'
@@ -98,11 +98,11 @@ def savesettings(request):
 			#makes a json out of the settings and saves it
 			profile.settings = settings
 			profile.save()
-			return HttpResponseRedirect('/graphrefresh?settingsmessage=settings saved')
+			return HttpResponseRedirect('/graphrefresh?settingsmessage = settings saved')
 		elif 'defaultsettings' in request.POST:
 			profile.settings = '{}'
 			profile.save()
-			return HttpResponseRedirect('/graphrefresh?settingsmessage=defaults restored')
+			return HttpResponseRedirect('/graphrefresh?settingsmessage = defaults restored')
 		else:
 			return HttpResponseRedirect('/graphrefresh?settingsmessage=error')
 		#in all cases, redirects back to the graph
