@@ -26,7 +26,7 @@ def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits, offset, sa
 	# for testing only
 #	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits, offset)
 
-	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits, 'samples': samples}.items()),
+	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits, 'samples': 'ABLU'}.items()),
 					urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth, 'offset': offset}.items()))
 
 def render(request, template, dict={}):
@@ -48,7 +48,7 @@ def merge_dict(d1, d2):
 #Add '@login_required' to all these!
 @login_required
 def graphjson(request):
-	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset': '0', 'samples':[]}
+	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset': '0', 'samples':''}
 
 	for (k,v) in request.GET.items():
 		p[k] = v
@@ -91,7 +91,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		samples.append('OLKR49')
 		return samples
 
-	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0, 'samples':[], 'all_samples':[]}
+	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0}
 	for k in condition_dict.keys():
 		try:
 			if request.POST[k] not in ('', []):
