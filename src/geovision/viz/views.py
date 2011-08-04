@@ -102,9 +102,10 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	depth = int(condition_dict['depth'])
 	hits = int(condition_dict['hits'])
 	offset = int(condition_dict['offset'])
-	samples = list(condition_dict['samples'])
+	samples = request.POST.getlist('samples')
 	all_samples = get_samples()
 	condition_dict['all_samples'] = all_samples
+	condition_dict['samples'] = samples
 	if samples == []:
 		samples = all_samples
 		condition_dict['samples'] = all_samples
