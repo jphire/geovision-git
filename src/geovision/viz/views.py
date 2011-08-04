@@ -107,9 +107,9 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	all_samples = get_samples()
 	condition_dict['all_samples'] = all_samples
 	condition_dict['samples'] = samples
-	if samples == []:
-		samples = all_samples
-		condition_dict['samples'] = all_samples
+#	if samples == []:
+#		samples = all_samples
+#		condition_dict['samples'] = all_samples
 
 	json_url = ('', '')
 	search_fields = filter(lambda k: condition_dict[k] != '', ['enzyme', 'read', 'dbentry'])
