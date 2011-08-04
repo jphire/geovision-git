@@ -57,7 +57,7 @@ def graphjson(request):
 		if p[k] == '':
 			p[k] = None
 
-		p['samples'] = request.POST.getlist('samples')
+	p['samples'] = request.GET.getlist('samples')
 	try:
 		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), float(p['offset']), p['samples'])
 	except Exception as e:
