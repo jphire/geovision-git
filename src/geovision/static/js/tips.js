@@ -22,15 +22,14 @@ Config.Tips =
 					//it's a read or db entry
 					var source = node.data.source || node.data.sample;
 					tip.innerHTML += "<b>" + node.id + "<br/>(" + source + ")</b><br/>";
+					if(node.data.type == 'read')
+						tip.innerHTML += "<b>" + node.data.source + "</b>";
 					tip.innerHTML += node.data.description + "<br/>";
 					if(node.data.hidden_nodes_count) tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 				else
 				{
 					tip.innerHTML = "<b>" + node.id + "</b>";
-					if(node.data.type == 'read')
-						tip.innerHTML += "<b>" + node.data.source + "</b>";
-					tip.innerHTML += tip.innerHTML + "<br/>" + node.data.name + "</br>";
 					if(node.data.hidden_nodes_count) tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 			}
