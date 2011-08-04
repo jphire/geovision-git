@@ -48,7 +48,7 @@ def merge_dict(d1, d2):
 #Add '@login_required' to all these!
 @login_required
 def graphjson(request):
-	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset': '0', 'samples':''}
+	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset': '0', 'samples':[]}
 
 	for (k,v) in request.GET.items():
 		p[k] = v
@@ -57,7 +57,7 @@ def graphjson(request):
 		if p[k] == '':
 			p[k] = None
 	try:
-		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), float(p['offset']), list(p['samples']))
+		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), float(p['offset']), ['ABLU'])
 	except Exception as e:
 		out = json.dumps({'error_message': str(e)})
 	return HttpResponse(out, mimetype='text/plain')
