@@ -11,6 +11,9 @@ var settings =
  {};
 {% endif %}
 var query = { read: "{{ read }}", dbentry: "{{ dbentry }}", enzyme: "{{ enzyme }}", bitscore: {{ bitscore }}, evalue: {{ evalue }}, hits: {{ hits }}, depth: {{ depth }} };
+{% if view_id %}
+query.view_id = {{ view_id }};
+{% endif %}
 </script>
 {%endautoescape%}
 <!-- JIT Library File -->
@@ -98,6 +101,13 @@ $(function() {
 {% else %}
 	<p id="navierror"></p>	
 {% endif %}
+
+<div id="savedViews"></div>
+<script type="text/javascript">
+{% for view in saved_views %}
+addSavedViewToList('{{ view.id }}', '{{ view.name }}');
+{% endfor %}
+</script>
 
 <script type="text/javascript">
 	$(function()

@@ -10,6 +10,7 @@ from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 import json
+from userdb.models import SavedView
 
 def loginpage(request):
 	if request.user.is_authenticated():
@@ -98,5 +99,12 @@ def savesettings(request):
 @login_required
 def save_view(request):
 	profile = request.user.get_profile()
-	profile.saved_views.create(name=request.POST['name'], data=request.POST['data'])
-	return HttpResponse('ok')
+	id_to_delete = request.GET.get('delete')
+	if id_to_delete:
+		try:
+			profile.saved_views.get(pk=id_to_delete).delete()
+		except SavedView.DoesNotExist:
+			pass
+		return HttpResponseRedirect('/graphrefresh')
+	view = profile.saved_views.create(name=request.POST['name'], graph=request.POST['graph'], query=request.POST['query'])
+	return HttpResponse(str(view.id))

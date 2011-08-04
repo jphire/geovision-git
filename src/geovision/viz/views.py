@@ -21,8 +21,8 @@ import urllib
 
 # TODO: move somewhere else
 def render(request, template, dict={}):
-	user_settings = request.user.get_profile().settings
-	return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': user_settings, 'settingsmessage': request.GET.get('settingsmessage')})))
+	profile = request.user.get_profile()
+	return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': profile.settings, 'saved_views': profile.saved_views.all(), 'settingsmessage': request.GET.get('settingsmessage')})))
 
 def merge_dict(d1, d2):
 	d = {}
@@ -43,6 +43,9 @@ def graphjson(request):
 	for (k,v) in request.GET.items():
 		p[k] = v
 			
+	view_id = request.GET.get('view_id')
+	if view_id:
+		return HttpResponse(request.user.get_profile().saved_views.get(pk=int(view_id)).graph, mimetype='text/plain')
 	for k in ('enzyme', 'read', 'dbentry'):
 		if p[k] == '':
 			p[k] = None
@@ -70,6 +73,12 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			return ec_numbers
 
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0}
+	view_id = request.GET.get('open_view')
+	if view_id:
+		saved_view = request.user.get_profile().saved_views.defer('graph').get(pk=view_id)
+		condition_dict['view_id'] = view_id
+		return render(request, 'graphviz.html', merge_dict(condition_dict, json.loads(saved_view.query)))
+
 	for k in condition_dict.keys():
 		try:
 			if request.POST[k] != '':

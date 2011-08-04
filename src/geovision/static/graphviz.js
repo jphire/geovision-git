@@ -69,7 +69,9 @@ function initGraph()
 			$('#infovis').disableSelection();
 
 			rgraph = new RGraph(Config);
-			rgraph.loadJSON(prepareJSON(json), 0);
+			rgraph.loadJSON(prepareJSON(json), query.root || 0);
+			delete query.view_id
+			delete query.root
 
 			colorEdges();
 			rgraph.refresh();
