@@ -108,3 +108,19 @@ def save_view(request):
 		return HttpResponseRedirect('/graphrefresh')
 	view = profile.saved_views.create(name=request.POST['name'], graph=request.POST['graph'], query=request.POST['query'])
 	return HttpResponse(str(view.id))
+
+@login_required
+def export_view(request):
+	type = request.GET.get('type', 'json')
+	id = int(request.GET['id'])
+
+	view = request.user.get_profile().saved_views.get(pk=id)
+	graph_json = view.graph
+	content = None
+
+	if type == 'json':
+		content = graph_json
+	else:
+		content = 'Invalid "type" argument to export_view'
+
+	return HttpResponse(content, mimetype='text/plain')
