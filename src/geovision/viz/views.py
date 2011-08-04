@@ -88,6 +88,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		for sample in sample_collection:
 			samples.append(sample.sample_id)
 		samples.append('ABLU')
+		samples.append('OLKR49')
 		return samples
 
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0, 'samples':[], 'all_samples':[]}
