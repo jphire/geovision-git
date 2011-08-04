@@ -13,9 +13,9 @@ class Sample(models.Model):
 #	samples = models.ManyToManyField(Sample, related_name='collections')
 #	owner = models.ForeignKey(User, related_name='own_collections')
 #
-#class UserProfile(models.Model):
-#	user = models.OneToOneField(User)
-#	settings = models.TextField(blank=True)
+class UserProfile(models.Model):
+	user = models.OneToOneField(User)
+	settings = models.TextField(blank=True)
 
 def save_user_profile_pre_hook(sender, instance, **kwargs):
 		instance.is_superuser = instance.is_staff
