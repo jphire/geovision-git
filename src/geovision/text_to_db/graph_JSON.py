@@ -241,7 +241,7 @@ class QueryToJSON:
 
 		if param.type == "db_entry":
 			query = query.filter(db_entry=param.dict["id"]).select_related('read').defer(*('read__' + x for x in Read.deferred_fields))
-			query = query.filter(sample__in=param.dict['data']['samples'])
+			query = query.filter(sample__in=self.samples)
 		elif param.type == "read":
 			query = query.filter(read=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
 
