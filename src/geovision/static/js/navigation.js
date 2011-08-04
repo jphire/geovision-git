@@ -130,5 +130,3 @@ function untagSubgraph(node) {
 	rgraph.refresh()
 }
 
-function centerToNode(id, opt){
-}

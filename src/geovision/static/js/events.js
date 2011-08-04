@@ -17,18 +17,7 @@ Config.Events =
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
 
-		//if clicked an unopened node
-		if (!node.data.opened)
-		{
-			if(busy)
-				return;
-			node.data.opened = true;
-			fetchJSON(node);
-		}
-		else
-		{
-			fetchJSON(node, true);
-		}
+		fetchJSON(node, true);
 		//show clicked node's info in the right column
 		/*
 		$jit.id('inner-details').innerHTML = ""
@@ -36,50 +25,26 @@ Config.Events =
 		$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
 		*/
 		if(node.data.type == 'enzyme'){
-			$.getJSON('/enzyme_data?id=' + node.id, showEnzymeData);
+			$.getJSON('/enzyme_data', { id: node.id }, showEnzymeData);
 		}
 	},
 	onMouseEnter: function(node, eventInfo, e)
 	{
-		if(ctxMenuOpen)
+		if(ctxMenuOpen || busy)
 			return;
 
+		rgraph.canvas.getElement().style.cursor = 'pointer';
+
 		if (node.nodeTo)
-		{
-			if(busy)
-				return;
 			currentEdge = node;
-
-			rgraph.canvas.getElement().style.cursor = 'pointer';
-		}
-		else if(node)
-		{
-			if(busy)
-				return;
+		else
 			currentNode = node;
-
-			rgraph.canvas.getElement().style.cursor = 'pointer';
-		}
 	},
 	onMouseLeave: function(object, eventInfo, e)
 	{
-		if(ctxMenuOpen)
-			return;
-		if(!object)
+		if(ctxMenuOpen || !object || busy)
 			return;
 		currentNode = currentEdge = undefined;
-		
-		if(object.nodeTo)
-		{
-			if(busy)
-				return;
-			rgraph.canvas.getElement().style.cursor = '';
-		}
-		else if(object){
-			if(busy)
-				return;
-
-			rgraph.canvas.getElement().style.cursor = '';
-		}
+		rgraph.canvas.getElement().style.cursor = '';
 	}
 };

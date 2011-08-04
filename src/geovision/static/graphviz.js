@@ -15,76 +15,72 @@ function prepareJSON(json)
 	}
 	return json;
 }
-function fetchJSON(node, addToExisting)
+
+function setBusy(msg)
+{
+	if(msg)
+	{
+		$('#load').html(msg + '...');
+		rgraph.canvas.getElement().style.cursor = 'wait';
+		busy = msg;
+	}
+	else
+	{
+		$('#load').html('');
+		rgraph.canvas.getElement().style.cursor = '';
+		busy = false;
+	}
+}
+function fetchJSON(node)
 {
 
-			busy = 'expanding';
-			rgraph.canvas.getElement().style.cursor = 'wait';
-			$('#load').html("Loading...");
-
-			var bitscoreArgs = '&offset=' + (addToExisting ? node.data.min_bitscore : 0); 
-			$.getJSON(json_base_url + '&depth=1&' + node.data.type + '=' + node.name + bitscoreArgs,
+			setBusy('Expanding');
+			var args = $jit.util.merge(query, { read: '', dbentry: '', enzyme: '', depth: 1, offset: node.data.min_bitscore});
+			args[node.data.type] = node.id;
+			$.getJSON('/graphjson', args,
 				function(newdata)
 				{
 					if(newdata.error_message)
 					{
 						console.log('Server error while loading JSON', newdata.error_message);
-						newdata = {};
+						setBusy(false);
 						return;
 					}
-					if(true)
+					else
 					{
-							graph = rgraph.construct(newdata)
-							//UPDATE HIDDEN NODE INFO IN ALREADY EXISTING NODES
-							var graphNode = graph.getNode(node.id);
-							
-							if(graphNode){
-								var graphNodeData = graphNode.data;
-								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
-							}
+						node.data.hidden_nodes_count = newdata[0].data.hidden_nodes_count;
+						rgraph.op.sum(prepareJSON(newdata), rgraph.op.userOptions);
 					}
-					
-					var settings = $jit.util.merge(
-						rgraph.op.userOptions,
-						{
-							onMerge: colorEdges,
-							onComplete: function() { 
-								busy = false;
-								rgraph.canvas.getElement().style.cursor = '';
-						}});
-					rgraph.op.sum(prepareJSON(newdata), settings);
-					$('#load').html("");
 				});
 }
 
-function initGraph(json)
+function initGraph()
 {
-	jQuery('#loader').fadeOut();
-	if(!json || json.error_message)
-	{
-		if(json)
-			$("#error").text(json.error_message);
-		openSearch();
-		return;
-	}
-	initContextMenu();
-	$('#infovis').disableSelection();
+	$.getJSON('/graphjson', query, function(json) {
+			jQuery('#loader').fadeOut();
+			if(!json || json.error_message)
+			{
+				if(json)
+					$("#navierror").text(json.error_message);
+				openSearch();
+				return;
+			}
+			initContextMenu();
+			$('#infovis').disableSelection();
 
-	rgraph = new RGraph(Config);
-	rgraph.loadJSON(prepareJSON(json), 0);
+			rgraph = new RGraph(Config);
+			rgraph.loadJSON(prepareJSON(json), 0);
 
+			colorEdges();
+			rgraph.refresh();
+			rgraph.op.userOptions = settings.animationsettings;
 
-	colorEdges();
-	rgraph.refresh();
-	rgraph.op.userOptions = $jit.util.merge(
-		settings.animationsettings);
-
-	rgraph.op.filterContract = filterContract;
-	rgraph.op.tagParents = tagParents;
-	rgraph.op.tagSubgraph = tagSubgraph;
-	rgraph.op.tagSubnodes = tagSubnodes;
-	rgraph.centerToNode = centerToNode;
-	rgraph.op.deleteUntagged = deleteUntagged;
+			rgraph.op.filterContract = filterContract;
+			rgraph.op.tagParents = tagParents;
+			rgraph.op.tagSubgraph = tagSubgraph;
+			rgraph.op.tagSubnodes = tagSubnodes;
+			rgraph.op.deleteUntagged = deleteUntagged;
+		});
 }
 
 

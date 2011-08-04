@@ -23,15 +23,9 @@ function initContextMenu()
 			'n_center': function() {
 				console.log(currentNode.id);
 				var id = currentNode.id;
-				busy = true;
+				setBusy('Centering');
 				tagNode(rgraph.graph.getNode(id), false);
-				rgraph.onClick(id, $jit.util.merge(
-						rgraph.op.userOptions,
-						{ onComplete: function() {
-							busy = false;
-							rgraph.canvas.getElement().style.cursor = '';
-						}
-				}));
+				rgraph.onClick(id, rgraph.op.userOptions);
 			},
 			'e_align': function() { alignmentfunction(currentEdge.data.blast_id, currentEdge.nodeFrom.id, currentEdge.nodeTo.id); },
 			'n_tag': function() { 
@@ -42,13 +36,13 @@ function initContextMenu()
 					untagNode(currentNode);
 				}
 			},
-			'n_more': function() { fetchJSON(currentNode, true); },
+			'n_more': function() { fetchJSON(currentNode); },
 			'n_tagparents': function() { rgraph.op.tagParents(currentNode)},
 			'n_tagsubnodes': function() { rgraph.op.tagSubnodes(currentNode)},
 			'n_tagsubgraph': function() { rgraph.op.tagSubgraph(currentNode)},
 			'n_untagsubgraph': function() { untagSubgraph(currentNode)},
 			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))},
-			'n_en_names': function() { $.getJSON('/enzyme_data?id=' + currentNode.id, showEnzymeData); },
+			'n_en_names': function() { $.getJSON('/enzyme_data', { id: currentNode.id }, showEnzymeData); },
 			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
 			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); },
 			'n_db_uni_link': function() { window.open('http://www.uniprot.org/uniprot/' + currentNode.id); },
@@ -82,8 +76,8 @@ function initContextMenu()
 						$('li[id^=n_db_uni]', menu).remove();
 					if(currentNode.data.source != 'frnadb')
 						$('li[id^=n_db_frn]', menu).remove();
-                                       if(currentNode.data.source.indexOf('silva') == -1)
-                                               $('li[id^=n_db_silva]', menu).remove();
+                    if(currentNode.data.source.indexOf('silva') == -1)
+                    	$('li[id^=n_db_silva]', menu).remove();
 
 				}
 			}
