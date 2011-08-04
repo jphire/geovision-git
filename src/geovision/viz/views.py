@@ -23,11 +23,8 @@ def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits, offset, sa
 	"""
 	Returns a tuple of...
 	"""
-	# for testing only
-#	qtj = QueryToJSON(enzyme, dbentry, read, evalue, bitscore, depth, hits, offset)
-
 	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits, 'samples': samples}, doseq=True),
-					urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth, 'offset': offset}.items()))
+					urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth, 'offset': offset}))
 
 def render(request, template, dict={}):
 	user_settings = request.user.get_profile().settings
@@ -89,8 +86,8 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		sample_collection = Sample.objects.all()
 		for sample in sample_collection:
 			samples.append(sample.sample_id)
-		samples.append('ABLU')
-		samples.append('OLKR49')
+#		samples.append('ABLU')
+#		samples.append('OLKR49')
 		return samples
 
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0}
@@ -110,9 +107,9 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 	all_samples = get_samples()
 	condition_dict['all_samples'] = all_samples
 
-#	if samples == []:
-#		samples = all_samples
-#		condition_dict['samples'] = all_samples
+	if samples == []:
+		samples = all_samples
+		condition_dict['samples'] = all_samples
 
 	json_url = ('', '')
 	search_fields = filter(lambda k: condition_dict[k] != '', ['enzyme', 'read', 'dbentry'])

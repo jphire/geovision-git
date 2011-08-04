@@ -4,7 +4,7 @@ from django.db.models.signals import pre_save, post_save
 
 class Sample(models.Model):
 	sample_id = models.CharField(max_length=32)
-#	owner = models.ForeignKey(User, related_name='samples')
+	owner = models.ForeignKey(User, related_name='samples')
 #
 #class Collection(models.Model):
 #	name = models.CharField(max_length=64)
