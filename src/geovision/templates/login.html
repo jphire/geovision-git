@@ -1,6 +1,6 @@
 {% extends "base.html" %}
     {% block additional_title %}- Login{% endblock %}
-    {% block allcontent %}
+    {% block content %}
     {% if error_message %}<div class="error">{{ error_message }}</div>{% endif %}
 	<script type="text/javascript" >
 		if ($.browser.msie || $.browser.opera || ($.browser.mozilla && $.browser.version.slice(0,3) < "1.9")){
