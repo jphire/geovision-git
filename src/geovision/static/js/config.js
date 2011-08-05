@@ -50,12 +50,22 @@ var subtype = type[settings.animationsettings.subtype];
 if(subtype)
 	type = subtype;
 settings.animationsettings.transition = type;
+$jit.util.computeLevels();
+var max_level = 6;
+var new_max_level = max_level;
+$jit.Graph.Util.eachNode(rgraph.graph, function(node){
+	if(node._depth > max_level){
+		new_max_level += 1;
+	}
+})
+
+
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
+		numberOfCircles: new_max_level,
 		//set canvas size
-		type: '3D',
 		width: settings.settings.canvaswidth,
 		height:settings.settings.canvasheight,
 		//Optional: create a background canvas that plots
