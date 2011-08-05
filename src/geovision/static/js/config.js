@@ -55,6 +55,7 @@ var Config =
 		//Where to append the visualization
 		injectInto: 'infovis',
 		//set canvas size
+		type: '3D',
 		width: settings.settings.canvaswidth,
 		height:settings.settings.canvasheight,
 		//Optional: create a background canvas that plots
