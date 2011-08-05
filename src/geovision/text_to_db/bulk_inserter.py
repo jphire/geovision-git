@@ -71,6 +71,9 @@ class BulkInserter():
 			self.status_check_counter = 0
 			self.check_psql_status()
 
+	def get_id(self):
+		return self.next_id
+
 	def get_next_id(self):
 		id = self.next_id
 		self.next_id += 1

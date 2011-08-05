@@ -107,6 +107,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		}, condition_dict))
 
 	elif condition_dict['enzyme'] != '':
+		result = lookup_enzyme(condition_dict['enzyme'])
 		if len(result) == 1:
 			condition_dict['enzyme'] = result[0] if isinstance(result[0], basestring) else result[0].ec_number
 		elif result == None:
