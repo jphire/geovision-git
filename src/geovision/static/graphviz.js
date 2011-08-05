@@ -43,7 +43,12 @@ function fetchJSON(node, addToExisting)
 								node.data.hidden_nodes_count = graphNodeData['hidden_nodes_count'];
 							}
 					}
-					
+					$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.graph.root, 0);
+					$jit.Graph.Util.eachNode(rgraph.graph, function(node){
+						if(node._depth > max_level){
+							new_max_level += 1;
+						}
+					})
 					var settings = $jit.util.merge(
 						rgraph.op.userOptions,
 						{

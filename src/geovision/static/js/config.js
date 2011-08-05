@@ -50,15 +50,9 @@ var subtype = type[settings.animationsettings.subtype];
 if(subtype)
 	type = subtype;
 settings.animationsettings.transition = type;
-$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.graph.root, 0);
+
 var max_level = 6;
 var new_max_level = max_level;
-$jit.Graph.Util.eachNode(rgraph.graph, function(node){
-	if(node._depth > max_level){
-		new_max_level += 1;
-	}
-})
-
 
 var Config = 
 {
