@@ -10,6 +10,15 @@ var settings =
 {% else %}
 	{};
 {% endif %}
+var query = { read: "{{ read }}", dbentry: "{{ dbentry }}", enzyme: "{{ enzyme }}",
+		bitscore: {{ bitscore }}, evalue: {{ evalue }}, hits: {{ hits }}, depth: {{ depth }},
+		samples: []};
+{% for sample in samples %}
+		query.samples.push('{{ sample }}');
+{% endfor %}
+{% if view_id %}
+query.view_id = {{ view_id }};
+{% endif %}
 </script>
 {% endautoescape %}
 <!-- JIT Library File -->
@@ -26,6 +35,7 @@ var settings =
 <script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/events.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/labels.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/loadsave.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/moreinfo.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/styles.js"></script>
@@ -34,12 +44,7 @@ var settings =
 
 <script type="text/javascript">
 $(function() {
-{% if json_base_url %}
-	json_base_url = "{{ json_base_url|safe }}";
- 	$.getJSON(json_base_url + "&{{ json_query_url_part|safe }}", function(data) { initGraph(data); });
-{% else %}
-	initGraph(null);
-{% endif %}
+	initGraph();
 });
 </script>
 <!-- jQuery-UI, for autocomplete -->
@@ -48,7 +53,6 @@ $(function() {
 {% endblock %}
 
 {% block additional_title %}{% endblock %}
-<!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
 {% block content %}
 <div id="graphnavi" class="transparent">
 <img id="optiontag" src="{{ STATIC_URL }}images/options.png" alt="display options"/>
@@ -65,7 +69,7 @@ $(function() {
 		{% if enzyme_list %}
 		</td></tr><tr><td colspan="2" class="center">Multiple enzymes matched, pick one:
 		{% for e in enzyme_list %}
-		</td></tr><tr><td colspan="2" class="center"><p class="submitForm" id='{{ e.enzyme }}'>{{ e.enzyme_name }} ({{ e.enzyme }})</p>
+		</td></tr><tr><td colspan="2" class="center"><p class="submitForm">{{ e.enzyme_name }} ({{ e.ec_number }})</p>
 		{% endfor %}
 		{% endif %}
 	</td></tr><tr><td>
@@ -105,12 +109,19 @@ $(function() {
 	{% endfor %}
 	</table>
 </form>
-{% if error_message or not json_base_url %}
-	<script type="text/javascript">openSearch($('#graphnavi'));</script>
+{% if error_message  %}
+	<script type="text/javascript">openSearch();</script>
 	<p id="navierror">{{ error_message }}</p>
 {% else %}
-	
+	<p id="navierror"></p>	
 {% endif %}
+
+<div id="savedViews"></div>
+<script type="text/javascript">
+{% for view in saved_views %}
+addSavedViewToList('{{ view.id }}', '{{ view.name }}');
+{% endfor %}
+</script>
 
 <script type="text/javascript">
 	$(function()
@@ -167,7 +178,7 @@ $(function() {
 					<p><strong>Settings</strong></p>
 					<p>Settings control some aspects of this application. They are saved on your profile.</p>
 					<p><strong>Coloring</strong></p>
-					<p>Dynamic node coloring means coloring is se so that the connection with the lowest bitscore that is still visible is red and the highest is green. Custom means you can set the values so that everything rated below the first is red and everything above the second is green.
+					<p>Dynamic node coloring means coloring is se so that the connection with the lowest bitscore that is still visible is red and the highest is green. Custom means you can set the values so that everything rated below the first is red and everything above the second is green.</p>
 					<p><strong>Right hand filter</strong></p>
 					<p>This filter lets you temporarily filter out all edges under the spesified value. To unfilter, input a smaller value.</p>
 				</div>
@@ -177,9 +188,9 @@ $(function() {
 					<br/><br/>
 				<div id="coloring">
 					<form action="/"  id="colorform">
-						<input type="radio" name="colortype" id="colortypeDynamic" value="dynamic" checked/>Dynamic<br/>
+						<input type="radio" name="colortype" id="colortypeDynamic" value="dynamic" checked="checked"/>Dynamic<br/>
 						<input type="radio" name="colortype" id="colortypeCustom" value="custom"/>Custom: 
-						<input type="text" id="colorMin" size="4" disabled/>-<input type="text" id="colorMax" size="4" disabled/><br/>
+						<input type="text" id="colorMin" size="4" disabled="disabled"/>-<input type="text" id="colorMax" size="4" disabled="disabled"/><br/>
 						<input type="submit" id="colorizeSubmit" value="Colorize"/>
 						<span id="colorErrorMsg" class="error"></span>
 					</form>
@@ -205,10 +216,10 @@ $(function() {
 					<form id="settingsform" action="savesettings" method="post">
 						{% csrf_token %}
 						<label>Canvas size:</label><br/>
-						<input type="text" size="6" name="canvas_x" id="canvas_x" value=""> x <input type="text" size="6" name="canvas_y" id="canvas_y" value=""><br/>
+						<input type="text" size="6" name="canvas_x" id="canvas_x" value=""/> x <input type="text" size="6" name="canvas_y" id="canvas_y" value=""/><br/>
 						<label>Animations:</label><br/>
-						<input type="radio" name="group1" value="animations_on" id="animations_on" checked="checked"> On<br/>
-						<input type="radio" name="group1" value="animations_off" id="animations_off"> Off<br/>
+						<input type="radio" name="group1" value="animations_on" id="animations_on" checked="checked"/> On<br/>
+						<input type="radio" name="group1" value="animations_off" id="animations_off"/> Off<br/>
 						<label>Animation speed in ms:</label><br/>
 						<input size="7" type="text" name="duration" id ="duration" value="" /><br/>
 						<label>Animation type:</label><br/>

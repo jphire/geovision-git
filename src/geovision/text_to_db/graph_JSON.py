@@ -149,7 +149,7 @@ class QueryToJSON:
 		if db_entry is None:
 			if read is None:
 				if enzyme is None:
-					raise Exception("Either db_entry or read parameter must be supplied")
+					raise Exception("Enter a search condition (read, enzyme or database entry)")
 				else:
 					self.startpoint = NodeId(enzyme, "enzyme")
 			else:

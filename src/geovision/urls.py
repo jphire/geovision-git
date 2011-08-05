@@ -16,8 +16,8 @@ urlpatterns = patterns('',
 
 	(r'^savesettings$', 'userdb.views.savesettings'),
 	(r'^save_view$', 'userdb.views.save_view'),
+	(r'^export_view$', 'userdb.views.export_view'),
 
-	(r'^testgraph$', 'viz.views.testgraph'),
 	(r'^graphrefresh$', 'viz.views.graphrefresh'),
 	(r'^graphjson$', 'viz.views.graphjson'),
 	(r'^show_alignment$', 'viz.views.show_alignment'),

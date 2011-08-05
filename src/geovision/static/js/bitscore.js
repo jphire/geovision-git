@@ -1,23 +1,19 @@
 /* Bitscore filtering & coloring related stuff */
 var bitscoreColorMin, bitscoreColorMax;
 function colorEdges(){
-
-	maxScore = 0;
-	minScore = 100000;
+	var min = Math.min, max = Math.max;
+	var maxScore = 0;
+	var minScore = 100000;
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		var nodeMaxScore = 0;
 		var nodeMinScore = 100000;
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
 			var bs = adj.data.bitscore;
 			if(!bs) return;
-			if(bs > maxScore)
-				maxScore = bs;
-			if(bs < minScore)
-				minScore = bs;
-			if(bs > nodeMaxScore)
-				nodeMaxScore = bs;
-			if(bs < nodeMinScore)
-				nodeMinScore = bs;
+				maxScore = max(bs, maxScore);
+				minScore = min(bs, minScore);
+				nodeMaxScore = max(bs, nodeMaxScore);
+				nodeMinScore = min(bs, nodeMinScore);
 		});
 		node.data.bitscore = nodeMaxScore;
 		node.data.min_bitscore = nodeMinScore;
@@ -50,7 +46,7 @@ function colorEdges(){
 }
  /*function to filter graph by a bitscore inputted by the user*/
 function filter(bitscore, masterbitscore) {
-	if (!(bitscore > 0) || isNaN(bitscore)) { /*bitscores must make sense*/
+	if (isNaN(bitscore) || bitscore <= 0) { /*bitscores must make sense*/
 		$('#filtererror').html("Not a valid bitscore.<br/>");
 		return false;
 	}

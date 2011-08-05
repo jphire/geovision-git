@@ -4,7 +4,7 @@ var helpopen = false;
 
 function openSearch()
 {
-	elem = $('#graphnavi')
+	var elem = $('#graphnavi')
         if (!opened){
             elem.find('#optiontag').hide();
             elem.animate({width: "25%"}, {complete:
@@ -53,7 +53,6 @@ jQuery(function($) {
 		}
 	})
 	$('#filterform').submit(function(e) {
-		console.log('aa');
 		e.preventDefault();
 		filter(parseFloat($('#bitscorefilter').val()), parseFloat($('#masterbitscorefilter').val()));
 		return false;
@@ -87,7 +86,8 @@ jQuery(function($) {
 		$('#loader').fadeIn(); //loader in
     });
 	$('.submitForm').live('click', function() {
-		$('#ec').replaceWith('<input size="10" type="text" name="ecnumber" id="ec" value="'+$(this).attr('id')+'"/>');
+		console.log();
+		$('#ec').val($(this).text());
 		$(this).parents('form').submit();
 	})
 }); //jquery close
