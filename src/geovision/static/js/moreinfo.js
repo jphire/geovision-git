@@ -51,14 +51,6 @@ function showEnzymeData (json){
 	ec = json.id;
 
 	var html = '<br/>';
-	/*
-	if(json.reactions)
-	{
-		html += '<strong>Reactions of ' + ec + '</strong><br/>';
-		html += $.map(json.reactions, function(reac){
-			return 'R' + reac.id + ': ' + reac.name + ' <a target="_blank" href="http://www.genome.jp/dbget-bin/www_bget?r' + reac.id + '">[KEGG]</a><br/>'; }).join('');
-	}
-	*/
 	// KEGG pathway url coloring params: pwnumber / ecnumber <TAB> #bgcol,#fgcol / ecnumber <TAB> #bgcol,fgcol ....
 	if(json.pathways)
 	{
