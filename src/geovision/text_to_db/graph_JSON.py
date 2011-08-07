@@ -83,7 +83,6 @@ class Edge:
 			self.dict["data"]["read"] = blastobject.read_id
 			self.dict["data"]["database_name"] = blastobject.database_name
 			self.dict["data"]["db_entry"] = blastobject.db_entry_id
-			self.dict["data"]["length"] = blastobject.length
 			self.dict["data"]["blast_id"] = blastobject.id
 			self.dict["data"]["error_value"] = blastobject.error_value
 			self.dict["data"]["bitscore"] = blastobject.bitscore
@@ -227,7 +226,7 @@ class QueryToJSON:
 				return n
 		raise KeyError(repr(id))
 
-	def make_blast_queryset(self, param = None):
+	def make_blast_queryset(self, param=None):
 		"""
 		Function for making the blast table QuerySet. Takes only one parameter,
 		an instance of Node object. Other query parameters are
@@ -246,7 +245,7 @@ class QueryToJSON:
 			query = query.filter(read=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
 
 		elif param.type == "enzyme":
-			query = BlastEcs.objects.filter(ec=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
+			query = BlastEcs.objects.filter(ec=param.dict["id"]).values('db_entry')
 		else:
 			raise RuntimeError('bad param type "%s"' % (param.type,))
 		
@@ -254,6 +253,11 @@ class QueryToJSON:
 		query = query.filter(bitscore__gt = self.bitscore_limit)
 		if self.offset != 0:
 				query = query.filter(bitscore__lt = self.offset)
+
+		if param.type == 'enzyme':
+			query = query.annotate(max_bitscore=Max('bitscore'), min_evalue=Min('error_value'))
+			
+
 		query = query.order_by('-bitscore')
 		count = query.count() - self.max_amount
 		if count < 0:

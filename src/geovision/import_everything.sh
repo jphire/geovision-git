@@ -24,12 +24,12 @@ CREATE INDEX viz_dbuniprotecs_ec ON viz_dbuniprotecs(ec) WITH (fillfactor = 100)
 	ANALYZE viz_dbuniprotecs;
 	ANALYZE meta_enzymename;"
 psq -ac "
-INSERT INTO viz_blastecs (ec, db_entry_id, bitscore, error_value) 
-SELECT e.ec, b.db_entry_id, MAX(b.bitscore), MIN(b.error_value) 
+INSERT INTO viz_blastecs (ec, db_entry_id, sample, bitscore, error_value) 
+SELECT e.ec, b.db_entry_id, b.sample, MAX(b.bitscore), MIN(b.error_value) 
 FROM viz_dbuniprotecs e 
 INNER JOIN viz_blast b ON (b.db_entry_id = e.db_id) 
 WHERE e.ec != '?' AND b.database_name = 'uniprot' 
-GROUP BY e.ec, b.db_entry_id;
+GROUP BY e.ec, b.db_entry_id, b.sample;
 ANALYZE viz_blastecs; 
 CREATE INDEX viz_blastecs_bitscore ON viz_blastecs (bitscore) WITH (fillfactor = 100);
 CREATE INDEX viz_blastecs_ec ON viz_blastecs (ec) WITH (fillfactor=100);"
