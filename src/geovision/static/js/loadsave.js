@@ -19,3 +19,19 @@ function addSavedViewToList(id, name)
 		' <a href="/export_view?type=json&id=' + id + '">Export as JSON</a>' +
 		'<br/>');
 }
+
+var MAX_UNDO = 10;
+var undoStates = [];
+function saveUndoState()
+{
+	undoStates.push(rgraph.toJSON('graph'));
+	if(undoStates.length > MAX_UNDO)
+		undoStates.shift();
+}
+function doUndo()
+{
+	if(undoStates.length == 0)
+		return;
+	var oldState = undoStates.pop();
+	rgraph.op.morph(oldState, rgraph.op.userOptions);
+}
