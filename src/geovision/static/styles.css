@@ -234,3 +234,7 @@ p#navierror {
 	margin: 15px;
 	color: #B80000;
 }
+A.load:link {color:#FFFFFF; text-decoration:none;}
+A.load:visited {color:#FFFFFF; text-decoration:none;}
+A.load:active {color:#FFFFFF; text-decoration:none;}
+A.load:hover {color:#FFFFFF; text-decoration:underline;}
