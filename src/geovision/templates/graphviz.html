@@ -60,7 +60,15 @@ $(function() {
 <form id="graphrefreshform" action="graphrefresh" method="post">{% csrf_token %} <!--protects from cross site request forgery-->
 	<table><tr><td colspan="2" class="center">
 		<strong>Get a new graph:</strong>
-	</td></tr><tr><td colspan="2" class="center">
+	</td></tr>
+	{% if error_message  %}
+	<tr><td>
+		<script type="text/javascript">openSearch();</script>
+		<p id="navierror">{{ error_message }}</p>
+	</td></tr>
+	{% else %}
+	{% endif %}
+	<tr><td colspan="2" class="center">
 		<p>(Input only one of the three following)</p>
 	</td></tr><tr><td>
 		<label>Enzyme:</label>
@@ -96,25 +104,23 @@ $(function() {
 		<label>Hits per node:</label>
 	</td><td>
 		<input size="10" type="text" name="hits" value="{{ hits }}" />
-	</td></tr><tr><td colspan="2">
+	</td></tr>
+	<tr><td>
+			<label>Samples:</label><br/>
+			<label>(Ctrl+click to<br/> select multiple)</label>
+		</td>
+		<td>
+			<select multiple="multiple" name="sample">
+				{% for sample in all_samples %}
+					<option value="{{ sample }}">{{ sample }}</option>
+				{% endfor %}
+			</select>
+	</td></tr>
+	<tr><td colspan="2">
 		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
 	</td></tr>
-	<tr><td>
-			<label>Samples:</label>
-		</td></tr>
-	{% for sample in all_samples %}
-	<tr><td>
-		<input type="checkbox" name="samples" value="{{ sample }}" />{{ sample }}
-	</td></tr>
-	{% endfor %}
 	</table>
 </form>
-{% if error_message  %}
-	<script type="text/javascript">openSearch();</script>
-	<p id="navierror">{{ error_message }}</p>
-{% else %}
-	<p id="navierror"></p>	
-{% endif %}
 
 <div id="savedViews"></div>
 <script type="text/javascript">
@@ -195,9 +201,8 @@ addSavedViewToList('{{ view.id }}', '{{ view.name }}');
 						<span id="colorErrorMsg" class="error"></span>
 					</form>
 				</div>
-
 				<br/>
-				<span id="filtertext">Temporarily filter graph</span><br/>
+				<span id="filtertext">Temporarily filter graph</span>
 				<div id="filter">
 					<form id="filterform" action="/" method="post">
 						<span id="filtererror"></span>
@@ -207,11 +212,13 @@ addSavedViewToList('{{ view.id }}', '{{ view.name }}');
 						<input id="filterbutton" type="submit" value="Filter"/><br/>
 					</form>
 				</div>
+				<br/>
 				<form action="/" method="post" id="saveGraph">
-					Save current view as:<input type="text" size="10" id="savedGraphName" />
+					<strong>Save</strong> current view as:<input type="text" size="10" id="savedGraphName" />
 					<input type="submit" value="Save"/> 
 					<span id="saveGraphStatus"></span>
 				</form>
+				<br/>
 				<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
 				<div id="settings">
 					<form id="settingsform" action="savesettings" method="post">
