@@ -120,7 +120,7 @@ $(function() {
 		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
 	</td></tr>
 	<tr><td colspan="2">
-		<div id="savedViews">
+		<div id="savedViews" style="text-align: center;">
 		{% if saved_views %}
 			<p>Your saved views:</p>
 		{% endif %}
@@ -220,7 +220,7 @@ $(function() {
 				</div>
 				<br/>
 				<form action="/" method="post" id="saveGraph">
-					<strong>Save</strong> current view as:<input type="text" size="10" id="savedGraphName" />
+					<strong>Save</strong> current view as: <input type="text" size="10" id="savedGraphName" />
 					<input type="submit" value="Save"/> 
 					<span id="saveGraphStatus"></span>
 				</form>
