@@ -23,10 +23,15 @@ Config.Events =
 				level = node._depth;
 		})
 		rgraph.canvas.config.background.numberOfCircles = level + 2;
-
+		var rg = new $jit.RGraph({
+			background: {
+				numberOfCircles: level+2,
+				//levelDistance: 150
+			}
+		});
 		fetchJSON(node, true);
-		rgraph.canvas.canvases[1].plot();
-		rgraph.refresh();
+		
+		rg.refresh();
 		
 		//show clicked node's info in the right column
 		/*
