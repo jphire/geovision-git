@@ -14,7 +14,7 @@ $('#saveGraph').submit(function(e) {
 
 function addSavedViewToList(id, name)
 {
-	$('#savedViews').append('View name: '+ name '<br/>\t<a class="load" href="/graphrefresh?open_view=' + id + '">Load</a>  ' +
+	$('#savedViews').append('View name: '+ name +'<br/>\t<a class="load" href="/graphrefresh?open_view=' + id + '">Load</a>  ' +
 		' <a class="load" href="/save_view?delete=' + id + '">Delete</a>  ' +
 		' <a class="load" href="/export_view?type=json&id=' + id + '">Export as JSON</a>' +
 		'<br/>');
