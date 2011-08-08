@@ -119,15 +119,21 @@ $(function() {
 	<tr><td colspan="2">
 		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
 	</td></tr>
+	<tr><td colspan="2">
+		<div id="savedViews" style="text-align: center;">
+		{% if saved_views %}
+			<p>Your saved views:</p>
+		{% endif %}
+		</div>
+		<script type="text/javascript">
+		{% for view in saved_views %}
+		addSavedViewToList('{{ view.id }}', '{{ view.name }}');
+		{% endfor %}
+		</script>
+	</td></tr>
 	</table>
 </form>
 
-<div id="savedViews"></div>
-<script type="text/javascript">
-{% for view in saved_views %}
-addSavedViewToList('{{ view.id }}', '{{ view.name }}');
-{% endfor %}
-</script>
 
 <script type="text/javascript">
 	$(function()
@@ -214,7 +220,7 @@ addSavedViewToList('{{ view.id }}', '{{ view.name }}');
 				</div>
 				<br/>
 				<form action="/" method="post" id="saveGraph">
-					<strong>Save</strong> current view as:<input type="text" size="10" id="savedGraphName" />
+					<strong>Save</strong> current view as: <input type="text" size="10" id="savedGraphName" />
 					<input type="submit" value="Save"/> 
 					<span id="saveGraphStatus"></span>
 				</form>
