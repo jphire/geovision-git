@@ -17,6 +17,7 @@ Config.Events =
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
 
+		saveUndoState();
 		fetchJSON(node, true);
 		//show clicked node's info in the right column
 		/*

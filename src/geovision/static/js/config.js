@@ -92,7 +92,7 @@ jQuery(function($) {
 	$('#right-container').css('height', parseInt(settings.settings.canvasheight));
 	$('#container').css('width', parseInt(settings.settings.canvaswidth)+400);
 	$('#container').css('height', parseInt(settings.settings.canvasheight));
-	$('#deleteUntagged').click(function(e) { e.preventDefault(); rgraph.op.deleteUntagged(); });
+	$('#deleteUntagged').click(function(e) { e.preventDefault(); saveUndoState(); rgraph.op.deleteUntagged(); });
 	$('#canvas_x').val(settings.settings.canvaswidth);
 	$('#canvas_y').val(settings.settings.canvasheight);
 	if (settings.animationsettings.type == 'replot'){

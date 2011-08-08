@@ -1,6 +1,7 @@
 /* Bitscore filtering & coloring related stuff */
 var bitscoreColorMin, bitscoreColorMax;
 function colorEdges(){
+	console.log('color');
 	var min = Math.min, max = Math.max;
 	var maxScore = 0;
 	var minScore = 100000;
@@ -54,6 +55,7 @@ function filter(bitscore, masterbitscore) {
 		$('#filtererror').html("You cannot filter by bitscores lower than the bitscore you used to search the database.<br/>");
 	}
 	else {
+		saveUndoState();
 		rgraph.op.deleteUntagged(bitscore);
 		return false;
 		$('#load').html("Filtering..."); /*tell the user its loading*/
