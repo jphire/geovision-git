@@ -94,7 +94,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 				condition_dict[k] = request.POST[k]
 		except KeyError:
 			pass
-	samples = request.POST.getlist('samples')
+	samples = request.POST.getlist('samples[]')
 	condition_dict['samples'] = samples
 	all_samples = get_samples()
 	condition_dict['all_samples'] = all_samples

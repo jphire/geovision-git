@@ -39,6 +39,7 @@ var Config =
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
+		
 		//set canvas size
 		width: settings.settings.canvaswidth,
 		height:settings.settings.canvasheight,
