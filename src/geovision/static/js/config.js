@@ -39,8 +39,8 @@ settings.animationsettings.onMerge = colorEdges;
 var max_level = 6;
 var new_max;
 if(rgraph){
-	computeLevels(rgraph.graph, rgaph.graph.root, 0);
-	$jit.Graph.Util.each(rgaph.graph, function(node){
+	computeLevels(rgraph.graph, rgraph.graph.root, 0);
+	$jit.Graph.Util.each(rgraph.graph, function(node){
 		if(node._depth > max_level)
 			max_level = node._depth;
 	})
