@@ -45,7 +45,7 @@ var Config =
 		height:settings.settings.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
-		background: { CanvasStyles: { strokeStyle: '#555', numberOfCircles:15 } },
+		background: { numberOfCircles:15, CanvasStyles: { strokeStyle: '#555' } },
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
