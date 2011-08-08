@@ -10,6 +10,10 @@ $('#saveGraph').submit(function(e) {
 	$('#saveGraphStatus').text('Saving...');
 	return false;
 });
+$('#undo').click(function(e) {
+	e.preventDefault();
+	doUndo();
+});
 });
 
 function addSavedViewToList(id, name)
@@ -33,5 +37,5 @@ function doUndo()
 	if(undoStates.length == 0)
 		return;
 	var oldState = undoStates.pop();
-	rgraph.op.morph(oldState, rgraph.op.userOptions);
+	rgraph.op.morph(oldState, $jit.util.merge(rgraph.op.userOptions, { onComplete: colorEdges }));
 }
