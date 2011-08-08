@@ -23,12 +23,11 @@ Config.Tips =
 					var source = node.data.source || node.data.sample;
 					tip.innerHTML += "<b>" + node.id + "<br/>(" + source + ")</b><br/>";
 					tip.innerHTML += node.data.description + "<br/>";
-					if(node.data.hidden_nodes_count) tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 				}
 				else
 				{
-					tip.innerHTML = "<b>" + node.id + "</b>";
-					if(node.data.hidden_nodes_count) tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
+					tip.innerHTML = "<b>" + node.id + "</b><br/>" + node.data.name + "<br/>";
 				}
+				if(node.data.hidden_nodes_count) tip.innerHTML += "<b>Matching hidden nodes:</b> " + node.data.hidden_nodes_count + "<br/>";
 			}
 };
