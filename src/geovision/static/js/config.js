@@ -39,7 +39,7 @@ var Config =
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
-		numberOfCircles: new_max_level,
+		
 		//set canvas size
 		width: settings.settings.canvaswidth,
 		height:settings.settings.canvasheight,
