@@ -12,7 +12,7 @@ from django.contrib.auth import logout
 from django.core.context_processors import csrf
 from django.db.models import Q
 from meta.models import EnzymeName, Enzyme
-from geovision.viz.models import Blast
+from geovision.viz.models import Blast, BlastExtra
 from geovision.userdb.models import Sample
 from geovision.settings import STATIC_URL
 import json
@@ -136,7 +136,7 @@ def show_alignment(request):
 		searchterm = request.GET['id']
 	except KeyError:
 		return HttpResponse('')
-	data = Blast.objects.get(id=searchterm)
+	data = BlastExtra.objects.get(pk=searchterm)
 	return HttpResponse(json.dumps({'readseq': '%s' % (data.read_seq), 'dbseq': '%s' % (data.db_seq)}), mimetype='text/plain')
 
 @login_required

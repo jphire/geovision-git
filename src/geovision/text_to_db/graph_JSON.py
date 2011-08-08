@@ -1,6 +1,6 @@
 import json
 from geovision.viz.models import *
-from django.db.models import Q
+from django.db.models import Q, Max, Min
 
 
 class NodeEdgeJSONEncoder(json.JSONEncoder):
@@ -251,15 +251,19 @@ class QueryToJSON:
 		
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gt = self.bitscore_limit)
+		query = query.order_by('-bitscore')
 		if self.offset != 0:
 				query = query.filter(bitscore__lt = self.offset)
 
 		if param.type == 'enzyme':
-			query = query.annotate(max_bitscore=Max('bitscore'), min_evalue=Min('error_value'))
-			
-
-		query = query.order_by('-bitscore')
-		count = query.count() - self.max_amount
+			query = query.annotate(bitscore=Max('bitscore'), error_value=Min('error_value'))
+			count = query.count() - self.max_amount
+			query = query[:self.max_amount]
+			for q in query:
+				q['db_entry'] = DbEntry.objects.get(pk=q['db_entry'])
+			query = [BlastEcs(ec=param.dict['id'], **q) for q in query]
+		else:
+			count = query.count() - self.max_amount
 		if count < 0:
 			count = 0
 		return (count, query[:self.max_amount])
