@@ -22,6 +22,10 @@ def loginpage(request):
 def register(request):
 	return render_to_response("register.html", { }, context_instance = RequestContext(request) )
 
+#shows the help page
+def show_help(request):
+	return render_to_response("help.html", { }, context_instance=RequestContext(request) )
+
 #registers a new user, is called from the registering page
 def registering(request):
 	datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
@@ -136,3 +140,5 @@ def export_view(request):
 		content = 'Invalid "type" argument to export_view'
 
 	return HttpResponse(content, mimetype='text/plain')
+
+

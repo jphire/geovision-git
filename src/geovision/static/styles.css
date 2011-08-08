@@ -32,6 +32,10 @@ div#login{
     width:230px;
     height:100px;
 }
+div#help{
+    width:400px;
+    /*height:100px;*/
+}
 div#register{
     width:400px;
 }
