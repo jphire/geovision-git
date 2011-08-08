@@ -17,7 +17,7 @@ Config.Events =
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
 		var level = 8;
-		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.graph.root, 0);
+		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 		$jit.Graph.Util.each(rgraph.graph, function(node){
 			if(node._depth > level)
 				level = node._depth;
