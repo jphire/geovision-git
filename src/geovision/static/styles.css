@@ -218,6 +218,10 @@ span#settingslink{
 	text-decoration: underline;
 	cursor: pointer;
 }
+span#sampleslink{
+	text-decoration: underline;
+	cursor: pointer;
+}
 div#settings{
 	display:none;
 }
@@ -238,3 +242,10 @@ A.load:link {color:#FFFFFF; text-decoration:none;}
 A.load:visited {color:#FFFFFF; text-decoration:none;}
 A.load:active {color:#FFFFFF; text-decoration:none;}
 A.load:hover {color:#FFFFFF; text-decoration:underline;}
+div.view{
+	border: 1px #BBBBBB solid;
+	margin: 2px;
+}
+div#samples{
+	display: none;
+}
