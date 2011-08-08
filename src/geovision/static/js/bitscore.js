@@ -56,36 +56,6 @@ function filter(bitscore, masterbitscore) {
 	else {
 		rgraph.op.deleteUntagged(bitscore);
 		return false;
-		$('#load').html("Filtering..."); /*tell the user its loading*/
-		/*contract everything but the root. Uses its own contract, not the main one*/
-		rgraph.op.filterContract(rgraph.graph.getNode(rgraph.root), {type: "replot"}); 
-
-		/*go through everything recursively and show nodes that have enough bitscore or are tagged*/
-		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
-			var target;
-			if (edge.nodeTo._depth > edge.nodeFrom._depth) {
-				target = edge.nodeTo;
-			}
-			else {
-				target = edge.nodeFrom;
-			}
-			if (typeof(edge.data.bitscore) == "undefined" || edge.data.bitscore >= bitscore || target.traversalTag){
-				var node = edge.nodeTo;
-				node.ignore = false;
-				node.setData('alpha', node.Node.alpha, "current");
-				node.eachAdjacency(function(edgenow){
-					if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth && edgenow.nodeTo != edge.nodeTo){
-						helper(edgenow);
-					}
-				})
-			}
-		})
-		/*refresh the graph. Should this be animated?*/
-		rgraph.op.viz.refresh();
-
-		$('#load').html(""); /*take loading away*/
-		$('#filtererror').html(""); /*did not get an error*/
-		return;
 	}
 }
 /*special version of contract function used only by the filter*/
