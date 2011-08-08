@@ -32,10 +32,11 @@ function saveUndoState()
 	if(undoStates.length > MAX_UNDO)
 		undoStates.shift();
 }
+
 function doUndo()
 {
 	if(undoStates.length == 0)
 		return;
 	var oldState = undoStates.pop();
-	rgraph.op.morph(oldState, $jit.util.merge(rgraph.op.userOptions, { onComplete: colorEdges }));
+	rgraph.op.morph(oldState, $jit.util.merge(rgraph.op.userOptions, { onComplete: function() { cleanupGraph(); colorEdges(); }}));
 }
