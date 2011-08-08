@@ -238,3 +238,6 @@ A.load:link {color:#FFFFFF; text-decoration:none;}
 A.load:visited {color:#FFFFFF; text-decoration:none;}
 A.load:active {color:#FFFFFF; text-decoration:none;}
 A.load:hover {color:#FFFFFF; text-decoration:underline;}
+span.view{
+	border: 1px #BBBBBB solid;
+}
