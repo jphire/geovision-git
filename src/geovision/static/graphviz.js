@@ -44,13 +44,8 @@ function cleanupGraph()
 {
 	var toDelete = [];
 	rgraph.graph.eachNode(function(n) {
-		n.eachAdjacency(function(adj) {				
-			if(adj.data.$alpha < 0.01)
-			{
-				delete rgraph.graph.edges[adj.nodeFrom.id][adj.nodeTo.id];
-				delete rgraph.graph.edges[adj.nodeTo.id][adj.nodeFrom.id];
-			}
-		});
+		if(n.data.$alpha < 0.01)
+			rgraph.graph.removeNode(n.id);
 	});
 }
 /* fetchJSON(JitNode node) - expand the graph at the specified node */

@@ -42,13 +42,7 @@ function deleteUntagged(bitscoreLimit) {
 	while (nodesArray.length > 1) {
 		var node = nodesArray.pop();
 		if (!node.traversalTag && (!bitscoreLimit || node.data.bitscore < bitscoreLimit)) {
-			(function deladj(n) {
-				n.eachAdjacency(function(adj) {
-					delete rgraph.graph.edges[adj.nodeFrom.id][adj.nodeTo.id];
-					delete rgraph.graph.edges[adj.nodeTo.id][adj.nodeFrom.id];
-				});
-			 })(node);
-			rgraph.op.removeNode(node.id, rgraph.op.userOptions);
+			rgraph.op.removeNode(node.id, $jit.util.merge(rgraph.op.userOptions, { onComplete: function() { cleanupGraph(); colorEdges(); }}));
 		}
 	}
 }
