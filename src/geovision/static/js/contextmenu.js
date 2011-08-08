@@ -41,7 +41,6 @@ function initContextMenu()
 			'n_tagsubnodes': function() { rgraph.op.tagSubnodes(currentNode)},
 			'n_tagsubgraph': function() { rgraph.op.tagSubgraph(currentNode)},
 			'n_untagsubgraph': function() { untagSubgraph(currentNode)},
-			'n_tagpath': function() { console.log(checkRootTagpath(currentNode))},
 			'n_en_names': function() { $.getJSON('/enzyme_data', { id: currentNode.id }, showEnzymeData); },
 			'n_en_brendalink': function() { window.open('http://www.brenda-enzymes.org/php/result_flat.php4?ecno=' + currentNode.id); },
 			'n_en_kegglink': function() { window.open('http://www.genome.jp/dbget-bin/www_bget?ec:' + currentNode.id); },

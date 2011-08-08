@@ -10,6 +10,10 @@ $('#saveGraph').submit(function(e) {
 	$('#saveGraphStatus').text('Saving...');
 	return false;
 });
+$('#undo').click(function(e) {
+	e.preventDefault();
+	doUndo();
+});
 });
 
 function addSavedViewToList(id, name)
@@ -24,14 +28,16 @@ var MAX_UNDO = 10;
 var undoStates = [];
 function saveUndoState()
 {
-	undoStates.push(rgraph.toJSON('graph'));
+	// $.extend is used to deep copy the array because JIT doesn't >:|
+	undoStates.push({ graph: $.extend(true, [], rgraph.toJSON('graph')), root: rgraph.root.id});
 	if(undoStates.length > MAX_UNDO)
 		undoStates.shift();
 }
+
 function doUndo()
 {
 	if(undoStates.length == 0)
 		return;
 	var oldState = undoStates.pop();
-	rgraph.op.morph(oldState, rgraph.op.userOptions);
+	rgraph.op.morph(oldState.graph, $jit.util.merge(rgraph.op.userOptions, { id: oldState.root, onComplete: function() { /* cleanupGraph(); */colorEdges(); }}));
 }

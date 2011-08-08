@@ -1,3 +1,4 @@
+/* prepareJSON(jitJSON json) - prepare a JIT graph in JSON 'graph' form for display */ 
 function prepareJSON(json)
 {
 	for (i in json)
@@ -10,12 +11,17 @@ function prepareJSON(json)
 			data.$color = '#00FF00';
 		for(var adj in node.adjacencies)
 		{
+				// setting adj.$direction is required for making arrow tips point to the correct direction
+				// Firefox actually gets them correct completely by accident without this line.
 				node.adjacencies[adj].data.$direction = node.adjacencies[adj].nodeTo;
 		}
 	}
 	return json;
 }
-
+/* setBusy(null|string msg) - Set animation busy status
+ * If msg is a string, add a loading bar with the specified message and prevent all other operations
+ * If msg is null, disable busy state
+ */
 function setBusy(msg)
 {
 	if(msg)
@@ -31,6 +37,23 @@ function setBusy(msg)
 		busy = false;
 	}
 }
+/* cleanupGraph() - clean up the graph by removing leftover stuff
+ * (e.g. edges with $alpha 0.0) that JIT tends to leave when deleting nodes.
+ */
+function cleanupGraph()
+{
+	var toDelete = [];
+	rgraph.graph.eachNode(function(n) {
+		n.eachAdjacency(function(adj) {				
+			if(adj.data.$alpha < 0.01)
+			{
+				delete rgraph.graph.edges[adj.nodeFrom.id][adj.nodeTo.id];
+				delete rgraph.graph.edges[adj.nodeTo.id][adj.nodeFrom.id];
+			}
+		});
+	});
+}
+/* fetchJSON(JitNode node) - expand the graph at the specified node */
 function fetchJSON(node)
 {
 
