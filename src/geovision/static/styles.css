@@ -246,3 +246,6 @@ div.view{
 	border: 1px #BBBBBB solid;
 	margin: 2px;
 }
+div#samples{
+	display: none;
+}

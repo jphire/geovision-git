@@ -105,13 +105,13 @@ $(function() {
 	</td><td>
 		<input size="10" type="text" name="hits" value="{{ hits }}" />
 	</td></tr>
-	<tr><td colspan="2">
+	<tr><td colspan="2" style="text-align: center;">
 		<span id="sampleslink">Click to select samples</span><br/>
 		<span>Default: use all samples</span><br/>
 		<div id="samples">
 			<label>Samples:</label><br/>
 			{% for sample in all_samples %}
-				<input type="checkbox" name="samples" value="{{ sample }}" />{{ sample }}
+				<input type="checkbox" name="samples" value="{{ sample }}" />{{ sample }}<br/>
 			{% endfor %}
 		</div>
 	</td></tr>
