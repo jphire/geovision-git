@@ -1,10 +1,37 @@
 jQuery(function($) {
 $('#saveGraph').submit(function(e) {
 	e.preventDefault();
-	$.ajax('/save_view', { type: 'POST', data: 
-		{ name: $('#savedGraphName').val(), data: JSON.stringify(rgraph.toJSON('graph')), csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val() },
-		complete: function() { $('#saveGraphStatus').text(''); }});
+	var name = $('#savedGraphName').val();
+	$.post('/save_view', { name: name, 
+			graph: JSON.stringify(rgraph.toJSON('graph')), 
+			query: JSON.stringify($jit.util.merge(query, {'root': rgraph.root.id})), 
+			csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val() },
+		function(data) { $('#saveGraphStatus').text(''); addSavedViewToList(data, name); });
 	$('#saveGraphStatus').text('Saving...');
 	return false;
 });
 });
+
+function addSavedViewToList(id, name)
+{
+	$('#savedViews').append('<a href="/graphrefresh?open_view=' + id + '">' + name + '</a>' + 
+		' <a href="/save_view?delete=' + id + '">Delete</a>' +
+		' <a href="/export_view?type=json&id=' + id + '">Export as JSON</a>' +
+		'<br/>');
+}
+
+var MAX_UNDO = 10;
+var undoStates = [];
+function saveUndoState()
+{
+	undoStates.push(rgraph.toJSON('graph'));
+	if(undoStates.length > MAX_UNDO)
+		undoStates.shift();
+}
+function doUndo()
+{
+	if(undoStates.length == 0)
+		return;
+	var oldState = undoStates.pop();
+	rgraph.op.morph(oldState, rgraph.op.userOptions);
+}

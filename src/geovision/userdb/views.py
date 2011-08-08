@@ -10,6 +10,7 @@ from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 import json
+from userdb.models import SavedView
 
 #redirects authenticated users straight in and shows the login form for the rest
 def loginpage(request):
@@ -110,5 +111,28 @@ def savesettings(request):
 @login_required
 def save_view(request):
 	profile = request.user.get_profile()
-	profile.saved_views.create(name=request.POST['name'], data=request.POST['data'])
-	return HttpResponse('ok')
+	id_to_delete = request.GET.get('delete')
+	if id_to_delete:
+		try:
+			profile.saved_views.get(pk=id_to_delete).delete()
+		except SavedView.DoesNotExist:
+			pass
+		return HttpResponseRedirect('/graphrefresh')
+	view = profile.saved_views.create(name=request.POST['name'], graph=request.POST['graph'], query=request.POST['query'])
+	return HttpResponse(str(view.id))
+
+@login_required
+def export_view(request):
+	type = request.GET.get('type', 'json')
+	id = int(request.GET['id'])
+
+	view = request.user.get_profile().saved_views.get(pk=id)
+	graph_json = view.graph
+	content = None
+
+	if type == 'json':
+		content = graph_json
+	else:
+		content = 'Invalid "type" argument to export_view'
+
+	return HttpResponse(content, mimetype='text/plain')

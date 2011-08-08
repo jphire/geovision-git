@@ -20,7 +20,8 @@ class UserProfile(models.Model):
 class SavedView(models.Model):
 	user_profile = models.ForeignKey(UserProfile, related_name='saved_views')
 	name = models.CharField(max_length=32)
-	data = models.TextField()
+	graph = models.TextField()
+	query = models.TextField()
 
 def save_user_profile_pre_hook(sender, instance, **kwargs):
 		instance.is_superuser = instance.is_staff

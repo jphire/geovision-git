@@ -19,19 +19,9 @@ import json
 import re
 import urllib
 
-def create_json(enzyme, read, dbentry, bitscore, evalue, depth, hits, offset, samples):
-	"""
-	Returns a tuple of...
-	"""
-	return ('/graphjson?' + urllib.urlencode({ 'bitscore': bitscore, 'evalue': evalue, 'hits': hits, 'samples': samples}, doseq=True),
-					urllib.urlencode({'enzyme': enzyme or '', 'dbentry': dbentry or '', 'read': read or '', 'depth': depth, 'offset': offset}))
-
 def render(request, template, dict={}):
-	user_settings = request.user.get_profile().settings
-	if 'settingsmessage' in request.GET:
-		return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': user_settings, 'settingsmessage': request.GET['settingsmessage']})))
-	else:
-		return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': user_settings})))
+	profile = request.user.get_profile()
+	return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': profile.settings, 'saved_views': profile.saved_views.all(), 'settingsmessage': request.GET.get('settingsmessage')})))
 
 def merge_dict(d1, d2):
 	"""
@@ -50,11 +40,14 @@ def graphjson(request):
 	for (k,v) in request.GET.items():
 		p[k] = v
 			
+	view_id = request.GET.get('view_id')
+	if view_id:
+		return HttpResponse(request.user.get_profile().saved_views.get(pk=int(view_id)).graph, mimetype='text/plain')
 	for k in ('enzyme', 'read', 'dbentry'):
 		if p[k] == '':
 			p[k] = None
 
-	p['samples'] = request.GET.getlist('samples')
+	p['samples'] = request.GET.getlist('samples[]')
 	try:
 		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), float(p['offset']), p['samples'])
 	except Exception as e:
@@ -64,45 +57,41 @@ def graphjson(request):
 @login_required
 def graphrefresh(request): #make a new JSon, set defaults if needed
 	def lookup_enzyme(enzyme):
-		match = re.search("\\(([-0-9.]+)\\)", enzyme) # XXX: queries of form 'asdasdasd (1.2.3.4) return 1.2.3.4 with all values of asdasdasd
+		match = re.search('^\s*(.*?)\s*\(([-0-9.]+)\)\s*$', enzyme)
+		enzyme_name = None
 		if match:
-			enzyme = match.group(1)
+			enzyme = match.group(2)
+			enzyme_name = match.group(1)
 
-		ec_match = EnzymeName.objects.filter(ec_number=enzyme).exists()
-		if ec_match:
-			return enzyme
+		ec_match = EnzymeName.objects.filter(ec_number=enzyme)
+		if enzyme_name: ec_match.filter(enzyme_name=enzyme_name)
+		if ec_match.exists():
+			return [enzyme]
 		else:
 			ec_numbers = EnzymeName.objects.filter(enzyme_name__iexact=enzyme)
-			num_results = len(ec_numbers)
-			if num_results == 0:
-				return None
-			elif num_results == 1:
-				return enzyme.ec_number
-			else:
-				return ec_numbers
+			return ec_numbers
 
 	def get_samples():
 		samples = []
 		sample_collection = Sample.objects.all()
 		for sample in sample_collection:
 			samples.append(sample.sample_id)
-#		samples.append('ABLU')
-#		samples.append('OLKR49')
 		return samples
 
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0}
+	view_id = request.GET.get('open_view')
+	if view_id:
+		saved_view = request.user.get_profile().saved_views.defer('graph').get(pk=view_id)
+		condition_dict['view_id'] = view_id
+		return render(request, 'graphviz.html', merge_dict(condition_dict, json.loads(saved_view.query)))
+
 	for k in condition_dict.keys():
 		try:
 			if request.POST[k] not in ('', []):
 				condition_dict[k] = request.POST[k]
 		except KeyError:
 			pass
-	bitscore = float(condition_dict['bitscore'])
-	evalue = float(condition_dict['evalue'])
-	depth = int(condition_dict['depth'])
-	hits = int(condition_dict['hits'])
-	offset = int(condition_dict['offset'])
-	samples = request.POST.getlist('samples')
+	samples = request.POST.getlist('samples[]')
 	condition_dict['samples'] = samples
 	all_samples = get_samples()
 	condition_dict['all_samples'] = all_samples
@@ -111,34 +100,21 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 		samples = all_samples
 		condition_dict['samples'] = all_samples
 
-	json_url = ('', '')
 	search_fields = filter(lambda k: condition_dict[k] != '', ['enzyme', 'read', 'dbentry'])
 	if len(search_fields) > 1:
 		return render(request, 'graphviz.html', merge_dict({
 			'error_message': "Error: You can only enter one of the following: Enzyme, DB entry id, Read id.",
 		}, condition_dict))
-	if condition_dict['dbentry'] != '':
-		json_url = create_json(None, None, condition_dict['dbentry'], bitscore, evalue, depth, hits, offset, samples)
 
 	elif condition_dict['enzyme'] != '':
-		result = lookup_enzyme(condition_dict['enzyme'])
-		if isinstance(result, basestring):
-			json_url = create_json(result, None, None, bitscore, evalue, depth, hits, offset, samples)
+		if len(result) == 1:
+			condition_dict['enzyme'] = result[0] if isinstance(result[0], basestring) else result[0].ec_number
 		elif result == None:
 			return render(request, 'graphviz.html', merge_dict({'error_message': 'Enzyme not found'}, condition_dict))
 		else:
 			return render(request, 'graphviz.html', merge_dict(condition_dict, {'enzyme_list': result}))
 
-	elif condition_dict['read'] != '':
-		json_url = create_json(None, condition_dict['read'], None, bitscore, evalue, depth, hits, offset, samples)
-
-	if (json_url == 'error_no_children'):
-		return render(request, 'graphviz.html', merge_dict({
-			'error_message': "Error: No data found, input different values.",
-		}, condition_dict))
-	
-	(json_base_url, json_query_url_part) = json_url
-	return render(request, "graphviz.html", merge_dict(condition_dict, {'json_base_url': json_base_url, 'json_query_url_part': json_query_url_part}))
+	return render(request, "graphviz.html", condition_dict)
 
 @login_required
 def enzyme_autocompletion(request):
@@ -146,12 +122,8 @@ def enzyme_autocompletion(request):
 		search = request.GET['term']
 	except KeyError:
 		return HttpResponse('')
-	try:
-		limit = request.GET['limit']
-	except KeyError:
-		limit = 10
 
-	matches = EnzymeName.objects.filter(enzyme_name__istartswith=search).order_by('enzyme_name')[:limit]
+	matches = EnzymeName.objects.filter(enzyme_name__istartswith=search).order_by('enzyme_name')[:10]
 	return HttpResponse(json.dumps([{'label': '%s (%s)' % (en.enzyme_name, en.ec_number)} for en in matches]), mimetype='text/plain')
 
 @login_required
@@ -160,7 +132,7 @@ def show_alignment(request):
 		searchterm = request.GET['id']
 	except KeyError:
 		return HttpResponse('')
-	data = Blast.objects.get(id = searchterm)
+	data = Blast.objects.get(id=searchterm)
 	return HttpResponse(json.dumps({'readseq': '%s' % (data.read_seq), 'dbseq': '%s' % (data.db_seq)}), mimetype='text/plain')
 
 @login_required
@@ -169,11 +141,9 @@ def enzyme_data(request):
 		searchterm = request.GET['id']
 	except KeyError:
 		return HttpResponse('')
-
 	enzyme = Enzyme.objects.get(pk=searchterm)
 
 	pathways = map(lambda x: {'id': x.id, 'name': x.name, 'enzymes': map(lambda y: y.pk, x.enzymes.all())}, enzyme.pathways.all())
-	reactions = map(lambda x: {'id': x.id, 'name': x.name}, enzyme.reactions.all())
 	names = map(lambda x: x.enzyme_name, EnzymeName.objects.filter(ec_number=searchterm).order_by('id'))
 
-	return HttpResponse(json.dumps({'id': searchterm, 'names': names, 'pathways': pathways, 'reactions': reactions}), mimetype='text/plain')
+	return HttpResponse(json.dumps({'id': searchterm, 'names': names, 'pathways': pathways}), mimetype='text/plain')
