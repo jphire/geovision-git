@@ -110,9 +110,11 @@ $(function() {
 		<span>Default: use all samples</span><br/>
 		<div id="samples">
 			<label>Samples:</label><br/>
+			<div id="samplelist">
 			{% for sample in all_samples %}
-				<input type="checkbox" name="samples" value="{{ sample }}" />{{ sample }}<br/>
+				<input type="checkbox" name="samples" value="{{ sample }}" /> {{ sample }}<br/>
 			{% endfor %}
+			</div>
 		</div>
 	</td></tr>
 	<tr><td colspan="2" style="text-align: center;">

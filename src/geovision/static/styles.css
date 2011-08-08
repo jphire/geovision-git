@@ -248,4 +248,8 @@ div.view{
 }
 div#samples{
 	display: none;
+	text-align: center;
+}
+div#samplelist{
+	text-align: left;
 }
