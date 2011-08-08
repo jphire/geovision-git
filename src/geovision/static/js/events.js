@@ -16,6 +16,13 @@ Config.Events =
 			
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
+		var level = 8;
+		computeLevels(rgraph.graph, rgraph.graph.root, 0);
+		$jit.Graph.Util.each(rgraph.graph, function(node){
+			if(node._depth > level)
+				level = node._depth;
+		})
+		rgraph.canvas.config.background.numberOfCircles = level + 2;
 
 		fetchJSON(node, true);
 		//show clicked node's info in the right column
