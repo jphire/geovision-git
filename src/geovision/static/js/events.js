@@ -26,6 +26,7 @@ Config.Events =
 
 		fetchJSON(node, true);
 		rgraph.canvas.translate(0,0);
+		rgraph.refresh();
 		
 		//show clicked node's info in the right column
 		/*
