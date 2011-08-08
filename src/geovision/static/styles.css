@@ -218,6 +218,10 @@ span#settingslink{
 	text-decoration: underline;
 	cursor: pointer;
 }
+span#sampleslink{
+	text-decoration: underline;
+	cursor: pointer;
+}
 div#settings{
 	display:none;
 }

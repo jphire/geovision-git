@@ -1,6 +1,7 @@
 var opened = false;
 var settingsopen = false;
 var helpopen = false;
+var samplesopen = false;
 
 function openSearch()
 {
@@ -30,8 +31,18 @@ function closeSearch(e)
 	}
 }
 jQuery(function($) {
-/*! Function to open the graph-option-navigation and the alignment and other items with a nice animations.*/
+/*! Functions to open the graph-option-navigation and the alignment and other items with a nice animations.*/
 
+	$('#sampleslink').click(function() {
+		if (!samplesopen){
+			$('#samples').slideDown();
+			samplesopen = true;
+		}
+		else{
+			$('#samples').slideUp();
+			samplesopen = false;
+		}
+	})
 	$('#settingslink').click(function() {
 		if (!settingsopen){
 			$('#settings').slideDown();

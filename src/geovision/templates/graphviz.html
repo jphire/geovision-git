@@ -106,15 +106,14 @@ $(function() {
 		<input size="10" type="text" name="hits" value="{{ hits }}" />
 	</td></tr>
 	<tr><td>
+		<span id="sampleslink">Click to select samples</span><br/>
+		<span>Default: use all samples</span><br/>
+		<div id="samples">
 			<label>Samples:</label><br/>
-			<label>(Ctrl+click to<br/> select multiple)</label>
-		</td>
-		<td>
-			<select multiple="multiple" name="sample">
-				{% for sample in all_samples %}
-					<option value="{{ sample }}">{{ sample }}</option>
-				{% endfor %}
-			</select>
+			{% for sample in all_samples %}
+				<input type="checkbox" name="samples" value="{{ sample }}" />{{ sample }}
+			{% endfor %}
+		</div>
 	</td></tr>
 	<tr><td colspan="2">
 		<input id="graphrefresh" type="submit" value="Refresh page" size="10"/>
