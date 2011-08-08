@@ -23,7 +23,7 @@ Config.Events =
 				level = node._depth;
 		})
 		rgraph.canvas.config.background.numberOfCircles = level + 2;
-		rgraph.refresh();
+		rgraph.plot();
 
 		fetchJSON(node, true);
 		//show clicked node's info in the right column
