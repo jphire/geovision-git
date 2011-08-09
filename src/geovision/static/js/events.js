@@ -17,7 +17,6 @@ Config.Events =
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
 		
-		
 		fetchJSON(node, true);
 		
 		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
@@ -25,26 +24,9 @@ Config.Events =
 			if(node._depth > max_level)
 				max_level = node._depth;
 		})
-		rgraph.config.background.numberOfCircles = max_level+2;
-//		rgraph.canvas.canvases[1].plot();
-//		rgraph.refresh();
-		var ctx = rgraph.canvas.getCtx();
-  	    var n = max_level+2,
-        rho = rgraph.config.levelDistance;
-		for(var i=1; i<=n; i++) {
-			ctx.beginPath();
-			ctx.arc(0, 0, rho * i, 0, 2 * Math.PI, false);
-			ctx.stroke();
-			ctx.closePath();
-		}
-		rgraph.refresh();
-
-		//show clicked node's info in the right column
-		/*
-		$jit.id('inner-details').innerHTML = ""
-		$jit.id('inner-details').innerHTML += "<b>" + node.id + "</b><br/>"
-		$jit.id('inner-details').innerHTML += node.data.description + "<br/>"
-		*/
+		rgraph.canvas.canvases[1].opt.numberOfCircles = max_level +2;
+		rgraph.canvas.canvases[1].plot();
+		
 		if(node.data.type == 'enzyme'){
 			$.getJSON('/enzyme_data', { id: node.id }, showEnzymeData);
 		}
