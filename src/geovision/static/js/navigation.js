@@ -42,9 +42,22 @@ function deleteUntagged(bitscoreLimit) {
 	while (nodesArray.length > 1) {
 		var node = nodesArray.pop();
 		if (!node.traversalTag && (!bitscoreLimit || node.data.bitscore < bitscoreLimit)) {
-			rgraph.op.removeNode(node.id, $jit.util.merge(rgraph.op.userOptions, { onComplete: function() { cleanupGraph(); colorEdges(); }}));
+			rgraph.op.removeNode(node.id, $jit.util.merge(rgraph.op.userOptions, { onComplete: function() { cleanupGraph(); colorEdges(); updateBitscores; }}));
 		}
 	}
+}
+
+function updateBitscores() {
+	rgraph.graph.eachNode(function(node) {
+		var bitscore = 0;
+		node.eachAdjacency(function(edge) {
+			console.log(edge);
+			if (edge.data.bitscore > bitscore) {
+				bitscore = edge.data.bitscore;
+			}
+		});
+		node.data.bitscore = bitscore;
+	});
 }
 
 function addTemporaryTags()
