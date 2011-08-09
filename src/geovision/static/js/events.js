@@ -19,17 +19,15 @@ Config.Events =
 		
 //		rgraph.canvas.canvases[1].plot();
 		fetchJSON(node, true);
-		var level = 2;
+		
 		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 		$jit.Graph.Util.each(rgraph.graph, function(node){
-			if(node._depth > level)
-				level = node._depth;
+			if(node._depth > max_level)
+				max_level = node._depth;
 		})
-		rgraph.canvas.config.background.numberOfCircles = level+2;
-		var viz = new $jit.Viz({
-			'injectInto':'infovis',
-			'background':{'numberOfCircles':level+2, 'CanvasStyles': { strokeStyle: '#555' }}
-		});
+		rgraph.config.background.numberOfCircles = max_level+2;
+		rgraph = new RGraph(Config);
+		rgraph.loadJSON(prepareJSON(json), query.root || 0);
 		rgraph.refresh();
 		//show clicked node's info in the right column
 		/*
