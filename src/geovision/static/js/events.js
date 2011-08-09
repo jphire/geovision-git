@@ -27,9 +27,9 @@ Config.Events =
 		})
 		rgraph.canvas.config.background.numberOfCircles = level+2;
 		var viz = new $jit.Viz({
-			injectinto:'infovis',
-			background:{numberOfCircles:level+2, CanvasStyles: { strokeStyle: '#555' }}
-		})
+			'injectInto':'infovis',
+			'background':{'numberOfCircles':level+2, 'CanvasStyles': { strokeStyle: '#555' }}
+		});
 		rgraph.refresh();
 		//show clicked node's info in the right column
 		/*
