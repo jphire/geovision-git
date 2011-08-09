@@ -22,10 +22,6 @@ def loginpage(request):
 def register(request):
 	return render_to_response("register.html", { }, context_instance = RequestContext(request) )
 
-#shows the help page
-def show_help(request):
-	return render_to_response("help.html", { }, context_instance=RequestContext(request) )
-
 #registers a new user, is called from the registering page
 def registering(request):
 	datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
@@ -76,10 +72,6 @@ def logging_in(request):
 def logging_out(request):
 	logout(request)
 	return redirect('/')
-
-#shows the about page
-def about(request):
-	return render_to_response("about.html", { }, context_instance=RequestContext(request) )
 
 #saves the users settings
 @login_required
