@@ -89,7 +89,7 @@ def savesettings(request):
 		duration = request.POST['duration']
 		canvas_x = request.POST['canvas_x']
 		canvas_y = request.POST['canvas_y']
-		if 'savesettings' in request.POST: #and numericsMakeSense:
+		if 'defaultsettings' not in request.POST:
 			type = ''
 			transition = ''
 			if request.POST['group1'] == 'animations_off':
@@ -103,14 +103,12 @@ def savesettings(request):
 			#makes a json out of the settings and saves it
 			profile.settings = settings
 			profile.save()
-			return HttpResponseRedirect('/graphrefresh?settingsmessage = settings saved')
-		elif 'defaultsettings' in request.POST:
+			return HttpResponse('Settings saved', mimetype='text/plain')
+		else:
 			profile.settings = '{}'
 			profile.save()
-			return HttpResponseRedirect('/graphrefresh?settingsmessage = defaults restored')
-		else:
-			return HttpResponseRedirect('/graphrefresh?settingsmessage=error')
-		#in all cases, redirects back to the graph
+			return HttpResponse('Restored defaults', mimetype='text/plain')
+
 #saves the graph the user was looking at
 @login_required
 def save_view(request):
