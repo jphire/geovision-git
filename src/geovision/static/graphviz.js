@@ -52,6 +52,7 @@ function fetchJSON(node)
 				rgraph.op.sum(prepareJSON(newdata), rgraph.op.userOptions);
 			}
 		});
+		return newdata;
 }
 
 function initGraph()

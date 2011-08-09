@@ -37,8 +37,6 @@ settings.animationsettings.onComplete = function() { setBusy(false); };
 settings.animationsettings.onMerge = colorEdges;
 
 var max_level = 6;
-var new_max;
-
 
 var Config = 
 {
