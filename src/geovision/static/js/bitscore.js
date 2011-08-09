@@ -1,7 +1,37 @@
 /* Bitscore filtering & coloring related stuff */
+/** http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+ * Converts an HSV color value to RGB. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+ * Assumes h, s, and v are contained in the set [0, 1] and
+ * returns r, g, and b in the set [0, 255].
+ *
+ * @param   Number  h       The hue
+ * @param   Number  s       The saturation
+ * @param   Number  v       The value
+ * @return  Array           The RGB representation
+ */
+function hsvToRgb(h, s, v){
+    var r, g, b;
+
+    var i = Math.floor(h * 6);
+    var f = h * 6 - i;
+    var p = v * (1 - s);
+    var q = v * (1 - f * s);
+    var t = v * (1 - (1 - f) * s);
+
+    switch(i % 6){
+        case 0: r = v, g = t, b = p; break;
+        case 1: r = q, g = v, b = p; break;
+        case 2: r = p, g = v, b = t; break;
+        case 3: r = p, g = q, b = v; break;
+        case 4: r = t, g = p, b = v; break;
+        case 5: r = v, g = p, b = q; break;
+    }
+
+    return [r * 255, g * 255, b * 255];
+}
 var bitscoreColorMin, bitscoreColorMax;
 function colorEdges(){
-	console.log('color');
 	var min = Math.min, max = Math.max;
 	var maxScore = 0;
 	var minScore = 100000;
@@ -33,8 +63,10 @@ function colorEdges(){
 			if(bitscore < bitscoreColorMin)
 				return '#ff0000';
 		}
-		grncol = (minScore == maxScore) ? 255 : Math.floor((1.0 * (bitscore - minScore) / (maxScore - minScore)) * 255);
-		return $jit.util.rgbToHex([255 - grncol, grncol, 0]);
+		// Use the HSV color model for interpolating between colors. Red is 0 degrees and green 120 degrees == 1/3: of a circle
+		var hue = (minScore == maxScore) ? 1.0/3.0 : (1.0/3.0 * (bitscore - minScore) / (maxScore - minScore));
+		var rgb = hsvToRgb(hue, 1.0, 1.0);
+		return $jit.util.rgbToHex([Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2])]);
 	}
 	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
 		$jit.Graph.Util.eachAdjacency(node, function(adj) {
@@ -58,36 +90,6 @@ function filter(bitscore, masterbitscore) {
 		saveUndoState();
 		rgraph.op.deleteUntagged(bitscore);
 		return false;
-		$('#load').html("Filtering..."); /*tell the user its loading*/
-		/*contract everything but the root. Uses its own contract, not the main one*/
-		rgraph.op.filterContract(rgraph.graph.getNode(rgraph.root), {type: "replot"}); 
-
-		/*go through everything recursively and show nodes that have enough bitscore or are tagged*/
-		rgraph.graph.getNode(rgraph.root).eachAdjacency(function helper(edge){
-			var target;
-			if (edge.nodeTo._depth > edge.nodeFrom._depth) {
-				target = edge.nodeTo;
-			}
-			else {
-				target = edge.nodeFrom;
-			}
-			if (typeof(edge.data.bitscore) == "undefined" || edge.data.bitscore >= bitscore || target.traversalTag){
-				var node = edge.nodeTo;
-				node.ignore = false;
-				node.setData('alpha', node.Node.alpha, "current");
-				node.eachAdjacency(function(edgenow){
-					if (edgenow.nodeTo._depth > edgenow.nodeFrom._depth && edgenow.nodeTo != edge.nodeTo){
-						helper(edgenow);
-					}
-				})
-			}
-		})
-		/*refresh the graph. Should this be animated?*/
-		rgraph.op.viz.refresh();
-
-		$('#load').html(""); /*take loading away*/
-		$('#filtererror').html(""); /*did not get an error*/
-		return;
 	}
 }
 /*special version of contract function used only by the filter*/

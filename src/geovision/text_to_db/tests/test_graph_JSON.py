@@ -5,7 +5,8 @@ import json
 def create_blast(**kwargs):
 	kwargs['read'] = Read.objects.get(pk=kwargs['read'])
 	kwargs['db_entry'] = DbEntry.objects.get(pk=kwargs['db_entry'])
-	Blast.objects.create(**kwargs)
+	normal_fields = ('read', 'db_entry', 'database_name', 'sample', 'error_value', 'bitscore')
+	Blast.objects.create(**dict([(k, v) for (k, v) in kwargs.iteritems() if k in normal_fields]))
 
 class Test_graph_JSONTestCase(unittest.TestCase):
 
@@ -74,16 +75,13 @@ class Test_graph_JSONTestCase(unittest.TestCase):
 		self.assertEquals(e.dict["data"]["read"], "R1")
 		self.assertEquals(e.dict["data"]["database_name"], "uniprot")
 		self.assertEquals(e.dict["data"]["db_entry"], "DB1")
-		self.assertEquals(e.dict["data"]["length"], 20)
 		self.assertAlmostEquals(e.dict["data"]["error_value"], 0.005)
 		self.assertEquals(e.dict["data"]["bitscore"], 200)
-#		self.assertEquals(e.dict["data"]["$color"], "#ff0000")
-#		self.assertEquals(e.dict["data"]["$type"], "arrow")
 
 	def test_edge_repr_1(self):
 		b = Blast.objects.all()[:1]
 		e = Edge(NodeId("R1", "read"), b[0])
-		self.assertEquals(e.__repr__(), '{"nodeTo": "R1", "data": {"error_value": 0.0050000000000000001, "bitscore": 200.0, "read": "R1", "database_name": "uniprot", "length": 20, "db_entry": "DB1", "blast_id": %d}}' % b[0].id)
+		self.assertEquals(e.__repr__(), '{"nodeTo": "R1", "data": {"error_value": 0.0050000000000000001, "bitscore": 200.0, "read": "R1", "database_name": "uniprot", "db_entry": "DB1", "blast_id": %d}}' % b[0].id)
 
 	def test_nodeid(self):
 		a = NodeId("12345", "test")
