@@ -26,8 +26,19 @@ Config.Events =
 				max_level = node._depth;
 		})
 		rgraph.config.background.numberOfCircles = max_level+2;
-		rgraph.canvas.canvases[1].plot();
+//		rgraph.canvas.canvases[1].plot();
+//		rgraph.refresh();
+		var ctx = rgraph.canvas.getCtx();
+  	    var n = max_level+2,
+        rho = rgraph.config.levelDistance;
+		for(var i=1; i<=n; i++) {
+			ctx.beginPath();
+			ctx.arc(0, 0, rho * i, 0, 2 * Math.PI, false);
+			ctx.stroke();
+			ctx.closePath();
+		}
 		rgraph.refresh();
+
 		//show clicked node's info in the right column
 		/*
 		$jit.id('inner-details').innerHTML = ""
