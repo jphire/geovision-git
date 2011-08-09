@@ -79,32 +79,32 @@ function fetchJSON(node)
 function initGraph()
 {
 	$.getJSON('/graphjson', query, function(json) {
-			jQuery('#loader').fadeOut();
-			if(!json || json.error_message)
-			{
-				if(json)
-					$("#navierror").text(json.error_message);
-				openSearch();
-				return;
-			}
-			initContextMenu();
-			$('#infovis').disableSelection();
+		jQuery('#loader').fadeOut();
+		if(!json || json.error_message)
+		{
+			if(json)
+				$("#navierror").text(json.error_message);
+			openSearch();
+			return;
+		}
+		initContextMenu();
+		$('#infovis').disableSelection();
 
-			rgraph = new RGraph(Config);
-			rgraph.loadJSON(prepareJSON(json), query.root || 0);
-			delete query.view_id
-			delete query.root
+		rgraph = new RGraph(Config);
+		rgraph.loadJSON(prepareJSON(json), query.root || 0);
+		delete query.view_id;
+		delete query.root;
 
-			colorEdges();
-			rgraph.refresh();
-			rgraph.op.userOptions = settings.animationsettings;
+		colorEdges();
+		rgraph.refresh();
+		rgraph.op.userOptions = settings.animationsettings;
 
-			rgraph.op.filterContract = filterContract;
-			rgraph.op.tagParents = tagParents;
-			rgraph.op.tagSubgraph = tagSubgraph;
-			rgraph.op.tagSubnodes = tagSubnodes;
-			rgraph.op.deleteUntagged = deleteUntagged;
-		});
+		rgraph.op.filterContract = filterContract;
+		rgraph.op.tagParents = tagParents;
+		rgraph.op.tagSubgraph = tagSubgraph;
+		rgraph.op.tagSubnodes = tagSubnodes;
+		rgraph.op.deleteUntagged = deleteUntagged;
+	});
 }
 
 

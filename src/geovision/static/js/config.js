@@ -35,16 +35,20 @@ if(subtype)
 settings.animationsettings.transition = type;
 settings.animationsettings.onComplete = function() { setBusy(false); };
 settings.animationsettings.onMerge = colorEdges;
+
+var max_level = 2;
+
 var Config = 
 {
 		//Where to append the visualization
 		injectInto: 'infovis',
+		
 		//set canvas size
 		width: settings.settings.canvaswidth,
 		height:settings.settings.canvasheight,
 		//Optional: create a background canvas that plots
 		//concentric circles.
-		background: { CanvasStyles: { strokeStyle: '#555' } },
+		background: { numberOfCircles: max_level + 2, CanvasStyles: { strokeStyle: '#555' } },
 		//set distance for nodes on different levels
 		levelDistance: 100,
 		//set transformation speed
