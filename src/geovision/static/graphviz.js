@@ -37,11 +37,10 @@ function fetchJSON(node)
 	setBusy('Expanding');
 	var args = $jit.util.merge(query, { read: '', dbentry: '', enzyme: '', depth: 1, offset: node.data.min_bitscore});
 	args[node.data.type] = node.id;
-	var ndata;
+
 	$.getJSON('/graphjson', args,
 		function(newdata)
 		{
-			ndata = newdata;
 			if(newdata.error_message)
 			{
 				console.log('Server error while loading JSON', newdata.error_message);
@@ -54,7 +53,6 @@ function fetchJSON(node)
 				rgraph.op.sum(prepareJSON(newdata), rgraph.op.userOptions);
 			}
 		});
-		return ndata;
 }
 
 function initGraph()
