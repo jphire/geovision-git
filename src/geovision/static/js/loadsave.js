@@ -24,7 +24,7 @@ function addSavedViewToList(id, name)
 		'</span><br/>');
 }
 
-var MAX_UNDO = 10;
+var MAX_UNDO = 20;
 var undoStates = [];
 function saveUndoState()
 {
@@ -32,6 +32,7 @@ function saveUndoState()
 	undoStates.push({ graph: $.extend(true, [], rgraph.toJSON('graph')), root: rgraph.root.id});
 	if(undoStates.length > MAX_UNDO)
 		undoStates.shift();
+	$('#undo').removeAttr('disabled');
 }
 
 function doUndo()
@@ -39,5 +40,8 @@ function doUndo()
 	if(undoStates.length == 0)
 		return;
 	var oldState = undoStates.pop();
-	rgraph.op.morph(oldState.graph, $jit.util.merge(rgraph.op.userOptions, { id: oldState.root, onComplete: function() { /* cleanupGraph(); */colorEdges(); }}));
+	rgraph.op.morph(oldState.graph, $jit.util.merge(rgraph.op.userOptions, 
+		{ id: oldState.root, onComplete: function() { /* cleanupGraph(); */colorEdges(); }}));
+	if(undoStates.length == 0)
+		$('#undo').attr('disabled', 'disabled');
 }
