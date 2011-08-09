@@ -35,7 +35,7 @@ def merge_dict(d1, d2):
 #Add '@login_required' to all these!
 @login_required
 def graphjson(request):
-	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset': '0', 'samples':[]}
+	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset[]': [], 'samples':[]}
 
 	for (k,v) in request.GET.items():
 		p[k] = v
@@ -48,8 +48,9 @@ def graphjson(request):
 			p[k] = None
 
 	p['samples'] = request.GET.getlist('samples[]')
+	p['offset'] = request.GET.getlist('offset[]')
 	try:
-		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), float(p['offset']), p['samples'])
+		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), p['offset'], p['samples'])
 	except Exception as e:
 		out = json.dumps({'error_message': str(e)})
 	if request.GET.get('debug', False): # if the GET parameter 'debug' is given, output html to show django debug toolbar
@@ -81,7 +82,7 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			samples.append(sample.sample_id)
 		return samples
 
-	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': 0}
+	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': [] }
 	view_id = request.GET.get('open_view')
 	if view_id:
 		saved_view = request.user.get_profile().saved_views.defer('graph').get(pk=view_id)

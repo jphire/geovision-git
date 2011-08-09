@@ -53,7 +53,11 @@ function fetchJSON(node)
 {
 
 			setBusy('Expanding');
-			var args = $jit.util.merge(query, { read: '', dbentry: '', enzyme: '', depth: 1, offset: node.data.min_bitscore});
+			var offset = [];
+			node.eachAdjacency(function(adj) {
+				offset.push(adj.nodeTo.id);
+			});
+			var args = $jit.util.merge(query, { read: '', dbentry: '', enzyme: '', depth: 1, offset: offset});
 			args[node.data.type] = node.id;
 			$.getJSON('/graphjson', args,
 				function(newdata)
