@@ -134,7 +134,7 @@ class QueryToJSON:
 	"""
 	def __init__(self, enzyme=None, db_entry=None, read=None,
 				e_value_limit=1, bitscore_limit=0, depth_limit=2,
-				max_amount=5, offset=0, samples=[]):
+				max_amount=5, offset=[], samples=[]):
 		self.enzyme = enzyme
 		self.db_entry = db_entry
 		self.read = read
