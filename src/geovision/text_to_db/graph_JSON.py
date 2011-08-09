@@ -240,20 +240,26 @@ class QueryToJSON:
 
 		if param.type == "db_entry":
 			query = query.filter(db_entry=param.dict["id"]).select_related('read').defer(*('read__' + x for x in Read.deferred_fields))
-			query = query.filter(read__sample__in=self.samples)
+			query = query.filter(sample__in=self.samples)
+			if len(self.offset) != 0:
+				query = query.filter(~Q(read__in=self.offset))
+
 		elif param.type == "read":
 			query = query.filter(read=param.dict["id"]).select_related('db_entry').defer(*('db_entry__' + x for x in DbEntry.deferred_fields))
+			if len(self.offset) != 0:
+				query = query.filter(~Q(db_entry__in=self.offset))
 
 		elif param.type == "enzyme":
 			query = BlastEcs.objects.filter(ec=param.dict["id"]).values('db_entry')
+			query = query.filter(sample__in=self.samples)
+			if len(self.offset) != 0:
+				query = query.filter(~Q(db_entry__in=self.offset))
 		else:
 			raise RuntimeError('bad param type "%s"' % (param.type,))
 		
 		query = query.filter(error_value__lte = self.e_value_limit)
 		query = query.filter(bitscore__gt = self.bitscore_limit)
 		query = query.order_by('-bitscore')
-		if self.offset != 0:
-				query = query.filter(bitscore__lt = self.offset)
 
 		if param.type == 'enzyme':
 			query = query.annotate(bitscore=Max('bitscore'), error_value=Min('error_value'))
