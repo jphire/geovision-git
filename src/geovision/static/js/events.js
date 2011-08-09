@@ -17,7 +17,7 @@ Config.Events =
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
 		
-//		rgraph.canvas.canvases[1].plot();
+		
 		fetchJSON(node, true);
 		
 		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
@@ -26,8 +26,7 @@ Config.Events =
 				max_level = node._depth;
 		})
 		rgraph.config.background.numberOfCircles = max_level+2;
-		rgraph = new RGraph(Config);
-		rgraph.loadJSON(prepareJSON(json), query.root || 0);
+		rgraph.canvas.canvases[1].plot();
 		rgraph.refresh();
 		//show clicked node's info in the right column
 		/*
