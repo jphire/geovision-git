@@ -26,7 +26,10 @@ Config.Events =
 				level = node._depth;
 		})
 		rgraph.canvas.config.background.numberOfCircles = level+2;
-		rgraph.loadJSON(rgraph.toJSON('graph'));
+		var viz = new $jit.Viz({
+			injectinto:'infovis',
+			background:{numberOfCircles:level+2, CanvasStyles: { strokeStyle: '#555' }}
+		})
 		rgraph.refresh();
 		//show clicked node's info in the right column
 		/*
