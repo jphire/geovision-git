@@ -14,6 +14,16 @@ $('#undo').click(function(e) {
 	e.preventDefault();
 	doUndo();
 });
+$('#settingsform, #defaultsettingsForm').submit(function(e) {
+	console.log(e);
+	e.preventDefault();
+	console.log($(this).serialize());
+	$.post('/savesettings', $(this).serialize(), function (data) {
+		$('#settingmessage').html(data);
+		console.log(data);
+	});
+	return false;
+});
 });
 
 function addSavedViewToList(id, name)

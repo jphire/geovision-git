@@ -212,9 +212,9 @@ $(function() {
 					<span id="saveGraphStatus"></span>
 				</form>
 				<br/>
-				<span id="settingslink">Your settings</span>  {%if settingsmessage%}<span style="color:red;" id="settingmessage">{{ settingsmessage }}</span>{%endif%}<br/>
+				<span id="settingslink">Your settings</span><span style="color:red;" id="settingmessage"></span><br/>
 				<div id="settings">
-					<form id="settingsform" action="savesettings" method="post">
+					<form id="settingsform" action="/" method="post">
 						{% csrf_token %}
 						<label>Canvas size:</label><br/>
 						<input type="text" size="6" name="canvas_x" id="canvas_x" value=""/> x <input type="text" size="6" name="canvas_y" id="canvas_y" value=""/><br/>
@@ -244,8 +244,12 @@ $(function() {
 							<option value="easeOut">Ease out</option>
 							<option value="easeInOut">Ease in and out</option>
 						</select><br/>
-						<p><strong>Warning</strong>: changing settings refreshes the page</p>
+						<p><strong>Note</strong>: changes will be in effect after reloading the page</p>
 						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" style="margin-bottom:4px;"/><br/>
+					</form>
+					<form id="defaultsettingsForm" method="post" action="/">
+						{{ csrf_token }}
+						<input type="hidden" name="defaultsettings" value="true"/>
 						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults"/>
 					</form>
 				</div>
