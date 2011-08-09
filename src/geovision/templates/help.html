@@ -6,10 +6,17 @@
 		<p>Help topics:</p>
 		<ul>
 			<li><a href="#login">Logging in</a></li>
+			<li><a href="#logout">Logging out</a></li>
 			<li><a href="#newgraph">Getting a new graph</a></li>
 			<li><a href="#savedviews">Saved views</a></li>
 			<li><a href="#navigating">Navigating the graph</a></li>
+			<li><a href="#tooltips">Tooltips</a></li>
+			<li><a href="#tagging">Tagging the graph</a></li>
+			<li><a href="#undo">Undoing changes</a></li>
+			<li><a href="#info">Extra info and other databases</a></li>
+			<li><a href="#colors">Colors of the edges</a></li>
 			<li><a href="#alignments">Alignments</a></li>
+			<li><a href="#settings">Settings</a></li>
 		</ul>
 		<br/><br/>
 		<p id="login"><strong>Logging in</strong></p><br/>
@@ -20,6 +27,12 @@
 			If you get an error saying your account is not active,
 			please contact the current admin (Esa Pitkänen). Once you are succesfully logged in,
 			you will be directed to the graph-page.
+        </p>
+		<p id="logout"><strong>Logging out</strong></p><br/>
+        <p>
+            After ending your work session, remember to log out of the system for security reasons. 
+			You can save your work so you can return to it the next time you log in (for this see <a href="#savedviews">saved views</a>). 
+			Logging out is done by clicking on the 'Logout' button in the upper right corner of the screen. This will guide you back to the login page.
         </p>
 		<p id="newgraph"><strong>Getting a new graph</strong></p><br/>
 		<p>
@@ -55,12 +68,56 @@
 			will show more of them. Allmost all other functions can be accessed from the menu which opens
 			when an object is clicked with the right mouse button. The menu shows actions that are available
 			for that specific object. For edges it shows only alignments, but for nodes it shows many different functions.
-			
+			Every node also has an option to center that node. Using this will make traversal in the graph easier and it also effects the tagging of the nodes (see <a href="#tagging">tagging the graph</a>).
+			Also, to make viewing the graph easier <strong>different types of nodes</strong> have been colorcoded for your convenience.
+			Enzyme nodes are blue, database entries are green and reads are red.
+		</p>
+		<p id="tooltips"><strong>Tooltips</strong></p><br/>
+		<p>
+			The boxes that open next to the mouse, when the mouse is over an edge or node are called tooltips.
+			They display some usefull information conserning the element they are atached to. When hovering over an edge
+			you can see the IDs of the two elements it connects and the bitscore and the e-value of the edge.
+			Over any type of node, you can see the number of hidden connections that are not displayed in the graph. This only takes into account connections that are over the bitscore and/or e-value limits you used when getting the graph.
+			When hovering over an enzyme node you can see its ec-number and the first of its names that are listed in the database
+			(for displaying more names, see <a href="#info">Extra info</a>). When hovering over an database entry, you can see it's ID, what database it's from and it's name and when hovering
+			over a read node, you can see it's ID and other related info.
+		</p>
+		<p id="tagging"><strong>Tagging the graph</strong></p><br/>
+		<p>
+			Tagging the graph is a feature made to make traversing and viewing the graph easier. A node can be tagged by selecting 'tag/untag node' from the
+			rightclick menu. The same command also untags a tagged node. When a node is tagged, its center turns white,
+			making it look slightly different from the other nodes. Tagging a node will also automaticly always tag a path to the centered node.
+			Nodes can also be tagged in baches. To tag a whole subgraph, select 'tag subgraph' from the rightclick menu. This can be reversed with the 'untag subgraph' option.
+			To tag the subnodes of a node, but not the subnodes of the subnodes, select 'tag subnodes'. To tag the nodes parents, select 'tag parents'.
+			To make the graph simpler, you can also delete all untagged node by clicking on the 'delete all untagged' button on the right side of the graph.
+		</p>
+		<p id="undo"><strong>Undoing changes</strong></p><br/>
+		<p>
+
+		</p>
+		<p id="info"><strong>Extra info and other databases</strong></p><br/>
+		<p>
+			Many of the nodes have links to other databases. You can access these links by rightclicking a node.
+			The nodes always have a straight link to their entry in the external database that they can be found in,
+			meaning that data from silva-database will have a link to silva ect. Enzyme nodes have more info available than
+			other nodes. When right clicking on an enzyme node, you have the options to display it's info from BRENDA or KEGG.
+			Also, clicking on an enzyme node, or clicking on the option 'more info' from the rightclick menu (if you don't want
+			to open more connections from the enzyme) will open a list of the enzymes names and a list of pathways (from KEGG)
+			which display the enzyme on the right side of the screen. For other additional info also see <a href="tooltips">tooltips</a>.
+		</p>
+		<p id="colors"><strong>Colors of the edges</strong></p><br/>
+		<p>
+			The coloring of the edges depends on the bitscore
 		</p>
 		<p id="alignments"><strong>Alignments</strong></p><br/>
 		<p>
 
 		</p>
+		<p id="settings"><strong>Settings</strong></p><br/>
+		<p>
+
+		</p>
+
     </div>
     {% endblock %}
 
