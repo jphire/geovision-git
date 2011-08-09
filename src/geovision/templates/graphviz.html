@@ -178,30 +178,15 @@ $(function() {
 			</div>
 
 			<div id="right-container">
+				<a id="helplink" href="show_help">Help</a>
 				<a id="logoutbutton" href="logging_out">Logout</a><br/>
-				<span id="helplink">Help</span>
-				<div id="help">
-					<p><strong>Getting a graph</strong></p>
-					<p>To get a graph, take your mouse to the options tag on the left side of the screen and a form will open up. Input some values and click the button under them.</p>
-					<p><strong>Navigating</strong></p>
-					<p>Click on a node to open more connections from that node. The extra connection will come with the same terms as the original graph (like minimum bitscore). All other options are available by right clicking any node.</p>
-					<p><strong>Alignments</strong></p>
-					<p>Right click on an edge and select Alignment from the menu to show an alignment of the read sequence and the database sequence (upper is read). The data opens under the graph and only one alignment can be visible at a time.</p>
-					<p><strong>Settings</strong></p>
-					<p>Settings control some aspects of this application. They are saved on your profile.</p>
-					<p><strong>Coloring</strong></p>
-					<p>Dynamic node coloring means coloring is se so that the connection with the lowest bitscore that is still visible is red and the highest is green. Custom means you can set the values so that everything rated below the first is red and everything above the second is green.</p>
-					<p><strong>Right hand filter</strong></p>
-					<p>This filter lets you temporarily filter out all edges under the spesified value.</p>
-					<a href="show_help">Help</a>
-				</div>
-				<br/>
 				<br/>
 					<button id="deleteUntagged">Delete all untagged</button><br/>
 					<button id="undo">Undo</button>
 					<br/><br/>
 				<div id="coloring">
 					<form action="/"  id="colorform">
+						<label><strong>Coloring</strong></label><br/>
 						<input type="radio" name="colortype" id="colortypeDynamic" value="dynamic" checked="checked"/>Dynamic<br/>
 						<input type="radio" name="colortype" id="colortypeCustom" value="custom"/>Custom: 
 						<input type="text" id="colorMin" size="4" disabled="disabled"/>-<input type="text" id="colorMax" size="4" disabled="disabled"/><br/>

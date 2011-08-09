@@ -67,7 +67,7 @@
 			To open connections from a node, simply click on it. If connections are already open, clicking
 			will show more of them. Allmost all other functions can be accessed from the menu which opens
 			when an object is clicked with the right mouse button. The menu shows actions that are available
-			for that specific object. For edges it shows only alignments, but for nodes it shows many different functions.
+			for that specific object. For edges it shows only alignments (exept for enzyme edges), but for nodes it shows many different functions.
 			Every node also has an option to center that node. Using this will make traversal in the graph easier and it also effects the tagging of the nodes (see <a href="#tagging">tagging the graph</a>).
 			Also, to make viewing the graph easier <strong>different types of nodes</strong> have been colorcoded for your convenience.
 			Enzyme nodes are blue, database entries are green and reads are red.
@@ -93,7 +93,8 @@
 		</p>
 		<p id="undo"><strong>Undoing changes</strong></p><br/>
 		<p>
-
+			If you change the graph in a way you are not happy with, click on the undo button on the right side of the graph.
+			The system saves the state of the graph up to ten times, so the maximum number of undos possible is ten.
 		</p>
 		<p id="info"><strong>Extra info and other databases</strong></p><br/>
 		<p>
@@ -107,15 +108,26 @@
 		</p>
 		<p id="colors"><strong>Colors of the edges</strong></p><br/>
 		<p>
-			The coloring of the edges depends on the bitscore
+			The coloring of the edges depends on the bitscore of the edge. You can change the way the edges are colored by changing the settings under
+			the 'Coloring' text on the right side of the graph. Dynamic coloring means that the edge with the highest visible bitscore is green, the lowest is red
+			and edges in between are calculated colors according to how close they are from the highest and lowest. You can also set the values manually by selecting the 'Custom' option.
+			All edges under the value you input into the first box will be colored red and all over the value in the second box will be green. Edges between these will get values according
+			to how far they are from the red and green values.
 		</p>
 		<p id="alignments"><strong>Alignments</strong></p><br/>
 		<p>
-
+			You can see the alignment of two nodes by right clicking on the edge between them and selecting show alignment.
+			The alignment will open under the graph. You can close the alignment by clicking on the close link on the upper right corner of the alignment box.
+			The parts of the alignment that are colored red are the parts that are similar in both alignments, other parts dont have a background color. The
+			upper part of the alignment is always the database sequence and the downer is the read sequence. Multiple alignments can be open at the same time
+			and for regognition purposes the top of the alignment box always states the IDs of the elements it shows.
 		</p>
 		<p id="settings"><strong>Settings</strong></p><br/>
 		<p>
-
+			You can change your settings by clicking the 'Settings' link on the right side of the graph. It will open the settings which are saved on your account.
+			Canvas size changes the size of the black graph area. 'Animations' has the option to turn the graph animations on or off. Animation speed states how fast the
+			graphs animations will go. Animation type and animation subtype will affect the look of the animations (they are only cosmetic changes).
+			To save your settings click on the 'Save settings' button. You can also restore the default settings by clicking on the 'Restore defaults' button.
 		</p>
 
     </div>
