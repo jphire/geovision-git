@@ -38,6 +38,7 @@ Config.Events =
 		}
 		else{
 			var html = '';
+			var source = node.data.source || node.data.sample;
 			html += "<b>" + node.id + "<br/>(" + source + ")</b><br/>";
 			html += node.data.description + "<br/>";
 
