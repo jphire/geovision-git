@@ -110,38 +110,6 @@ A:visited {color:#0C1F02; text-decoration:none;}
 A:active {color:#0C1F02; text-decoration:none;}
 A:hover {color:#08C444; text-decoration:underline;}
 
-/* NOT IN USE
-div#staticnavi{
-    z-index: 1;
-    width:100%;
-    /*background-color:#ACC2B3;*/
-    /*margin:0px 0px 0px 10px;
-    padding:0px;
-}
-#staticnavi ul{
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-}
-#staticnavi li{
-    float: left;
-    padding: 3px;
-    background-color:#7EC294;
-    border: 2px solid #265434;
-    margin-right:4px;
-}
-#staticnavi li a {
-    height: 18px;
-    line-height: 18px;
-    float: left;
-    width: 50px;
-    display: block;
-    text-decoration: none;
-    text-align: center;
-}
-li#last{
-    float:right;
-} */
 div#graphnavi{
     position: fixed;
     top: 0px;
