@@ -19,15 +19,21 @@ Config.Events =
 
 		saveUndoState();
 		fetchJSON(node, true);
-		
-		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
+
+		var changed_max = false;
+		$jit.Graph.Util.computeLevels(rgraph.graph, node.id, max_level);
 		$jit.Graph.Util.each(rgraph.graph, function(node){
-			if(node._depth > max_level)
-				max_level = node._depth;
-		})
-		rgraph.canvas.canvases[1].opt.numberOfCircles = max_level +2;
-		rgraph.canvas.canvases[1].plot();
-		
+			if(node._depth){
+				if(node._depth > max_level)
+					max_level = node._depth;
+					changed_max = true;
+			}
+		});
+		if(changed_max){
+			rgraph.canvas.canvases[1].opt.numberOfCircles = max_level;
+			rgraph.canvas.canvases[1].plot();
+			changed_max = false;
+		}
 		if(node.data.type == 'enzyme'){
 			$.getJSON('/enzyme_data', { id: node.id }, showEnzymeData);
 		}
