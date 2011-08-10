@@ -248,7 +248,7 @@ $(function() {
 						<input id="savesettings" name="savesettings" type="submit" value="Save your settings" style="margin-bottom:4px;"/><br/>
 					</form>
 					<form id="defaultsettingsForm" method="post" action="/">
-						{{ csrf_token }}
+						{% csrf_token %}
 						<input type="hidden" name="defaultsettings" value="true"/>
 						<input id="defaultsettings" name="defaultsettings" type="submit" value="Switch to defaults"/>
 					</form>
