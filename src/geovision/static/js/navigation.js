@@ -69,10 +69,10 @@ function addTemporaryTags()
 }
 /*
  * Function for checking if node has a tagged path to the root node.
+ * Assumes the node has a path to root.
  */
 function checkRootTagpath(node) {
 	var parentNodes = node.getParents();
-	if (!node.traversalTag) return false;
 	if (parentNodes.length == 0) return true;
 	for (var i = 0; i < parentNodes.length; i++) {
 		pnode = parentNodes[i]
