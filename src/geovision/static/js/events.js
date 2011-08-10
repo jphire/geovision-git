@@ -21,7 +21,6 @@ Config.Events =
 		fetchJSON(node, true);
 
 		var changed_max = false;
-		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 
 		if(node._depth >= max_level){
 			max_level = node._depth + 2;
@@ -29,12 +28,27 @@ Config.Events =
 		}
 
 		if(changed_max){
+			$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 			rgraph.canvas.canvases[1].opt.numberOfCircles = max_level;
 			rgraph.canvas.canvases[1].plot();
 			changed_max = false;
 		}
 		if(node.data.type == 'enzyme'){
 			$.getJSON('/enzyme_data', { id: node.id }, showEnzymeData);
+		}
+		else{
+			var html = '';
+			var source = node.data.source || node.data.sample;
+			html += "<b>" + node.id + "<br/>(" + source + ")</b><br/>";
+			html += node.data.description + "<br/>";
+			if(node.data.source == 'uniprot'){
+				html += node.data.sub_db + "<br/>";
+				html += node.data.entry_name + "<br/>";
+				html += node.data.os_field + "<br/>";
+				html += node.data.other_info + "<br/>";
+			}
+
+			$('#names').html(html);
 		}
 	},
 	onMouseEnter: function(node, eventInfo, e)

@@ -77,20 +77,15 @@ function colorEdges(){
 	});
 	return false;
 }
- /*function to filter graph by a bitscore inputted by the user*/
-function filter(bitscore, masterbitscore) {
+/*function to filter graph by a bitscore inputted by the user*/
+function filter(bitscore) {
 	if (isNaN(bitscore) || bitscore <= 0) { /*bitscores must make sense*/
 		$('#filtererror').html("Not a valid bitscore.<br/>");
 		return false;
 	}
-	if (false && bitscore > 0 && bitscore < masterbitscore){ /*read below ^^*/
-		$('#filtererror').html("You cannot filter by bitscores lower than the bitscore you used to search the database.<br/>");
-	}
-	else {
-		saveUndoState();
-		rgraph.op.deleteUntagged(bitscore);
-		return false;
-	}
+	saveUndoState();
+	rgraph.op.deleteUntagged(bitscore);
+	return true;
 }
 /*special version of contract function used only by the filter*/
 function filterContract(node, opt) {

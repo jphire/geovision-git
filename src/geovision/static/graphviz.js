@@ -42,7 +42,6 @@ function setBusy(msg)
  */
 function cleanupGraph()
 {
-	var toDelete = [];
 	rgraph.graph.eachNode(function(n) {
 		if(n.data.$alpha < 0.01)
 			rgraph.graph.removeNode(n.id);
@@ -92,6 +91,7 @@ function initGraph()
 
 		rgraph = new RGraph(Config);
 		rgraph.loadJSON(prepareJSON(json), query.root || 0);
+		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 		delete query.view_id;
 		delete query.root;
 
