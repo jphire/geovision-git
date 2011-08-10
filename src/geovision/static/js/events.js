@@ -41,6 +41,12 @@ Config.Events =
 			var source = node.data.source || node.data.sample;
 			html += "<b>" + node.id + "<br/>(" + source + ")</b><br/>";
 			html += node.data.description + "<br/>";
+			if(node.data.source == 'uniprot'){
+				html += node.data.sub_db + "<br/>";
+				html += node.data.entry_name + "<br/>";
+				html += node.data.os_field + "<br/>";
+				html += node.data.other_info + "<br/>";
+			}
 
 			$('#names').html(html);
 		}
