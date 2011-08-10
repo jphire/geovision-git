@@ -3,10 +3,21 @@
 <html>
   <head>
     <link rel="stylesheet" href="{{ STATIC_URL }}/qunit.css" type="text/css"/>
-    <script src="{{ STATIC_URL }}/jquery.js"> </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}/qunit.js"></script>
     <script type="text/javascript">
-     // --- Unittest Code goes here ---
+    $(document).ready(function(){
+    module("Basic Unit Test");
+    test("Sample test", function()
+    {
+       expect(2);
+       equals(divide(4,2),
+        2,
+        'Expected 2 as the result, result was: ' + divide(4,2));
+    });
+	equals(4/2, 2, 'Expected 2 as the result, result was: ' 4/2);
+    });
+  });
     </script>
   </head>
   <body>
