@@ -228,9 +228,9 @@ span#load{
 }
 a#helplink{
 	padding: 5px;
-	color:gray;
+	color:#4A4A4A;
 	float:right;
-	border: 2px #AAAAAA solid;
+	border: 2px #49914A solid;
 	background-color: #F2F2F2;
 	margin-right: 5px;
 	margin-top: 10px;
@@ -248,9 +248,9 @@ div#settings{
 }
 a#logoutbutton{
 	padding: 5px;
-	color:gray;
+	color:#4A4A4A;
 	float:right;
-	border: 2px #AAAAAA solid;
+	border: 2px #A82727 solid;
 	background-color: #F2F2F2;
 	margin-right: 15px;
 	margin-top: 10px;
