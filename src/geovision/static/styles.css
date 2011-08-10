@@ -41,8 +41,8 @@ div#help{
 }
 #help ul{
 	margin-left: 0px;
-	padding-left: 25px;
-	list-style-type: circle;
+	padding-left: 30px;
+	list-style: circle;
 	font-size: 14px;
 }
 #help p{
