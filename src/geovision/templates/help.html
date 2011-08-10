@@ -2,8 +2,8 @@
     {% block additional_title %}- Login{% endblock %}
     {% block content %}
     <div  class="greenbox" id="help">
-        <h2>Geovision - Help</h2><br/><br/>
-		<p>Help topics:</p>
+        <h2>Geovision - Help</h2><br/>
+		<p><strong>Help topics:</strong></p>
 		<ul>
 			<li><a href="#login">Logging in</a></li>
 			<li><a href="#logout">Logging out</a></li>
@@ -27,13 +27,13 @@
 			If you get an error saying your account is not active,
 			please contact the current admin (Esa Pitkänen). Once you are succesfully logged in,
 			you will be directed to the graph-page.
-        </p>
+        </p><br/>
 		<p id="logout"><strong>Logging out</strong></p><br/>
         <p>
             After ending your work session, remember to log out of the system for security reasons. 
 			You can save your work so you can return to it the next time you log in (for this see <a href="#savedviews">saved views</a>). 
 			Logging out is done by clicking on the 'Logout' button in the upper right corner of the screen. This will guide you back to the login page.
-        </p>
+        </p><br/>
 		<p id="newgraph"><strong>Getting a new graph</strong></p><br/>
 		<p>
 			To get a graph, take your mouse to the options
@@ -52,7 +52,7 @@
 			</ul>
 			You can also select which samples to use in getting results. The default (none selected) means all of the will be used.
 			If you would prefer to use only the samples of your chosing, click on their checkboxes before clicking 'refresh page'.
-		</p>
+		</p><br/>
 		<p id="savedviews"><strong>Saved views</strong></p><br/>
 		<p>
 			You can save a graph by inputting a name in the box on the right hand side of the
@@ -60,7 +60,7 @@
 			The graph will then be saved for later viewing on your account. To view a graph you have saved
 			click the 'Load' link under the name of the view you want to see. You can also delete a view or
 			export it as a JSON file. For these there are links next to the loading link.
-		</p>
+		</p><br/>
 		<p id="navigating"><strong>Navigating the graph</strong></p><br/>
 		<p>
 			Once you have a graph open, you can navigate it by clicking on nodes.
@@ -71,7 +71,7 @@
 			Every node also has an option to center that node. Using this will make traversal in the graph easier and it also effects the tagging of the nodes (see <a href="#tagging">tagging the graph</a>).
 			Also, to make viewing the graph easier <strong>different types of nodes</strong> have been colorcoded for your convenience.
 			Enzyme nodes are blue, database entries are green and reads are red.
-		</p>
+		</p><br/>
 		<p id="tooltips"><strong>Tooltips</strong></p><br/>
 		<p>
 			The boxes that open next to the mouse, when the mouse is over an edge or node are called tooltips.
@@ -81,7 +81,7 @@
 			When hovering over an enzyme node you can see its ec-number and the first of its names that are listed in the database
 			(for displaying more names, see <a href="#info">Extra info</a>). When hovering over an database entry, you can see it's ID, what database it's from and it's name and when hovering
 			over a read node, you can see it's ID and other related info.
-		</p>
+		</p><br/>
 		<p id="tagging"><strong>Tagging the graph</strong></p><br/>
 		<p>
 			Tagging the graph is a feature made to make traversing and viewing the graph easier. A node can be tagged by selecting 'tag/untag node' from the
@@ -90,12 +90,12 @@
 			Nodes can also be tagged in baches. To tag a whole subgraph, select 'tag subgraph' from the rightclick menu. This can be reversed with the 'untag subgraph' option.
 			To tag the subnodes of a node, but not the subnodes of the subnodes, select 'tag subnodes'. To tag the nodes parents, select 'tag parents'.
 			To make the graph simpler, you can also delete all untagged node by clicking on the 'delete all untagged' button on the right side of the graph.
-		</p>
+		</p><br/>
 		<p id="undo"><strong>Undoing changes</strong></p><br/>
 		<p>
 			If you change the graph in a way you are not happy with, click on the undo button on the right side of the graph.
 			The system saves the state of the graph up to ten times, so the maximum number of undos possible is ten.
-		</p>
+		</p><br/>
 		<p id="info"><strong>Extra info and other databases</strong></p><br/>
 		<p>
 			Many of the nodes have links to other databases. You can access these links by rightclicking a node.
@@ -105,7 +105,7 @@
 			Also, clicking on an enzyme node, or clicking on the option 'more info' from the rightclick menu (if you don't want
 			to open more connections from the enzyme) will open a list of the enzymes names and a list of pathways (from KEGG)
 			which display the enzyme on the right side of the screen. For other additional info also see <a href="tooltips">tooltips</a>.
-		</p>
+		</p><br/>
 		<p id="colors"><strong>Colors of the edges</strong></p><br/>
 		<p>
 			The coloring of the edges depends on the bitscore of the edge. You can change the way the edges are colored by changing the settings under
@@ -113,7 +113,7 @@
 			and edges in between are calculated colors according to how close they are from the highest and lowest. You can also set the values manually by selecting the 'Custom' option.
 			All edges under the value you input into the first box will be colored red and all over the value in the second box will be green. Edges between these will get values according
 			to how far they are from the red and green values.
-		</p>
+		</p><br/>
 		<p id="alignments"><strong>Alignments</strong></p><br/>
 		<p>
 			You can see the alignment of two nodes by right clicking on the edge between them and selecting show alignment.
@@ -121,14 +121,14 @@
 			The parts of the alignment that are colored red are the parts that are similar in both alignments, other parts dont have a background color. The
 			upper part of the alignment is always the database sequence and the downer is the read sequence. Multiple alignments can be open at the same time
 			and for regognition purposes the top of the alignment box always states the IDs of the elements it shows.
-		</p>
+		</p><br/>
 		<p id="settings"><strong>Settings</strong></p><br/>
 		<p>
 			You can change your settings by clicking the 'Settings' link on the right side of the graph. It will open the settings which are saved on your account.
 			Canvas size changes the size of the black graph area. 'Animations' has the option to turn the graph animations on or off. Animation speed states how fast the
 			graphs animations will go. Animation type and animation subtype will affect the look of the animations (they are only cosmetic changes).
 			To save your settings click on the 'Save settings' button. You can also restore the default settings by clicking on the 'Restore defaults' button.
-		</p>
+		</p><br/>
 
     </div>
     {% endblock %}
