@@ -42,8 +42,10 @@ div#help{
 #help ul{
 	margin-left: 0px;
 	padding-left: 30px;
-	list-style: circle;
 	font-size: 14px;
+}
+#help li{
+	list-style: circle;
 }
 #help p{
 	font-size: 14px;
