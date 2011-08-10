@@ -21,7 +21,7 @@ Config.Events =
 		fetchJSON(node, true);
 
 		var changed_max = false;
-		$jit.Graph.Util.computeLevels(rgraph.graph, node.id, max_level);
+		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 		$jit.Graph.Util.each(rgraph.graph, function(node){
 			if(node._depth){
 				if(node._depth > max_level)
