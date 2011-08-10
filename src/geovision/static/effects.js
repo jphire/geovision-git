@@ -65,7 +65,7 @@ jQuery(function($) {
 	})
 	$('#filterform').submit(function(e) {
 		e.preventDefault();
-		filter(parseFloat($('#bitscorefilter').val()), parseFloat($('#masterbitscorefilter').val()));
+		filter(parseFloat($('#bitscorefilter').val()));
 		return false;
 	})
 	$('#colorform').submit(function(){

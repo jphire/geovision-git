@@ -36,6 +36,13 @@ Config.Events =
 		if(node.data.type == 'enzyme'){
 			$.getJSON('/enzyme_data', { id: node.id }, showEnzymeData);
 		}
+		else{
+			var html = '';
+			html += "<b>" + node.id + "<br/>(" + source + ")</b><br/>";
+			html += node.data.description + "<br/>";
+
+			$('#names').html(html);
+		}
 	},
 	onMouseEnter: function(node, eventInfo, e)
 	{
