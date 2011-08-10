@@ -33,8 +33,20 @@ div#login{
     height:100px;
 }
 div#help{
-    width:400px;
-    /*height:100px;*/
+    width:600px;
+	text-align: left;
+	margin-top:15px;
+	margin-bottom: 15px;
+	padding-bottom: 30px;
+}
+#help ul{
+	margin-left: 0px;
+	padding-left: 25px;
+	list-style-type: circle;
+}
+#help p{
+	font-size: 10px;
+
 }
 div#register{
     width:400px;

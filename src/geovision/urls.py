@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 	(r'^logging_out$', 'userdb.views.logging_out'),
 	(r'^about$', direct_to_template, { 'template': 'about.html'}),
 	(r'^show_help$', direct_to_template, { 'template': 'help.html'}),
+	(r'^qunit$', direct_to_template, { 'template': 'qunit.html'}),
 
 	(r'^savesettings$', 'userdb.views.savesettings'),
 	(r'^save_view$', 'userdb.views.save_view'),
