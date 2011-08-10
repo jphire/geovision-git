@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 
 admin.autodiscover()
@@ -12,7 +13,8 @@ urlpatterns = patterns('',
 	(r'^registering$', 'userdb.views.registering'),
 	(r'^logging_in$', 'userdb.views.logging_in'),
 	(r'^logging_out$', 'userdb.views.logging_out'),
-	(r'^about$', 'userdb.views.about'),
+	(r'^about$', direct_to_template, { 'template': 'about.html'}),
+	(r'^show_help$', direct_to_template, { 'template': 'help.html'}),
 
 	(r'^savesettings$', 'userdb.views.savesettings'),
 	(r'^save_view$', 'userdb.views.save_view'),
@@ -31,5 +33,4 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/', include(admin.site.urls)),
 
-	#(r'', 'userdb.views.loginpage'), #everything else regirects to login for now
 )

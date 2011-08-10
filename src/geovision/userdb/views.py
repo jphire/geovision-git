@@ -22,10 +22,6 @@ def loginpage(request):
 def register(request):
 	return render_to_response("register.html", { }, context_instance = RequestContext(request) )
 
-#shows the help page
-def show_help(request):
-	return render_to_response("help.html", { }, context_instance=RequestContext(request) )
-
 #registers a new user, is called from the registering page
 def registering(request):
 	datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
@@ -77,10 +73,6 @@ def logging_out(request):
 	logout(request)
 	return redirect('/')
 
-#shows the about page
-def about(request):
-	return render_to_response("about.html", { }, context_instance=RequestContext(request) )
-
 #saves the users settings
 @login_required
 def savesettings(request):
@@ -89,7 +81,7 @@ def savesettings(request):
 		duration = request.POST['duration']
 		canvas_x = request.POST['canvas_x']
 		canvas_y = request.POST['canvas_y']
-		if 'savesettings' in request.POST: #and numericsMakeSense:
+		if 'defaultsettings' not in request.POST:
 			type = ''
 			transition = ''
 			if request.POST['group1'] == 'animations_off':
@@ -103,14 +95,12 @@ def savesettings(request):
 			#makes a json out of the settings and saves it
 			profile.settings = settings
 			profile.save()
-			return HttpResponseRedirect('/graphrefresh?settingsmessage = settings saved')
-		elif 'defaultsettings' in request.POST:
+			return HttpResponse('Settings saved', mimetype='text/plain')
+		else:
 			profile.settings = '{}'
 			profile.save()
-			return HttpResponseRedirect('/graphrefresh?settingsmessage = defaults restored')
-		else:
-			return HttpResponseRedirect('/graphrefresh?settingsmessage=error')
-		#in all cases, redirects back to the graph
+			return HttpResponse('Restored defaults', mimetype='text/plain')
+
 #saves the graph the user was looking at
 @login_required
 def save_view(request):
