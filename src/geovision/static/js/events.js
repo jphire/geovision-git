@@ -22,13 +22,18 @@ Config.Events =
 
 		var changed_max = false;
 		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
-		$jit.Graph.Util.each(rgraph.graph, function(node){
-			if(node._depth){
-				if(node._depth > max_level)
-					max_level = node._depth;
-					changed_max = true;
-			}
-		});
+//		$jit.Graph.Util.each(rgraph.graph, function(node){
+//			if(node._depth){
+//				if(node._depth > max_level)
+//					max_level = node._depth;
+//					changed_max = true;
+//			}
+//		});
+		if(node._depth >= max_level){
+			max_level = node._depth;
+			changed_max = true;
+		}
+
 		if(changed_max){
 			rgraph.canvas.canvases[1].opt.numberOfCircles = max_level;
 			rgraph.canvas.canvases[1].plot();
