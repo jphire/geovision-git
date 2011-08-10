@@ -86,15 +86,13 @@
 		<p>
 			Tagging the graph is a feature made to make traversing and viewing the graph easier. A node can be tagged by selecting 'tag/untag node' from the
 			rightclick menu. The same command also untags a tagged node. When a node is tagged, its center turns white,
-			making it look slightly different from the other nodes. Tagging a node will also automaticly always tag a path to the centered node.
-			Nodes can also be tagged in baches. To tag a whole subgraph, select 'tag subgraph' from the rightclick menu. This can be reversed with the 'untag subgraph' option.
-			To tag the subnodes of a node, but not the subnodes of the subnodes, select 'tag subnodes'. To tag the nodes parents, select 'tag parents'.
-			To make the graph simpler, you can also delete all untagged node by clicking on the 'delete all untagged' button on the right side of the graph.
+			making it look slightly different from the other nodes. Tagging a node will also automaticly always tag a path to the root node, which is the node at the center of the graph.
+			Nodes can also be tagged in batches. To tag a whole subgraph, select 'tag subgraph' from the rightclick menu. This can be reversed with the 'untag subgraph' option.
+			To tag the children of a node instead of the whole subgraph, select 'tag children'.	To make the graph simpler, you can also delete all untagged node by clicking on the 'delete all untagged' button on the right side of the graph.
 		</p><br/>
 		<p id="undo"><strong>Undoing changes</strong></p><br/>
 		<p>
 			If you change the graph in a way you are not happy with, click on the undo button on the right side of the graph.
-			The system saves the state of the graph up to ten times, so the maximum number of undos possible is ten.
 		</p><br/>
 		<p id="info"><strong>Extra info and other databases</strong></p><br/>
 		<p>
