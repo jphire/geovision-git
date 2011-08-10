@@ -21,7 +21,6 @@ Config.Events =
 		fetchJSON(node, true);
 
 		var changed_max = false;
-		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 
 		if(node._depth >= max_level){
 			max_level = node._depth + 2;
@@ -29,6 +28,7 @@ Config.Events =
 		}
 
 		if(changed_max){
+			$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 			rgraph.canvas.canvases[1].opt.numberOfCircles = max_level;
 			rgraph.canvas.canvases[1].plot();
 			changed_max = false;

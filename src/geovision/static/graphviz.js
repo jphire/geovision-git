@@ -92,6 +92,7 @@ function initGraph()
 
 		rgraph = new RGraph(Config);
 		rgraph.loadJSON(prepareJSON(json), query.root || 0);
+		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 		delete query.view_id;
 		delete query.root;
 
