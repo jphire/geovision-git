@@ -22,15 +22,9 @@ Config.Events =
 
 		var changed_max = false;
 		$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
-//		$jit.Graph.Util.each(rgraph.graph, function(node){
-//			if(node._depth){
-//				if(node._depth > max_level)
-//					max_level = node._depth;
-//					changed_max = true;
-//			}
-//		});
+
 		if(node._depth >= max_level){
-			max_level = node._depth;
+			max_level = node._depth + 2;
 			changed_max = true;
 		}
 
