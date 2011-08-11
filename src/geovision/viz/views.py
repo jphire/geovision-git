@@ -1,23 +1,12 @@
 from geovision.text_to_db.graph_JSON import QueryToJSON
-from geovision.settings import PROJECT_PATH
-
 from django.http import HttpResponse
-from django.template import Context, loader
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
-from django.core.context_processors import csrf
-from django.db.models import Q
 from meta.models import EnzymeName, Enzyme
-from geovision.viz.models import Blast, BlastExtra
 from geovision.userdb.models import Sample
-from geovision.settings import STATIC_URL
 import json
 import re
-import urllib
 
 def render(request, template, dict={}):
 	"""

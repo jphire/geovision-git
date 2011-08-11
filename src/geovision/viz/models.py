@@ -1,5 +1,4 @@
 from django.db import models
-from geovision.userdb.models import Sample
 from meta.models import *
 
 class Read(models.Model):
