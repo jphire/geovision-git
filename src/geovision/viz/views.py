@@ -20,6 +20,9 @@ import re
 import urllib
 
 def render(request, template, dict={}):
+	"""
+	Merges the user's settings in the response.
+	"""
 	profile = request.user.get_profile()
 	return render_to_response(template, context_instance=RequestContext(request, merge_dict(dict, {'user_settings': profile.settings, 'saved_views': profile.saved_views.all(), 'settingsmessage': request.GET.get('settingsmessage')})))
 
@@ -32,25 +35,29 @@ def merge_dict(d1, d2):
 	d.update(d2)
 	return d
 
-#Add '@login_required' to all these!
+#Add '@login_required' to all functions below this!
 @login_required
 def graphjson(request):
-	p = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset[]': [], 'samples':[]}
+	"""
+	Gets the parameters according to which to make the database query. Calls
+	QueryToJSON to get results and returns the resulted graph in JSON format.
+	"""
+	values = { 'bitscore': '', 'evalue': '', 'depth': '', 'hits': '', 'enzyme': '', 'read': '', 'dbentry': '', 'offset[]': [], 'samples':[]}
 
 	for (k,v) in request.GET.items():
-		p[k] = v
+		values[k] = v
 			
 	view_id = request.GET.get('view_id')
 	if view_id:
 		return HttpResponse(request.user.get_profile().saved_views.get(pk=int(view_id)).graph, mimetype='text/plain')
-	for k in ('enzyme', 'read', 'dbentry'):
-		if p[k] == '':
-			p[k] = None
+	for item_name in ('enzyme', 'read', 'dbentry'):
+		if values[item_name] == '':
+			values[item_name] = None
 
-	p['samples'] = request.GET.getlist('samples[]')
-	p['offset'] = request.GET.getlist('offset[]')
+	values['samples'] = request.GET.getlist('samples[]')
+	values['offset'] = request.GET.getlist('offset[]')
 	try:
-		out = QueryToJSON(p['enzyme'], p['dbentry'], p['read'], float(p['evalue']), float(p['bitscore']), int(p['depth']), int(p['hits']), p['offset'], p['samples'])
+		out = QueryToJSON(values['enzyme'], values['dbentry'], values['read'], float(values['evalue']), float(values['bitscore']), int(values['depth']), int(values['hits']), values['offset'], values['samples'])
 	except Exception as e:
 		out = json.dumps({'error_message': str(e)})
 	if request.GET.get('debug', False): # if the GET parameter 'debug' is given, output html to show django debug toolbar
@@ -59,8 +66,17 @@ def graphjson(request):
 		return HttpResponse(out, mimetype='text/plain')
 
 @login_required
-def graphrefresh(request): #make a new JSon, set defaults if needed
+def graphrefresh(request):
+	"""
+	Checks the given parameters according to which to make the database query and
+	sets defaults if needed. If the inputted parameters are incorrect, returns a
+	response with an error message.
+	"""
 	def lookup_enzyme(enzyme):
+		"""
+		Fetches an enzyme based on either an ec number or enzyme name given as
+		argument and returns a list.
+		"""
 		match = re.search('^\s*(.*?)\s*\(([-0-9.]+)\)\s*$', enzyme)
 		enzyme_name = None
 		if match:
@@ -76,6 +92,9 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 			return ec_numbers
 
 	def get_samples():
+		"""
+		Returns a list of all the samples in the database.
+		"""
 		samples = []
 		sample_collection = Sample.objects.all()
 		for sample in sample_collection:
@@ -123,6 +142,9 @@ def graphrefresh(request): #make a new JSon, set defaults if needed
 
 @login_required
 def enzyme_autocompletion(request):
+	"""
+	This function is used to autocomplete given enzyme name in the query field.
+	"""
 	try:
 		search = request.GET['term']
 	except KeyError:
@@ -133,6 +155,10 @@ def enzyme_autocompletion(request):
 
 @login_required
 def show_alignment(request):
+	"""
+	This function shows the alignment between two nodes in the graph. The other
+	node is a read node and the other is db entry node.
+	"""
 	try:
 		searchterm = request.GET['id']
 	except KeyError:
@@ -142,6 +168,10 @@ def show_alignment(request):
 
 @login_required
 def enzyme_data(request):
+	"""
+	This function is used to get information about an enzyme. Information contains
+	enzyme's alias names and it's metabolic pathways.
+	"""
 	try:
 		searchterm = request.GET['id']
 	except KeyError:
