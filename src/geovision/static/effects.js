@@ -3,6 +3,9 @@ var settingsopen = false;
 var helpopen = false;
 var samplesopen = false;
 
+/*
+ * Opens the side query menu.
+ */
 function openSearch()
 {
 	var elem = $('#graphnavi')
@@ -12,6 +15,9 @@ function openSearch()
 			function() { $('#navicontainer').fadeIn('fast', function() { opened = true; } ); }});
 	}
 }
+/*
+ * Closes the side query menu.
+ */
 function closeSearch(e)
 {
 	if (opened){
@@ -31,7 +37,9 @@ function closeSearch(e)
 	}
 }
 jQuery(function($) {
-/*! Functions to open the graph-option-navigation and the alignment and other items with a nice animations.*/
+/* ! Functions to open the graph-option-navigation and the alignment and other
+ * items with nice animations.
+ */
 
 	$('#sampleslink').click(function() {
 		if (!samplesopen){
@@ -103,6 +111,9 @@ jQuery(function($) {
 	})
 }); //jquery close
 
+/*
+ * Sets bitscorelimits based on the given arguments and color the graph.
+ */
 function setBitscoreColoring(min, max)
 {
 	if(!min)

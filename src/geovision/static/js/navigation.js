@@ -35,7 +35,8 @@ function contractForTraversal(node, opt) {
 		viz.refresh();
 	}
 }
-
+/* Deletes all untagged nodes from the graph.
+ */
 function deleteUntagged(bitscoreLimit) {
 	var nodesArray = [];
 	rgraph.graph.eachBFS(rgraph.root, function(n) { nodesArray.push(n) });
@@ -89,7 +90,7 @@ function tagNode(node, value) {
 }
 
 /* 
- * Function for tagging a path from node to root, always tags first node in parents list
+ * Function for tagging a path from node to root, always tags first node in parents list.
  */
 function tagParents(node, value) {
 	var parents = node.getParents();

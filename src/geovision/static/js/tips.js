@@ -1,3 +1,6 @@
+/* This is tooltip configurations file.
+ */
+
 Config.Tips = 
 {
 			enable: true,

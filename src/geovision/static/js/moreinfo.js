@@ -1,4 +1,6 @@
-/*Function for showing the alignment of the read and the db-entry*/
+/*
+ * Function for showing the alignment of the read and the db-entry.
+ */
 function alignmentfunction(thisid, nodeFrom, nodeTo) {
 	$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
 		if(data == null){
@@ -27,11 +29,14 @@ function alignmentfunction(thisid, nodeFrom, nodeTo) {
 	});
 	return false;
 }
-/*when the close button appears, it's se to work*/
+//when the close button appears, it's set to work
 $('#closealign').live('click', function() {
 	closealignment(this);
 });
-/*Function to close the div-element showing the alignment*/
+
+/*
+ * Function to close the div-element showing the alignment
+ */
 function closealignment (button) {
 		button = $(button);
 		var alignment = button.parent();
@@ -41,7 +46,9 @@ function closealignment (button) {
 		$(alignment).slideUp();
 }
 
-/* Function to list all names, reactions and pathways related to an enzyme in the right container */
+/* Function to list all names, reactions and pathways related to an enzyme in
+ * the right container.
+ * */
 function showEnzymeData (json){
 	enzymes = {};
 	rgraph.graph.eachNode(function(n) {
@@ -68,6 +75,7 @@ function showEnzymeData (json){
 	for (name in names){
 		html = html + names[name] + '<br/>';
 	}
-	$('#names').html(html); /*#names is replaced fully when this is called for a new node*/
+	//#names is replaced fully when this is called for a new node
+	$('#names').html(html); 
 	return;
  }

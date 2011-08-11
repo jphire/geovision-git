@@ -31,7 +31,12 @@ function hsvToRgb(h, s, v){
     return [r * 255, g * 255, b * 255];
 }
 var bitscoreColorMin, bitscoreColorMax;
+
+/* Calculates colors for all adges and nodes in the graph and add that information
+ * in the nodes and edges. Color can be accessed through node.data.$color.
+ */
 function colorEdges(){
+	
 	var min = Math.min, max = Math.max;
 	var maxScore = 0;
 	var minScore = 100000;
@@ -54,8 +59,11 @@ function colorEdges(){
 		minScore = bitscoreColorMin;
 		maxScore = bitscoreColorMax;
 	}
-	function color(bitscore)
-	{
+	/* Calculates colors based on the bitscore given as argument. Returns the
+	 * color in hexadecimal format.
+	 */
+	function color(bitscore){
+		
 		if(bitscoreColorMin)
 		{
 			if(bitscore > bitscoreColorMax)
@@ -77,7 +85,8 @@ function colorEdges(){
 	});
 	return false;
 }
-/*function to filter graph by a bitscore inputted by the user*/
+/* Function to filter graph based on a bitscore given by the user.
+ */
 function filter(bitscore) {
 	if (isNaN(bitscore) || bitscore <= 0) { /*bitscores must make sense*/
 		$('#filtererror').html("Not a valid bitscore.<br/>");
@@ -87,7 +96,8 @@ function filter(bitscore) {
 	rgraph.op.deleteUntagged(bitscore);
 	return true;
 }
-/*special version of contract function used only by the filter*/
+/* Special version of contract function used only by filter function.
+ */
 function filterContract(node, opt) {
 	var viz = this.viz;
 	opt = $jit.util.merge(this.options, viz.config, opt || {}, {

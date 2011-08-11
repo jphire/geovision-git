@@ -91,7 +91,7 @@ def logging_out(request):
 @login_required
 def savesettings(request):
 	"""
-	Saves the users settings.
+	Saves the user's settings.
 	"""
 	profile = request.user.get_profile()
 	#check to see if numeric values make sense. Empty strings are ok,
@@ -123,7 +123,7 @@ def savesettings(request):
 @login_required
 def save_view(request):
 	"""
-	saves the graph the user was looking at
+	Saves the graph the user was looking at.
 	"""
 	profile = request.user.get_profile()
 	id_to_delete = request.GET.get('delete')

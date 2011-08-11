@@ -1,8 +1,12 @@
+/* Event configurations for nodes and edges is implemented here.
+ */
+
+
 Config.Events = 
 {
 	enableForEdges: true,
 	enable : true,
-	type : 'Native', //edge event doesn't work with 'HTML'..
+	type : 'Native', //edge event doesn't work with 'HTML'
 
 	onClick: function(node, opt)
 	{

@@ -1,3 +1,6 @@
+/* Label configurations.
+ */
+
 $.extend(Config, {
 		//Label styling is done via CSS!
 		Label:

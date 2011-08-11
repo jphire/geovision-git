@@ -36,6 +36,7 @@ settings.animationsettings.transition = type;
 settings.animationsettings.onComplete = function() { setBusy(false); };
 settings.animationsettings.onMerge = colorEdges;
 
+//set initial number of concentric circles
 var max_level = 6;
 
 var Config = 
