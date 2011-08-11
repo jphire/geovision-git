@@ -72,7 +72,7 @@ var Config =
 			color: '#ff0000',
 			alpha: 0.6,
 			dim: 7.0,
-			angularWidth: 1,
+			angularWidth: 20,
 			span:1,
 			type: 'customCircle',
 			CanvasStyles: {}
