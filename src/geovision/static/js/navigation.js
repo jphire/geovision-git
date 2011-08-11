@@ -1,6 +1,7 @@
 /*
  * Modified version of the original contract function for removing unnecessary
  * nodes while traversing the graph.
+ * TODO: NOT USED
  */
 function contractForTraversal(node, opt) {
 	console.log("contractForTraversal");
@@ -35,19 +36,45 @@ function contractForTraversal(node, opt) {
 		viz.refresh();
 	}
 }
-/* Deletes all untagged nodes from the graph.
+
+function deleteByBitscore(bitscoreLimit) {
+
+}
+
+/* Function for deleting nodes from the graph.
+ * If bitscoreLimit is not defined, all untagged nodes except root will be deleted.
+ * If bitscoreLimit is defined, all untagged nodes (except root) without connections 
+ * over that bitscore will be deleted. It will also preserve a path to root from each
+ * remaining node (since many operations would break if graph became disconnected).
+ *
+ * Function will also clean all edges to (and from) the deleted nodes from the graph, 
+ * and update data.bitscore field for remaining nodes.
+ *
+ * Will also untag all nodes once finished.
  */
 function deleteUntagged(bitscoreLimit) {
 	var nodesArray = [];
 	rgraph.graph.eachBFS(rgraph.root, function(n) { nodesArray.push(n) });
+	// Add nodes to end of array and pop from there to get reverse-BFS order
 	while (nodesArray.length > 1) {
 		var node = nodesArray.pop();
 		if (!node.traversalTag && (!bitscoreLimit || node.data.bitscore < bitscoreLimit)) {
-			rgraph.op.removeNode(node.id, $jit.util.merge(rgraph.op.userOptions, { onComplete: function() { cleanupGraph(); colorEdges(); updateBitscores; }}));
+			rgraph.op.removeNode(
+				node.id, 
+				$jit.util.merge(rgraph.op.userOptions, {
+					onComplete: function() { cleanupGraph(); colorEdges(); updateBitscores();},
+					onAfterPlotNode: function(n) { n.traversalTag = false; }
+			}));
+		}
+		else {
+			tagParents(node);
 		}
 	}
 }
 
+/* Function for updating data.bitscore field for all nodes in the graph.
+ * Should be used after deleting edges from the graph if relevant values are not otherwise updated.
+ */
 function updateBitscores() {
 	rgraph.graph.eachNode(function(node) {
 		var bitscore = 0;
@@ -61,6 +88,7 @@ function updateBitscores() {
 	});
 }
 
+// TODO: UNUSED?
 function addTemporaryTags()
 {
 	rgraph.graph.eachNode(function(n) {
@@ -68,13 +96,16 @@ function addTemporaryTags()
 			tagParents(n, 'temp');
 	});
 }
-/*
- * Function for checking if node has a tagged path to the root node.
+
+/* Function for checking if node has a tagged path to the root node.
  * Assumes the node has a path to root.
  */
 function checkRootTagpath(node) {
 	var parentNodes = node.getParents();
-	if (parentNodes.length == 0) return true;
+	if (parentNodes.length == 0) {
+		if (node.id === rgraph.root) return true;
+		else return false;
+	}
 	for (var i = 0; i < parentNodes.length; i++) {
 		pnode = parentNodes[i]
 		if (!pnode.traversalTag) continue;
@@ -83,24 +114,38 @@ function checkRootTagpath(node) {
 	return false;
 }
 
+/* Function for tagging a node. If node has no tagged path to root, a path will also be tagged
+ * since otherwise deletion could result in disconnected graph.
+ */
 function tagNode(node, value) {
 	if (!checkRootTagpath(node)) tagParents(node);
 	node.traversalTag = value ? value : true;
 	rgraph.refresh()
 }
 
-/* 
- * Function for tagging a path from node to root, always tags first node in parents list.
+/* Function for tagging a path from node to root.
+ * Builds path by tagging the parent with the best (bitscore) connection to current node.
+ * Responsibility for updating the visualization is left to user, this function does
+ * not call refresh() or any animating function.
  */
 function tagParents(node, value) {
+	var currentNode = node;
 	var parents = node.getParents();
 	while (parents.length > 0) {
-		parents[0].traversalTag = value ? value : true;
-		console.log("Parent " + parents[0].id + " tagged");
-		parents = parents[0].getParents();
+		var bestParent = parents[0];
+		var bestBitscore = currentNode.getAdjacency(parents[0].id).data.bitscore;
+		for (var i = 1; i < parents.length; i++) {
+			var tempBitscore = currentNode.getAdjacency(parents[i].id).data.bitscore;
+			if (tempBitscore > bestBitscore) {
+				bestParent = parents[i];
+				bestBitscore = tempBitscore;
+			}
+		}
+		bestParent.traversalTag = value ? value : true;
+		currentNode = bestParent;
+		parents = currentNode.getParents();
 	}
 	node.traversalTag = true;
-	rgraph.refresh()
 }
 
 function tagSubnodes(node) {
@@ -123,8 +168,9 @@ function tagSubgraph(node) {
 	rgraph.refresh()
 }
 
-/*
- * Untags a node and all nodes in it's subgraph without tagged path to root.
+/* Untags a node.
+ * Since many operations rely on all nodes having a path to root, also untags all
+ * tagged nodes without a tagged path to root after untagging this node.
  */
 function untagNode(node) {
 	node.traversalTag = false;

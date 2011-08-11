@@ -212,6 +212,7 @@ span#settingslink{
 	color:#4A4A4A;
 	border: 1px #8FA191 solid;
 	background-color: #F2F2F2;
+	margin-bottom: 6px;
 }
 span#sampleslink{
 	text-decoration: underline;
