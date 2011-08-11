@@ -85,9 +85,11 @@ function filter(bitscore) {
 	}
 	saveUndoState();
 	rgraph.op.deleteUntagged(bitscore);
-	return true;
+return true;
 }
-/*special version of contract function used only by the filter*/
+
+/*special version of contract function used only by the filter
+ * TODO: UNUSED?*/
 function filterContract(node, opt) {
 	var viz = this.viz;
 	opt = $jit.util.merge(this.options, viz.config, opt || {}, {

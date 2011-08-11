@@ -47,6 +47,7 @@ function cleanupGraph()
 			rgraph.graph.removeNode(n.id);
 	});
 }
+
 /* fetchJSON(JitNode node) - expand the graph at the specified node */
 function fetchJSON(node)
 {
