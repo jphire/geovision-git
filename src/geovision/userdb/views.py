@@ -94,13 +94,10 @@ def savesettings(request):
 	Saves the users settings.
 	"""
 	profile = request.user.get_profile()
-	#check to see if numeric values make sense. Empty strings are ok,
-	#then we just asume they want the defaults
-	numericsMakeSense = False; 
-	duration = request.POST['duration']
-	canvas_x = request.POST['canvas_x']
-	canvas_y = request.POST['canvas_y']
 	if 'defaultsettings' not in request.POST:
+		duration = request.POST['duration']
+		canvas_x = request.POST['canvas_x']
+		canvas_y = request.POST['canvas_y']
 		type = ''
 		transition = ''
 		if request.POST['group1'] == 'animations_off':
