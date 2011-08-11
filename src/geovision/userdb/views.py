@@ -12,18 +12,28 @@ from django.core.urlresolvers import reverse
 import json
 from userdb.models import SavedView
 
-#redirects authenticated users straight in and shows the login form for the rest
+
 def loginpage(request):
+	"""
+	Redirects authenticated users straight in and shows the login form for the rest.
+	"""
+
 	if request.user.is_authenticated():
 		return redirect('/graphrefresh')
 	else:
 		return render_to_response("login.html", { }, context_instance=RequestContext(request) )
-#shows the page with the registering form
+
 def register(request):
+	"""
+	Shows the page with the registering form.
+	"""
 	return render_to_response("register.html", { }, context_instance = RequestContext(request) )
 
-#registers a new user, is called from the registering page
+
 def registering(request):
+	"""
+	Registers a new user, is called from the registering page.
+	"""
 	datatable = [request.POST['username'], request.POST['email'], request.POST['password1'], request.POST['password2']]
 	for data in datatable: #checks to see that all fields have data
 		if (len(data) < 1):
@@ -50,8 +60,11 @@ def registering(request):
 		}, context_instance=RequestContext(request))
 		#new account created - note: it must be activated via the admin panel to be fully functional
 
-#logs a user in, is called from the login page
+
 def logging_in(request):
+	"""
+	Logs a user in, is called from the login page.
+	"""
 	username = request.POST['username']
 	password = request.POST['password']
 	user = authenticate(username=username, password=password) #djangos auth
@@ -68,42 +81,50 @@ def logging_in(request):
 			'error_message': "Username or password was incorrect.",
 		}, context_instance = RequestContext(request))
 
-#logs the user out. Is called from the logout -button
 def logging_out(request):
+	"""
+	Logs the user out. Is called from the logout -button.
+	"""
 	logout(request)
 	return redirect('/')
 
-#saves the users settings
 @login_required
 def savesettings(request):
-		profile = request.user.get_profile()
-		numericsMakeSense = False; #check to see if numeric values make sense. Empty strings are ok, then we just asume they want the defaults
-		duration = request.POST['duration']
-		canvas_x = request.POST['canvas_x']
-		canvas_y = request.POST['canvas_y']
-		if 'defaultsettings' not in request.POST:
-			type = ''
-			transition = ''
-			if request.POST['group1'] == 'animations_off':
-				type = 'replot'
-			else:
-					type = 'fade:con'
-			transition = request.POST['animationtype']
-			subtype = request.POST['animationsubtype']
-			
-			settings = json.dumps({'settings': {'canvaswidth': canvas_x, 'canvasheight': canvas_y}, 'animationsettings': {'type': type, 'duration': duration, 'subtype': subtype, 'transition': transition}})
-			#makes a json out of the settings and saves it
-			profile.settings = settings
-			profile.save()
-			return HttpResponse('Settings saved', mimetype='text/plain')
+	"""
+	Saves the users settings.
+	"""
+	profile = request.user.get_profile()
+	#check to see if numeric values make sense. Empty strings are ok,
+	#then we just asume they want the defaults
+	numericsMakeSense = False; 
+	duration = request.POST['duration']
+	canvas_x = request.POST['canvas_x']
+	canvas_y = request.POST['canvas_y']
+	if 'defaultsettings' not in request.POST:
+		type = ''
+		transition = ''
+		if request.POST['group1'] == 'animations_off':
+			type = 'replot'
 		else:
-			profile.settings = '{}'
-			profile.save()
-			return HttpResponse('Restored defaults', mimetype='text/plain')
+				type = 'fade:con'
+		transition = request.POST['animationtype']
+		subtype = request.POST['animationsubtype']
 
-#saves the graph the user was looking at
+		settings = json.dumps({'settings': {'canvaswidth': canvas_x, 'canvasheight': canvas_y}, 'animationsettings': {'type': type, 'duration': duration, 'subtype': subtype, 'transition': transition}})
+		#makes a json out of the settings and saves it
+		profile.settings = settings
+		profile.save()
+		return HttpResponse('Settings saved', mimetype='text/plain')
+	else:
+		profile.settings = '{}'
+		profile.save()
+		return HttpResponse('Restored defaults', mimetype='text/plain')
+
 @login_required
 def save_view(request):
+	"""
+	saves the graph the user was looking at
+	"""
 	profile = request.user.get_profile()
 	id_to_delete = request.GET.get('delete')
 	if id_to_delete:
@@ -117,6 +138,9 @@ def save_view(request):
 
 @login_required
 def export_view(request):
+	"""
+	Fetches the requested saved graph view and returns it as json.
+	"""
 	type = request.GET.get('type', 'json')
 	id = int(request.GET['id'])
 

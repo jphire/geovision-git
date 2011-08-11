@@ -128,7 +128,7 @@ $(function() {
 		</div>
 		<script type="text/javascript">
 		{% for view in saved_views %}
-		addSavedViewToList('{{ view.id }}', '{{ view.name }}');
+			addSavedViewToList('{{ view.id }}', '{{ view.name }}');
 		{% endfor %}
 		</script>
 	</td></tr>
@@ -237,7 +237,7 @@ $(function() {
 						  <option value="Elastic">Elastic</option>
 						</select><br/>
 						<label>Animation subtype:<br/>
-						Note: does not effect linear transitions</label><br/>
+						Note: does not affect linear transitions</label><br/>
 						<select name="animationsubtype" id="animationsubtype">
 							<option value="easeIn">Ease in</option>
 							<option value="easeOut">Ease out</option>
