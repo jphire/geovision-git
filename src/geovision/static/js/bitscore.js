@@ -40,10 +40,10 @@ function colorEdges(){
 	var min = Math.min, max = Math.max;
 	var maxScore = 0;
 	var minScore = 100000;
-	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
+	rgraph.graph.eachNode(function(node) {
 		var nodeMaxScore = 0;
 		var nodeMinScore = 100000;
-		$jit.Graph.Util.eachAdjacency(node, function(adj) {
+		node.eachAdjacency(function(adj) {
 			var bs = adj.data.bitscore;
 			if(!bs) return;
 				maxScore = max(bs, maxScore);
@@ -76,8 +76,8 @@ function colorEdges(){
 		var rgb = hsvToRgb(hue, 1.0, 1.0);
 		return $jit.util.rgbToHex([Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2])]);
 	}
-	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
-		$jit.Graph.Util.eachAdjacency(node, function(adj) {
+	rgraph.graph.eachNode(function(node) {
+		node.eachAdjacency(node, function(adj) {
 			adj.data.$color = color(adj.data.bitscore);
 		});
 		if(node.data.type == 'enzyme')

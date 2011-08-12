@@ -1,9 +1,15 @@
 /* Event configurations for nodes and edges is implemented here. onClick event is
- * triggered when a node or an edge is clicked. When node is is clicked, a new database
- * query is made to fetch new adjacencies for the clicked node. After this the graph
- * is refreshed automatically. If an edge is clicked, nothing happens. The right-click
- * functionality is not implemented here. The onMouseEnter and onMouseLeave functions
- * change the mouse pointer style as well as some other values related to all events.
+ * triggered when a node or an edge is clicked. 
+ *
+ * When node is is clicked, a new database query is made to fetch new adjacencies for 
+ * the clicked node. fetchJSON also calls JIT graph.op.sum to sum the graphs and animate
+ * the transition.
+ *
+ * If an edge is clicked, nothing happens. The right-click functionality is implemented in 
+ * contextmenu.js. 
+ *
+ * The onMouseEnter and onMouseLeave events change the mouse pointer style as well 
+ * as some other values related to all events.
  */
 
 Config.Events = 
@@ -12,21 +18,17 @@ Config.Events =
 	enable : true,
 	type : 'Native', //edge event doesn't work with 'HTML'
 
-	onClick: function(node, opt)
-	{
+	onClick: function(node, opt){
 		if(!node || node.nodeFrom)
 			return;
 		if(currentEdge != undefined){
-			
 			rgraph.config.Events.onMouseLeave(currentEdge);
 		}
 		if(currentNode != undefined){
-			
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
-
 		saveUndoState();
-		//fetch new adjacencies for the clicked node
+		// Fetch new adjacencies for the clicked node, sum and animate
 		fetchJSON(node, true);
 
 		var changed_max = false;
@@ -34,7 +36,7 @@ Config.Events =
 			max_level = node._depth + 2;
 			changed_max = true;
 		}
-		//increase the number of concentric circles if needed
+		// Increase the number of concentric circles if needed
 		if(changed_max){
 			$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
 			rgraph.canvas.canvases[1].opt.numberOfCircles = max_level;
@@ -59,8 +61,7 @@ Config.Events =
 			$('#names').html(html);
 		}
 	},
-	onMouseEnter: function(node, eventInfo, e)
-	{
+	onMouseEnter: function(node, eventInfo, e) {
 		if(ctxMenuOpen || busy)
 			return;
 
@@ -71,8 +72,7 @@ Config.Events =
 		else
 			currentNode = node;
 	},
-	onMouseLeave: function(object, eventInfo, e)
-	{
+	onMouseLeave: function(object, eventInfo, e) {
 		if(ctxMenuOpen || !object || busy)
 			return;
 		currentNode = currentEdge = undefined;
