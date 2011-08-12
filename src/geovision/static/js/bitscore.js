@@ -77,7 +77,7 @@ function colorEdges(){
 		return $jit.util.rgbToHex([Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2])]);
 	}
 	rgraph.graph.eachNode(function(node) {
-		node.eachAdjacency(node, function(adj) {
+		node.eachAdjacency(function(adj) {
 			adj.data.$color = color(adj.data.bitscore);
 		});
 		if(node.data.type == 'enzyme')

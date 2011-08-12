@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from viz.models import BlastExtra
 from meta.models import EnzymeName, Enzyme
 from geovision.userdb.models import Sample
 import json
