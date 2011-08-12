@@ -5,6 +5,19 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}/qunit.css" type="text/css"/>
     <script type="text/javascript" src="{{ STATIC_URL }}/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}/qunit.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}/js/create_test_data.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/events.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/labels.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/loadsave.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/moreinfo.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/styles.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/tips.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
+
     <script type="text/javascript">
     $(document).ready(function(){
     module("Basic Unit Test");
@@ -18,8 +31,22 @@
     test("Alignment test", function()
     {
        expect(1);
-	   var alignment
-       equals(, 2, 'Expected 2 as the result, result was: ' + divide(4,2));
+	   var alignment;
+       equals(2, 2, 'Expected 2 as the result, result was: ' + divide(4,2));
+    });
+	module("graphviz.js");
+    test("Graph creation test", function()
+    {
+       expect(1);
+	   var query = { read: "R1", dbentry: "", enzyme: "",
+		bitscore: 10, evalue: 1, hits: 1, depth: 1, samples: ['TEST']};
+	   initGraph();
+	   ok(rgraph, "rgraph creation failed");
+
+
+	   Config.Events.onMouseEnter(node);
+	   var cursorStyle = rgraph.canvas.getElement().style.cursor;
+       equals(cursorStyle, 'pointer', 'Expected pointer as the result, result was: ' + cursorStyle);
     });
 
   });

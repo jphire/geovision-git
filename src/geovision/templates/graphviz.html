@@ -17,7 +17,7 @@ var query = { read: "{{ read }}", dbentry: "{{ dbentry }}", enzyme: "{{ enzyme }
 		query.samples.push('{{ sample }}');
 {% endfor %}
 {% if view_id %}
-query.view_id = {{ view_id }};
+		query.view_id = {{ view_id }};
 {% endif %}
 </script>
 {% endautoescape %}

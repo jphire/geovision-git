@@ -1,5 +1,6 @@
 /*
- * Function for showing the alignment of the read and the db-entry.
+ * Function for showing the alignment of the read and the db-entry. Takes as arguments
+ * the edge id and the edge's both end nodes.
  */
 function alignmentfunction(thisid, nodeFrom, nodeTo) {
 	$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
