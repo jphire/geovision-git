@@ -1,4 +1,8 @@
 jQuery(function($) {
+/* Performed when the 'Save' button is pressed
+ * Export the graph as JIT 'graph' style JSON annotated with the root node and the original query
+ * Also add the saved graph immediately to the search bar
+ */
 $('#saveGraph').submit(function(e) {
 	e.preventDefault();
 	var name = $('#savedGraphName').val();
@@ -10,10 +14,16 @@ $('#saveGraph').submit(function(e) {
 	$('#saveGraphStatus').text('Saving...');
 	return false;
 });
+
+/* performed when the 'Undo' button is clicked */
 $('#undo').click(function(e) {
 	e.preventDefault();
 	doUndo();
 });
+
+/* performed when the 'Save settings' or 'Restore defaults' buttons are pressed.
+ * Instead of normally POSTing the form, use AJAX to prevent page loading and having the current graph disappear.
+ */
 $('#settingsform, #defaultsettingsForm').submit(function(e) {
 	console.log(e);
 	e.preventDefault();
@@ -35,8 +45,9 @@ function addSavedViewToList(id, name)
 		'</span><br/>');
 }
 
-var MAX_UNDO = 20;
+var MAX_UNDO = 20; /* Maximum number of undo states. This could be made user configurable */
 var undoStates = [];
+
 /**Deep copies and saves the new state of the graph into undoStates.
 If there are too many states, shifts the array. Also removes the undo-buttons disabled attribute if it has one.*/
 function saveUndoState()
