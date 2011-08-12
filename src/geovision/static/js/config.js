@@ -1,4 +1,8 @@
-/* config.js - Initialize all globals and the config dict */
+/* config.js - Initializes all globals and the config dict. Sets default
+ * values for settings. Detailed explanation of all the configurations available
+ * e.g. for animations can be found at the JIT documents page
+ * http://thejit.org/static/v20/Docs/.
+ */
 
 var rgraph;
 var RGraph = $jit.RGraph;
@@ -83,7 +87,6 @@ var Config =
 			color: '#888800',
 			alpha: 0.6,
 			type: 'customArrow',
-
 			lineWidth:1.5,
 			dim: 10,
 		}
@@ -109,4 +112,3 @@ jQuery(function($) {
 	}
 	$('#animationsubtype').val(settings.animationsettings.subtype);
 });
-
