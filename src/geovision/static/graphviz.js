@@ -47,7 +47,9 @@ function cleanupGraph()
 			rgraph.graph.removeNode(n.id);
 	});
 }
-/* fetchJSON(JitNode node) - expand the graph at the specified node */
+/*
+ * fetchJSON(JitNode node) - expand the graph at the specified node
+ */
 function fetchJSON(node)
 {
 
@@ -75,6 +77,9 @@ function fetchJSON(node)
 				});
 }
 
+/* 
+ * This function creates the graph according to the JSON data.
+ */
 function initGraph()
 {
 	$.getJSON('/graphjson', query, function(json) {
@@ -98,7 +103,6 @@ function initGraph()
 		colorEdges();
 		rgraph.refresh();
 		rgraph.op.userOptions = settings.animationsettings;
-
 		rgraph.op.filterContract = filterContract;
 		rgraph.op.tagParents = tagParents;
 		rgraph.op.tagSubgraph = tagSubgraph;

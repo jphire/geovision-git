@@ -1,3 +1,8 @@
+/* This is tooltip configurations file. You can change the shown info about nodes
+ * or edges by modifying the innerHtml element.
+ *
+ */
+
 Config.Tips = 
 {
 			enable: true,
@@ -10,13 +15,14 @@ Config.Tips =
 					return false;
 				tip.innerHTML = "";
 				if (!node) return false;
-
+				//edge data
 				if(node.nodeFrom)
 				{
 						tip.innerHTML += '<b>' + node.nodeFrom.id + ' <-> ' + node.nodeTo.id + '</b><br/>';
 						tip.innerHTML += "bitscore: " + node.data.bitscore + "<br/>";
 						tip.innerHTML += "e-value: " + node.data.error_value + "<br/>";
 				}
+				//node data
 				else if(node.data.type != 'enzyme')
 				{
 					//it's a read or db entry
