@@ -103,7 +103,6 @@ function initGraph()
 		colorEdges();
 		rgraph.refresh();
 		rgraph.op.userOptions = settings.animationsettings;
-		rgraph.op.filterContract = filterContract;
 		rgraph.op.tagParents = tagParents;
 		rgraph.op.tagSubgraph = tagSubgraph;
 		rgraph.op.tagSubnodes = tagSubnodes;

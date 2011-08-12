@@ -1,4 +1,4 @@
-/* Bitscore filtering & coloring related stuff */
+/** Bitscore filtering & coloring related stuff */
 /** http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
  * Converts an HSV color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
@@ -32,7 +32,7 @@ function hsvToRgb(h, s, v){
 }
 var bitscoreColorMin, bitscoreColorMax;
 
-/* Calculates colors for all adges and nodes in the graph and add that information
+/** Calculates colors for all adges and nodes in the graph and add that information
  * in the nodes and edges. Color can be accessed through node.data.$color.
  */
 function colorEdges(){
@@ -40,10 +40,10 @@ function colorEdges(){
 	var min = Math.min, max = Math.max;
 	var maxScore = 0;
 	var minScore = 100000;
-	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
+	rgraph.graph.eachNode(function(node) {
 		var nodeMaxScore = 0;
 		var nodeMinScore = 100000;
-		$jit.Graph.Util.eachAdjacency(node, function(adj) {
+		node.eachAdjacency(function(adj) {
 			var bs = adj.data.bitscore;
 			if(!bs) return;
 				maxScore = max(bs, maxScore);
@@ -59,7 +59,7 @@ function colorEdges(){
 		minScore = bitscoreColorMin;
 		maxScore = bitscoreColorMax;
 	}
-	/* Calculates colors based on the bitscore given as argument. Returns the
+	/** Calculates colors based on the bitscore given as argument. Returns the
 	 * color in hexadecimal format.
 	 */
 	function color(bitscore){
@@ -76,8 +76,8 @@ function colorEdges(){
 		var rgb = hsvToRgb(hue, 1.0, 1.0);
 		return $jit.util.rgbToHex([Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2])]);
 	}
-	$jit.Graph.Util.eachNode(rgraph.graph, function(node) {
-		$jit.Graph.Util.eachAdjacency(node, function(adj) {
+	rgraph.graph.eachNode(function(node) {
+		node.eachAdjacency(function(adj) {
 			adj.data.$color = color(adj.data.bitscore);
 		});
 		if(node.data.type == 'enzyme')
@@ -85,7 +85,7 @@ function colorEdges(){
 	});
 	return false;
 }
-/* Function to filter graph based on a bitscore given by the user.
+/** Function to filter graph based on a bitscore given by the user.
  */
 function filter(bitscore) {
 	if (isNaN(bitscore) || bitscore <= 0) { /*bitscores must make sense*/
@@ -97,32 +97,3 @@ function filter(bitscore) {
 return true;
 }
 
-/*special version of contract function used only by the filter
- * TODO: UNUSED?*/
-function filterContract(node, opt) {
-	var viz = this.viz;
-	opt = $jit.util.merge(this.options, viz.config, opt || {}, {
-		'modes': ['node-property:alpha:span', 'linear']
-	});
-	node.collapsed = true;
-	(function subn(n) {
-		n.eachSubnode(function(ch) {
-			ch.ignore = true;
-			ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
-			subn(ch);
-		});
-	})(node);
-	if(opt.type == 'animate') {
-		viz.compute('end');
-		(function subn(n) {
-			n.eachSubnode(function(ch) {
-				ch.setPos(node.getPos('end'), 'end');
-				subn(ch);
-			});
-		})(node);
-		viz.fx.animate(opt);
-	}
-	else if(opt.type == 'replot') {
-		viz.refresh();
-	}
-}

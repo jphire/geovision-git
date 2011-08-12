@@ -28,10 +28,6 @@ urlpatterns = patterns('',
 
 	(r'^enzyme_data$', 'viz.views.enzyme_data'),
 
-	(r'^metaboly_json$', 'meta.views.metaboly_json'),
-	(r'^show_metaboly$', 'meta.views.show_metaboly'),
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/', include(admin.site.urls)),
 
 )

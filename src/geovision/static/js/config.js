@@ -18,6 +18,9 @@ var defaultsettings = {
 			canvasheight: 600}
 };
 settings = $jit.util.merge(defaultsettings, settings);
+
+/////// Perform parameter validation on the user settings
+// Replace incorrectly formatted number fields with defaults
 var numericFields = {settings: ['canvaswidth', 'canvasheight'], animationsettings: ['duration']}
 
 for (var key1 in numericFields)
@@ -29,6 +32,8 @@ for (var key1 in numericFields)
 		settings[key1][key2] = isNaN(num) ? defaultsettings[key1][key2] : num;
 	}
 }
+
+// Sets the transition function based on the strings in the settings dict
 settings.animationsettings.transitionname = settings.animationsettings.transition;
 var type = $jit.Trans[settings.animationsettings.transition];
 if(!type)
@@ -92,7 +97,7 @@ var Config =
 		}
 };
 jQuery(function($) {
-	/*setting stuff in css to the preferred size*/
+	/* Set correct values for the settings widgets, also bind some events */
 	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
 	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
 	$('#center-container').css('width', parseInt(settings.settings.canvaswidth));
@@ -100,7 +105,6 @@ jQuery(function($) {
 	$('#right-container').css('height', parseInt(settings.settings.canvasheight));
 	$('#container').css('width', parseInt(settings.settings.canvaswidth)+400);
 	$('#container').css('height', parseInt(settings.settings.canvasheight));
-	$('#deleteUntagged').click(function(e) { e.preventDefault(); saveUndoState(); rgraph.op.deleteUntagged(); });
 	$('#canvas_x').val(settings.settings.canvaswidth);
 	$('#canvas_y').val(settings.settings.canvasheight);
 	if (settings.animationsettings.type == 'replot'){
@@ -111,4 +115,6 @@ jQuery(function($) {
 		$('#animationtype').val(settings.animationsettings.transitionname);
 	}
 	$('#animationsubtype').val(settings.animationsettings.subtype);
+
+	$('#deleteUntagged').click(function(e) { e.preventDefault(); saveUndoState(); rgraph.op.deleteUntagged(); });
 });
