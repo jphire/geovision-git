@@ -26,6 +26,7 @@ $('#settingsform, #defaultsettingsForm').submit(function(e) {
 });
 });
 
+/*Adds the views name and load-, delete-, and export-buttons to the left navigation with their css-styles.*/
 function addSavedViewToList(id, name)
 {
 	$('#savedViews').append('<div class="view">View name: <strong>'+ name +'</strong><br/><a class="load" href="/graphrefresh?open_view=' + id + '">Load</a> -' +
@@ -36,6 +37,8 @@ function addSavedViewToList(id, name)
 
 var MAX_UNDO = 20;
 var undoStates = [];
+/*Deep copies and saves the new state of the graph into undoStates.
+If there are too many states, shifts the array. Also removes the undo-buttons disabled attribute if it has one.*/
 function saveUndoState()
 {
 	// $.extend is used to deep copy the array because JIT doesn't >:|
@@ -45,6 +48,8 @@ function saveUndoState()
 	$('#undo').removeAttr('disabled');
 }
 
+/*If there are saved states to use for undoing, morphs the graph into the last state recorded.
+If there are no states, sets the undo-button to disabled.*/
 function doUndo()
 {
 	if(undoStates.length == 0)
