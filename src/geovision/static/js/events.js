@@ -5,6 +5,9 @@
  * the clicked node. fetchJSON also calls JIT graph.op.sum to sum the graphs and animate
  * the transition.
  *
+ * For enzymes additional data is fetched using enzyme_data function in
+ * [project root]/src/geovision/viz/views.py and shown with showEnzymeData in moreinfo.js.
+ *
  * If an edge is clicked, nothing happens. The right-click functionality is implemented in 
  * contextmenu.js. 
  *
@@ -28,6 +31,7 @@ Config.Events =
 			rgraph.config.Events.onMouseLeave(currentNode);
 		}
 		saveUndoState();
+
 		// Fetch new adjacencies for the clicked node, sum and animate
 		fetchJSON(node, true);
 
@@ -36,6 +40,7 @@ Config.Events =
 			max_level = node._depth + 2;
 			changed_max = true;
 		}
+
 		// Increase the number of concentric circles if needed
 		if(changed_max){
 			$jit.Graph.Util.computeLevels(rgraph.graph, rgraph.root, 0);
@@ -43,6 +48,8 @@ Config.Events =
 			rgraph.canvas.canvases[1].plot();
 			changed_max = false;
 		}
+
+
 		if(node.data.type == 'enzyme'){
 			$.getJSON('/enzyme_data', { id: node.id }, showEnzymeData);
 		}
