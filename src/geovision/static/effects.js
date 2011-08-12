@@ -3,8 +3,8 @@ var settingsopen = false;
 var helpopen = false;
 var samplesopen = false;
 
-/*
- * Opens the side query menu.
+/**
+ * Opens the left side query menu.
  */
 function openSearch()
 {
@@ -15,8 +15,8 @@ function openSearch()
 			function() { $('#navicontainer').fadeIn('fast', function() { opened = true; } ); }});
 	}
 }
-/*
- * Closes the side query menu.
+/**
+ * Closes the left side query menu.
  */
 function closeSearch(e)
 {
@@ -36,11 +36,9 @@ function closeSearch(e)
 		}});
 	}
 }
-jQuery(function($) {
-/* ! Functions to open the graph-option-navigation and the alignment and other
- * items with nice animations.
+/** Functions to open the graph-option-navigation, settings and samples with nice animations. Also takes care of coloring- and filtering-forms events.
  */
-
+jQuery(function($) {
 	$('#sampleslink').click(function() {
 		if (!samplesopen){
 			$('#samples').slideDown();
@@ -59,16 +57,6 @@ jQuery(function($) {
 		else{
 			$('#settings').slideUp();
 			settingsopen = false;
-		}
-	})
-	$('#helplink').click(function() {
-		if (!helpopen){
-			$('#help').slideDown();
-			helpopen = true;
-		}
-		else{
-			$('#help').slideUp();
-			helpopen = false;
 		}
 	})
 	$('#filterform').submit(function(e) {
@@ -111,7 +99,7 @@ jQuery(function($) {
 	})
 }); //jquery close
 
-/*
+/**
  * Sets bitscorelimits based on the given arguments and color the graph.
  */
 function setBitscoreColoring(min, max)

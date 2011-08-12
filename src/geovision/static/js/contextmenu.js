@@ -2,6 +2,7 @@ var currentNode;
 var currentEdge;
 var ctxMenuOpen;
 
+/* Called when the context menu is hidden */
 function hideCtxMenu()
 {
 	if(!ctxMenuOpen) return;
@@ -16,9 +17,12 @@ function hideCtxMenu()
 }
 function initContextMenu()
 {
+	/* Adds the context menu to the canvas and binds all the necessary events */
+	/* The event bindings are done in the jquery-contextmenu plugin code */
 	$('#infovis').contextMenu('nodeMenu', {
 		'shadow': false,
 		'bindings': {
+			/* The actual menu events. All the menu entries are defined in templates/graphviz.html */
 			'close': function() { },
 			'n_center': function() {
 				console.log(currentNode.id);
@@ -53,7 +57,19 @@ function initContextMenu()
 		},
 		'onShowMenu': function(evt, menu)
 		{
+			/* Removes all the menu items that are not applicable for the currently selected node/edge */
+			/* The applicable menu entries are based on the prefix of the element id:
+			 *     e_ - for read-dbentry-edges
+			 *     n_ - for all nodes
+			 *     n_en_ - for all enzyme nodes
+			 *     n_db_ - for all database nodes
+			 *     n_db_uni - for uniprot database nodes
+			 *     n_db_frn - for frnadb database nodes
+			 *     n_db_silva - for silva database nodes
+			 */
 			ctxMenuOpen = true;
+
+			// menu clicks don't play too nicely with JIT - disable panning & tooltips temporarily and re-enable them when hiding the menu.
 			rgraph.config.Navigation.panning = false;
 			rgraph.config.Tips.enable = false;
 			rgraph.tips.hide();

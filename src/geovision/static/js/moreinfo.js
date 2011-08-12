@@ -1,5 +1,5 @@
-/*
- * Function for showing the alignment of the read and the db-entry.
+/**
+ * Function for showing the alignment of the read and the db-entry and coloring it so that you can easily see which parts match
  */
 function alignmentfunction(thisid, nodeFrom, nodeTo) {
 	$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
@@ -29,13 +29,13 @@ function alignmentfunction(thisid, nodeFrom, nodeTo) {
 	});
 	return false;
 }
-//when the close button appears, it's set to work
+/**when the close button appears, it's set to work*/
 $('#closealign').live('click', function() {
 	closealignment(this);
 });
 
-/*
- * Function to close the div-element showing the alignment
+/**
+ * Function to close and delete the div-element showing the alignment
  */
 function closealignment (button) {
 		button = $(button);
@@ -46,9 +46,8 @@ function closealignment (button) {
 		$(alignment).slideUp();
 }
 
-/* Function to list all names, reactions and pathways related to an enzyme in
- * the right container.
- * */
+/** Function to list all names, reactions and pathways related to an enzyme in the right container.
+ */
 function showEnzymeData (json){
 	enzymes = {};
 	rgraph.graph.eachNode(function(n) {
