@@ -1,4 +1,8 @@
 jQuery(function($) {
+/* Performed when the 'Save' button is pressed
+ * Export the graph as JIT 'graph' style JSON annotated with the root node and the original query
+ * Also add the saved graph immediately to the search bar
+ */
 $('#saveGraph').submit(function(e) {
 	e.preventDefault();
 	var name = $('#savedGraphName').val();
@@ -10,10 +14,16 @@ $('#saveGraph').submit(function(e) {
 	$('#saveGraphStatus').text('Saving...');
 	return false;
 });
+
+/* performed when the 'Undo' button is clicked */
 $('#undo').click(function(e) {
 	e.preventDefault();
 	doUndo();
 });
+
+/* performed when the 'Save settings' or 'Restore defaults' buttons are pressed.
+ * Instead of normally POSTing the form, use AJAX to prevent page loading and having the current graph disappear.
+ */
 $('#settingsform, #defaultsettingsForm').submit(function(e) {
 	console.log(e);
 	e.preventDefault();
@@ -26,6 +36,7 @@ $('#settingsform, #defaultsettingsForm').submit(function(e) {
 });
 });
 
+/* Add a saved view to the side bar's saved view list */
 function addSavedViewToList(id, name)
 {
 	$('#savedViews').append('<div class="view">View name: <strong>'+ name +'</strong><br/><a class="load" href="/graphrefresh?open_view=' + id + '">Load</a> -' +
@@ -34,8 +45,10 @@ function addSavedViewToList(id, name)
 		'</span><br/>');
 }
 
-var MAX_UNDO = 20;
+var MAX_UNDO = 20; /* Maximum number of undo states. This could be made user configurable */
 var undoStates = [];
+
+/* Saves the current status of the graph to the undo history. */
 function saveUndoState()
 {
 	// $.extend is used to deep copy the array because JIT doesn't >:|
@@ -45,6 +58,7 @@ function saveUndoState()
 	$('#undo').removeAttr('disabled');
 }
 
+/* Perform an undo */
 function doUndo()
 {
 	if(undoStates.length == 0)
