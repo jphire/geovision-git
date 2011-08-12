@@ -1,3 +1,4 @@
+/* Calculate the shortest distance between a line segment and a point */
 dotLineLength = function( x, y, x0, y0, x1, y1, o ){
 	function lineLength( x, y, x0, y0 ){
 		return Math.sqrt( ( x -= x0 ) * x + ( y -= y0 ) * y );
@@ -20,6 +21,9 @@ dotLineLength = function( x, y, x0, y0, x1, y1, o ){
 RGraph.Plot.NodeTypes.implement({
     'customCircle': {
       'render': function(node, canvas){
+		/* Circle drawing code based on JIT code
+		 * Adds the drawing of the traversal tag of the node
+		 */
           var pos = node.pos.getc(),
               radius = node.getData('dim');
           var ctx = canvas.getCtx();
@@ -54,6 +58,11 @@ RGraph.Plot.NodeTypes.implement({
 
 RGraph.Plot.EdgeTypes.implement({  
 	'customArrow':{
+		/* Largely based on the JIT arrow rendering code, with several improvements:
+		 *   * doesn't draw part of the line over the arrow tip, making it look less ugly with alpha < 1
+		 *   * takes the node radius into account to make it look a lot nicer and easier to click a node with many connections
+		 *   * improved collision detection
+		 */
 	    'render': function(adj, canvas) {
             var from = adj.nodeFrom.pos.getc(),
                 to = adj.nodeTo.pos.getc(),
