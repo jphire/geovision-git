@@ -1,4 +1,4 @@
-/* Bitscore filtering & coloring related stuff */
+/** Bitscore filtering & coloring related stuff */
 /** http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
  * Converts an HSV color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
@@ -32,7 +32,7 @@ function hsvToRgb(h, s, v){
 }
 var bitscoreColorMin, bitscoreColorMax;
 
-/* Calculates colors for all adges and nodes in the graph and add that information
+/** Calculates colors for all adges and nodes in the graph and add that information
  * in the nodes and edges. Color can be accessed through node.data.$color.
  */
 function colorEdges(){
@@ -59,7 +59,7 @@ function colorEdges(){
 		minScore = bitscoreColorMin;
 		maxScore = bitscoreColorMax;
 	}
-	/* Calculates colors based on the bitscore given as argument. Returns the
+	/** Calculates colors based on the bitscore given as argument. Returns the
 	 * color in hexadecimal format.
 	 */
 	function color(bitscore){
@@ -85,7 +85,7 @@ function colorEdges(){
 	});
 	return false;
 }
-/* Function to filter graph based on a bitscore given by the user.
+/** Function to filter graph based on a bitscore given by the user.
  */
 function filter(bitscore) {
 	if (isNaN(bitscore) || bitscore <= 0) { /*bitscores must make sense*/
@@ -97,32 +97,3 @@ function filter(bitscore) {
 return true;
 }
 
-/*special version of contract function used only by the filter
- * TODO: UNUSED?*/
-function filterContract(node, opt) {
-	var viz = this.viz;
-	opt = $jit.util.merge(this.options, viz.config, opt || {}, {
-		'modes': ['node-property:alpha:span', 'linear']
-	});
-	node.collapsed = true;
-	(function subn(n) {
-		n.eachSubnode(function(ch) {
-			ch.ignore = true;
-			ch.setData('alpha', 0, opt.type == 'animate'? 'end' : 'current');
-			subn(ch);
-		});
-	})(node);
-	if(opt.type == 'animate') {
-		viz.compute('end');
-		(function subn(n) {
-			n.eachSubnode(function(ch) {
-				ch.setPos(node.getPos('end'), 'end');
-				subn(ch);
-			});
-		})(node);
-		viz.fx.animate(opt);
-	}
-	else if(opt.type == 'replot') {
-		viz.refresh();
-	}
-}
