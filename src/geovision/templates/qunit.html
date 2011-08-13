@@ -52,6 +52,7 @@
 		test("Events test", function()
 		{
 			expect(2);
+			initGraph();
 			var node = rgraph.graph.getNode(rgraph.root);
 			Config.Events.onMouseEnter(node);
 			var cursorStyle = rgraph.canvas.getElement().style.cursor;
