@@ -13,14 +13,14 @@
 		bitscore: 10, evalue: 1, hits: 1, depth: 1, samples: ['ABLU']};
 	  var settings = {}
 	</script>
-    <link rel="stylesheet" href="{{ STATIC_URL }}/qunit.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}qunit.css" type="text/css"/>
 	
 	<script type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 	<link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
     <link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />
 	<script type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
 	
-    <script type="text/javascript" src="{{ STATIC_URL }}/qunit.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}qunit.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
@@ -37,6 +37,9 @@
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
 
     <script type="text/javascript">
+		$(function() {
+				initGraph();
+			});
 	$(document).ready(function(){
 		module("Basic Unit Test");
 		test("Sample test", function()
