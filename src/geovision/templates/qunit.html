@@ -4,12 +4,11 @@
   <head>
     <script type="text/javascript">
 	  var query = { read: "", dbentry: "Q57DS4", enzyme: "",
-		bitscore: 10, evalue: 1, hits: 1, depth: 1, samples: []};
+		bitscore: 10, evalue: 1, hits: 1, depth: 1, samples: ['ABLU']};
 	</script>
     <link rel="stylesheet" href="{{ STATIC_URL }}/qunit.css" type="text/css"/>
     <script type="text/javascript" src="{{ STATIC_URL }}/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}/qunit.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}/js/create_test_data.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
@@ -23,37 +22,45 @@
 	<script type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
 
     <script type="text/javascript">
-    $(document).ready(function(){
-    module("Basic Unit Test");
-    test("Sample test", function()
-    {
-       expect(2);
-	   equals((4/2), 2, 'Expected 2 as the result, result was: ' + (4/2));
-       equals(divide(4,2), 2, 'Expected 2 as the result, result was: ' + divide(4,2));
-    });
-    module("moreinfo.js");
-    test("Alignment test", function()
-    {
-       expect(1);
-	   var alignment;
-       equals(2, 2, 'Expected 2 as the result, result was: ' + divide(4,2));
-    });
-	module("graphviz.js");
-    test("Graph creation test", function()
-    {
-       expect(1);
-	   var query = { read: "R1", dbentry: "", enzyme: "",
-		bitscore: 10, evalue: 1, hits: 1, depth: 1, samples: ['TEST']};
-	   initGraph();
-	   ok(rgraph, "rgraph creation failed");
+	$(document).ready(function(){
+		module("Basic Unit Test");
+		test("Sample test", function()
+		{
+			expect(2);
+			equals((4/2), 2, 'Expected 2 as the result, result was: ' + (4/2));
+			equals(divide(4,2), 2, 'Expected 2 as the result, result was: ' + divide(4,2));
+		});
 
+		module("moreinfo.js");
+		test("Alignment test", function()
+		{
+			expect(1);
+			var alignment;
+			equals(2, 2, 'Expected 2 as the result, result was: ' + divide(4,2));
+		});
 
-	   Config.Events.onMouseEnter(node);
-	   var cursorStyle = rgraph.canvas.getElement().style.cursor;
-       equals(cursorStyle, 'pointer', 'Expected pointer as the result, result was: ' + cursorStyle);
-    });
+		module("graphviz.js");
+		test("Graph creation test", function()
+		{
+			expect(1);
+			initGraph();
+			ok(rgraph, "rgraph value: " + rgraph);
+		});
 
-  });
+		module("events.js");
+		test("Events test", function()
+		{
+			expect(2);
+			var node = rgraph.graph.getNode(rgraph.root);
+			Config.Events.onMouseEnter(node);
+			var cursorStyle = rgraph.canvas.getElement().style.cursor;
+			equals(cursorStyle, 'pointer', 'Expected pointer as the result, result was: ' + cursorStyle);
+			Config.Events.onMouseLeave(node);
+			cursorStyle = rgraph.canvas.getElement().style.cursor;
+			equals(cursorStyle, '', 'Expected pointer as the result, result was: ' + cursorStyle);
+		});
+	}
+  
     </script>
   </head>
   <body>
