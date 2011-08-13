@@ -52,7 +52,9 @@
 		test("Graph creation test", function()
 		{
 			expect(1);
-			initGraph();
+			$(function() {
+				initGraph();
+			});
 			ok(rgraph, "rgraph value: " + rgraph);
 		});
 
