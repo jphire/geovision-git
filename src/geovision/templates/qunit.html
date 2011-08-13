@@ -16,8 +16,7 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}qunit.css" type="text/css"/>
 	
 	<script type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
-	<link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
-    <link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />
+	
 	<script type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
 	
     <script type="text/javascript" src="{{ STATIC_URL }}qunit.js"></script>
@@ -37,9 +36,7 @@
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
 
     <script type="text/javascript">
-		$(function() {
-				initGraph();
-			});
+		
 	$(document).ready(function(){
 		module("Basic Unit Test");
 		test("Sample test", function()
@@ -90,5 +87,9 @@
     <h2 id="qunit-userAgent"></h2>
     <ol id="qunit-tests">
     </ol>
+	<div id="qunit-fixture">
+		<link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
+		<link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />
+	</div>
   </body>
 </html>
