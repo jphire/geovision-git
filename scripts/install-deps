@@ -1,0 +1,33 @@
+#!/bin/bash
+LIBPATH=`dirname $0`/../libs
+LIBS=
+
+echo 'This script will install all the necessary Python modules for Geovision'
+read -p 'Install the required modules? (y/n): ' CHOICE
+
+if [ "$CHOICE" = "y" ]
+then
+	LIBS=$LIBPATH/*.tar.gz
+fi
+
+echo 'You can also install the libraries required for Geovision development and running the test suite.'
+echo 'They are not required for normal operation, and can be installed later by running this script again.'
+read  -p 'Install the development/unit testing tools? (y/n): ' CHOICE
+
+if [ "$CHOICE" = "y" ]
+then
+	LIBS=`echo $LIBS $LIBPATH/devel/*.tar.gz`
+fi
+
+TMPDIR=`mktemp -d geovision-installer-tmp.XXXXXXXX`
+for F in $LIBS
+do
+	LIBNAME=`basename ${F%.tar.gz}`
+	echo ">>>>> Installing $LIBNAME"
+	tar xzf $F -C $TMPDIR
+	cd $TMPDIR/$LIBNAME
+	python setup.py install --user
+	cd ../../
+	echo "<<<<< Installed $LIBNAME"
+done
+rm -rf $TMPDIR
