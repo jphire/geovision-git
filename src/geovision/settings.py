@@ -68,6 +68,9 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
+# Make sure that urls are correct when using FastCGI.
+FORCE_SCRIPT_NAME = ''
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True

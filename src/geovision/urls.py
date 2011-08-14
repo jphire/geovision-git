@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 admin.autodiscover()
 from geovision.admin import setup_admin
@@ -31,3 +32,4 @@ urlpatterns = patterns('',
 	(r'^admin/', include(admin.site.urls)),
 
 )
+urlpatterns += staticfiles_urlpatterns()

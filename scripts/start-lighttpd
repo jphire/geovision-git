@@ -1,0 +1,4 @@
+#!/bin/bash
+statusecho "Starting lighttpd HTTP server"
+run-manage runfcgi socket=$HOME/geovision-lighttpd/fastcgi.sock pidfile=$HOME/geovision/lighttpd/django.pid
+lighttpd -f lighttpd.conf

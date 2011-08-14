@@ -1,0 +1,38 @@
+# lighttpd.conf.base - a template file used to create ~/geovision-lighttpd/lighttpd.conf by scripts/setup-lighttpd
+server.modules              = (
+                                "mod_access",
+								"mod_rewrite",
+								"mod_fastcgi",
+                                "mod_accesslog" )
+server.document-root        = "/home/tmtynkky/geovision/src/geovision/"
+server.errorlog             = "/home/tmtynkky/geovision-lighttpd/error.log"
+accesslog.filename          = "/home/tmtynkky/geovision-lighttpd/access.log"
+
+mimetype.assign             = (
+  ".css"          =>      "text/css",
+  ".html"         =>      "text/html",
+  ".htm"          =>      "text/html",
+  ".js"           =>      "text/javascript",
+  ".txt"          =>      "text/plain",
+  ".xml"          =>      "text/xml",
+ )
+
+static-file.exclude-extensions = (".fcgi")
+
+server.port                = 25892
+server.pid-file            = "/home/tmtynkky/geovision-lighttpd/lighttpd.pid"
+
+fastcgi.server = (
+    "/geovision.fcgi" => (
+        "main" => (
+            "socket" => "/home/tmtynkky/geovision-lighttpd/fastcgi.sock",
+            "check-local" => "disable",
+        )
+    ),
+)
+
+url.rewrite-once = (
+#	"^(/static/admin.*)$" => "/geovision.fcgi$1",
+    "^/(static(?!/admin/).*)$" => "$1", 
+	"^(/.*)$" => "/geovision.fcgi$1",
+)

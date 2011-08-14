@@ -1,0 +1,3 @@
+#!/bin/bash
+kill `cat $HOME/geovision-lighttpd/lighttpd.pid` > /dev/null 2>&1
+kill `cat $HOME/geovision-lighttpd/django.pid` > /dev/null 2>&1
