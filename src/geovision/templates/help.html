@@ -12,6 +12,7 @@
 			<li><a href="#navigating">Navigating the graph</a></li>
 			<li><a href="#tooltips">Tooltips</a></li>
 			<li><a href="#tagging">Tagging the graph</a></li>
+			<li><a href="#tagoptions">Tagging options</a></li>
 			<li><a href="#undo">Undoing changes</a></li>
 			<li><a href="#info">Extra info and other databases</a></li>
 			<li><a href="#colors">Colors of the edges</a></li>
@@ -85,11 +86,38 @@
 		<p id="tagging"><strong>Tagging the graph</strong></p><br/>
 		<p>
 			Tagging the graph is a feature made to make traversing and viewing the graph easier. A node can be tagged by selecting 'tag/untag node' from the
-			rightclick menu. The same command also untags a tagged node. When a node is tagged, its center turns white,
-			making it look slightly different from the other nodes. Tagging a node will also automaticly always tag a path to the root node, which is the node at the center of the graph.
-			Nodes can also be tagged in batches. To tag a whole subgraph, select 'tag subgraph' from the rightclick menu. This can be reversed with the 'untag subgraph' option.
-			To tag the children of a node instead of the whole subgraph, select 'tag children'.	To make the graph simpler, you can also delete all untagged node by clicking on the 'delete all untagged' button on the right side of the graph.
+			rightclick menu. The same command also untags a tagged node. When a node is tagged, its center turns white.
+			Tagging a node will also tag a path to the root node, which is the node at the center of the graph. Untagging a node will also cause similar check to be made, and
+			all nodes which no longer have a tagged path to the root will also be untagged. 
+			This is done because the style of graph visualization assumes every node has a path to root (graph is connected).
 		</p><br/>
+		<p id="tagoptions"><strong>Tagging options</strong></p><br/>
+		<p>
+		<ul>
+			<li><i>Tag/Untag Node</i> - Tags or untags a single node. When tagging it will also tag a path to root if no path exists. 
+				Tagged path is the one with best edge bitscores starting from tagged node.
+				When untagging, all nodes in untagged node's subgraph without a path to root will also be untagged. More about the two untag options below.</li>
+			<li><i>Tag Children</i> - Tags a single node and it's immediate children. Please note that the children of a node may not be immediately obvious 
+				as some might be on the other side of the graph.<br/>
+				<img src="{{ STATIC_URL }}/images/1.png"/>
+				Before tagging node gl|1857124<br/>
+				<img src="{{ STATIC_URL }}/images/2-c.png"/>
+				Selecting the option<br/>
+				<img src="{{ STATIC_URL }}/images/3-c.png"/>
+				After tagging, note that some of the tagged nodes are on the other side of the graph. Tagging has also tagged a path to root (in this case only root, which is FR123406).<br/>
+				</li>
+			<li><i>Tag Subgraph</i> - Tags a single node and it's whole subgraph. Please note that the children of a node may not be immediately obvious 
+				as some might be on the other side of the graph.<br/>
+				<img src="{{ STATIC_URL }}/images/1.png"/>
+				Before tagging node gl|1857124<br/>
+				<img src="{{ STATIC_URL }}/images/2-c.png"/>
+				Selecting the option<br/>
+				<img src="{{ STATIC_URL }}/images/3-c.png"/>
+				After tagging, note that some of the tagged nodes are on the other side of the graph. Tagging has also tagged a path to root (in this case only root, which is FR123406).<br/>
+				</li>
+		</ul>
+		</p>
+			
 		<p id="undo"><strong>Undoing changes</strong></p><br/>
 		<p>
 			If you change the graph in a way you are not happy with, click on the undo button on the right side of the graph.
