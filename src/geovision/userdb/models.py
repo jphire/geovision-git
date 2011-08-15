@@ -5,6 +5,10 @@ from django.db.models.signals import pre_save, post_save
 class Sample(models.Model):
 	sample_id = models.CharField(max_length=32)
 	owner = models.ForeignKey(User, related_name='samples')
+
+class ImportedData(models.Model):
+	type = models.CharField(max_length=8)
+	data = models.CharField(max_length=32)
 #
 #class Collection(models.Model):
 #	name = models.CharField(max_length=64)

@@ -1,0 +1,15 @@
+
+#!/bin/bash
+source `dirname $0`/inc/common.bash
+
+if [ "$1" = "" ]
+then
+	echo "usage: $0 /path/to/kegg/enzyme"
+fi
+if [ ! -r "$1" ]
+then
+	errorecho "Could not open kegg file: $1"
+fi
+
+rundjango meta/enzyme_parser.py $1
+
