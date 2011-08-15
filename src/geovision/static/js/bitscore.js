@@ -61,6 +61,8 @@ function colorEdges(){
 	}
 	/** Calculates colors based on the bitscore given as argument. Returns the
 	 * color in hexadecimal format.
+	 * @param bitscore the birscore to be used for calculations
+	 * @return a color
 	 */
 	function color(bitscore){
 		
@@ -86,6 +88,7 @@ function colorEdges(){
 	return false;
 }
 /** Function to filter graph based on a bitscore given by the user.
+ * @param bitscore the bitscore to be used for filtering
  */
 function filter(bitscore) {
 	if (isNaN(bitscore) || bitscore <= 0) { /*bitscores must make sense*/
