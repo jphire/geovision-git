@@ -1,4 +1,4 @@
-/* config.js - Initializes all globals and the config dict. Sets default
+/** config.js - Initializes all globals and the config dict. Sets default
  * values for settings. Detailed explanation of all the configurations available
  * e.g. for animations can be found at the JIT documents page
  * http://thejit.org/static/v20/Docs/.
@@ -19,8 +19,7 @@ var defaultsettings = {
 };
 settings = $jit.util.merge(defaultsettings, settings);
 
-/////// Perform parameter validation on the user settings
-// Replace incorrectly formatted number fields with defaults
+/* Perform parameter validation on the user settings. Replace incorrectly formatted number fields with defaults */
 var numericFields = {settings: ['canvaswidth', 'canvasheight'], animationsettings: ['duration']}
 
 for (var key1 in numericFields)
@@ -33,7 +32,7 @@ for (var key1 in numericFields)
 	}
 }
 
-// Sets the transition function based on the strings in the settings dict
+/* Sets the transition function based on the strings in the settings dict*/
 settings.animationsettings.transitionname = settings.animationsettings.transition;
 var type = $jit.Trans[settings.animationsettings.transition];
 if(!type)
@@ -96,8 +95,8 @@ var Config =
 			dim: 10,
 		}
 };
+/** Set correct values for the settings widgets, also bind some events */
 jQuery(function($) {
-	/* Set correct values for the settings widgets, also bind some events */
 	$('#infovis').css('height', parseInt(settings.settings.canvasheight));
 	$('#infovis').css('width', parseInt(settings.settings.canvaswidth));
 	$('#center-container').css('width', parseInt(settings.settings.canvaswidth));

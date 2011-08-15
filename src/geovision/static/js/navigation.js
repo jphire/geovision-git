@@ -1,4 +1,4 @@
-/*
+/**
  * Modified version of the original contract function for removing unnecessary
  * nodes while traversing the graph.
  * TODO: NOT USED
@@ -41,7 +41,7 @@ function deleteByBitscore(bitscoreLimit) {
 
 }
 
-/* Function for deleting nodes from the graph.
+/** Function for deleting nodes from the graph.
  * If bitscoreLimit is not defined, all untagged nodes except root will be deleted.
  * If bitscoreLimit is defined, all untagged nodes (except root) without connections 
  * over that bitscore will be deleted. It will also preserve a path to root from each
@@ -72,7 +72,7 @@ function deleteUntagged(bitscoreLimit) {
 	}
 }
 
-/* Function for updating data.bitscore field for all nodes in the graph.
+/** Function for updating data.bitscore field for all nodes in the graph.
  * Should be used after deleting edges from the graph if relevant values are not otherwise updated.
  */
 function updateBitscores() {
@@ -88,7 +88,7 @@ function updateBitscores() {
 	});
 }
 
-// TODO: UNUSED?
+/** TODO: UNUSED? */
 function addTemporaryTags()
 {
 	rgraph.graph.eachNode(function(n) {
@@ -97,7 +97,7 @@ function addTemporaryTags()
 	});
 }
 
-/* Function for checking if node has a tagged path to the root node.
+/** Function for checking if node has a tagged path to the root node.
  * Assumes the node has a path to root.
  */
 function checkRootTagpath(node) {
@@ -114,7 +114,7 @@ function checkRootTagpath(node) {
 	return false;
 }
 
-/* Function for tagging a node. If node has no tagged path to root, a path will also be tagged
+/** Function for tagging a node. If node has no tagged path to root, a path will also be tagged
  * since otherwise deletion could result in disconnected graph.
  */
 function tagNode(node, value) {
@@ -123,7 +123,7 @@ function tagNode(node, value) {
 	rgraph.refresh()
 }
 
-/* Function for tagging a path from node to root.
+/** Function for tagging a path from node to root.
  * Builds path by tagging the parent with the best (bitscore) connection to current node.
  * Responsibility for updating the visualization is left to user, this function does
  * not call refresh() or any animating function.
@@ -148,6 +148,7 @@ function tagParents(node, value) {
 	node.traversalTag = true;
 }
 
+/** Tags the subnodes of the node*/
 function tagSubnodes(node) {
 	if (!checkRootTagpath(node)) tagParents(node);
 	node.eachSubnode(function(child) {
@@ -158,6 +159,7 @@ function tagSubnodes(node) {
 	rgraph.refresh()
 }
 
+/** Tags the subgraph of the node*/
 function tagSubgraph(node) {
 	if (!checkRootTagpath(node)) tagParents(node);
 	node.eachSubgraph(function(child) {
@@ -168,7 +170,7 @@ function tagSubgraph(node) {
 	rgraph.refresh()
 }
 
-/* Untags a node.
+/** Untags a node.
  * Since many operations rely on all nodes having a path to root, also untags all
  * tagged nodes without a tagged path to root after untagging this node.
  */
@@ -183,6 +185,7 @@ function untagNode(node) {
 	rgraph.refresh()
 }
 
+/** Untags a subgraph */
 function untagSubgraph(node) {
 	node.eachSubgraph(function(sn) {
 		sn.traversalTag = false;

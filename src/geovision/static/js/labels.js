@@ -1,4 +1,4 @@
-/* Label configurations for nodes.
+/** Label configurations for nodes.
  */
 
 $.extend(Config, {

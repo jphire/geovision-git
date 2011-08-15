@@ -2,23 +2,23 @@ var currentNode;
 var currentEdge;
 var ctxMenuOpen;
 
-/* Called when the context menu is hidden */
+/** Called when the context menu is being hidden */
 function hideCtxMenu()
 {
 	if(!ctxMenuOpen) return;
 	ctxMenuOpen = false;
 	if(currentNode) rgraph.config.Events.onMouseLeave(currentNode)
-	if(currentEdge) rgraph.config.Events.onMouseLeave(currentEdge); // XXX does this work completely?
+	if(currentEdge) rgraph.config.Events.onMouseLeave(currentEdge);
 	busy = false;
 	currentEdge = currentNode = false;
 	rgraph.config.Navigation.panning = true;
 	rgraph.config.Tips.enable = true;
 	rgraph.events.pressed = false;
 }
+/** Adds the context menu to the canvas and binds all the necessary events.
+* The event bindings are done in the jquery-contextmenu plugin code */
 function initContextMenu()
 {
-	/* Adds the context menu to the canvas and binds all the necessary events */
-	/* The event bindings are done in the jquery-contextmenu plugin code */
 	$('#infovis').contextMenu('nodeMenu', {
 		'shadow': false,
 		'bindings': {

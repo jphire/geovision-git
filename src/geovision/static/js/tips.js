@@ -1,4 +1,4 @@
-/* This is tooltip configurations file. You can change the shown info about nodes
+/** This is tooltip configurations file. You can change the shown info about nodes
  * or edges by modifying the innerHtml element.
  *
  */

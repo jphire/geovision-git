@@ -1,4 +1,4 @@
-/* Event configurations for nodes and edges is implemented here. onClick event is
+/** Event configurations for nodes and edges is implemented here. onClick event is
  * triggered when a node or an edge is clicked. 
  *
  * When node is is clicked, a new database query is made to fetch new adjacencies for 
