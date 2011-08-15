@@ -1,3 +1,0 @@
-#!/bin/sh
-PROJECTROOT=`dirname $0`
-PYTHONPATH=$PROJECTROOT:$PROJECTROOT/.. DJANGO_SETTINGS_MODULE=settings exec python "$@"
