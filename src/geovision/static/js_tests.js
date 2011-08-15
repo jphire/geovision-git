@@ -42,22 +42,24 @@ $(document).ready(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
 				var cursorStyle = rgraph.canvas.getElement().style.cursor;
 				Config.Events.onMouseEnter(node);
-				ok(cursorStyle=='pointer', 'Expected cursorStyle to be pointer, instead it was: ' + rgraph.canvas.getElement().style.cursor);
+				ok(cursorStyle=='pointer', 'Expected cursorStyle to be pointer, it was: ' + rgraph.canvas.getElement().style.cursor);
 				start();
 			}, 1000);
 
 			
 			setTimeout(function(){
+				var node = rgraph.graph.getNode(rgraph.root);
 				Config.Events.onMouseLeave(node);
 				cursorStyle = rgraph.canvas.getElement().style.cursor;
-				ok(cursorStyle=='', 'Expected cursorStyle to be empty, instead it was: ' + rgraph.canvas.getElement().style.cursor);
+				ok(cursorStyle=='', 'Expected cursorStyle to be empty, it was: ' + rgraph.canvas.getElement().style.cursor);
 				start();
 			}, 1000);
 			
 			
 			setTimeout(function(){
+				var node = rgraph.graph.getNode(rgraph.root);
 				Config.Events.onClick(node);
-				ok('DB5' in rgraph.graph.nodes, 'DB5 was not in the graph');
+				ok('DB5' in rgraph.graph.nodes, 'DB5 was in the graph: ' + 'DB5' in rgraph.graph.nodes);
 				start();
 			}, 1000);
 		});
