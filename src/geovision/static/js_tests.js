@@ -14,7 +14,7 @@ $(document).ready(function(){
 				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
 				ok(closealign.innerHTML=="Close", "Alignmentfunction has close button:" + (closealign.innerHTML=="Close"));
 				start();
-			}, 1000);
+			}, 2000);
 
 			setTimeout(function(){
 				closealignment(closealign);
