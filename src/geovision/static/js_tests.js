@@ -56,10 +56,12 @@ $(document).ready(function(){
 				ok(currentNode==undefined, 'currentNode was undefined: ' + (currentNode==undefined));
 				start();
 			}, 1000);
-					
+
+			Config.Events.onClick(node);
 			setTimeout(function(){
-				var node = rgraph.graph.getNode(rgraph.root);
-				Config.Events.onClick(node);
+//				var node = rgraph.graph.getNode(rgraph.root);
+				
+				ok(currentNode!=undefined, 'currentNode was not undefined: ' + (currentNode!=undefined));
 				ok(('DB5' in rgraph.graph.nodes), 'DB5 was in the graph: ' + ('DB5' in rgraph.graph.nodes));
 				start();
 			}, 1000);
