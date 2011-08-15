@@ -1,4 +1,6 @@
-/* prepareJSON(jitJSON json) - prepare a JIT graph in JSON 'graph' form for display */ 
+/** prepareJSON(jitJSON json) - prepare a JIT graph in JSON 'graph' form for display
+ * @param json the json to be used for the graph
+ * @return the 'graphified' json */
 function prepareJSON(json)
 {
 	for (i in json)
@@ -18,9 +20,10 @@ function prepareJSON(json)
 	}
 	return json;
 }
-/* setBusy(null|string msg) - Set animation busy status
+/** setBusy(null|string msg) - Set animation busy status
  * If msg is a string, add a loading bar with the specified message and prevent all other operations
  * If msg is null, disable busy state
+ * @param msg message to be shown
  */
 function setBusy(msg)
 {
@@ -37,7 +40,7 @@ function setBusy(msg)
 		busy = false;
 	}
 }
-/* cleanupGraph() - clean up the graph by removing leftover stuff
+/** clean up the graph by removing leftover stuff
  * (e.g. edges with $alpha 0.0) that JIT tends to leave when deleting nodes.
  */
 function cleanupGraph()
@@ -47,8 +50,9 @@ function cleanupGraph()
 			rgraph.graph.removeNode(n.id);
 	});
 }
-/*
- * fetchJSON(JitNode node) - expand the graph at the specified node
+/**
+ * expand the graph at the specified node
+ * @param node JitNode from which the graph needs to expand
  */
 function fetchJSON(node)
 {
@@ -77,7 +81,7 @@ function fetchJSON(node)
 				});
 }
 
-/* 
+/**
  * This function creates the graph according to the JSON data.
  */
 function initGraph()

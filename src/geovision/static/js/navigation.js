@@ -2,6 +2,8 @@
  * Modified version of the original contract function for removing unnecessary
  * nodes while traversing the graph.
  * TODO: NOT USED
+ * @param node node to contract the graph from
+ * @param opt options
  */
 function contractForTraversal(node, opt) {
 	console.log("contractForTraversal");
@@ -37,6 +39,7 @@ function contractForTraversal(node, opt) {
 	}
 }
 
+/** not used */
 function deleteByBitscore(bitscoreLimit) {
 
 }
@@ -51,6 +54,7 @@ function deleteByBitscore(bitscoreLimit) {
  * and update data.bitscore field for remaining nodes.
  *
  * Will also untag all nodes once finished.
+ * @param bitscoreLimit the limit under which nodes will be deleted
  */
 function deleteUntagged(bitscoreLimit) {
 	var nodesArray = [];
@@ -99,6 +103,7 @@ function addTemporaryTags()
 
 /** Function for checking if node has a tagged path to the root node.
  * Assumes the node has a path to root.
+ * @param node the node for which to check the path
  */
 function checkRootTagpath(node) {
 	var parentNodes = node.getParents();
@@ -116,6 +121,8 @@ function checkRootTagpath(node) {
 
 /** Function for tagging a node. If node has no tagged path to root, a path will also be tagged
  * since otherwise deletion could result in disconnected graph.
+ * @param node the node to be tagged
+ * @param value 
  */
 function tagNode(node, value) {
 	if (!checkRootTagpath(node)) tagParents(node);
@@ -127,6 +134,8 @@ function tagNode(node, value) {
  * Builds path by tagging the parent with the best (bitscore) connection to current node.
  * Responsibility for updating the visualization is left to user, this function does
  * not call refresh() or any animating function.
+ * @param node the node which will have its parents tagged
+ * @param value
  */
 function tagParents(node, value) {
 	var currentNode = node;
@@ -148,7 +157,8 @@ function tagParents(node, value) {
 	node.traversalTag = true;
 }
 
-/** Tags the subnodes of the node*/
+/** Tags the subnodes of the node
+ * @param node target node to have subnodes tagged*/
 function tagSubnodes(node) {
 	if (!checkRootTagpath(node)) tagParents(node);
 	node.eachSubnode(function(child) {
@@ -159,7 +169,8 @@ function tagSubnodes(node) {
 	rgraph.refresh()
 }
 
-/** Tags the subgraph of the node*/
+/** Tags the subgraph of the node
+ * @param node target node to have its subgraph tagged*/
 function tagSubgraph(node) {
 	if (!checkRootTagpath(node)) tagParents(node);
 	node.eachSubgraph(function(child) {
@@ -173,6 +184,7 @@ function tagSubgraph(node) {
 /** Untags a node.
  * Since many operations rely on all nodes having a path to root, also untags all
  * tagged nodes without a tagged path to root after untagging this node.
+ * @param node node to be untagged
  */
 function untagNode(node) {
 	node.traversalTag = false;
@@ -185,7 +197,8 @@ function untagNode(node) {
 	rgraph.refresh()
 }
 
-/** Untags a subgraph */
+/** Untags a subgraph
+ *@param node node to have its subgraph untagged*/
 function untagSubgraph(node) {
 	node.eachSubgraph(function(sn) {
 		sn.traversalTag = false;
