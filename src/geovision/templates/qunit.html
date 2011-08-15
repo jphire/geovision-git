@@ -1,25 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
       "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-  <head>
+	<head>
 	  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	  <link rel="stylesheet" href="{{ STATIC_URL }}styles.css" type="text/css"/>
-    <link rel="stylesheet" href="{{ STATIC_URL }}reset.css" type="text/css"/>
-	<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}effects.js"></script>
-
-    <script type="text/javascript">
+	  <script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+	  <script type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
+	   <script type="text/javascript" src="{{ STATIC_URL }}qunit.js"></script>
+	  <link rel="stylesheet" href="{{ STATIC_URL }}qunit.css" type="text/css"/>
+		<link rel="stylesheet" href="{{ STATIC_URL }}styles.css" type="text/css"/>
+		<link rel="stylesheet" href="{{ STATIC_URL }}reset.css" type="text/css"/>
+	<script type="text/javascript">
 	  var query = { read: "", dbentry: "Q57DS4", enzyme: "",
 		bitscore: 10, evalue: 1, hits: 1, depth: 1, samples: ['ABLU']};
 	  var settings = {}
 	</script>
-    <link rel="stylesheet" href="{{ STATIC_URL }}qunit.css" type="text/css"/>
-	
+    
+	<script type="text/javascript" src="{{ STATIC_URL }}effects.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
 	
-	<script type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
-	
-    <script type="text/javascript" src="{{ STATIC_URL }}qunit.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
@@ -32,11 +30,11 @@
 	<script type="text/javascript" src="{{ STATIC_URL }}js/tips.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
 	
-	
 	<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
 
-    <script type="text/javascript">
-		
+	</head>
+	<body>
+	<script type="text/javascript">
 	$(document).ready(function(){
 		module("Basic Unit Test");
 		test("Sample test", function()
@@ -80,8 +78,7 @@
 	});
   
     </script>
-  </head>
-  <body>
+   
     <h1 id="qunit-header">QUnit example</h1>
     <h2 id="qunit-banner"></h2>
     <h2 id="qunit-userAgent"></h2>
