@@ -37,23 +37,26 @@ $(document).ready(function(){
 		{
 			expect(3);
 			initGraph();
-			var node = rgraph.graph.getNode(rgraph.root);
-			var cursorStyle = rgraph.canvas.getElement().style.cursor;
-			Config.Events.onMouseEnter(node);
+			
 			setTimeout(function(){
+				var node = rgraph.graph.getNode(rgraph.root);
+				var cursorStyle = rgraph.canvas.getElement().style.cursor;
+				Config.Events.onMouseEnter(node);
 				ok(cursorStyle=='pointer', 'Expected cursorStyle to be pointer, instead it was: ' + rgraph.canvas.getElement().style.cursor);
 				start();
 			}, 1000);
 
-			Config.Events.onMouseLeave(node);
-			cursorStyle = rgraph.canvas.getElement().style.cursor;
+			
 			setTimeout(function(){
+				Config.Events.onMouseLeave(node);
+				cursorStyle = rgraph.canvas.getElement().style.cursor;
 				ok(cursorStyle=='', 'Expected cursorStyle to be empty, instead it was: ' + rgraph.canvas.getElement().style.cursor);
 				start();
 			}, 1000);
 			
-			Config.Events.onClick(node);
+			
 			setTimeout(function(){
+				Config.Events.onClick(node);
 				ok('DB5' in rgraph.graph.nodes, 'DB5 was not in the graph');
 				start();
 			}, 1000);
