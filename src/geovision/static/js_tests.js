@@ -30,8 +30,10 @@ $(document).ready(function(){
 			ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.levelDistance);
 			ok(rgraph.config.Node.alpha==Config.Node.alpha, "rgraph.config.Node.alpha: " + rgraph.config.Node.alpha);
 			ok(rgraph.config.Edge.dim==Config.Edge.dim, "rgraph.config.Edge.dim: " + rgraph.config.Edge.dim);
+			stop(2000);
 			$.getJSON('/graphjson', query, function(json) {
 				rgraph.loadJSON(prepareJSON(json), query.root || 0);
+				start();
 			});
 			ok(rgraph.json.length == 5, "rgraph.json.length was: " + rgraph.json.length);
 			
