@@ -4,24 +4,24 @@
 
 $(document).ready(function(){
 
-		module("moreinfo.js");
-		asyncTest("Alignment test", function()
-		{
-			expect(2);
-			initGraph();
-			setTimeout(function(){
-				alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
-				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
-				ok(closealign.innerHTML=="Close", "Alignmentfunction has close button:" + (closealign.innerHTML=="Close"));
-				start();
-			}, 1000);
-
-			closealignment(closealign);
-			setTimeout(function(){
-				raises(closealignment(closealign), "must raise error to pass");
-				start();
-			}, 1000);
-		});
+//		module("moreinfo.js");
+//		asyncTest("Alignment test", function()
+//		{
+//			expect(2);
+//			initGraph();
+//			setTimeout(function(){
+//				alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
+//				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
+//				ok(closealign.innerHTML=="Close", "Alignmentfunction has close button:" + (closealign.innerHTML=="Close"));
+//				start();
+//			}, 1000);
+//
+//			closealignment(closealign);
+//			setTimeout(function(){
+//				raises(closealignment(closealign), "must raise error to pass");
+//				start();
+//			}, 1000);
+//		});
 
 		module("graphviz.js");
 		 /* Asynchronous testing required when using ajax!*/
