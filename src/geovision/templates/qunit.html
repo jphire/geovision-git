@@ -56,8 +56,7 @@
 		test("Graph creation test", function()
 		{
 			expect(1);
-			var rgraph;
-			initGraph();
+			var rgraph = new RGraph(Config);
 			
 			ok(rgraph.busy==false, "rgraph value: " + rgraph);
 		});
