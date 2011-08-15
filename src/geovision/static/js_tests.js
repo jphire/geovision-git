@@ -1,8 +1,7 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This file includes qunit tests for all javascript code not in external libraries.
+ *
  */
-
 
 $(document).ready(function(){
 		module("Basic Unit Test");
@@ -34,6 +33,7 @@ $(document).ready(function(){
 			$.getJSON('/graphjson', query, function(json) {
 				rgraph.loadJSON(prepareJSON(json), query.root || 0);
 			});
+			ok(rgraph.json.length == 5, "rgraph.json.length was: " + rgraph.json.length);
 			
 		});
 
