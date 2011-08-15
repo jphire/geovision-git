@@ -4,11 +4,11 @@
 
 $(document).ready(function(){
 
-//		module("moreinfo.js");
-//		asyncTest("Alignment test", function()
-//		{
-//			expect(2);
-//			initGraph();
+		module("moreinfo.js");
+		asyncTest("Alignment test", function()
+		{
+			//expect(0);
+			initGraph();
 //			setTimeout(function(){
 //				alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
 //				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
@@ -20,8 +20,8 @@ $(document).ready(function(){
 //			setTimeout(function(){
 //				raises(closealignment(closealign), "must raise error to pass");
 //				start();
-//			}, 1000);
-//		});
+			}, 1000);
+		});
 
 		module("graphviz.js");
 		 /* Asynchronous testing required when using ajax!*/
