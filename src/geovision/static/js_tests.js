@@ -40,22 +40,22 @@ $(document).ready(function(){
 			
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
-				cursorStyle = rgraph.canvas.getElement().style.cursor;
+				var cursorStyle = rgraph.canvas.getElement().style.cursor;
 				Config.Events.onMouseEnter(node);
-				ok(cursorStyle=='pointer', 'Expected cursorStyle to be pointer, it was: ' + rgraph.canvas.getElement().style.cursor);
+				ok(cursorStyle=='pointer', 'cursorStyle was pointer: ' + (cursorStyle=='pointer'));
 				start();
 			}, 1000);
-
-			
+	
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
 				Config.Events.onMouseLeave(node);
 				cursorStyle = rgraph.canvas.getElement().style.cursor;
 				ok(cursorStyle=='', 'cursorStyle was empty: ' + (cursorStyle==''));
+				ok(currentNode==rgraph.root, 'currentNode was DB1: ' + currentNode==rgraph.root);
+				ok(cursorStyle=='', 'cursorStyle was empty: ' + (cursorStyle==''));
 				start();
 			}, 1000);
-			
-			
+					
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
 				Config.Events.onClick(node);
