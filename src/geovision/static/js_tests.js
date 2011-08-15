@@ -9,29 +9,18 @@ $(document).ready(function(){
 		{
 			expect(9);
 			initGraph();
-
-			setTimeout(function(){
-				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
-				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.config.levelDistance);
-				ok(rgraph.config.Node.alpha==Config.Node.alpha, "rgraph.config.Node.alpha: " + rgraph.config.Node.alpha);
-				ok(rgraph.config.Edge.dim==Config.Edge.dim, "rgraph.config.Edge.dim: " + rgraph.config.Edge.dim);
-				ok(rgraph.json.length == 5, "rgraph.json.length was: " + rgraph.json.length);
-				ok(rgraph.root=="R1", "rgraph.root was: " + rgraph.root);
-				start();
-			}, 1000);
-
 			setTimeout(function(){
 				alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
-				ok($('#qunit-fixture.span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
+				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
 				ok(closealign.innerHTML=="Close", "Alignmentfunction has close button:" + (closealign.innerHTML=="Close"));
 				start();
 			}, 1000);
 
-//			setTimeout(function(){
-//				closealignment(closealign);
-//				raises(closealignment(closealign), "must raise error to pass");
-//				start();
-//			}, 1000);
+			setTimeout(function(){
+				closealignment(closealign);
+				raises(closealignment(closealign), "must raise error to pass");
+				start();
+			}, 1000);
 			
 		});
 
