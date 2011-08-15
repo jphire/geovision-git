@@ -35,24 +35,25 @@ $(document).ready(function(){
 		module("events.js");
 		asyncTest("Events test", function()
 		{
-			expect(3);
+			expect(5);
 			initGraph();
+			var node = rgraph.graph.getNode(rgraph.root);
+			Config.Events.onMouseEnter(node);
 			
 			setTimeout(function(){
-				var node = rgraph.graph.getNode(rgraph.root);
+				
 				var cursorStyle = rgraph.canvas.getElement().style.cursor;
-				Config.Events.onMouseEnter(node);
-				ok(cursorStyle=='pointer', 'cursorStyle was pointer: ' + (cursorStyle=='pointer'));
+				ok((rgraph.canvas.getElement().style.cursor=='pointer'), 'cursorStyle was pointer: ' + (cursorStyle=='pointer'));
 				start();
 			}, 1000);
-	
+
+			node = rgraph.graph.getNode(rgraph.root);
+			Config.Events.onMouseLeave(node);
 			setTimeout(function(){
-				var node = rgraph.graph.getNode(rgraph.root);
-				Config.Events.onMouseLeave(node);
+				
 				cursorStyle = rgraph.canvas.getElement().style.cursor;
-				ok(cursorStyle=='', 'cursorStyle was empty: ' + (cursorStyle==''));
-				ok(currentNode==rgraph.root, 'currentNode was DB1: ' + currentNode==rgraph.root);
-				ok(cursorStyle=='', 'cursorStyle was empty: ' + (cursorStyle==''));
+				ok(rgraph.canvas.getElement().style.cursor=='', 'cursorStyle was empty: ' + (cursorStyle==''));
+				ok(currentNode==undefined, 'currentNode was undefined: ' + (currentNode==undefined));
 				start();
 			}, 1000);
 					
