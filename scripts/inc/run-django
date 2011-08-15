@@ -1,0 +1,4 @@
+#!/bin/bash
+# Runs a django program with the correct django configuration
+PROJECTROOT=`dirname $0`/../../src/geovision/
+PYTHONPATH=$PROJECTROOT:$PROJECTROOT/.. DJANGO_SETTINGS_MODULE=settings exec python $PROJECTROOT/"$1" "${@:2}"

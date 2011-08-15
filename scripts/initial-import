@@ -1,0 +1,88 @@
+#!/bin/bash
+echo <<EOF ########## Geovision initial data import script ##########
+
+This script will create a database suitable for Geovision and import all the data files specified in scripts/initial-import.conf
+This WILL take several hours and DESTROY EVERYTHING IN THE DATABASE!
+
+Before continuing, make sure that
+
+1) You have a running PostgreSQL server, and that Geovision is properly configured to use it in src/geovision/settings.py
+
+2) You have configured the paths to the KEGG database files and UniProt ecs database in scripts/initial-import.conf
+
+3) You have listed all the data files (samples, databases, blasts) you want to import in scripts/initial-import.conf
+   Note that it is usually much faster to import as much data that is possible during the initial importing phase.
+
+4) You are running this script either on a local terminal (Linux virtual terminal, X terminal), or in a GNU screen session to prevent any errors caused by e.g. flaky SSH connections.
+
+EOF
+read -p "Enter 'YES' to continue, anything else to abort: " INPUT
+
+if [ $INPUT != 'YES' ]
+then
+	echo 'Aborting.'
+	exit 0
+fi
+source `dirname $0`/common.bash
+source `dirname $0`/initial-import.conf
+
+statusecho "(Re)creating database"
+run-manage syncdb
+run-manage --noinput reset viz meta
+
+read -p "Do you want to create a new superuser account? (y/n): " INPUT
+if [ "$INPUT" = "y" ]
+then
+	run-manage createsuperuser
+else
+	echo 'You can create one later with the create-superuser script'
+fi
+
+# drop predefined indexes to speed up importing
+run-psql -ac 'DROP INDEX "viz_blast_read_id";'
+run-psql -ac 'DROP INDEX "viz_blast_read_id_like";'
+run-psql -ac 'DROP INDEX "viz_blast_db_entry_id";'
+run-psql -ac 'DROP INDEX "viz_blast_db_entry_id_like";'
+run-psql -ac 'DROP INDEX "viz_blastecs_db_entry_id_like";'
+run-psql -ac 'DROP INDEX "viz_dbuniprotecs_db_id_like";'
+run-psql -ac 'ALTER TABLE viz_dbuniprotecs DROP CONSTRAINT viz_dbuniprotecs_db_id_fkey;'
+
+statusecho "Importing utility databases"
+import-kegg "$KEGG_ENZYME_PATH"
+import-ecs "$ECS_PATH"
+
+statusecho "Importing samples"
+for SAMPLEFILE in $SAMPLES
+do
+	import-sample $SAMPLEFILE
+done
+
+statusecho "Importing databases"
+for DB in $DATABASES
+do
+	DBNAME=`echo $DB | cut -d'|' -f1`
+	DBFILE=`echo $DB | cut -d'|' -f2`
+	import-database $DBFILE $DBNAME
+done
+
+statusecho "Importing blasts"
+for BLASTFILE in $BLAST_PATH/*.align
+do
+	import-blast $BLASTFILE --no-warning
+done
+
+statusecho "Creating indexes"
+run-psql -1ac "CREATE INDEX viz_blast_read_id ON viz_blast (read_id) WITH (fillfactor = 100);
+CREATE INDEX viz_blast_db_entry_id ON viz_blast (db_entry_id) WITH (fillfactor = 100);
+CREATE INDEX viz_blast_bitscore ON viz_blast (bitscore) WITH (fillfactor = 100);
+CREATE INDEX viz_dbuniprotecs_ec ON viz_dbuniprotecs(ec) WITH (fillfactor = 100) WHERE ec != '?';
+
+	ANALYZE viz_read;
+	ANALYZE viz_dbentry;
+	ANALYZE viz_blast;
+	ANALYZE viz_dbuniprotecs;
+	ANALYZE meta_enzymename;"
+rebuild-cache
+run-psql -ac "CREATE INDEX viz_blastecs_bitscore ON viz_blastecs (bitscore) WITH (fillfactor = 100);
+CREATE INDEX viz_blastecs_ec ON viz_blastecs (ec) WITH (fillfactor=100);"
+statusecho "Initial importing complete"

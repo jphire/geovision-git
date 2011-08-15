@@ -42,17 +42,14 @@ function colorEdges(){
 	var minScore = 100000;
 	rgraph.graph.eachNode(function(node) {
 		var nodeMaxScore = 0;
-		var nodeMinScore = 100000;
 		node.eachAdjacency(function(adj) {
 			var bs = adj.data.bitscore;
 			if(!bs) return;
 				maxScore = max(bs, maxScore);
 				minScore = min(bs, minScore);
 				nodeMaxScore = max(bs, nodeMaxScore);
-				nodeMinScore = min(bs, nodeMinScore);
 		});
 		node.data.bitscore = nodeMaxScore;
-		node.data.min_bitscore = nodeMinScore;
 	});
 	if(bitscoreColorMin)
 	{
@@ -97,6 +94,5 @@ function filter(bitscore) {
 	}
 	saveUndoState();
 	rgraph.op.deleteUntagged(bitscore);
-return true;
+	return true;
 }
-
