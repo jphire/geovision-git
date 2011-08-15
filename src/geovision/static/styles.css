@@ -39,13 +39,16 @@ div#help{
 	margin-bottom: 15px;
 	padding-bottom: 30px;
 }
-#img {
+#help img {
 	width:540px;
 }
 #help ul{
 	margin-left: 0px;
 	padding-left: 30px;
 	font-size: 14px;
+}
+ul#taghelplist li{
+	margin-bottom: 10px;
 }
 #help li{
 	list-style: circle;
