@@ -58,6 +58,7 @@
 		test("Graph creation test", function()
 		{
 			expect(1);
+			var rgraph;
 			initGraph();
 			
 			ok(rgraph.busy==false, "rgraph value: " + rgraph);
@@ -88,8 +89,6 @@
     </ol>
 	<div id="qunit-fixture">
 		<div id="infovis"></div>
-		<link rel="stylesheet" href="{{ STATIC_URL }}base.css" type="text/css"/>
-		<link type="text/css" href="{{ STATIC_URL }}ui-lightness/jquery-ui.css" rel="stylesheet" />
 	</div>
   </body>
 </html>
