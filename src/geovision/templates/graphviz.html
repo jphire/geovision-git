@@ -17,7 +17,7 @@ var query = { read: "{{ read }}", dbentry: "{{ dbentry }}", enzyme: "{{ enzyme }
 		query.samples.push('{{ sample }}');
 {% endfor %}
 {% if view_id %}
-query.view_id = {{ view_id }};
+		query.view_id = {{ view_id }};
 {% endif %}
 </script>
 {% endautoescape %}
@@ -62,10 +62,10 @@ $(function() {
 		<strong>Get a new graph:</strong>
 	</td></tr>
 	{% if error_message  %}
-	<tr><td>
-		<script type="text/javascript">openSearch();</script>
-		<p id="navierror">{{ error_message }}</p>
-	</td></tr>
+		<tr><td>
+			<script type="text/javascript">openSearch();</script>
+			<p id="navierror">{{ error_message }}</p>
+		</td></tr>
 	{% else %}
 	{% endif %}
 	<tr><td colspan="2" class="center">
@@ -75,10 +75,10 @@ $(function() {
 	</td><td>
 		<input size="10" type="text" name="enzyme" id="ec" value="{{ enzyme }}"/>
 		{% if enzyme_list %}
-		</td></tr><tr><td colspan="2" class="center">Multiple enzymes matched, pick one:
-		{% for e in enzyme_list %}
-		</td></tr><tr><td colspan="2" class="center"><p class="submitForm">{{ e.enzyme_name }} ({{ e.ec_number }})</p>
-		{% endfor %}
+			</td></tr><tr><td colspan="2" class="center">Multiple enzymes matched, pick one:
+			{% for e in enzyme_list %}
+				</td></tr><tr><td colspan="2" class="center"><p class="submitForm">{{ e.enzyme_name }} ({{ e.ec_number }})</p>
+			{% endfor %}
 		{% endif %}
 	</td></tr><tr><td>
 		<label>Read id:</label>
@@ -112,7 +112,11 @@ $(function() {
 			<label>Samples:</label><br/>
 			<div id="samplelist">
 			{% for sample in all_samples %}
-				<input type="checkbox" name="samples" value="{{ sample }}" /> {{ sample }}<br/>
+				{% if sample in samples %}
+					<input type="checkbox" name="samples" value="{{ sample }}" checked="checked"/> {{ sample }}<br/>
+				{% else %}
+					<input type="checkbox" name="samples" value="{{ sample }}" /> {{ sample }}<br/>
+				{% endif %}
 			{% endfor %}
 			</div>
 		</div>
