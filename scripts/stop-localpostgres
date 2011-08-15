@@ -3,4 +3,4 @@ cd `dirname $0`
 source inc/common.bash
 
 statusecho "Starting your local PostgreSQL server"
-pg_ctl -D $HOME/geovision-postgres stop || die "Failed to stop the local PostgreSQL server"
+pg_ctl -D $PG_DIR stop || die "Failed to stop the local PostgreSQL server"
