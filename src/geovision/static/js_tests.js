@@ -24,16 +24,18 @@ $(document).ready(function(){
 		asyncTest("Graph creation test", function()
 		{
 			expect(1);
-			var rgraph = new RGraph(Config);
-			var json;
-//			ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
-//			ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.levelDistance);
-//			ok(rgraph.config.Node.alpha==Config.Node.alpha, "rgraph.config.Node.alpha: " + rgraph.config.Node.alpha);
-//			ok(rgraph.config.Edge.dim==Config.Edge.dim, "rgraph.config.Edge.dim: " + rgraph.config.Edge.dim);
+			initGraph();
+//			var rgraph = new RGraph(Config);
+//			var json;
+			
 			$.getJSON('/graphjson', query, function(json) {
 					rgraph.loadJSON(prepareJSON(json), query.root || 0);
 			});
 			setTimeout(function(){
+				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
+				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.levelDistance);
+				ok(rgraph.config.Node.alpha==Config.Node.alpha, "rgraph.config.Node.alpha: " + rgraph.config.Node.alpha);
+				ok(rgraph.config.Edge.dim==Config.Edge.dim, "rgraph.config.Edge.dim: " + rgraph.config.Edge.dim);
 				ok(rgraph.json.length == 5, "rgraph.json.length was: " + rgraph.json.length);
 				start();
 			}, 1000);
