@@ -22,7 +22,6 @@ $(document).ready(function(){
 				start();
 			}, 1000);
 			
-			start();
 		});
 
 		module("graphviz.js");
