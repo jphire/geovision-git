@@ -16,7 +16,7 @@ $(document).ready(function(){
 		 /* Asynchronous testing required when using ajax!*/
 		asyncTest("Graph creation and initial query result test", function()
 		{
-			expect(5);
+			expect(6);
 			initGraph();
 //			$.getJSON('/graphjson', query, function(json) {
 //					rgraph.loadJSON(prepareJSON(json), query.root || 0);
@@ -40,7 +40,7 @@ $(document).ready(function(){
 			
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
-				var cursorStyle = rgraph.canvas.getElement().style.cursor;
+				cursorStyle = rgraph.canvas.getElement().style.cursor;
 				Config.Events.onMouseEnter(node);
 				ok(cursorStyle=='pointer', 'Expected cursorStyle to be pointer, it was: ' + rgraph.canvas.getElement().style.cursor);
 				start();
@@ -51,7 +51,7 @@ $(document).ready(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
 				Config.Events.onMouseLeave(node);
 				cursorStyle = rgraph.canvas.getElement().style.cursor;
-				ok(cursorStyle=='', 'Expected cursorStyle to be empty, it was: ' + rgraph.canvas.getElement().style.cursor);
+				ok(cursorStyle=='', 'cursorStyle was empty: ' + (cursorStyle==''));
 				start();
 			}, 1000);
 			
@@ -59,7 +59,7 @@ $(document).ready(function(){
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
 				Config.Events.onClick(node);
-				ok('DB5' in rgraph.graph.nodes, 'DB5 was in the graph: ' + 'DB5' in rgraph.graph.nodes);
+				ok(('DB5' in rgraph.graph.nodes), 'DB5 was in the graph: ' + ('DB5' in rgraph.graph.nodes));
 				start();
 			}, 1000);
 		});
