@@ -30,6 +30,24 @@ $(document).ready(function(){
 				ok(rgraph.root=="R1", "rgraph.root was: " + rgraph.root);
 				start();
 			}, 1000);
+
+			setTimeout(function(){
+				setBusy(true);
+				ok(busy==true, "setBusy works: " + busy==true);
+				setBusy(false);
+				start();
+			}, 10);
+
+			setTimeout(function(){
+				cleanupGraph();
+				var works = true;
+				rgraph.graph.eachNode(function(n) {
+					if(n.data.$alpha<0.01)
+						works = false;
+				});
+				ok(works, "cleanupGraph works: " + works);
+				start();
+			}, 500);
 		});
 
 		module("events.js");
@@ -41,7 +59,8 @@ $(document).ready(function(){
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
 				rgraph.events.config.onMouseEnter(node);
-				ok((rgraph.canvas.getElement().style.cursor=='pointer'), 'cursorStyle was pointer: ' + rgraph.canvas.getElement().style.cursor);
+				ok((rgraph.canvas.getElement().style.cursor=='pointer'), 'cursorStyle was pointer: ' + rgraph.canvas.getElement().style.cursor=='pointer');
+				ok(currentNode!=undefined, 'currentNode was not undefined: ' + (currentNode!=undefined));
 				start();
 			}, 1000);
 
@@ -57,8 +76,7 @@ $(document).ready(function(){
 			
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
-				Config.Events.onClick(node);
-				ok(currentNode!=undefined, 'currentNode was not undefined: ' + (currentNode!=undefined));
+				Config.Events.onClick(node);		
 				ok(('DB5' in rgraph.graph.nodes), 'DB5 was in the graph: ' + ('DB5' in rgraph.graph.nodes));
 				start();
 			}, 1000);
