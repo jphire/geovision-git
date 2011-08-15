@@ -42,6 +42,8 @@ $(document).ready(function(){
 			var cursorStyle = rgraph.canvas.getElement().style.cursor;
 
 			setTimeout(function(){
+				var node = rgraph.graph.getNode(rgraph.root);
+				rgraph.events.config.onMouseEnter(node);
 				ok((rgraph.canvas.getElement().style.cursor=='pointer'), 'cursorStyle was pointer: ' + rgraph.canvas.getElement().style.cursor);
 				start();
 			}, 1000);
