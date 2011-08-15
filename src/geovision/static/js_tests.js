@@ -20,7 +20,7 @@ $(document).ready(function(){
 //			setTimeout(function(){
 //				raises(closealignment(closealign), "must raise error to pass");
 //				start();
-			}, 1000);
+//			}, 1000);
 		});
 
 		module("graphviz.js");
