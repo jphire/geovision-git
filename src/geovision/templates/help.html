@@ -93,12 +93,12 @@
 		</p><br/>
 		<p id="tagoptions"><strong>Tagging options</strong></p><br/>
 		<p>
-		<ul>
+		<ul id="taghelplist">
 			<li><i>Tag/Untag Node</i> - Tags or untags a single node. When tagging it will also tag a path to root if no path exists. 
 				Tagged path is the one with best edge bitscores starting from tagged node.
 				When untagging, all nodes in untagged node's subgraph without a path to root will also be untagged. More about the two untag options below.</li>
 			<li><i>Tag Children</i> - Tags a single node and it's immediate children. Please note that the children of a node may not be immediately obvious 
-				as some might be on the other side of the graph.<br/>
+				as some might be on the other side of the graph. Node's children are nodes one level futher from the root with an edge to this node.<br/>
 				<img src="{{ STATIC_URL }}/images/1.png"/>
 				Before tagging node gl|1857124<br/>
 				<img src="{{ STATIC_URL }}/images/2-c.png"/>
@@ -106,15 +106,24 @@
 				<img src="{{ STATIC_URL }}/images/3-c.png"/>
 				After tagging, note that some of the tagged nodes are on the other side of the graph. Tagging has also tagged a path to root (in this case only root, which is FR123406).<br/>
 				</li>
-			<li><i>Tag Subgraph</i> - Tags a single node and it's whole subgraph. Please note that the children of a node may not be immediately obvious 
-				as some might be on the other side of the graph.<br/>
+			<li><i>Tag Subgraph</i> - Tags a single node and it's whole subgraph. Please note that not all subgraph nodes may be immediately obvious.<br/>
 				<img src="{{ STATIC_URL }}/images/1.png"/>
 				Before tagging node gl|1857124<br/>
-				<img src="{{ STATIC_URL }}/images/2-c.png"/>
+				<img src="{{ STATIC_URL }}/images/2-s.png"/>
 				Selecting the option<br/>
-				<img src="{{ STATIC_URL }}/images/3-c.png"/>
+				<img src="{{ STATIC_URL }}/images/3-s.png"/>
 				After tagging, note that some of the tagged nodes are on the other side of the graph. Tagging has also tagged a path to root (in this case only root, which is FR123406).<br/>
 				</li>
+			<li><i>Untag and Untag Subgraph</i> - Since untag operation will also untag all nodes left without a path to root, it can in some cases do exactly the same as untag subgraph. 
+				There is a difference in some situations, as shown by the images below. After untag, only subgraph nodes left without path to root will be untagged. With untag subgraph, all subgraph
+				nodes will be untagged. Untagging the whole graph is as easy as untagging the root node, as all other nodes will then be left without a tagged path to root.
+				<img src="{{ STATIC_URL }}/images/untag-1.png"/>
+				Starting point
+				<img src="{{ STATIC_URL }}/images/untag-2.png"/>
+				Nodes selected after untag operation on node FR321869.
+				<img src="{{ STATIC_URL }}/images/untag-3.png"/>
+				Nodes selected after untag subgraph operation on node FR321869.
+			</li>
 		</ul>
 		</p>
 			
