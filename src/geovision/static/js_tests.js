@@ -21,6 +21,7 @@ $(document).ready(function(){
 //				raises(closealignment(closealign), "must raise error to pass");
 //				start();
 //			}, 1000);
+			start();
 		});
 
 		module("graphviz.js");
