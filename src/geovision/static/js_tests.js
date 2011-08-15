@@ -38,7 +38,7 @@ $(document).ready(function(){
 			expect(5);
 			initGraph();
 			var node = rgraph.graph.getNode(rgraph.root);
-			Config.Events.onMouseEnter(node);
+			rgraph.events.config.onMouseEnter(node);
 			var cursorStyle = rgraph.canvas.getElement().style.cursor;
 
 			setTimeout(function(){
