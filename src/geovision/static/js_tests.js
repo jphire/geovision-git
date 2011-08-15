@@ -16,7 +16,7 @@ $(document).ready(function(){
 		 /* Asynchronous testing required when using ajax!*/
 		asyncTest("Graph creation and initial query result test", function()
 		{
-			expect(6);
+			expect(8);
 			initGraph();
 //			$.getJSON('/graphjson', query, function(json) {
 //					rgraph.loadJSON(prepareJSON(json), query.root || 0);
@@ -36,7 +36,7 @@ $(document).ready(function(){
 				ok(busy==true, "setBusy works: " + busy==true);
 				setBusy(false);
 				start();
-			}, 10);
+			}, 1000);
 
 			setTimeout(function(){
 				cleanupGraph();
@@ -47,7 +47,7 @@ $(document).ready(function(){
 				});
 				ok(works, "cleanupGraph works: " + works);
 				start();
-			}, 500);
+			}, 1000);
 		});
 
 		module("events.js");
