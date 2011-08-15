@@ -2,88 +2,43 @@
       "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	  <script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
-	  <script type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
-	   <script type="text/javascript" src="{{ STATIC_URL }}qunit.js"></script>
-	  <link rel="stylesheet" href="{{ STATIC_URL }}qunit.css" type="text/css"/>
-		<link rel="stylesheet" href="{{ STATIC_URL }}styles.css" type="text/css"/>
-		<link rel="stylesheet" href="{{ STATIC_URL }}reset.css" type="text/css"/>
-	<script type="text/javascript">
-	  var query = { read: "", dbentry: "Q57DS4", enzyme: "",
-		bitscore: 10, evalue: 1, hits: 1, depth: 1, samples: ['ABLU']};
-	  var settings = {}
-	</script>
-    
-	<script type="text/javascript" src="{{ STATIC_URL }}effects.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
-	
-	<script type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/events.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/labels.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/loadsave.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/moreinfo.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/styles.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/tips.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
-	
-	<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL}}jquery.contextmenu.r2.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}qunit.js"></script>
+		<link rel="stylesheet" href="{{ STATIC_URL }}qunit.css" type="text/css"/>
 
+		<script type="text/javascript">
+		  var query = { read: "", dbentry: "Q57DS4", enzyme: "",
+			bitscore: 10, evalue: 1, hits: 1, depth: 1, samples: ['ABLU']};
+		  var settings = {}
+		</script>
+		<!-- Your project files goes here -->
+		<script type="text/javascript" src="{{ STATIC_URL }}effects.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}JIT.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/bitscore.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/config.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/contextmenu.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/events.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/labels.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/loadsave.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/moreinfo.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/styles.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/tips.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}graphviz.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui.js"></script>
+		<!-- Your tests file goes here -->
+		<script type="text/javascript" src="{{ STATIC_URL }}js_tests.js"></script>
 	</head>
 	<body>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		module("Basic Unit Test");
-		test("Sample test", function()
-		{
-			expect(2);
-			equals((4/2), 2, 'Expected 2 as the result, result was: ' + (4/2));
-			equals(divide(4,2), 2, 'Expected 2 as the result, result was: ' + divide(4,2));
-		});
-
-		module("moreinfo.js");
-		test("Alignment test", function()
-		{
-			expect(1);
-			var alignment;
-			equals(2, 2, 'Expected 2 as the result, result was: ' + divide(4,2));
-		});
-
-		module("graphviz.js");
-		test("Graph creation test", function()
-		{
-			expect(1);
-			var rgraph = new RGraph(Config);
-			
-			ok(rgraph.busy==false, "rgraph value: " + rgraph);
-		});
-
-		module("events.js");
-		test("Events test", function()
-		{
-			expect(2);
-			initGraph();
-			var node = rgraph.graph.getNode(rgraph.root);
-			Config.Events.onMouseEnter(node);
-			var cursorStyle = rgraph.canvas.getElement().style.cursor;
-			equals(cursorStyle, 'pointer', 'Expected pointer as the result, result was: ' + cursorStyle);
-			Config.Events.onMouseLeave(node);
-			cursorStyle = rgraph.canvas.getElement().style.cursor;
-			equals(cursorStyle, '', 'Expected pointer as the result, result was: ' + cursorStyle);
-		});
-	});
-  
-    </script>
-   
+	
     <h1 id="qunit-header">QUnit example</h1>
     <h2 id="qunit-banner"></h2>
     <h2 id="qunit-userAgent"></h2>
-    <ol id="qunit-tests">
-    </ol>
+    <ol id="qunit-tests"></ol>
 	<div id="qunit-fixture">
+		<!-- The HTML needed goes here -->
 		<div id="infovis"></div>
 	</div>
   </body>
