@@ -5,11 +5,22 @@
 $(document).ready(function(){
 
 		module("moreinfo.js");
-		test("Alignment test", function()
+		asyncTest("Alignment test", function()
 		{
-			expect(1);
-			var alignment;
-			equals(2, 2, 'Expected 2 as the result, result was: ' + divide(4,2));
+			expect(2);
+			initGraph();
+			setTimeout(function(){
+				alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
+				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
+				ok(closealign.innerHTML=="Close", "Alignmentfunction has close button:" + (closealign.innerHTML=="Close"));
+				start();
+			}, 1000);
+
+			closealignment(closealign);
+			setTimeout(function(){
+				raises(closealignment(closealign), "must raise error to pass");
+				start();
+			}, 1000);
 		});
 
 		module("graphviz.js");
@@ -33,7 +44,7 @@ $(document).ready(function(){
 
 			setTimeout(function(){
 				setBusy(true);
-				ok(busy==true, "setBusy works: " + busy==true);
+				ok(busy==true, "setBusy works: " + (busy==true));
 				setBusy(false);
 				start();
 			}, 1000);
@@ -59,7 +70,7 @@ $(document).ready(function(){
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
 				rgraph.events.config.onMouseEnter(node);
-				ok((rgraph.canvas.getElement().style.cursor=='pointer'), 'cursorStyle was pointer: ' + rgraph.canvas.getElement().style.cursor=='pointer');
+				ok((rgraph.canvas.getElement().style.cursor=='pointer'), 'cursorStyle was pointer: ' + (rgraph.canvas.getElement().style.cursor=='pointer'));
 				ok(currentNode!=undefined, 'currentNode was not undefined: ' + (currentNode!=undefined));
 				start();
 			}, 1000);
