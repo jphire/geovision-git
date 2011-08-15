@@ -39,6 +39,9 @@ div#help{
 	margin-bottom: 15px;
 	padding-bottom: 30px;
 }
+#img {
+	width:540px;
+}
 #help ul{
 	margin-left: 0px;
 	padding-left: 30px;
