@@ -33,9 +33,9 @@ $(document).ready(function(){
 			stop(2000);
 			$.getJSON('/graphjson', query, function(json) {
 				rgraph.loadJSON(prepareJSON(json), query.root || 0);
-				start();
 			});
 			ok(rgraph.json.length == 5, "rgraph.json.length was: " + rgraph.json.length);
+			start();
 			
 		});
 
