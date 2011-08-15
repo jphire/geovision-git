@@ -37,9 +37,6 @@ $(document).ready(function(){
 		{
 			expect(5);
 			initGraph();
-			var node = rgraph.graph.getNode(rgraph.root);
-			rgraph.events.config.onMouseEnter(node);
-			var cursorStyle = rgraph.canvas.getElement().style.cursor;
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
@@ -48,23 +45,22 @@ $(document).ready(function(){
 				start();
 			}, 1000);
 
-//			node = rgraph.graph.getNode(rgraph.root);
-//			Config.Events.onMouseLeave(node);
-//			setTimeout(function(){
-//
-//				cursorStyle = rgraph.canvas.getElement().style.cursor;
-//				ok(rgraph.canvas.getElement().style.cursor=='', 'cursorStyle was empty: ' + (cursorStyle==''));
-//				ok(currentNode==undefined, 'currentNode was undefined: ' + (currentNode==undefined));
-//				start();
-//			}, 1000);
+			
+			setTimeout(function(){
+				node = rgraph.graph.getNode(rgraph.root);
+				Config.Events.onMouseLeave(node);
+				ok(rgraph.canvas.getElement().style.cursor=='', 'cursorStyle was empty: ' + (rgraph.canvas.getElement().style.cursor==''));
+				ok(currentNode==undefined, 'currentNode was undefined: ' + (currentNode==undefined));
+				start();
+			}, 1000);
 
-//			Config.Events.onClick(node);
-//			setTimeout(function(){
-////				var node = rgraph.graph.getNode(rgraph.root);
-//
-//				ok(currentNode!=undefined, 'currentNode was not undefined: ' + (currentNode!=undefined));
-//				ok(('DB5' in rgraph.graph.nodes), 'DB5 was in the graph: ' + ('DB5' in rgraph.graph.nodes));
-//				start();
-//			}, 1000);
+			
+			setTimeout(function(){
+				var node = rgraph.graph.getNode(rgraph.root);
+				Config.Events.onClick(node);
+				ok(currentNode!=undefined, 'currentNode was not undefined: ' + (currentNode!=undefined));
+				ok(('DB5' in rgraph.graph.nodes), 'DB5 was in the graph: ' + ('DB5' in rgraph.graph.nodes));
+				start();
+			}, 1000);
 		});
 	});
