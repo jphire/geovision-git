@@ -92,15 +92,6 @@ function updateBitscores() {
 	});
 }
 
-/** TODO: UNUSED? */
-function addTemporaryTags()
-{
-	rgraph.graph.eachNode(function(n) {
-		if(n.traversalTag === true)
-			tagParents(n, 'temp');
-	});
-}
-
 /** Function for checking if node has a tagged path to the root node.
  * Assumes the node has a path to root.
  * @param node the node for which to check the path
@@ -122,11 +113,10 @@ function checkRootTagpath(node) {
 /** Function for tagging a node. If node has no tagged path to root, a path will also be tagged
  * since otherwise deletion could result in disconnected graph.
  * @param node the node to be tagged
- * @param value 
  */
-function tagNode(node, value) {
+function tagNode(node) {
 	if (!checkRootTagpath(node)) tagParents(node);
-	node.traversalTag = value ? value : true;
+	node.traversalTag = true;
 	rgraph.refresh()
 }
 
@@ -135,9 +125,8 @@ function tagNode(node, value) {
  * Responsibility for updating the visualization is left to user, this function does
  * not call refresh() or any animating function.
  * @param node the node which will have its parents tagged
- * @param value
  */
-function tagParents(node, value) {
+function tagParents(node) {
 	var currentNode = node;
 	var parents = node.getParents();
 	while (parents.length > 0) {
@@ -150,7 +139,7 @@ function tagParents(node, value) {
 				bestBitscore = tempBitscore;
 			}
 		}
-		bestParent.traversalTag = value ? value : true;
+		bestParent.traversalTag = true;
 		currentNode = bestParent;
 		parents = currentNode.getParents();
 	}

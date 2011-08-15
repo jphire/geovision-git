@@ -28,7 +28,7 @@ function initContextMenu()
 				console.log(currentNode.id);
 				var id = currentNode.id;
 				setBusy('Centering');
-				tagNode(rgraph.graph.getNode(id), false);
+				tagNode(rgraph.graph.getNode(id));
 				rgraph.onClick(id, rgraph.op.userOptions);
 			},
 			'e_align': function() { alignmentfunction(currentEdge.data.blast_id, currentEdge.nodeFrom.id, currentEdge.nodeTo.id); },
