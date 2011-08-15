@@ -1,0 +1,45 @@
+#!/bin/bash
+cd `dirname $0`
+source inc/common.bash
+
+echo "This script will set up a local PostgreSQL instance in $HOME/geovision-postgres/"
+echo "This is necessary on users.cs.helsinki.fi as the default user databases are located on a disk with very little space."
+
+read -p 'Install a local PostgreSQL instance? (y/n): ' CHOICE
+
+if [ ! "$CHOICE" = "y" ]
+then
+	echo "Aborting."
+	exit 1
+fi
+
+statusecho "Initializing data directory"
+initdb -D $HOME/geovision-postgres/ -A ident|| die "initdb failed! Is PostgreSQL installed and/or are PostgreSQL utility functions in PATH? Use 'locate initdb' to see"
+cat > $HOME/geovision-postgres/pg_hba.conf <<EOF
+local all `whoami` ident
+host all `whoami` 127.0.0.1/32 ident
+host all `whoami` ::1/128 ident
+EOF
+sed -e "s#!PGDIR!#$HOME/geovision-postgres/#g" < conf/postgresql.conf.base > $HOME/geovision-postgres/postgresql.conf
+start-localpostgres
+sleep 2 # wait a bit for the server to initialize
+statusecho "Creating a database"
+createdb -h $HOME/geovision-postgres -p 4394 geovision
+statusecho "All done!"
+cat <<EOF
+Use these database settings in your settings.py
+
+Host: $HOME/geovision-postgres/
+Port: 4394
+Database: geovision
+Username: (leave blank)
+Password: (leave blank)
+
+You can easily connect to the database specified in your settings.py with the psql utility by running the run-psql script.
+
+Your database is configured to accept connections only from the local user `whoami` using ident authentication.
+See the PostgreSQL documentation for enabling access to other users in the $HOME/geovision-postgres/pg_hba.conf file.
+
+Use the start-localpostgres and stop-localpostgres scripts to start/stop your database server.
+Your database log is in $HOME/geovision-postgres/postgresql.log
+EOF
