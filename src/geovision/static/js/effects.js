@@ -17,6 +17,7 @@ function openSearch()
 }
 /**
  * Closes the left side query menu.
+ * @param e the DOM-element triggering the event
  */
 function closeSearch(e)
 {
@@ -101,6 +102,8 @@ jQuery(function($) {
 
 /**
  * Sets bitscorelimits based on the given arguments and color the graph.
+ * @param min minimum bitscore
+ * @param max maximum bitscore
  */
 function setBitscoreColoring(min, max)
 {

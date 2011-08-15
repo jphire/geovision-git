@@ -1,5 +1,8 @@
 /**
  * Function for showing the alignment of the read and the db-entry and coloring it so that you can easily see which parts match
+ * @param thisid the id of the edge for which the alignment is shown
+ * @param nodeFrom the id of the node on the other side of the edge, only used for showing to the user so it's easier to distinguish alignments from eachother
+ * @param nodeTo the id of the node on the other side of the edge, only used for showing to the user so it's easier to distinguish alignments from eachother
  */
 function alignmentfunction(thisid, nodeFrom, nodeTo) {
 	$.getJSON('/show_alignment', {id: thisid}, function (data) { /*get the json with the data*/
@@ -36,6 +39,7 @@ $('#closealign').live('click', function() {
 
 /**
  * Function to close and delete the div-element showing the alignment
+ * @param button the DOM-element which was clicked to start this function
  */
 function closealignment (button) {
 		button = $(button);
@@ -47,6 +51,7 @@ function closealignment (button) {
 }
 
 /** Function to list all names, reactions and pathways related to an enzyme in the right container.
+ * @param json the json to get info from
  */
 function showEnzymeData (json){
 	enzymes = {};

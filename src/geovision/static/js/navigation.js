@@ -39,6 +39,7 @@ function contractForTraversal(node, opt) {
 	}
 }
 
+/** not used */
 function deleteByBitscore(bitscoreLimit) {
 
 }

@@ -274,7 +274,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#addSavedViewToList">addSavedViewToList</a></b>(id, name)
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#addSavedViewToList">addSavedViewToList</a></b>(id, the)
 								</div>
 								<div class="description">Adds the views name and load-, delete-, and export-buttons to the left navigation with their css-styles.</div>
 							</td>
@@ -396,7 +396,7 @@ nodes while traversing the graph.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/_global_.html#fetchJSON">fetchJSON</a></b>(node)
 								</div>
-								<div class="description">fetchJSON(JitNode node) - expand the graph at the specified node</div>
+								<div class="description">expand the graph at the specified node</div>
 							</td>
 						</tr>
 					
@@ -648,7 +648,7 @@ http://thejit.org/static/v20/Docs/.
 					<div class="fixedFont">
 					
 					
-					<b>addSavedViewToList</b>(id, name)
+					<b>addSavedViewToList</b>(id, the)
 					
 					</div>
 					<div class="description">
@@ -670,13 +670,13 @@ http://thejit.org/static/v20/Docs/.
 									<b>id</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the id of the saved view in question</dd>
 							
 								<dt>
-									<b>name</b>
+									<b>the</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>name of the view</dd>
 							
 							</dl>
 						
@@ -743,19 +743,19 @@ http://thejit.org/static/v20/Docs/.
 									<b>thisid</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the id of the edge for which the alignment is shown</dd>
 							
 								<dt>
 									<b>nodeFrom</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the id of the node on the other side of the edge, only used for showing to the user so it's easier to distinguish alignments from eachother</dd>
 							
 								<dt>
 									<b>nodeTo</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the id of the node on the other side of the edge, only used for showing to the user so it's easier to distinguish alignments from eachother</dd>
 							
 							</dl>
 						
@@ -795,7 +795,7 @@ Assumes the node has a path to root.
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the node for which to check the path</dd>
 							
 							</dl>
 						
@@ -902,7 +902,7 @@ Assumes the node has a path to root.
 									<b>e</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the DOM-element triggering the event</dd>
 							
 							</dl>
 						
@@ -972,13 +972,13 @@ TODO: NOT USED
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>node to contract the graph from</dd>
 							
 								<dt>
 									<b>opt</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>options</dd>
 							
 							</dl>
 						
@@ -1065,7 +1065,7 @@ Will also untag all nodes once finished.
 									<b>bitscoreLimit</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the limit under which nodes will be deleted</dd>
 							
 							</dl>
 						
@@ -1190,7 +1190,7 @@ If there are no states, sets the undo-button to disabled.
 					
 					</div>
 					<div class="description">
-						fetchJSON(JitNode node) - expand the graph at the specified node
+						expand the graph at the specified node
 						
 							<br />
 							<i>Defined in: </i> <a href="../symbols/src/geovision_src_geovision_static_js_graphviz.js.html">graphviz.js</a>.
@@ -1208,7 +1208,7 @@ If there are no states, sets the undo-button to disabled.
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>JitNode from which the graph needs to expand</dd>
 							
 							</dl>
 						
@@ -1247,7 +1247,7 @@ If there are no states, sets the undo-button to disabled.
 									<b>bitscore</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the bitscore to be used for filtering</dd>
 							
 							</dl>
 						
@@ -1461,13 +1461,20 @@ The event bindings are done in the jquery-contextmenu plugin code
 									<b>json</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the json to be used for the graph</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>the 'graphified' json</dd>
+							
+							</dl>
 						
 						
 						
@@ -1529,13 +1536,13 @@ If there are too many states, shifts the array. Also removes the undo-buttons di
 									<b>min</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>minimum bitscore</dd>
 							
 								<dt>
 									<b>max</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>maximum bitscore</dd>
 							
 							</dl>
 						
@@ -1576,7 +1583,7 @@ If msg is null, disable busy state
 									<b>msg</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>message to be shown</dd>
 							
 							</dl>
 						
@@ -1615,7 +1622,7 @@ If msg is null, disable busy state
 									<b>json</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the json to get info from</dd>
 							
 							</dl>
 						
@@ -1655,7 +1662,7 @@ since otherwise deletion could result in disconnected graph.
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the node to be tagged</dd>
 							
 								<dt>
 									<b>value</b>
@@ -1703,7 +1710,7 @@ not call refresh() or any animating function.
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the node which will have its parents tagged</dd>
 							
 								<dt>
 									<b>value</b>
@@ -1748,7 +1755,7 @@ not call refresh() or any animating function.
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>target node to have its subgraph tagged</dd>
 							
 							</dl>
 						
@@ -1787,7 +1794,7 @@ not call refresh() or any animating function.
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>target node to have subnodes tagged</dd>
 							
 							</dl>
 						
@@ -1828,7 +1835,7 @@ tagged nodes without a tagged path to root after untagging this node.
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>node to be untagged</dd>
 							
 							</dl>
 						
@@ -1867,7 +1874,7 @@ tagged nodes without a tagged path to root after untagging this node.
 									<b>node</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>node to have its subgraph untagged</dd>
 							
 							</dl>
 						
@@ -1921,7 +1928,7 @@ Should be used after deleting edges from the graph if relevant values are not ot
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Aug 15 2011 12:46:38 GMT+0300 (EEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Aug 15 2011 13:55:05 GMT+0300 (EEST)
 		</div>
 	</body>
 </html>
