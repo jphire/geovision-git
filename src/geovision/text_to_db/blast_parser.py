@@ -4,11 +4,13 @@ import os
 from geovision.viz.models import Blast, BlastExtra
 from geovision.viz.models import Read, DbEntry
 from geovision.text_to_db.bulk_inserter import BulkInserter, dict_from_kwargs
+from geovision.userdb import ImportedData
 
+inserter = BulkInserter(Blast, use_dict=True)
+extra_inserter = BulkInserter(BlastExtra, use_dict=True)
 def create_blast(db_name, sample_name, filename):
+	global inserter, extra_inserter
 	filehandle = open(filename, 'r')
-	inserter = BulkInserter(Blast, use_dict=True)
-	extra_inserter = BulkInserter(BlastExtra, use_dict=True)
 
 	for line in filehandle:
 		(read_id, db_seq_id, pident, length, mismatch, gapopen, qstart, qend, sstart, send, error_value, bitscore, read_seq, db_seq) = line.split(None)
@@ -24,4 +26,18 @@ if __name__ == '__main__':
 	import sys
 	filename = sys.argv[1]
 	(sample_name, db_name, rest) = os.path.basename(filename).split('.')
-	create_blast(db_name, sample_name, filename)
+	blast_name = sample_name + '.' + db_name
+	if ImportedData.objects.filter(type='blast', data=blast_name).exists()
+		print("Not importing blast %s because it already exists" % blast_name)
+		sys.exit(1)
+	if not ImportedData.objects.filter(type='sample', data=sample_name).exists():
+		print("Not importing blast %s because sample %s doesn't exist" % (blast_name, sample_name)) 
+	if not ImportedData.objects.filter(type='dbentry', data=db_name).exists():
+		print("Not importing blast %s because dbentry %s doesn't exist" % (blast_name, db_name))
+	try:
+		create_blast(db_name, sample_name, filename)
+		ImportedData.objects.create(type='blast', data=blast_name)
+	except Exception as e:
+		inserter.rollback()
+		extra_inserter.rollback()
+		raise

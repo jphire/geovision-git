@@ -1,6 +1,7 @@
 from django.db import connection
-from subprocess import Popen, PIPE
 from django.db.models import ForeignKey
+from subprocess import Popen, PIPE
+from signal import SIGINT
 
 def dict_from_kwargs(**kwargs):
 	return kwargs
@@ -111,3 +112,6 @@ class BulkInserter():
 			self.db_set_pk_nextval(self.next_id)
 			self.psql_popen.stdin.close()
 			self.check_psql_status(True)
+
+	def rollback(self):
+		self.psql_popen.send_signal(signal.SIGINT)
