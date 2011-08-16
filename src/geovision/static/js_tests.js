@@ -33,14 +33,14 @@ $(document).ready(function(){
 				ok(rgraph.json.length == 2, "rgraph.json.length was: " + rgraph.json.length);
 				ok(rgraph.root=="Q57DS4", "rgraph.root was: " + rgraph.root);
 				start();
-			}, 1000);
+			}, 2000);
 
 			setTimeout(function(){
 				setBusy(true);
 				ok(busy==true, "setBusy works: " + (busy==true));
 				setBusy(false);
 				start();
-			}, 1000);
+			}, 2000);
 
 			setTimeout(function(){
 				cleanupGraph();
@@ -51,14 +51,14 @@ $(document).ready(function(){
 				});
 				ok(works, "cleanupGraph works: " + works);
 				start();
-			}, 1000);
+			}, 2000);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
 				fetchJSON(node);
 				ok('A8LMA2' in rgraph.graph.nodes, "fetchJSON works: " + ('A8LMA2' in rgraph.graph.nodes));
 				start();
-			}, 3000);
+			}, 2000);
 
 		});
 
@@ -120,13 +120,8 @@ $(document).ready(function(){
 		});
 
 		module("navigation.js");
-		test("Graph traversal and tagging test", function()
+		asyncTest("Graph traversal and tagging test", function()
 		{
-			stop();
-			stop();
-			stop();
-			stop();
-			stop();
 			expect(5);
 			initGraph();
 			var node = rgraph.graph.getNode('Q57DS4')
