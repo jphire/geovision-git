@@ -54,9 +54,14 @@ $(document).ready(function(){
 			}, 1000);
 
 			setTimeout(function(){
-				var node = rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|');
-				fetchJSON(node);
-				ok('Q0KF09' in rgraph.graph.nodes, "fetchJSON works: " + ('Q0KF09' in rgraph.graph.nodes));
+				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
+				if(node){
+					fetchJSON(node);
+					ok('A8LMA2' in rgraph.graph.nodes, "fetchJSON works: " + ('A8LMA2' in rgraph.graph.nodes));
+				}
+				else{
+					ok(false, "fetchJSON did not work");
+				}
 				start();
 			}, 3000);
 
@@ -87,7 +92,7 @@ $(document).ready(function(){
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
 				rgraph.events.config.onClick(node);
-				ok(('gi|289562918|gb|ADIG01002029.1|' in rgraph.graph.nodes), '\'gi|289562918|gb|ADIG01002029.1|\' was in the graph: ' + ('DB5' in rgraph.graph.nodes));
+				ok(('gi|185679843|gb|ABLU01135391.1|' in rgraph.graph.nodes), '\'gi|185679843|gb|ABLU01135391.1|\' was in the graph: ' + ('DB5' in rgraph.graph.nodes));
 				start();
 			}, 1000);
 		});
@@ -127,7 +132,7 @@ $(document).ready(function(){
 				tagNode(node);
 				ok(node.traversalTag==true, "tagNode works: " + (node.traversalTag==true));
 				ok(checkRootTagpath(node)==true, "checkRootTagpath test 1: " + (checkRootTagpath(node)==true));
-				ok(checkRootTagpath(rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|'))==false, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|'))==false));
+				ok(checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false));
 			}, 1000);
 
 			setTimeout(function(){
@@ -136,9 +141,9 @@ $(document).ready(function(){
 			}, 1000);
 
 			setTimeout(function(){
-				var node = rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|')
+				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|')
 				tagParents(node);
-				ok(checkRootTagpath(node)==true, "tagParents: " + (checkRootTagpath(rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|'))==true));
+				ok(checkRootTagpath(node)==true, "tagParents: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true));
 			}, 1000);
 		});
 
