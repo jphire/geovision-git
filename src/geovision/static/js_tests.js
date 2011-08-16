@@ -17,8 +17,8 @@ $(document).ready(function(){
 				start();
 			}, 3000);
 
-			closealignment(closealign);
-			setTimeout(function(){	
+			setTimeout(function(){
+				closealignment(closealign);
 				raises(closealignment(closealign), "must raise error to pass");
 				start();
 			}, 3000);
