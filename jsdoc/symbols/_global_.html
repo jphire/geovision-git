@@ -15,10 +15,15 @@ body
 	width: 800px;
 }
 
+A:link {color:#07B51E; text-decoration:none;}
+A:visited {color:#00A115; text-decoration:none;}
+A:active {color:#00A115; text-decoration:none;}
+A:hover {color:#3BD950; text-decoration:underline;}
+
 .header
 {
 	clear: both;
-	background-color: #ccc;
+	background-color: #599C70;
 	padding: 8px;
 }
 
@@ -33,7 +38,7 @@ h1
 hr
 {
 	border: none 0;
-	border-top: 1px solid #7F8FB1;
+	border-top: 1px solid #599C70;
 	height: 1px;
 }
 
@@ -88,12 +93,12 @@ h1.classTitle
 h2 { font-size: 110%; }
 caption, div.sectionTitle
 {
-	background-color: #7F8FB1;
+	background-color: #599C70;
 	color: #fff;
 	font-size:130%;
 	text-align: left;
 	padding: 2px 6px 2px 6px;
-	border: 1px #7F8FB1 solid;
+	border: 1px #599C70 solid;
 }
 
 div.sectionTitle { margin-bottom: 8px; }
@@ -103,14 +108,14 @@ div.sectionTitle { margin-bottom: 8px; }
 {
 	vertical-align: top;
 	padding: 4px;
-	border-bottom: 1px #7F8FB1 solid;
-	border-right: 1px #7F8FB1 solid;
+	border-bottom: 1px #599C70 solid;
+	border-right: 1px #599C70 solid;
 }
 
 /*col#summaryAttributes {}*/
 .summaryTable td.attributes
 {
-	border-left: 1px #7F8FB1 solid;
+	border-left: 1px #599C70 solid;
 	width: 140px;
 	text-align: right;
 }
@@ -118,7 +123,7 @@ div.sectionTitle { margin-bottom: 8px; }
 td.attributes, .fixedFont
 {
 	line-height: 15px;
-	color: #002EBE;
+	color: #20912F;
 	font-family: "Courier New",Courier,monospace;
 	font-size: 13px;
 }
@@ -274,18 +279,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#addSavedViewToList">addSavedViewToList</a></b>(id, the)
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#addSavedViewToList">addSavedViewToList</a></b>(id, name)
 								</div>
 								<div class="description">Adds the views name and load-, delete-, and export-buttons to the left navigation with their css-styles.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#addTemporaryTags">addTemporaryTags</a></b>()
-								</div>
-								<div class="description">TODO: UNUSED?</div>
 							</td>
 						</tr>
 					
@@ -360,7 +356,7 @@ nodes while traversing the graph.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/_global_.html#deleteByBitscore">deleteByBitscore</a></b>(bitscoreLimit)
 								</div>
-								<div class="description"></div>
+								<div class="description">not used</div>
 							</td>
 						</tr>
 					
@@ -505,7 +501,7 @@ If msg is null, disable busy state</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#tagNode">tagNode</a></b>(node, value)
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#tagNode">tagNode</a></b>(node)
 								</div>
 								<div class="description">Function for tagging a node.</div>
 							</td>
@@ -514,7 +510,7 @@ If msg is null, disable busy state</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#tagParents">tagParents</a></b>(node, value)
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#tagParents">tagParents</a></b>(node)
 								</div>
 								<div class="description">Function for tagging a path from node to root.</div>
 							</td>
@@ -648,7 +644,7 @@ http://thejit.org/static/v20/Docs/.
 					<div class="fixedFont">
 					
 					
-					<b>addSavedViewToList</b>(id, the)
+					<b>addSavedViewToList</b>(id, name)
 					
 					</div>
 					<div class="description">
@@ -673,40 +669,12 @@ http://thejit.org/static/v20/Docs/.
 								<dd>the id of the saved view in question</dd>
 							
 								<dt>
-									<b>the</b>
+									<b>name</b>
 									
 								</dt>
-								<dd>name of the view</dd>
+								<dd>the name of the view</dd>
 							
 							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="addTemporaryTags"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>addTemporaryTags</b>()
-					
-					</div>
-					<div class="description">
-						TODO: UNUSED?
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/geovision_src_geovision_static_js_navigation.js.html">navigation.js</a>.
-						
-						
-					</div>
-					
-					
-					
 						
 						
 						
@@ -863,7 +831,7 @@ Assumes the node has a path to root.
 									<b>button</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>the DOM-element which was clicked to start this function</dd>
 							
 							</dl>
 						
@@ -999,7 +967,7 @@ TODO: NOT USED
 					
 					</div>
 					<div class="description">
-						
+						not used
 						
 							<br />
 							<i>Defined in: </i> <a href="../symbols/src/geovision_src_geovision_static_js_navigation.js.html">navigation.js</a>.
@@ -1639,7 +1607,7 @@ If msg is null, disable busy state
 					<div class="fixedFont">
 					
 					
-					<b>tagNode</b>(node, value)
+					<b>tagNode</b>(node)
 					
 					</div>
 					<div class="description">
@@ -1664,12 +1632,6 @@ since otherwise deletion could result in disconnected graph.
 								</dt>
 								<dd>the node to be tagged</dd>
 							
-								<dt>
-									<b>value</b>
-									
-								</dt>
-								<dd></dd>
-							
 							</dl>
 						
 						
@@ -1685,7 +1647,7 @@ since otherwise deletion could result in disconnected graph.
 					<div class="fixedFont">
 					
 					
-					<b>tagParents</b>(node, value)
+					<b>tagParents</b>(node)
 					
 					</div>
 					<div class="description">
@@ -1711,12 +1673,6 @@ not call refresh() or any animating function.
 									
 								</dt>
 								<dd>the node which will have its parents tagged</dd>
-							
-								<dt>
-									<b>value</b>
-									
-								</dt>
-								<dd></dd>
 							
 							</dl>
 						
@@ -1928,7 +1884,7 @@ Should be used after deleting edges from the graph if relevant values are not ot
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Aug 15 2011 13:55:05 GMT+0300 (EEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Aug 16 2011 21:51:25 GMT+0300 (EEST)
 		</div>
 	</body>
 </html>
