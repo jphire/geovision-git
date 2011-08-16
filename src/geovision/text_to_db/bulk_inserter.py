@@ -97,9 +97,8 @@ class BulkInserter():
 		if field.name == 'id':
 			return "self.get_next_id()"
 		if isinstance(field, ForeignKey):
-			return "obj['%s_id']" % field.name if self.use_dict else 'obj.%s_id' % field.name
-			#return str(obj_dict[field.name].id if is_dict else obj_dict[field.column])
-		return "obj['%s']" % field.name if self.use_dict else 'obj.%s' % field.name
+			return "self.escape_csv(obj['%s_id'])" % field.name if self.use_dict else 'self.escape_csv(obj.%s_id)' % field.name
+		return "self.escape_csv(obj['%s'])" % field.name if self.use_dict else 'self.escape_csv(obj.%s)' % field.name
 
 	def obj_to_csv_code(self): # return '%s^%s^%s^%s\n' % (self.next_id(), m.fieldA, m.fieldB.id)
 		fields = self.model_class._meta.fields
@@ -110,7 +109,10 @@ class BulkInserter():
 
 	@classmethod
 	def escape_csv(cls, data):
-		return data.replace(cls.CSV_DELIMITER, "\\" + cls.CSV_DELIMITER)
+		data = str(data)
+		for x in (("\\", "\\\\"), ("\n", "\\n"), ("\r", "\\r"), (cls.CSV_DELIMITER, "\\" + cls.CSV_DELIMITER)):
+			data = data.replace(x[0], x[1])
+		return data
 
 	def close(self):
 		if self.use_postgres:
