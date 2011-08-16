@@ -25,8 +25,6 @@ $(document).ready(function(){
 		{
 			expect(9);
 			initGraph();
-			var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
-			fetchJSON(node);
 			setTimeout(function(){
 				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
 				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.config.levelDistance);
@@ -56,6 +54,8 @@ $(document).ready(function(){
 			}, 3000);
 
 			setTimeout(function(){
+				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
+				fetchJSON(node);
 				ok(('A8LMA2' in rgraph.graph.nodes), "fetchJSON works: " + ('A8LMA2' in rgraph.graph.nodes));
 				start();
 			}, 3000);
