@@ -15,7 +15,7 @@ $(document).ready(function(){
 				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
 				ok(closealign[1].innerHTML=="Close", "Alignmentfunction has a close button:" + (closealign[1].innerHTML=="Close"));
 				start();
-			}, 1000);
+			}, 2000);
 
 		});
 
@@ -115,10 +115,12 @@ $(document).ready(function(){
 			
 			setTimeout(function(){
 				ok(works, "colorEdges works: " + works);
+				start();
 			}, 1000);
 
 			setTimeout(function(){
-				raises(filter(-1), "Filter(-1) has to raise exception to function correctly");
+				ok(filter(-1)==false, "Filter(-1) returned false: " + (filter(-1)==false));
+				start();
 			}, 1000);
 		});
 
@@ -133,18 +135,20 @@ $(document).ready(function(){
 				ok(node.traversalTag==true, "tagNode works: " + (node.traversalTag==true));
 				ok(checkRootTagpath(node)==true, "checkRootTagpath test 1: " + (checkRootTagpath(node)==true));
 				ok(checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false));
+				start();
 			}, 1000);
 
 			setTimeout(function(){
 				untagNode(node);
 				ok(node.traversalTag==false, "untagNode works: " + (node.traversalTag==false));
+				start();
 			}, 1000);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|')
 				tagParents(node);
 				ok(checkRootTagpath(node)==true, "tagParents: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true));
+				start();
 			}, 1000);
 		});
-
 	});
