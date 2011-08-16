@@ -9,13 +9,13 @@ $(document).ready(function(){
 		{
 			expect(4);
 			initGraph();
+			alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
 			setTimeout(function(){
-				alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
-				ok(alignment[0].innerText.search(/Alignment for edge/i)==6, "ok: " + alignment[0].innerText.search(/Alignment for edge/i));
-				//ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
+				ok($(alignment)[0].innerText.search(/Alignment for edge/i)==6, "ok: " + $(alignment)[0].innerText.search(/Alignment for edge/i));
+				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
 				ok(closealign[1].innerHTML=="Close", "Alignmentfunction has a close button:" + (closealign.innerHTML=="Close"));
 				start();
-			}, 2000);
+			}, 3000);
 
 //			setTimeout(function(){
 //				closealignment(closealign);
