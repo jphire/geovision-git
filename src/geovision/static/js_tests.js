@@ -23,18 +23,15 @@ $(document).ready(function(){
 		 /* Asynchronous testing required when using ajax!*/
 		asyncTest("Graph creation and initial query result test", function()
 		{
-			expect(8);
+			expect(9);
 			initGraph();
-//			$.getJSON('/graphjson', query, function(json) {
-//					rgraph.loadJSON(prepareJSON(json), query.root || 0);
-//			});
 			setTimeout(function(){
 				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
 				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.config.levelDistance);
 				ok(rgraph.config.Node.alpha==Config.Node.alpha, "rgraph.config.Node.alpha: " + rgraph.config.Node.alpha);
 				ok(rgraph.config.Edge.dim==Config.Edge.dim, "rgraph.config.Edge.dim: " + rgraph.config.Edge.dim);
-				ok(rgraph.json.length == 5, "rgraph.json.length was: " + rgraph.json.length);
-				ok(rgraph.root=="R1", "rgraph.root was: " + rgraph.root);
+				ok(rgraph.json.length == 2, "rgraph.json.length was: " + rgraph.json.length);
+				ok(rgraph.root=="Q57DS4", "rgraph.root was: " + rgraph.root);
 				start();
 			}, 1000);
 
@@ -57,9 +54,8 @@ $(document).ready(function(){
 			}, 1000);
 
 			setTimeout(function(){
-				var node = rgraph.graph.getNode('GDQ9FB102IMS1X');
+				var node = rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|');
 				fetchJSON(node);
-				ok(busy==true, "busy was set right:" + (busy==true));
 				ok('Q0KF09' in rgraph.graph.nodes, "fetchJSON works: " + ('Q0KF09' in rgraph.graph.nodes));
 				start();
 			}, 3000);
@@ -82,7 +78,7 @@ $(document).ready(function(){
 			
 			setTimeout(function(){
 				node = rgraph.graph.getNode(rgraph.root);
-				Config.Events.onMouseLeave(node);
+				rgraph.events.config.onMouseLeave(node);
 				ok(rgraph.canvas.getElement().style.cursor=='', 'cursorStyle was empty: ' + (rgraph.canvas.getElement().style.cursor==''));
 				ok(currentNode==undefined, 'currentNode was undefined: ' + (currentNode==undefined));
 				start();
@@ -90,9 +86,60 @@ $(document).ready(function(){
 			
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
-				Config.Events.onClick(node);		
-				ok(('DB5' in rgraph.graph.nodes), '\'DB5\' was in the graph: ' + ('DB5' in rgraph.graph.nodes));
+				rgraph.events.config.onClick(node);
+				ok(('gi|289562918|gb|ADIG01002029.1|' in rgraph.graph.nodes), '\'gi|289562918|gb|ADIG01002029.1|\' was in the graph: ' + ('DB5' in rgraph.graph.nodes));
 				start();
 			}, 1000);
 		});
+
+		module("bitscore.js");
+		asyncTest("Graph coloring and filtering test", function()
+		{
+			expect(2);
+			initGraph();
+
+			colorEdges();
+			var works = true;
+			rgraph.graph.eachNode(function(node) {
+				node.eachAdjacency(function(adj) {
+					if(adj.data.type=='enzyme'){
+						if(!node.data.color) works = false;
+					}
+				});
+			});
+			
+			setTimeout(function(){
+				ok(works, "colorEdges works: " + works);
+			}, 1000);
+
+			setTimeout(function(){
+				raises(filter(-1), "Filter(-1) has to raise exception to function correctly");
+			}, 1000);
+		});
+
+		module("navigation.js");
+		asyncTest("Graph traversal and tagging test", function()
+		{
+			expect(5);
+			initGraph();
+			var node = rgraph.graph.getNode('Q57DS4')
+			setTimeout(function(){
+				tagNode(node);
+				ok(node.traversalTag==true, "tagNode works: " + (node.traversalTag==true));
+				ok(checkRootTagpath(node)==true, "checkRootTagpath test 1: " + (checkRootTagpath(node)==true));
+				ok(checkRootTagpath(rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|'))==false, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|'))==false));
+			}, 1000);
+
+			setTimeout(function(){
+				untagNode(node);
+				ok(node.traversalTag==false, "untagNode works: " + (node.traversalTag==false));
+			}, 1000);
+
+			setTimeout(function(){
+				var node = rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|')
+				tagParents(node);
+				ok(checkRootTagpath(node)==true, "tagParents: " + (checkRootTagpath(rgraph.graph.getNode('gi|289562918|gb|ADIG01002029.1|'))==true));
+			}, 1000);
+		});
+
 	});
