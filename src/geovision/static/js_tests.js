@@ -55,13 +55,8 @@ $(document).ready(function(){
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
-				if(node){
-					fetchJSON(node);
-					ok('A8LMA2' in rgraph.graph.nodes, "fetchJSON works: " + ('A8LMA2' in rgraph.graph.nodes));
-				}
-				else{
-					ok(false, "fetchJSON did not work");
-				}
+				fetchJSON(node);
+				ok('A8LMA2' in rgraph.graph.nodes, "fetchJSON works: " + ('A8LMA2' in rgraph.graph.nodes));
 				start();
 			}, 3000);
 
@@ -125,8 +120,13 @@ $(document).ready(function(){
 		});
 
 		module("navigation.js");
-		asyncTest("Graph traversal and tagging test", function()
+		test("Graph traversal and tagging test", function()
 		{
+			stop();
+			stop();
+			stop();
+			stop();
+			stop();
 			expect(5);
 			initGraph();
 			var node = rgraph.graph.getNode('Q57DS4')
@@ -136,19 +136,19 @@ $(document).ready(function(){
 				ok(checkRootTagpath(node)==true, "checkRootTagpath test 1: " + (checkRootTagpath(node)==true));
 				ok(checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false));
 				start();
-			}, 1000);
+			}, 2000);
 
 			setTimeout(function(){
 				untagNode(node);
 				ok(node.traversalTag==false, "untagNode works: " + (node.traversalTag==false));
 				start();
-			}, 1000);
+			}, 2000);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|')
 				tagParents(node);
 				ok(checkRootTagpath(node)==true, "tagParents: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true));
 				start();
-			}, 1000);
+			}, 2000);
 		});
 	});
