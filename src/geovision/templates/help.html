@@ -26,7 +26,7 @@
 			Because the system is only accessible to people authorised to use it,
 			you must wait for your account to be activated by the superuser.
 			If you get an error saying your account is not active,
-			please contact the current admin (Esa Pitkänen). Once you are succesfully logged in,
+			please contact the current admin (<a href="http://www.cs.helsinki.fi/u/epitkane/">Esa Pitkänen</a>). Once you are succesfully logged in,
 			you will be directed to the graph-page.
         </p><br/>
 		<p id="logout"><strong>Logging out</strong></p><br/>
@@ -45,11 +45,11 @@
 				<li>Enzyme: EC-number of the enzyme you want to search for.
 					You can also input the name and the system will autocomplete it for you.</li>
 				<li>Read id: ID-number of the specific read you want to search for.</li>
-				<li>DB entry id: ID-number of the specific database entry you want to search for.</li>
+				<li>DB entry id: ID-number of the specific database entry you want to search for. Supported databases are UniProt, fRNAdb and SILVA.</li>
 				<li>Minimum bitscore: A bitscore limit. Nodes with bitscores under this will not be taken into account. </li>
-				<li>Minimum e-value: A e-value limit. Nodes with e-values under this will not be taken into account. </li>
+				<li>Maximum e-value: A e-value limit. Nodes with e-values over this will not be taken into account. </li>
 				<li>Depth: The initial depth of the graph, meaning how many circles of nodes will initially be drawn.</li>
-				<li>Hits per node: How many edges per node will initially be drawn. The ones that will be drawn will be the best ones of each node.</li>
+				<li>Hits per node: How many edges per node will initially be drawn. The ones that will be drawn will be the best ones of each node. Additional, next-best nodes can be revealed from the right click menu.</li>
 			</ul>
 		<p>You can also select which samples to use in getting results. The default (none selected) means all of the will be used.
 			If you would prefer to use only the samples of your chosing, click on their checkboxes before clicking 'refresh page'.
@@ -68,7 +68,7 @@
 			To open connections from a node, simply click on it. If connections are already open, clicking
 			will show more of them. Allmost all other functions can be accessed from the menu which opens
 			when an object is clicked with the right mouse button. The menu shows actions that are available
-			for that specific object. For edges it shows only alignments (exept for enzyme edges), but for nodes it shows many different functions.
+			for that specific object. For edges it shows only alignments (except for enzyme edges), but for nodes it shows many different functions.
 			Every node also has an option to center that node. Using this will make traversal in the graph easier and it also effects the tagging of the nodes (see <a href="#tagging">tagging the graph</a>).
 			Also, to make viewing the graph easier <strong>different types of nodes</strong> have been colorcoded for your convenience.
 			Enzyme nodes are blue, database entries are green and reads are red.
@@ -76,7 +76,7 @@
 		<p id="tooltips"><strong>Tooltips</strong></p><br/>
 		<p>
 			The boxes that open next to the mouse, when the mouse is over an edge or node are called tooltips.
-			They display some usefull information conserning the element they are atached to. When hovering over an edge
+			They display some useful information conserning the element they are atached to. When hovering over an edge
 			you can see the IDs of the two elements it connects and the bitscore and the e-value of the edge.
 			Over any type of node, you can see the number of hidden connections that are not displayed in the graph. This only takes into account connections that are over the bitscore and/or e-value limits you used when getting the graph.
 			When hovering over an enzyme node you can see its ec-number and the first of its names that are listed in the database
@@ -85,7 +85,7 @@
 		</p><br/>
 		<p id="tagging"><strong>Tagging the graph</strong></p><br/>
 		<p>
-			Tagging the graph is a feature made to make traversing and viewing the graph easier. A node can be tagged by selecting 'tag/untag node' from the
+			Tagging the graph is a feature made to make traversing and viewing the graph easier. Tagging is used to simplify the graph, since there is a button to delete all untagged nodes. Tagged nodes also visually differ from the others. A node can be tagged by selecting 'tag/untag node' from the
 			rightclick menu. The same command also untags a tagged node. When a node is tagged, its center turns white.
 			Tagging a node will also tag a path to the root node, which is the node at the center of the graph. Untagging a node will also cause similar check to be made, and
 			all nodes which no longer have a tagged path to the root will also be untagged. 
@@ -155,7 +155,7 @@
 			The alignment will open under the graph. You can close the alignment by clicking on the close link on the upper right corner of the alignment box.
 			The parts of the alignment that are colored red are the parts that are similar in both alignments, other parts dont have a background color. The
 			upper part of the alignment is always the database sequence and the downer is the read sequence. Multiple alignments can be open at the same time
-			and for regognition purposes the top of the alignment box always states the IDs of the elements it shows.
+			and for recognition purposes the top of the alignment box always states the IDs of the elements it shows.
 		</p><br/>
 		<p id="settings"><strong>Settings</strong></p><br/>
 		<p>
