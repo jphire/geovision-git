@@ -2,10 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_save
 
-class Sample(models.Model):
-	sample_id = models.CharField(max_length=32)
-	owner = models.ForeignKey(User, related_name='samples')
-
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	settings = models.TextField(blank=True)

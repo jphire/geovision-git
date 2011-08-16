@@ -240,7 +240,8 @@ class QueryToJSON:
 
 		if param.type == "db_entry":
 			query = query.filter(db_entry=param.dict["id"]).select_related('read').defer(*('read__' + x for x in Read.deferred_fields))
-			query = query.filter(sample__in=self.samples)
+			if len(self.samples) != 0:
+				query = query.filter(sample__in=self.samples)
 			if len(self.offset) != 0:
 				query = query.filter(~Q(read__in=self.offset))
 
@@ -251,7 +252,8 @@ class QueryToJSON:
 
 		elif param.type == "enzyme":
 			query = BlastEcs.objects.filter(ec=param.dict["id"]).values('db_entry')
-			query = query.filter(sample__in=self.samples)
+			if len(self.samples) != 0:
+				query = query.filter(sample__in=self.samples)
 			if len(self.offset) != 0:
 				query = query.filter(~Q(db_entry__in=self.offset))
 		else:

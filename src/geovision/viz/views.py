@@ -3,9 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from viz.models import BlastExtra
+from viz.models import BlastExtra, ImportedData
 from meta.models import EnzymeName, Enzyme
-from geovision.userdb.models import Sample
 import json
 import re
 
@@ -85,11 +84,7 @@ def graphrefresh(request):
 		"""
 		Returns a list of all the samples in the database.
 		"""
-		samples = []
-		sample_collection = Sample.objects.all()
-		for sample in sample_collection:
-			samples.append(sample.sample_id)
-		return samples
+		return [x.data for x in ImportedData.objects.filter(type='sample')]
 
 	condition_dict = { 'bitscore': 30, 'evalue': 0.005, 'depth': 1, 'hits': 5, 'enzyme': '', 'read': '', 'dbentry': '', 'offset': [] }
 	view_id = request.GET.get('open_view')
