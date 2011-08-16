@@ -8,20 +8,25 @@ $(document).ready(function(){
 		asyncTest("Alignment test", function()
 		{
 			expect(4);
+			var test1_ready = false;
 			initGraph();
 			alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
 			setTimeout(function(){
 				ok($(alignment)[0].innerText.search(/Alignment for edge/i)==6, "ok: " + $(alignment)[0].innerText.search(/Alignment for edge/i));
 				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
 				ok(closealign[1].innerHTML=="Close", "Alignmentfunction has a close button:" + (closealign[1].innerHTML=="Close"));
-				start();
-			}, 3000);
+				test1_ready = true;
+			}, 2000);
 
 			setTimeout(function(){
 				closealignment(closealign);
 				raises(closealignment(closealign), "must raise error to pass");
 				start();
 			}, 3000);
+			
+//			setTimeout(function() {
+//				start();
+//			}, 2000);
 
 		});
 
