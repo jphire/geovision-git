@@ -6,10 +6,6 @@ class Sample(models.Model):
 	sample_id = models.CharField(max_length=32)
 	owner = models.ForeignKey(User, related_name='samples')
 
-class ImportedData(models.Model):
-	type = models.CharField(max_length=8)
-	data = models.CharField(max_length=32)
-
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	settings = models.TextField(blank=True)

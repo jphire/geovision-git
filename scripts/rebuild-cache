@@ -3,7 +3,7 @@
 source `dirname $0`/inc/common.bash
 
 statusecho "Rebuilding cache"
-psq -ac <<EOF
+run-psql --quiet <<EOF
 	TRUNCATE viz_blastecs;
 
 	INSERT INTO viz_blastecs (ec, db_entry_id, sample, bitscore, error_value) 

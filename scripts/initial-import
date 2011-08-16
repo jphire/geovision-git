@@ -1,5 +1,16 @@
 #!/bin/bash
-echo <<EOF ########## Geovision initial data import script ##########
+cd `dirname $0`
+source inc/common.bash
+source conf/initial-import.conf
+
+sigint() {
+	echo ""
+	errorecho "User cancelled"
+	exit 1
+}
+trap sigint INT
+
+cat <<EOF ########## Geovision initial data import script ##########
 
 This script will create a database suitable for Geovision and import all the data files specified in scripts/initial-import.conf
 This WILL take several hours and DESTROY EVERYTHING IN THE DATABASE!
@@ -16,6 +27,7 @@ Before continuing, make sure that
 4) You are running this script either on a local terminal (Linux virtual terminal, X terminal), or in a GNU screen session to prevent any errors caused by e.g. flaky SSH connections.
 
 EOF
+
 read -p "Enter 'YES' to continue, anything else to abort: " INPUT
 
 if [ $INPUT != 'YES' ]
@@ -23,12 +35,10 @@ then
 	echo 'Aborting.'
 	exit 0
 fi
-source `dirname $0`/common.bash
-source `dirname $0`/initial-import.conf
 
 statusecho "(Re)creating database"
-run-manage syncdb
-run-manage --noinput reset viz meta
+run-manage syncdb --noinput
+run-manage reset --noinput viz meta
 
 read -p "Do you want to create a new superuser account? (y/n): " INPUT
 if [ "$INPUT" = "y" ]
@@ -49,7 +59,7 @@ run-psql -ac 'ALTER TABLE viz_dbuniprotecs DROP CONSTRAINT viz_dbuniprotecs_db_i
 
 statusecho "Importing utility databases"
 import-kegg "$KEGG_ENZYME_PATH"
-import-ecs "$ECS_PATH"
+import-uniprotecs "$ECS_PATH"
 
 statusecho "Importing samples"
 for SAMPLEFILE in $SAMPLES

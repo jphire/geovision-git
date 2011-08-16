@@ -11,5 +11,6 @@ then
 	errorecho "Could not open database file: $1"
 fi
 
-rundjango text_to_db/db_parser.py $1 $2
+echo "Importing database $2: $1"
+run-django run_db_parser.py $1 $2
 

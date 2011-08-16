@@ -1,0 +1,17 @@
+
+#!/bin/bash
+cd `dirname $0`
+source inc/common.bash
+
+if [ "$1" = "" ]
+then
+	echo "usage: $0 /path/to/SAMPLE.dbname.align"
+fi
+if [ ! -r "$1" ]
+then
+	errorecho "Could not open blast file: $1"
+fi
+
+echo "Importing blast: $1"
+run-django text_to_db/blast_parser.py $1
+

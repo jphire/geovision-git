@@ -1,0 +1,17 @@
+
+#!/bin/bash
+cd `dirname $0`
+source inc/common.bash
+
+if [ "$1" = "" ]
+then
+	echo "usage: $0 /path/to/sample.fasta"
+fi
+if [ ! -r "$1" ]
+then
+	errorecho "Could not open sample file: $1"
+fi
+
+echo "Importing sample: $1"
+run-django run_sample_parser.py $1
+

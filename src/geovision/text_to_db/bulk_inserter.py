@@ -1,10 +1,13 @@
 from django.db import connection
 from django.db.models import ForeignKey
 from subprocess import Popen, PIPE
-from signal import SIGINT
+import signal
 
 def dict_from_kwargs(**kwargs):
 	return kwargs
+
+def sigterm_handler(signum, frame):
+	raise RuntimeError('got SIGTERM')
 
 class BulkInserter():
 	CSV_DELIMITER = '$'
@@ -52,6 +55,9 @@ class BulkInserter():
 			self.check_psql_status()
 		else:
 			self.next_id = 1
+
+		# Add a signal handler for TERM so that kill'ing a parser script causes it to rollback properly.
+		signal.signal(signal.SIGTERM, sigterm_handler)
 
 	def check_psql_status(self, finished=False):
 		status = self.psql_popen.poll() if not finished else self.psql_popen.wait()
@@ -114,4 +120,7 @@ class BulkInserter():
 			self.check_psql_status(True)
 
 	def rollback(self):
-		self.psql_popen.send_signal(signal.SIGINT)
+		try:
+			self.psql_popen.send_signal(signal.SIGINT)
+		except Exception:
+			pass

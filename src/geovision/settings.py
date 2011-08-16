@@ -1,9 +1,8 @@
 # encoding= utf-8
 # Django settings for geovision project.
-# added this line just for fucking mercurial
-import os
 import sys
-from socket import gethostname
+import os
+import dbconfig
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 TEST_FILE_PATH = PROJECT_PATH + '/text_to_db/testfiles/'
@@ -20,39 +19,11 @@ MANAGERS = (
 		 )
 
 ADMINS = ()
-DATABASES = None
+DATABASES = dbconfig.DATABASES
 
 LOGIN_URL = '/login'
 
-login_user = os.environ['USER']
-RUNNING_ON_USERS = (gethostname() == 'users') 
-if RUNNING_ON_USERS: # Postgres settings if running on users.cs, the user/database tmtynkky is used for tests
-#	pwfile = open(os.environ['HOME'] + '/.psql_password') # Read the password from the file created by wanna-postgres
-#	pw = pwfile.readline().strip()
-#	pwfile.close()
-	DATABASES = {
-		'default': {
-			'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-			'NAME': 'tkt_gvis', # Or path to database file if using sqlite3.
-			'USER': login_user, # Not used with sqlite3.
-			'PASSWORD': '', # Not used with sqlite3.
-			'HOST': '/home/tkt_gvis/pg_data/',
-			'PORT': '58786'
-		}
-	}
-else: # Use a local SQLite database if not on users
-	DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-		'NAME': PROJECT_PATH + '/testdb.sqlite', # Or path to database file if using sqlite3.
-		'USER': '', # Not used with sqlite3.
-		'PASSWORD': '', # Not used with sqlite3.
-		'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
-		'PORT': '' # Set to empty string for default. Not used with sqlite3.
-	}
-}
-
-
+RUNNING_ON_USERS = True
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

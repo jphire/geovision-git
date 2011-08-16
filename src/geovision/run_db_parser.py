@@ -1,8 +1,7 @@
 import sys
 import geovision.text_to_db.db_parser
 from geovision.text_to_db.bulk_inserter import BulkInserter
-from geovision.viz.models import DbEntry
-from geovision.userdb import ImportedData
+from geovision.viz.models import DbEntry, ImportedData
 
 def run(args):
 	try:
@@ -10,8 +9,8 @@ def run(args):
 	except IOError:
 		print("Unable to open file", args[1])
 		sys.exit(1);
-	if ImportedData.objects.filter(type='dbentry', data=parser.source).exists()
-		print("Warning: Not importing sample %s because it already exists")
+	if ImportedData.objects.filter(type='dbentry', data=parser.source).exists():
+		print("Warning: Not importing database %s because it already exists" % args[2])
 		sys.exit(1)
 	try:
 		inserter = BulkInserter(DbEntry)
@@ -20,7 +19,7 @@ def run(args):
 			inserter.save(db_entry)
 			db_entry = parser.next_db_entry()
 		inserter.close()
-		ImpotedData.objects.create(type='dbentry', data=parser.source)
+		ImportedData.objects.create(type='dbentry', data=parser.source)
 	except Exception as e:
 		inserter.rollback()
 		raise

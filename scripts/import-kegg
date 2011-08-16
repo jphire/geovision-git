@@ -11,5 +11,5 @@ then
 	errorecho "Could not open kegg file: $1"
 fi
 
-rundjango meta/enzyme_parser.py $1
+run-django meta/enzyme_parser.py $1
 

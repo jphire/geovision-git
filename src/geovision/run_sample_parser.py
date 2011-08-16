@@ -2,8 +2,7 @@
 import sys
 import geovision.text_to_db.sample_parser
 from geovision.text_to_db.bulk_inserter import BulkInserter
-from geovision.userdb import ImportedData
-from geovision.viz.models import Read
+from geovision.viz.models import Read, ImportedData
 
 def run(args):
 	try:
@@ -11,8 +10,8 @@ def run(args):
 	except IOError:
 		print "Unable to open file", args[1]
 		sys.exit(1);
-	if ImportedData.objects.filter(type='sample', data=parser.sample).exists()
-		print("Warning: Not importing sample %s because it already exists")
+	if ImportedData.objects.filter(type='sample', data=parser.sample).exists():
+		print("Warning: Not importing sample %s because it already exists" % parser.sample)
 		sys.exit(1)
 	try:
 		inserter = BulkInserter(Read)
@@ -26,5 +25,5 @@ def run(args):
 		inserter.rollback()
 		raise 
 
-if __nam__ == "__main__":
+if __name__ == "__main__":
 	run(sys.argv)

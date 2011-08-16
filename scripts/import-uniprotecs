@@ -11,5 +11,5 @@ then
 	errorecho "Could not open the ecs file: $1"
 fi
 
-rundjango text_to_db/uniprot_ecs_parser.py $1
+run-django text_to_db/uniprot_ecs_parser.py $1
 

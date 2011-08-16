@@ -1,6 +1,7 @@
 import os
 import sys
 from geovision.viz.models import DbUniprotEcs as EcsEntry
+from geovision.text_to_db.bulk_inserter import BulkInserter
 
 class EcsFileParser:
 	"""
@@ -28,18 +29,19 @@ class EcsFileParser:
 		return (EcsEntry(db_id_id = self.db_id, protein_existence_type = self.pext, ec = ec) for ec in self.ecs)
 
 def run(args):
-	import sys
 	parser = EcsFileParser(args[1])
 
-	from geovision.text_to_db.bulk_inserter import BulkInserter
-	inserter = BulkInserter(EcsEntry)
-
-	while True:
-		entries = parser.next_ecs_entry()
-		if not entries: break
-		for entry in entries:
-			inserter.save(entry)
-	inserter.close()
+	try:
+		inserter = BulkInserter(EcsEntry)
+		while True:
+			entries = parser.next_ecs_entry()
+			if not entries: break
+			for entry in entries:
+				inserter.save(entry)
+		inserter.close()
+	except Exception:
+		inserter.rollback()
+		raise
 
 if __name__ == '__main__':
 	run(sys.argv)

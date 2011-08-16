@@ -1,6 +1,10 @@
 from django.db import models
 from meta.models import *
 
+class ImportedData(models.Model):
+	type = models.CharField(max_length=8)
+	data = models.CharField(max_length=32)
+
 class Read(models.Model):
 	sample = models.CharField(max_length=16)
 	read_id = models.CharField(max_length=64, primary_key=True)
