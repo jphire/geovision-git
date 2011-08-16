@@ -4,12 +4,13 @@
 
 $(document).ready(function(){
 
+		initGraph();
+		alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
+
 		module("moreinfo.js");
 		asyncTest("Alignment test", function()
 		{
-			expect(4);
-			initGraph();
-			alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
+			expect(4);	
 			setTimeout(function(){
 				ok($(alignment)[0].innerText.search(/Alignment for edge/i)==6, "ok: " + $(alignment)[0].innerText.search(/Alignment for edge/i));
 				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
@@ -22,13 +23,11 @@ $(document).ready(function(){
 		module("moreinfo.js");
 		asyncTest("Alignment test_2", function()
 		{
-			initGraph();
-			alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
 			setTimeout(function(){
 				closealignment(closealign);
 				raises(closealignment(closealign), "must raise error to pass");
 				start();
-			}, 3000);
+			}, 2000);
 		});
 
 		module("graphviz.js");
