@@ -11,8 +11,8 @@ $(document).ready(function(){
 			initGraph();
 			setTimeout(function(){
 				alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
-//				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
-				ok(closealign.innerHTML=="Close", "Alignmentfunction has a close button:" + (closealign.innerHTML=="Close"));
+				ok($('.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
+				ok(closealign[1].innerHTML=="Close", "Alignmentfunction has a close button:" + (closealign.innerHTML=="Close"));
 				start();
 			}, 3000);
 
