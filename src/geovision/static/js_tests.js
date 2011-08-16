@@ -13,16 +13,16 @@ $(document).ready(function(){
 			setTimeout(function(){
 				ok($(alignment)[0].innerText.search(/Alignment for edge/i)==6, "ok: " + $(alignment)[0].innerText.search(/Alignment for edge/i));
 				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
-				ok(closealign[1].innerHTML=="Close", "Alignmentfunction has a close button:" + (closealign.innerHTML=="Close"));
+				ok(closealign[1].innerHTML=="Close", "Alignmentfunction has a close button:" + (closealign[1].innerHTML=="Close"));
 				start();
 			}, 3000);
 
-//			setTimeout(function(){
-//				closealignment(closealign);
-//				raises(closealignment(closealign), "must raise error to pass");
-//				start();
-//			}, 3000);
-//
+			closealignment(closealign);
+			setTimeout(function(){	
+				raises(closealignment(closealign), "must raise error to pass");
+				start();
+			}, 3000);
+
 		});
 
 		module("graphviz.js");
