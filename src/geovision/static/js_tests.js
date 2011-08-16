@@ -4,30 +4,19 @@
 
 $(document).ready(function(){
 
-		initGraph();
-		alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
-
 		module("moreinfo.js");
 		asyncTest("Alignment test", function()
 		{
-			expect(4);	
+			expect(3);
+			initGraph();
+			alignmentfunction(26092180, 'A1A835', 'GDQ9FB102FUTYO');
 			setTimeout(function(){
-				ok($(alignment)[0].innerText.search(/Alignment for edge/i)==6, "ok: " + $(alignment)[0].innerText.search(/Alignment for edge/i));
+				ok($(alignment)[0].innerText.search(/Alignment for edge/i)!=-1, "Alignment for edge has data: " + ($(alignment)[0].innerText.search(/Alignment for edge/i)!=-1));
 				ok($('span.alignmentpart')[0].innerHTML != '', "Alignmentfunction has data: " + ($('span.alignmentpart')[0].innerHTML!=''));
 				ok(closealign[1].innerHTML=="Close", "Alignmentfunction has a close button:" + (closealign[1].innerHTML=="Close"));
 				start();
-			}, 2000);
+			}, 1000);
 
-		});
-
-		module("moreinfo.js");
-		asyncTest("Alignment test_2", function()
-		{
-			setTimeout(function(){
-				closealignment(closealign);
-				raises(closealignment(closealign), "must raise error to pass");
-				start();
-			}, 2000);
 		});
 
 		module("graphviz.js");
@@ -66,6 +55,15 @@ $(document).ready(function(){
 				ok(works, "cleanupGraph works: " + works);
 				start();
 			}, 1000);
+
+			setTimeout(function(){
+				var node = rgraph.graph.getNode('GDQ9FB102IMS1X');
+				fetchJSON(node);
+				ok(busy==true, "busy was set right:" + (busy==true));
+				ok('Q0KF09' in rgraph.graph.nodes, "fetchJSON works: " + ('Q0KF09' in rgraph.graph.nodes));
+				start();
+			}, 3000);
+
 		});
 
 		module("events.js");
@@ -81,7 +79,6 @@ $(document).ready(function(){
 				ok(currentNode!=undefined, 'currentNode was not undefined: ' + (currentNode!=undefined));
 				start();
 			}, 1000);
-
 			
 			setTimeout(function(){
 				node = rgraph.graph.getNode(rgraph.root);
@@ -90,7 +87,6 @@ $(document).ready(function(){
 				ok(currentNode==undefined, 'currentNode was undefined: ' + (currentNode==undefined));
 				start();
 			}, 1000);
-
 			
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
