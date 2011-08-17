@@ -131,20 +131,20 @@ $(document).ready(function(){
 				ok(checkRootTagpath(node)==true, "checkRootTagpath test 1: " + (checkRootTagpath(node)==true));
 				ok(checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false));
 				start();
-			}, 2000);
+			}, 3000);
 
 			setTimeout(function(){
 				untagNode(node);
 				ok(node.traversalTag==false, "untagNode works: " + (node.traversalTag==false));
 				start();
-			}, 2000);
+			}, 3000);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
 				tagParents(node);
-				ok(checkRootTagpath(node)==true, "tagParents: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true));
+				ok(checkRootTagpath(node)==true, "tagParents works: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true));
 				start();
-			}, 2000);
+			}, 3000);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgaph.root);
@@ -155,8 +155,9 @@ $(document).ready(function(){
 						works = false;
 				});
 				ok(works, "tagSubnodes works: " + (works));
+				untagSubgraph(node);
 				start();
-			}, 2000);
+			}, 3000);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
@@ -166,9 +167,10 @@ $(document).ready(function(){
 					if(node.traversalTag != true)
 						works = false;
 				});
-				ok(works, "tagSubnodes works: " + (works));
+				ok(works, "tagSubgraph works: " + (works));
+				untagSubgraph(node);
 				start();
-			}, 2000);
+			}, 3000);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgaph.root);
@@ -179,8 +181,8 @@ $(document).ready(function(){
 					if(node.traversalTag == true)
 						works = false;
 				});
-				ok(works, "tagSubnodes works: " + (works));
+				ok(works, "untagSubgraph works: " + (works));
 				start();
-			}, 2000);
+			}, 3000);
 		});
 	});
