@@ -52,13 +52,13 @@ $(document).ready(function(){
 //				ok(works, "cleanupGraph works: " + works);
 //				start();
 //			}, 3000);
-
-			setTimeout(function(){
-				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
+			var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
 				fetchJSON(node);
+			setTimeout(function(){
+				
 				ok(('A8LMA2' in rgraph.graph.nodes), "fetchJSON works: " + (rgraph.graph.nodes));
 				start();
-			}, 3000);
+			}, 7000);
 
 		});
 
