@@ -45,7 +45,7 @@
 <span class='line'> 38</span> 
 <span class='line'> 39</span> </span><span class="COMM">/**Adds the views name and load-, delete-, and export-buttons to the left navigation with their css-styles.
 <span class='line'> 40</span>  * @param id the id of the saved view in question
-<span class='line'> 41</span>  * @param the name of the view*/</span><span class="WHIT">
+<span class='line'> 41</span>  * @param name the name of the view*/</span><span class="WHIT">
 <span class='line'> 42</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">addSavedViewToList</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT">
 <span class='line'> 43</span> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 44</span> </span><span class="WHIT">	</span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'#savedViews'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">append</span><span class="PUNC">(</span><span class="STRN">'&lt;div class="view">View name: &lt;strong>'</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="STRN">'&lt;/strong>&lt;br/>&lt;a class="load" href="/graphrefresh?open_view='</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'">Load&lt;/a> -'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
