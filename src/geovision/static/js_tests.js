@@ -60,7 +60,7 @@ $(document).ready(function(){
 			}, 3000);
 			
 			setTimeout(function(){	
-				ok(('A8LMA2' in rgraph.graph.nodes), "fetchJSON works: " + (rgraph.graph.nodes));
+				ok(('A8LMA2' in rgraph.graph.nodes), "fetchJSON works: " + ('A8LMA2' in rgraph.graph.nodes));
 				start();
 			}, 3000);
 		});
@@ -70,8 +70,12 @@ $(document).ready(function(){
 		{
 			expect(5);
 			initGraph();
-			var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
-			rgraph.events.config.onClick(node);
+			var node;
+
+			setTimeout(function(){
+				node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
+				rgraph.events.config.onClick(node);
+			}, 1000);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
@@ -79,7 +83,7 @@ $(document).ready(function(){
 				ok((rgraph.canvas.getElement().style.cursor=='pointer'), 'cursorStyle was pointer: ' + (rgraph.canvas.getElement().style.cursor=='pointer'));
 				ok(currentNode!=undefined, 'currentNode was not undefined: ' + (currentNode!=undefined));
 				start();
-			}, 2000);
+			}, 3000);
 			
 			setTimeout(function(){
 				node = rgraph.graph.getNode(rgraph.root);
@@ -87,12 +91,12 @@ $(document).ready(function(){
 				ok(rgraph.canvas.getElement().style.cursor=='', 'cursorStyle was empty: ' + (rgraph.canvas.getElement().style.cursor==''));
 				ok(currentNode==undefined, 'currentNode was undefined: ' + (currentNode==undefined));
 				start();
-			}, 2000);
+			}, 3000);
 			
 			setTimeout(function(){
 				ok(('A8LMA2' in rgraph.graph.nodes), '\'gi|185679843|gb|ABLU01135391.1|\' was in the graph: ' + ('A8LMA2' in rgraph.graph.nodes));
 				start();
-			}, 2000);
+			}, 3000);
 		});
 
 		module("bitscore.js");
