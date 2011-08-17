@@ -24,7 +24,16 @@ $(document).ready(function(){
 		{
 			expect(9);
 			initGraph();
-			fetchJSON(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'));
+			var node;
+
+			setTimeout(function(){
+				node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
+				fetchJSON(node);
+			}, 100);
+
+			rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
+			fetchJSON(node);
+
 			setTimeout(function(){
 				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
 				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.config.levelDistance);
@@ -57,7 +66,6 @@ $(document).ready(function(){
 				ok(('A8LMA2' in rgraph.graph.nodes), "fetchJSON works: " + (rgraph.graph.nodes));
 				start();
 			}, 3000);
-
 		});
 
 		module("events.js");
@@ -85,9 +93,7 @@ $(document).ready(function(){
 			}, 2000);
 			
 			setTimeout(function(){
-				
-//				rgraph.events.config.onClick(node);
-				ok(('A8LMA2' in rgraph.graph.nodes), '\'gi|185679843|gb|ABLU01135391.1|\' was in the graph: ' + ('DB5' in rgraph.graph.nodes));
+				ok(('A8LMA2' in rgraph.graph.nodes), '\'gi|185679843|gb|ABLU01135391.1|\' was in the graph: ' + ('A8LMA2' in rgraph.graph.nodes));
 				start();
 			}, 2000);
 		});
@@ -130,7 +136,7 @@ $(document).ready(function(){
 				tagNode(node);
 				ok(node.traversalTag==true, "tagNode works: " + (node.traversalTag==true));
 				ok(checkRootTagpath(node)==true, "checkRootTagpath test 1: " + (checkRootTagpath(node)==true));
-				ok(checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false));
+				ok(checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true));
 				start();
 			}, 3000);
 
