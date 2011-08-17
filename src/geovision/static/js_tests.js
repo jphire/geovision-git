@@ -67,6 +67,8 @@ $(document).ready(function(){
 		{
 			expect(5);
 			initGraph();
+			var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
+			rgraph.events.config.onClick(node);
 
 			setTimeout(function(){
 				var node = rgraph.graph.getNode(rgraph.root);
@@ -85,8 +87,8 @@ $(document).ready(function(){
 			}, 2000);
 			
 			setTimeout(function(){
-				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
-				rgraph.events.config.onClick(node);
+				
+//				rgraph.events.config.onClick(node);
 				ok(('A8LMA2' in rgraph.graph.nodes), '\'gi|185679843|gb|ABLU01135391.1|\' was in the graph: ' + ('DB5' in rgraph.graph.nodes));
 				start();
 			}, 2000);
@@ -130,7 +132,7 @@ $(document).ready(function(){
 				tagNode(node);
 				ok(node.traversalTag==true, "tagNode works: " + (node.traversalTag==true));
 				ok(checkRootTagpath(node)==true, "checkRootTagpath test 1: " + (checkRootTagpath(node)==true));
-				ok(checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false));
+				ok(checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true, "checkRootTagpath test 2: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==false));
 				start();
 			}, 3000);
 
