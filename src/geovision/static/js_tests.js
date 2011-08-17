@@ -52,10 +52,10 @@ $(document).ready(function(){
 //				ok(works, "cleanupGraph works: " + works);
 //				start();
 //			}, 3000);
-			var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
-				fetchJSON(node);
+			
 			setTimeout(function(){
-				
+				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
+				fetchJSON(node);
 				ok(('A8LMA2' in rgraph.graph.nodes), "fetchJSON works: " + (rgraph.graph.nodes));
 				start();
 			}, 7000);
@@ -140,9 +140,46 @@ $(document).ready(function(){
 			}, 2000);
 
 			setTimeout(function(){
-				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|')
+				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
 				tagParents(node);
 				ok(checkRootTagpath(node)==true, "tagParents: " + (checkRootTagpath(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'))==true));
+				start();
+			}, 2000);
+
+			setTimeout(function(){
+				var node = rgraph.graph.getNode(rgaph.root);
+				var works = true;
+				tagSubnodes(node);
+				rgraph.graph.eachNode(function(node) {
+					if(node.traversalTag != true)
+						works = false;
+				});
+				ok(works, "tagSubnodes works: " + (works));
+				start();
+			}, 2000);
+
+			setTimeout(function(){
+				var node = rgraph.graph.getNode(rgraph.root);
+				var works = true;
+				tagSubgraph(node);
+				rgraph.graph.eachNode(function(node) {
+					if(node.traversalTag != true)
+						works = false;
+				});
+				ok(works, "tagSubnodes works: " + (works));
+				start();
+			}, 2000);
+
+			setTimeout(function(){
+				var node = rgraph.graph.getNode(rgaph.root);
+				var works = true;
+				tagSubgraph(node);
+				untagSubgraph(node);
+				rgraph.graph.eachNode(function(node) {
+					if(node.traversalTag == true)
+						works = false;
+				});
+				ok(works, "tagSubnodes works: " + (works));
 				start();
 			}, 2000);
 		});
