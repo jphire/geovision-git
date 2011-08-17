@@ -23,42 +23,42 @@ $(document).ready(function(){
 		 /* Asynchronous testing required when using ajax!*/
 		asyncTest("Graph creation and initial query result test", function()
 		{
-//			expect(9);
+			expect(9);
 			initGraph();
-//			setTimeout(function(){
-//				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
-//				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.config.levelDistance);
-//				ok(rgraph.config.Node.alpha==Config.Node.alpha, "rgraph.config.Node.alpha: " + rgraph.config.Node.alpha);
-//				ok(rgraph.config.Edge.dim==Config.Edge.dim, "rgraph.config.Edge.dim: " + rgraph.config.Edge.dim);
-//				ok(rgraph.json.length == 2, "rgraph.json.length was: " + rgraph.json.length);
-//				ok(rgraph.root=="Q57DS4", "rgraph.root was: " + rgraph.root);
-//				start();
-//			}, 3000);
-//
-//			setTimeout(function(){
-//				setBusy(true);
-//				ok(busy==true, "setBusy works: " + (busy==true));
-//				setBusy(false);
-//				start();
-//			}, 3000);
-//
-//			setTimeout(function(){
-//				cleanupGraph();
-//				var works = true;
-//				rgraph.graph.eachNode(function(n) {
-//					if(n.data.$alpha<0.01)
-//						works = false;
-//				});
-//				ok(works, "cleanupGraph works: " + works);
-//				start();
-//			}, 3000);
+			setTimeout(function(){
+				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
+				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.config.levelDistance);
+				ok(rgraph.config.Node.alpha==Config.Node.alpha, "rgraph.config.Node.alpha: " + rgraph.config.Node.alpha);
+				ok(rgraph.config.Edge.dim==Config.Edge.dim, "rgraph.config.Edge.dim: " + rgraph.config.Edge.dim);
+				ok(rgraph.json.length == 2, "rgraph.json.length was: " + rgraph.json.length);
+				ok(rgraph.root=="Q57DS4", "rgraph.root was: " + rgraph.root);
+				start();
+			}, 3000);
+
+			setTimeout(function(){
+				setBusy(true);
+				ok(busy==true, "setBusy works: " + (busy==true));
+				setBusy(false);
+				start();
+			}, 3000);
+
+			setTimeout(function(){
+				cleanupGraph();
+				var works = true;
+				rgraph.graph.eachNode(function(n) {
+					if(n.data.$alpha<0.01)
+						works = false;
+				});
+				ok(works, "cleanupGraph works: " + works);
+				start();
+			}, 3000);
 			
 			setTimeout(function(){
 				var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
 				fetchJSON(node);
 				ok(('A8LMA2' in rgraph.graph.nodes), "fetchJSON works: " + (rgraph.graph.nodes));
 				start();
-			}, 7000);
+			}, 3000);
 
 		});
 
@@ -122,7 +122,7 @@ $(document).ready(function(){
 		module("navigation.js");
 		asyncTest("Graph traversal and tagging test", function()
 		{
-			expect(5);
+			expect(8);
 			initGraph();
 			var node = rgraph.graph.getNode('Q57DS4')
 			setTimeout(function(){
