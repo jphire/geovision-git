@@ -149,7 +149,7 @@ $(document).ready(function(){
 			}, 3000);
 
 			setTimeout(function(){
-				var node = rgraph.graph.getNode(rgaph.root);
+				var node = rgraph.graph.getNode(rgraph.root);
 				var works = true;
 				tagSubnodes(node);
 				rgraph.graph.eachNode(function(node) {
@@ -175,7 +175,7 @@ $(document).ready(function(){
 			}, 3000);
 
 			setTimeout(function(){
-				var node = rgraph.graph.getNode(rgaph.root);
+				var node = rgraph.graph.getNode(rgraph.root);
 				var works = true;
 				tagSubgraph(node);
 				untagSubgraph(node);
