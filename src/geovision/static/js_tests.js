@@ -1,9 +1,9 @@
 /**
- * This file includes qunit tests for all javascript code not in external libraries.
+ * This file includes qunit tests for javascript code not in external libraries.
  */
 
 $(document).ready(function(){
-
+		/* Asynchronous tests required when using ajax!*/
 		module("moreinfo.js");
 		asyncTest("Alignment test", function()
 		{
@@ -19,14 +19,12 @@ $(document).ready(function(){
 
 		});
 
-		module("graphviz.js");
-		 /* Asynchronous testing required when using ajax!*/
+		module("graphviz.js");	
 		asyncTest("Graph creation and initial query result test", function()
 		{
 			expect(9);
 			initGraph();
-			var node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
-			fetchJSON(node);
+			fetchJSON(rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|'));
 			setTimeout(function(){
 				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
 				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.config.levelDistance);
@@ -55,8 +53,7 @@ $(document).ready(function(){
 				start();
 			}, 3000);
 			
-			setTimeout(function(){
-				
+			setTimeout(function(){	
 				ok(('A8LMA2' in rgraph.graph.nodes), "fetchJSON works: " + (rgraph.graph.nodes));
 				start();
 			}, 3000);
