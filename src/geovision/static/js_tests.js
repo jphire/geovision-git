@@ -124,8 +124,9 @@ $(document).ready(function(){
 		{
 			expect(8);
 			initGraph();
-			var node = rgraph.graph.getNode('Q57DS4')
+			
 			setTimeout(function(){
+				var node = rgraph.graph.getNode('Q57DS4')
 				tagNode(node);
 				ok(node.traversalTag==true, "tagNode works: " + (node.traversalTag==true));
 				ok(checkRootTagpath(node)==true, "checkRootTagpath test 1: " + (checkRootTagpath(node)==true));
@@ -134,6 +135,7 @@ $(document).ready(function(){
 			}, 3000);
 
 			setTimeout(function(){
+				var node = rgraph.graph.getNode('Q57DS4')
 				untagNode(node);
 				ok(node.traversalTag==false, "untagNode works: " + (node.traversalTag==false));
 				start();
