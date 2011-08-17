@@ -29,10 +29,7 @@ $(document).ready(function(){
 			setTimeout(function(){
 				node = rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
 				fetchJSON(node);
-			}, 100);
-
-			rgraph.graph.getNode('gi|185679843|gb|ABLU01135391.1|');
-			fetchJSON(node);
+			}, 1000);
 
 			setTimeout(function(){
 				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
