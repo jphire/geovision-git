@@ -24,7 +24,7 @@ $(document).ready(function(){
 		asyncTest("Graph creation and initial query result test", function()
 		{
 //			expect(9);
-//			initGraph();
+			initGraph();
 //			setTimeout(function(){
 //				ok(rgraph.busy==false, "rgraph.busy: " + rgraph.busy);
 //				ok(rgraph.config.levelDistance==Config.levelDistance, "rgraph.levelDistance: " + rgraph.config.levelDistance);
