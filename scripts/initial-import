@@ -10,34 +10,55 @@ sigint() {
 }
 trap sigint INT
 
-cat <<EOF ########## Geovision initial data import script ##########
+cat <<EOF
+########## Geovision initial data import script ##########
 
-This script will create a database suitable for Geovision and import all the data files specified in scripts/initial-import.conf
+This script will create a database suitable for Geovision and import all the data files specified in scripts/conf/initial-import.conf
 This WILL take several hours and DESTROY EVERYTHING IN THE DATABASE!
 
 Before continuing, make sure that
 
-1) You have a running PostgreSQL server, and that Geovision is properly configured to use it in src/geovision/settings.py
+1) You have a running PostgreSQL server, and that Geovision is properly configured to use it in src/geovision/dbconfig.py
 
-2) You have configured the paths to the KEGG database files and UniProt ecs database in scripts/initial-import.conf
+2) You have configured the paths to the KEGG database files and UniProt ecs database in scripts/conf/initial-import.conf
 
-3) You have listed all the data files (samples, databases, blasts) you want to import in scripts/initial-import.conf
+3) You have listed all the data files (samples, databases, blasts) you want to import in scripts/conf/initial-import.conf
    Note that it is usually much faster to import as much data that is possible during the initial importing phase.
 
 4) You are running this script either on a local terminal (Linux virtual terminal, X terminal), or in a GNU screen session to prevent any errors caused by e.g. flaky SSH connections.
 
+Hit enter to read more...
 EOF
 
-read -p "Enter 'YES' to continue, anything else to abort: " INPUT
+read INPUT
 
-if [ $INPUT != 'YES' ]
+cat <<EOF
+Initial import configuration
+
+Uniprot ECS database file: $ECS_PATH
+KEGG database file: $KEGG_ENZYME_PATH
+
+Sample files:
+$SAMPLES
+
+Databases:
+$(echo "$DATABASES" | sed -e 's/|/: /g')
+
+Blasts:
+$(find $BLAST_PATH -name '*.align')
+
+EOF
+
+read -p "Is the information above correct? Enter 'YES' to start the installation, anything else to abort: " INPUT
+
+if [ "$INPUT" != 'YES' ]
 then
 	echo 'Aborting.'
 	exit 0
 fi
 
 statusecho "(Re)creating database"
-run-manage syncdb --noinput
+run-manage syncdb --noinput || die "Is your database configuration in src/geovision/dbconfig.py correct? Did you remember to start-localpostgres?"
 run-manage reset --noinput viz meta
 
 read -p "Do you want to create a new superuser account? (y/n): " INPUT

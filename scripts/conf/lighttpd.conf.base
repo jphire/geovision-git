@@ -16,6 +16,9 @@ mimetype.assign             = (
   ".js"           =>      "text/javascript",
   ".txt"          =>      "text/plain",
   ".xml"          =>      "text/xml",
+  ".png"          =>      "image/png",
+  ".jpg"          =>      "image/jpeg",
+  ".gif"          =>      "image/gif",
  )
 
 static-file.exclude-extensions = (".fcgi")
