@@ -13,3 +13,7 @@ die() {
 	errorecho "$@"
 	exit 2
 }
+warn-cacheinvalidate() {
+	echo "You have run a command that invalidates the blast-ecs-cache."
+	echo "After you are done with your data importing session, please run the rebuild-cache scripts or your enzyme queries may report incorrect results!"
+}

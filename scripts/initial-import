@@ -49,7 +49,7 @@ $(find $BLAST_PATH -name '*.align')
 
 EOF
 
-read -p "Is the information above correct? Enter 'YES' to start the installation, anything else to abort: " INPUT
+read -p "Is the information above correct? Enter 'YES' to continue, anything else to abort: " INPUT
 
 if [ "$INPUT" != 'YES' ]
 then
@@ -68,19 +68,20 @@ then
 else
 	echo 'You can create one later with the create-superuser script'
 fi
+statusecho "Starting the import process. Go and have a looong coffee break."
 
 # drop predefined indexes to speed up importing
-run-psql -ac 'DROP INDEX "viz_blast_read_id";'
-run-psql -ac 'DROP INDEX "viz_blast_read_id_like";'
-run-psql -ac 'DROP INDEX "viz_blast_db_entry_id";'
-run-psql -ac 'DROP INDEX "viz_blast_db_entry_id_like";'
-run-psql -ac 'DROP INDEX "viz_blastecs_db_entry_id_like";'
-run-psql -ac 'DROP INDEX "viz_dbuniprotecs_db_id_like";'
-run-psql -ac 'ALTER TABLE viz_dbuniprotecs DROP CONSTRAINT viz_dbuniprotecs_db_id_fkey;'
+run-psql -c 'DROP INDEX "viz_blast_read_id";' > /dev/null
+run-psql -c 'DROP INDEX "viz_blast_read_id_like";' > /dev/null
+run-psql -c 'DROP INDEX "viz_blast_db_entry_id";' > /dev/null
+run-psql -c 'DROP INDEX "viz_blast_db_entry_id_like";' > /dev/null
+run-psql -c 'DROP INDEX "viz_blastecs_db_entry_id_like";' > /dev/null
+run-psql -c 'DROP INDEX "viz_dbuniprotecs_db_id_like";' > /dev/null
+run-psql -c 'ALTER TABLE viz_dbuniprotecs DROP CONSTRAINT viz_dbuniprotecs_db_id_fkey;' > /dev/null
 
 statusecho "Importing utility databases"
 import-kegg "$KEGG_ENZYME_PATH"
-import-uniprotecs "$ECS_PATH"
+import-uniprotecs "$ECS_PATH" --quiet
 
 statusecho "Importing samples"
 for SAMPLEFILE in $SAMPLES
@@ -114,6 +115,6 @@ CREATE INDEX viz_dbuniprotecs_ec ON viz_dbuniprotecs(ec) WITH (fillfactor = 100)
 	ANALYZE viz_dbuniprotecs;
 	ANALYZE meta_enzymename;"
 rebuild-cache
-run-psql -ac "CREATE INDEX viz_blastecs_bitscore ON viz_blastecs (bitscore) WITH (fillfactor = 100);
+run-psql -c "CREATE INDEX viz_blastecs_bitscore ON viz_blastecs (bitscore) WITH (fillfactor = 100);
 CREATE INDEX viz_blastecs_ec ON viz_blastecs (ec) WITH (fillfactor=100);"
 statusecho "Initial importing complete"

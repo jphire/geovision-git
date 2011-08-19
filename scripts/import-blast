@@ -10,8 +10,12 @@ fi
 if [ ! -r "$1" ]
 then
 	errorecho "Could not open blast file: $1"
+	exit 1
 fi
 
 echo "Importing blast: $1"
 run-django text_to_db/blast_parser.py $1
 
+case "$1" in 
+	*uniprot.align) [ "$2" = "--quiet" ] || warn-cacheinvalidate;;
+esac

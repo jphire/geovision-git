@@ -29,6 +29,7 @@ class EcsFileParser:
 		return (EcsEntry(db_id_id = self.db_id, protein_existence_type = self.pext, ec = ec) for ec in self.ecs)
 
 def run(args):
+	EcsEntry.objects.all().delete()
 	parser = EcsFileParser(args[1])
 
 	try:

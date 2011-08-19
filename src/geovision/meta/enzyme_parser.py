@@ -5,6 +5,8 @@ import sys
 
 def run(args):
 	ep = KeggParser(open(args[1], 'r'), ['ENTRY', 'NAME', 'PATHWAY', 'CLASS'])
+	Enzyme.objects.all().delete()
+	EnzymeName.objects.all().delete()
 	name_inserter = BulkInserter(EnzymeName)
 
 	try:
