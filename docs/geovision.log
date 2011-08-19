@@ -1,0 +1,2328 @@
+--- Log opened Mon May 16 11:42:31 2011
+11:42 -!- Sundo [lassetyr@melkki.cs.helsinki.fi] has joined #geovision
+11:42 -!- Irssi: #geovision: Total of 2 nicks [1 ops, 0 halfops, 0 voices, 1 normal]
+11:42 -!- Irssi: Join to #geovision was synced in 1 secs
+11:42 -!- mode/#geovision [+o Sundo] by Firesong
+11:43 -!- Dezgeg [tmtynkky@melkki.cs.helsinki.fi] has joined #geovision
+11:43 -!- mode/#geovision [+o Dezgeg] by Firesong
+11:44 -!- Tattoo [tkairi@myntti.helsinki.fi] has joined #geovision
+11:45 -!- mode/#geovision [+o Tattoo] by Firesong
+11:46 -!- jannel_ [jjlaukka@melkki.cs.helsinki.fi] has joined #geovision
+11:47 -!- mode/#geovision [+o jannel_] by Firesong
+13:50 -!- Firesong changed the topic of #geovision to: Geovision!!!
+13:50 -!- Firesong changed the topic of #geovision to: Geovision!!! \o/
+13:54 <@Sundo> tulilaulu@gmail.com
+13:54 <@Sundo> dezgeg@gmail.com
+13:54 <@Sundo> janne.laukkanen83@gmail.com
+13:54 <@Sundo> sundokan@gmail.com
+13:55 <@Sundo> asiakastapaaminen keskiviikko klo 12 A217
+13:57 <@Sundo> päivittäiset tapaamiset klo 12
+13:57 <@Sundo> täällä
+14:53 <@Dezgeg> ookei. aluksi ~/.hgrc:hen tämäntyyliset rivit: 
+14:53 <@Dezgeg> [ui]
+14:53 <@Dezgeg> username = Tuomas Tynkkynen <dezgeg@gmail.com>
+14:53 <@Dezgeg> sit hg clone https://username@geovision.googlecode.com/hg/ geovision
+14:54 <@Dezgeg> tuo luo tuon geovision-kansion ja clonettaa kaiken sinne
+14:55 <@Dezgeg> sit sieltä  projektikansiosta pitää muokata .hg/hgrc:tä, että voi pushata:
+14:55 <@Dezgeg> [paths]
+14:55 <@Dezgeg> default = https://dezgeg:XXXXXXX@geovision.googlecode.com/hg/
+14:56 <@Dezgeg> tuohon XXX tilalle salasana, joka löytyy täältä https://code.google.com/hosting/settings
+14:56 <@Dezgeg> tuolleen kometoriviltä, netbeans on vielä vähän hämärä
+15:15 -!- jannel_ [jjlaukka@melkki.cs.helsinki.fi] has left #geovision []
+16:45 -!- jannel [jjlaukka@melkki.cs.helsinki.fi] has joined #geovision
+16:55 < jannel> .
+17:04 -!- mode/#geovision [+o jannel] by Firesong
+17:11 <@jannel> moi, en pääsekään tänään tulemaan illalla, tuli yllättävä meno..
+17:11 <@Firesong> :(
+17:11 <@Firesong> sääli
+17:11 <@Firesong> mites muut?
+17:11 <@Firesong> pitäisköhän siirtää sit sinne viikon päähän=
+17:11 <@jannel> nii mulle käy kyllä ens viikollaki 
+17:12 <@jannel> ainaki ma, ke, to ens viikolla käy
+17:12 <@Firesong> Ensviikon loppupuolella kävis mulle kyl ihan yhtä hyvin, siinä keskiviikosta eteenpäin
+17:12 <@Firesong> mites Sundo ja Dezgeg 
+17:12 <@Sundo> juu
+17:12 <@Firesong> tuli muuten mieleen, että onko kenelläkään toistensa puhelinnumeroita, ja jos ei, niin oisko (esim. tällaisia tilanteita ajatellen) hyvä olla?
+17:13 <@jannel> ei oo mut ois varmaan hyvä..
+17:13 <@Sundo> 050 5217225 on mulle
+17:14 <@jannel> 0503261854 mulle
+17:16 <@Firesong> 050-5990546 mulle
+17:17 <@Firesong> nyt ois kyl ihan hyvä saada Dezgeg kiinni, jos se ei enää oo laitoksella
+17:18 <@Firesong> ettei se tuu turhaan
+17:19 <@jannel> nii..ehkä se käy kattoo täällä ennen ku lähtee ku sovittiin et ilmotaan tänne
+17:20 <@Firesong> toivotaan :)
+17:20 <@Firesong> ois tylsää jos se menis sinne itekseen :P
+17:21 <@jannel> niinpä
+17:21 <@jannel> meen nyt pois, palaillaan!
+17:21 <@Firesong> o/
+17:49 <@Dezgeg> tänään ei siis mitään, ok
+17:49 <@Dezgeg> 0400-624275 
+18:42 <@Dezgeg> ja näyttääpi siltä, että noilla ylläolevilla konffeilla saa suoraan netbeanssin mercurial-toiminnallisuuden käyttöön \o/
+18:42 <@Firesong> oo, hienoa :D
+--- Day changed Tue May 17 2011
+11:58 <@Firesong> hyvää huomenta :)
+11:59 <@Sundo> huomenta
+11:59 <@Firesong> pitäiskö tässä kokoustaakkin?
+12:00 <@Sundo> juu
+12:01 <@Firesong> formaatti kai oli että kerrotaan mitä on tehty ja mitä aiotaan, näikös?
+12:01 <@Sundo> joh
+12:02 <@Firesong> mä oon pystyttänyt aikakirjurin (ja itseasiassa forkannnut uuden softan siitä alkuperäisestä, mutta sitä en laske tän projektin työmäärään mielelläni): http://serveri.tulilaulu.net/aikakirjuri
+12:02 <@Firesong> salasana on derp
+12:02 <@Firesong> se tulee tänään siihe kuntoon että sitä voi alkaa käyttää
+12:02 <@Firesong> vaihdan sitten salasanaksi hejamikrobit (onko sopiva)
+12:02 <@Firesong> siihen kirjuriin tulee vielä pari pientä säätöä
+12:02 <@Sundo> käy mulle ainakin
+12:03 <@Firesong> se ei vielä ihan hallitse sitä graafinpiirtämistä
+12:03 <@Sundo> ei sillä niin kiire ole, kunhan saa tunnit ylös
+12:03 <@Firesong> mutta aattelin että ei haittaa itteä käyttää paljon aikaa ton koodaamiseen, koska siitä voi olla hyötyy niin monelle (aattelin antaa ton softan tulevillekkin projekteille jos siitä tulee hyvä)
+12:03 <@Firesong> lisäominaisuuksia saa ehdottaa
+12:04 <@Firesong> tänään aion koodata tota ja sitten asennella loppuun kaikki merkurit sun muut läppärille ja ehkä pöytäpöntöllekkin.
+12:04 <@Firesong> onko meillä on repository?
+12:05 <@Sundo> http://code.google.com/p/geovision/
+12:05 <@Firesong> kiitos
+12:05 <@Firesong> mulla ei ole ongelmia raportoitavaksi
+12:05 <@Firesong> mites sun asiat
+12:06 <@jannel> moimoi
+12:06 <@Sundo> yritän tänään asentaa noita työkaluja ja jatkaa initial backlogin kasaamista
+12:06 <@Sundo> pistän sen tonne wikiin kohtapuoliin
+12:07 <@Sundo> kunhan saa aamupalan syötyä ja semmosta
+12:07 <@Sundo> sinne saa muutkin sitten lisäillä jos tulee mieleen jotain
+12:07 <@Firesong> (niin joo, ja kyllä sitä kirjuria saa jo käyttää, koska ne logit sieltä ei tuhoudu vaikka asentaisinkin jotain uutta. Muistakaa sit että se ei tarkista käyttäjän inputtia)
+12:08 <@jannel> mä opiskelin tota mercurii tässä ja sain sen toimimaan
+12:08 <@Tattoo> hyvä juttu :)
+12:11 <@jannel> hginit.com on ok pikanen tutoriaali mercurialiin
+12:12 <@Firesong> kuulostaa hyvältä, pitänee lukaista :)
+12:12 <@Tattoo> kantsii lisätä jonnekin noita resursseja
+12:12 <@Tattoo> kun niitä hyvii tutoriaaleja löytyy
+12:12 <@jannel> ok
+12:12 <@Tattoo> jannel: mitäs meinasit tänään? 
+12:12 <@Sundo> wikiin varmaankin
+12:13 <@Firesong> hei, ja sanokaa sit jos löydätte jotain pahoja bugeja tosta aikakirjurista, koska oon nykyään sen forkin ainoa ylläpitäjä
+12:13 <@Firesong> onko Dezgeg muuten linjoilla?
+12:13 <@jannel> ajattelin tutustua pythoniin ja djangoon
+12:15 <@jannel> onkos meillä nyt kaikki tarvittava tekeillä torstaiksi? kun mulla ei nyt ole varsinaista tehtävää niin jos tulee mieleen niin voin ruveta tekee
+12:16 <@Tattoo> no siis, jos huomenna tavataan asiakas, niin jonkun varmaan pitäis koklaa sitä djangoo ja googlailla ja miettii, onko se soveltuva
+12:18 <@jannel> ok, teen sitä sit :)
+12:19 <@jannel> ja dezgeg kanssa meinas kai koklaa djangoo
+12:21 <@Firesong> hei, jos jollain on aikaa niin sitä yhtä piirto-ohjelmaa mikä tekee graafeja vois kans vähän tutkii
+12:21 <@Firesong> että onko siitä meille apua missään muodossa
+12:21 <@Firesong> se mihin se asiakas lähetti linkin eilen
+12:22 <@Firesong> mut se ei kyl oo vielä mitenkään kiireellinen asia...
+12:22 <@Firesong> vaan jos aikaa jää
+12:22 <@jannel> jep
+12:24 <@Tattoo> jeps, näyttää hyvältä ihmiset!
+12:28 <@Firesong> :)
+12:28 <@Sundo> joo eiköhän se ollut siinä
+12:28 <@jannel> joo mun puolesta
+12:29 <@Sundo> http://code.google.com/p/geovision/wiki/Resources
+12:29 <@Sundo> tuolla on nyt sivu johon voi niitä tutorial-linkkejä pistellä
+12:29 <@Sundo> ah niin
+12:30 <@Sundo> tehdäänkö me dokumentaatio ja koodi suomeksi vai englanniksi?
+12:30 <@jannel> pitäs varmaan kysyä asiakkaalta
+12:31 <@jannel> tai olis hyvä?
+12:31 <@Sundo> juu
+12:43 <@jannel> wikissä linkki mercurial tutorialiin
+12:55 <@Tattoo> no asiakkaan piirissä on ei-suomenkielisiä
+13:01 <@Sundo> ok, englanti siis
+13:15 <@Firesong> juu, englanti käy
+13:16 <@Firesong> itellä on ollut hassusti tapana koodata kumpaakin vähän sekaisin, huomautelkaa jos koodista löytyy jotain kamalaa sekakieltä, se on varmaa mun :D
+13:37 <@Dezgeg> no pöh, olipa tänään hyvä päivä mennä syömään tasan klo 12 ja unohtaa tämä kokonaan :) yritänpä jatkossa muistaa
+13:38 <@Dezgeg> eilinen meni palaverin lisäksi mercurialin konffimiseen google coden ja nb:n kanssa, ohjeet ylenpänä logeissa, sekä djangon tuton lukemiseen
+13:38 <@Dezgeg> django vaikuttaa ihan lupaavalta ja kivalta kyl
+13:39 <@Dezgeg> jinja2:n säätäminen siihen kiinni vaikuttaa kyl parin ekan googlehitin perusteella vähän purkkaviritykseltä, pitääpi sitä IMHO harkita vielä sitten kun on tutustunut lähemmin
+13:40 <@Dezgeg> ja djangokoodailua olisi sit ilmeisemmin tänään kokeilla sit
+13:42 <@Firesong> lisäks, käy kattoo että onko toi burndownin generointi nyt sellainen minkä katsoit että se tarttee?
+13:42 <@Firesong> hups, väärä kanava
+13:43 <@Firesong> no, Tattoo, toi ylempi oli sulle
+13:43 <@Firesong> sain vihdoin ton kirjurin piirtää järkevii graafeja \o/
+13:43 <@Firesong> voitto
+13:50 <@Tattoo> Dezgeg: hyvä huomio
+13:51 <@Tattoo> just tän takia kantsii tehdä joku blogi tms. ja kattoo, onko se vakio-templatekieli oikeasti niin hirveä
+13:52 <@Tattoo> Firesong: näyttää hyvältä
+13:52 <@Sundo> :)
+13:53 <@Sundo> pythonista kannattaa varmaan käyttää versiota 2.6.5 koska se on laitoksella yleisesti käytössä
+13:55 <@Tattoo> hyvä huomio :)=
+13:56 <@Tattoo> näitä just kantsii kirjailla initial backlogiin
+13:58 <@Tattoo> et päästään tilanteeseen, missä software stack on (alustavasti) kondiksessa, tiedetään alustavasti mitä fiitsöreitä tehdään, et voidaan iloisin mielin suunnitella sprint 1 ja ruveta rokkaamaan
+13:59 <@Tattoo> initial backlog on siis semmonen master-list joka on tukena just tässä työskentelyssä: mitä pitää selvittää, mitä pitää sopia, mitä on sovittu, jne.
+14:06 <@Sundo> http://code.google.com/p/geovision/wiki/InitialBacklog
+14:06 <@Sundo> tossa on nyt se josta vois lähteä työstämään
+14:13 <@Tattoo> esim. just tota adminia voisi koklailla jossain testiprojektissa, et saisi käsitystä miten se toimii ja mitä se tarjoaa. sit pystyy tekee tarkentavia kyssäreitä huomenna
+14:48 <@Sundo> ryhmätunnus on nyt tehty, mailissa on ohjeet käyttöönottoon
+15:28 -!- Sundo changed the topic of #geovision to: Geovision!!! \o/ | Lisätkää initial backlogiin asioita
+15:33 <@Sundo> jos haluaa automatisoida, .ssh/configin host entryn käyttämän keyfilen saa määriteltyä "Identityfile ~/rsa_id"
+15:33 <@Sundo> en itse ollut käyttänyt aiemmin useampaa keyfileä joten toi oli uutta
+15:36 <@Dezgeg> joo muutenkin on kiva tehdä hostialiakset ja laittaa sinne käyttäjätunnukset ym.
+15:38 <@Dezgeg> mulla itellä on tämmönen ~/.ssh/config  http://www.cs.helsinki.fi/u/tmtynkky/ssh_config
+16:13 <@Sundo> netbeanskin näyttää ihan kivasti toimivan suoraan noin pienellä säädöllä, harvinaista
+16:25 <@Sundo> vaihdoin projektin platformin jythonista python 2.6.5
+--- Day changed Wed May 18 2011
+00:12 <@Tattoo> hmm, haaste #1
+00:12 <@Tattoo> olen ilmeisesti antanut teidän ymmärtää, että teille on pysyvästi varattu A217 :)
+00:13 <@Tattoo> mutta siellä alkaa kokous huomenna klo 13
+00:14 <@Tattoo> noo, nyt on sitten A219
+11:39 <@Tattoo> jahas, dösä ei lähde ajallaan
+11:39 <@Tattoo> saatanpa siis tulla myöhässä
+11:46 <@Sundo> niin, itsehän olin asennoitunut että toi noudattaa akateemista varttia
+11:46 <@Sundo> mutta jos nyt lähtis liikkeelle, melkeen ajoissa vielä
+11:54 <@Firesong> itehän olin täällä jo 20 vaille
+11:54 <@Firesong> yritin tähdätä tasaksi, ja ainoa sopiva bussi oli liian aikainen
+13:41 <@Dezgeg> /home/group/urenzyme/geoviz
+16:06 <@Dezgeg> http://tkt_gvis.users.cs.helsinki.fi/ ohjaa nyt kaikki requestit porttiin 5435 userssilla
+16:08 <@Dezgeg> django on asennettu ja näkyy toimivan sqliten kanssa hyvin. .bash_profile laittaa myös django-admin.py:n polkuun
+16:11 <@Dezgeg> myöskin userssilla on projetkin repo kloonattu kansioon geovision
+16:22 <@Tattoo> hyvä homma!
+17:17 <@Firesong> onko ne tänään otetut kuvat vielä missään netissä?
+18:15 <@jannel> nyt on kuvat wikissä
+19:16 <@jannel> ja laitoin ohjeen djangon käyttämiseen netbeansissa
+19:17 <@jannel> alustavan..
+19:51 <@Firesong> hei, kuulin tänään että HIITissä on jotain tyyppejä jotka tekee melkein samaa juttua kuin mitä meidän pitäis kait tehä
+19:51 <@Firesong> niitten olemassaolosta vois olla hyötyy ehkä
+19:51 <@Firesong> ne on ne kilpakoodarityypit
+19:54 <@Firesong> ne kuullemma tekee jotain dynaamista geenivisualisaatiota
+19:54 <@Firesong> niille voi jutella
+19:54 <@Firesong> en kyl tiiä yhenkään nimee
+23:07 <@Sundo> jannel: saatko tän päivän taulukuvan wikiin jossain vaiheessa
+23:08 <@jannel> sen pitäs olla siellä
+23:09 <@Sundo> kas, totta
+23:09 <@Sundo> kiitos :)
+23:09 <@jannel> :)
+--- Day changed Thu May 19 2011
+03:06 <@Tattoo> hei, huomasinpa juuri että meillä on prosessipalaveri muiden ohjaajien ja prosessisihteerien kanssa klo 12 perjantaina
+03:07 <@Tattoo> eli kokous voisi olla vähän myöhemmin, minä ja Sundo voidaan sit tosta kokouksesta tulla suoraan
+12:02 <@Sundo> huomenta
+12:05 <@jannel> huomenta
+12:06 <@jannel> mitäs ootte puuhaillu?
+12:08 <@Dezgeg> säädin eilen djangon toimimaan userssille ja näkymään ulospäin
+12:08 <@jannel> ok :)
+12:10 <@jannel> oon ettiny siihen graafin piirtämiseen vaihtoehtoja, nyt tutkiskelen sellasta kun jit. siihen on linkki wikissä
+12:10 <@jannel> ihan hyvän näköstä saa aikaan mut en oo vielä kokeillu isommalla määrällä nodeja
+12:11 <@Dezgeg> ja selvitin myös että salasanasuojauksen saa devikäyttön triviaalisti apachen http-autheilla 
+12:11 <@Sundo> ok, hyvä
+12:12 <@Sundo> mä yritin vähän alottaa tohon dataan tutustumista ja yritin miettiä minkälaisia hakuja sieltä tullaan tekemään
+12:13 <@Sundo> mutta paremminhan tuo onnistuu jos sais sitä dokumentaatiota vähän
+12:13 <@jannel> niinpä
+12:15 <@Tattoo> ok, hyvältä näyttää
+12:15 <@Tattoo> Dezgeg: oliksi toi salasanasuojaus semmonen, et sä teet sen? :)
+12:16 <@Sundo> mites muiden tuntikirjanpito, mä oon lisäilly tonne roran listaan
+12:19 <@Dezgeg> enpäs ite oo ihan viel ehtiny tonne lisäämään, pitääpi se tehfä kun pääsee koneelle
+12:19 <@jannel> en oo vielä lisänny, teen piakkoin
+12:19 <@Sundo> oman suolansa tohon tietokannan suunnitteluun tuo vielä noiden tietokantojen dataformaattien hajonta
+12:20 <@Tattoo> mmmm
+12:21 <@Tattoo> jannel: tässä vielä pari kandidaattia piirtelyyn: http://ejohn.org/blog/processingjs/ ja http://raphaeljs.com/
+12:23 <@jannel> ok. se dezgegin ehdottama ainaki käyttää tota raphaeljssää
+12:27 <@Tattoo> jeps
+12:28 <@Tattoo> niin siis erityisesti kantsii noiden kahden, processingjs ja raphaeljs, kanssa että mitä muut on tehneet niinku sen päälle
+12:28 <@Tattoo> noi on sillee ei-suoranaisesti verkon piirtelyyn vaan kaiken mahdollisen piirtelyyn. hyvällä tsägällä joku on tehny jommankumman päälle ihan verkonpiirtelyyn tarkotetun palikan
+12:29 <@Sundo> ja vielä paremmalla tuurilla se on editointikelpoista vapaata lähdekoodia
+12:29 <@Tattoo> hyvin tyypillisesti on
+12:29 <@jannel> joo, niin mä ajattelinkin. se dracula on sellanen, vapaatakin
+12:30 <@Tattoo> Sundo: Dezgeg jannel: mitäs tehdään ton huomisen kanssa?
+12:30 <@Tattoo> <@Tattoo> hei, huomasinpa juuri että meillä on prosessipalaveri muiden ohjaajien ja prosessisihteerien kanssa klo 12 perjantaina
+12:30 <@Sundo> miten kauan se kestää
+12:30 <@Tattoo> en usko et yli tuntia
+12:30 <@Tattoo> ja voidaanhan me mennä sinne sillee "meidän pitää lähteä 13"
+12:30 <@Dezgeg> hmm
+12:31 <@jannel> jaa voin tulla vaikka 12 sinne haxxoon
+12:31 <@jannel> ja ootella siellä
+12:31 <@Tattoo> jannel: muttakun osa meistä on poissa klo 12
+12:32 <@Dezgeg> kuinkakohan pitkään menee huomenna
+12:32 <@Tattoo> no tää riippuu teistä
+12:33 <@jannel> mulla on vapaata koko ilta
+12:33 <@jannel> tai päivä
+12:36 <@Dezgeg> mulla saattaa olla jossain tossa kolmen aikaan muuta puuhaa, en kyl ihan  satavarma vielä oo
+12:37 <@Sundo> no tulkaa yhdeksi viimeistään sinne haxxoon, katotaan sitten paljonko ehditään tehdä
+12:38 <@Dezgeg> ok
+12:38 <@jannel> ok
+12:41 <@Tattoo> no siinä on pari tuntia tehokasta peliaikaa
+21:15 <@Dezgeg> Firesong: tuo aikakirjurin .txt-exportti puskee sekaan php-erroreita
+21:42 <@Tattoo> tunnettu virhe
+--- Day changed Fri May 20 2011
+11:27 <@Sundo> Tattoo: missä tuo palaveri on?
+11:44 <@Tattoo> Sundo: mennään sari laakson toimistoon C272 ja siit johonki
+11:44 <@Tattoo> mut siis c272
+12:48 <@Dezgeg> joo sori, aikataulut pettivätkin mut sit tänään, eli en taida ollenkaan ehtiä :( perjantai on kiireinen itelle
+12:49 <@Dezgeg> eilinen meni djangon authi- ja admin-osuuden lähempään tutkiskeluun
+12:49 <@Dezgeg> authiosaa kannattais imho ehdottomasti käyttää, se ratkasee helposti monet kivat pikkuprobleemat kuten salasanojen oikeaoppinen hashaus+suolaus kannassa, ja sessiot ym.
+12:52 <@Dezgeg> ite en usko, että tuosta admin-frameworkista saa paljoa hyötyjä, koska tuohon sovellukseen tulee kuitenkin suht vähän sitä tiedon muokkausta
+12:58 <@Sundo> njahas, me ollaan ilmeisesti myöhässä
+12:59 <@Sundo> täällä menee vielä hekti
+12:59 <@Sundo> hetki
+13:03 <@jannel> oon exactumissa, käyn nyt syömässä jos se meetingi vielä kestää?
+13:10 <@Sundo> joo
+19:00 <@Sundo> maanantaina kahdeltatoista taas haxxorissa 
+19:01 -!- Sundo changed the topic of #geovision to: Seuraava tapaaminen: Maanantaina haxxorissa
+--- Day changed Sun May 22 2011
+03:24 <@Firesong> täällähän on ollut hiljaista viimepäivät. Pääsin nyt lukemaan lokit.
+03:27 <@Firesong> Ilmoittelettehan ku ootte päättäneet juttui, etten oo ihan pihalla. Meen tässä lukee wikin varmaan seuraavaks
+17:16 <@Tattoo> heip
+17:16 <@Tattoo> en pääse huomenna kokoustamaan teidän kanssanne, joten olette omillanne
+17:16 <@Tattoo> :)
+--- Day changed Mon May 23 2011
+17:18 -!- Netsplit irc.cc.tut.fi <-> *.hut.fi quits: @Dezgeg, @Tattoo, @jannel
+17:23 -!- Dezgeg_ [tmtynkky@melkki.cs.helsinki.fi] has joined #geovision
+17:28 -!- jannel [jjlaukka@melkki.cs.helsinki.fi] has joined #geovision
+17:49 -!- Dezgeg_ is now known as Dezgeg
+20:07 -!- Tattoo [tkairi@myntti.helsinki.fi] has joined #geovision
+--- Day changed Tue May 24 2011
+11:58 <@Sundo> huomenta
+12:00 < jannel> huomenta
+12:01 < Dezgeg> menta, itellä kestää viel hieman et pääsen kpneelle
+12:04 <@Sundo> mitäs eilisen jälkeen, aika täys työpäivä tuli siellä laitoksella tehtyä
+12:05 < jannel> joo, en ite ainakaan hirveesti tehny muuta enää
+12:06 < jannel> tänään oon töissä ni saa nähdä miten ehtii
+12:08 <@Sundo> heps
+12:10 < Dezgeg> dih
+12:10 <@Sundo> mä ajattelin koodailla noita text->db parsereita tän päivän
+12:10 <@Sundo> ensimmäinen koodailu tässä projektissa, voi mennä hetki että pääsee vauhtiin
+12:11 < Dezgeg> hm, mulla on vielä vähän auki mitä tekis
+12:11 < Dezgeg> pitäisköhän tuota käyttäjäsysteemiä alkaa suunnittelemaan/dokumentoimaan jo
+12:12 <@Sundo> vois olla ihan hyvä
+12:13 <@Sundo> ja toinen jota ei olla edes alotettu on automaattisen testauksen kasaaminen
+12:13 < Dezgeg> ah. totta
+12:14 <@Sundo> luulen että siinä olis tähän väliin hyvä homma
+12:14 < Dezgeg> joo. voisin ainakin tutkia että miten se nose integroidaan djangoon
+12:14 <@Sundo> jep, ja onnistuuko ilman lisäpalikoita usersilla
+12:19 < jannel> joo, voin koittaa kattoo sitä käyttäjäpuolta jos ehdin
+12:43 < Tattoo> kuulostaa hyvältä
+12:48 < Tattoo> joo testausta just kantsii ruveta miettii ku ootte saanu jo jonkinlaisia modeleitakin kasaan
+12:49 < Tattoo> Dezgeg: samalla voisi miettiä (ja kirjotella vähän ylös) alustavia ajatuksia siitä, miten nyt ainakin yksikkötestaus voitaisiin tulla toteuttamaan
+--- Day changed Wed May 25 2011
+12:04 < Dezgeg> huomenta
+12:16 < jannel> huomenta :)
+12:16 <@Sundo> huomenta
+12:16 -!- Irssi: #geovision: Total of 5 nicks [2 ops, 0 halfops, 0 voices, 3 normal]
+12:16 -!- mode/#geovision [+ooo Tattoo jannel Dezgeg] by Sundo
+12:17 <@Sundo> me ollaan täällä laitoksella, tuutko tänne tänään vai teetkö kotona hommia?
+12:17 <@Dezgeg> aa. voin tulla sinne kyl, ei mee kauan
+12:19 <@Sundo> ok
+--- Day changed Thu May 26 2011
+10:24 <@Firesong> huomenta
+10:24 <@Firesong> tuhkapilvistä sun sellaisista huolimatta pääsin takaisin suomeen eilen yöllä
+10:25 <@Firesong> vaikka lentokenttä oli välillä kii :P
+12:00 <@Sundo> huomenta
+12:00 <@Dezgeg> huomenta
+12:05 <@Firesong> anteeks, en saanut lomalla melkein missään nettiyhteyttä
+12:05 <@Firesong> joten olen lähinnä lukenut wikin ja sen pdf:n mikä tuli postissa
+12:06 <@Firesong> ja sit lukenut paria kirjaa liittyen javascriptiin ja pythoniin mitkä mulla oli mukana
+12:06 <@Firesong> mihin hommaan mun nyt kannattais hypätä mukaan?
+12:06 <@Firesong> mikä työnjako teil on ny ollut
+12:06 <@Dezgeg> nyt ollaan suunnittelemassa sprinttiä
+12:07 <@Firesong> ja onko huomenna siis töitä laitoksella vai?
+12:08 <@Dezgeg> ilmeisesti joo
+12:08 <@Sundo> on
+12:09 <@jannel> huomenta, oon tulossa, menee vielä hetki
+12:10 <@Sundo> luulen että tälle päivälle hyvä työnjako olis kaikille hudsoniin tutustuminen ja työkalujen viimeistely
+12:11 <@Dezgeg> työnjako on menny silleen, että Sundo importtailee kantaan dataa, minä oon käyttäjäpuolta ja janne käyttääpuolta ja sitä  graafiosuutta
+12:11 <@Dezgeg> userssilla on muuten testit sit rikki, eilen yömyöhään pähkäilin
+12:12 <@Dezgeg> django haluaa ite luoda testitietokantansa, eikä siellä luonnollisesti oo semmosii oikeuksia
+12:12 <@Sundo> mmm
+12:13 <@Dezgeg> luulen että sen saa monkey patchailtua pois, ja käyttää vaikka mun pg-kantaa testikantana
+12:14 <@Firesong> okei, jos kerran työkaluja viimeistellään, niin mä ainakin korjaan sen työtuntikirjurin bugit
+12:14 <@Firesong> niin että ne exportit alkais toimii
+12:15 <@Firesong> onko siinä ilmennyt mitään muita bugeja mitä pitäisi fiksata?
+12:17 <@Dezgeg> niiin siis, meillä on hudson , joka ajaa automaattisesti testejä
+12:17 <@Dezgeg> joka ny on rikki
+12:17 <@Firesong> hudson näyttää kätevälle, aloin just lukee sitä.
+12:18 <@Tattoo> ootteko laitoksella?
+12:18 <@Sundo> ei, huomenna vasta
+12:18 <@Tattoo> ok
+12:18 <@Tattoo> onko Firesong muuten vain laitoksella? :)
+12:19 <@Firesong> en oo
+12:19 -!- Sundo changed the topic of #geovision to: Seuraava tapaaminen: Perjantaina laitoksella
+12:19 <@Firesong> mäkin oon huomenna
+12:19 <@Tattoo> ok
+12:19 -!- Sundo changed the topic of #geovision to: Laitospäivät ma, ke, pe
+12:19 <@Tattoo> Firesong: sun pitää kirjoittaa toi lisenssisoppari sit huomenna, pidä huolta etten mä unohda :D
+12:19 <@Dezgeg> se löytyy http://t-tkt_gvis.users.cs.helsinki.fi/hudson
+12:19 <@Firesong> Tattoo: okei, yritän muistuttaa
+12:19 <@Tattoo> jes
+12:20 <@Firesong> hudson-linkistä tuli liian-monta-hudsonia error?
+12:20 <@Dezgeg> tunnukset geovision:geovision
+12:21 <@Dezgeg> hmm, eilen se viel toimi
+12:21 <@Sundo> joo mullekin näyttää että liikaa hudsoneita ajossa
+12:21 <@Firesong> tuli muuten mieleen yksi kysymys.
+12:21 <@Firesong> ajatteko te jo dataa kantaan?
+12:22 <@Firesong> jos ajatte niin mikä tietokanta on valittu?
+12:22 <@Firesong> (en ainakaan huomannut että wikissä ois ollut tosta päätöstä)
+12:22 <@Dezgeg> postgre
+12:22 <@Tattoo> Firesong: nyt kantsii kysellä paljon ja tsiigailla, mitä pojat on pusannu, et pääset messiin 
+12:23 <@Dezgeg> postgre userssilla siis, muuten sqlite
+12:24 <@Firesong> entäs tietokanta itse, onko siitä kaavioita/suunnitelmia?
+12:25 <@Dezgeg> kato models.py:t
+12:25 <@Firesong> ok
+12:30 <@Firesong> jos tänään ehdin tehä jotain muutakin kuin korjailla kirjuria ja lukea dokumentaatioita, niin onko ehdotuksia?
+12:33 <@Sundo> hudsonin ja nosen ihmettely
+12:35 <@Dezgeg> onks hudsonissa ees paljoo tutstuttavaa kun se toimii, automaattinenhan sen about pitais olla
+12:37 <@Dezgeg> mut päiviyän tänään tuoya testiosuutta
+23:52 <@Firesong> export-ongelmat toivottavasti korjattu. Kertokaa jos ongelmia ilmenee enää
+23:52 <@Firesong> nyt se nimeääkin tiedostoi järkevästi
+--- Day changed Fri May 27 2011
+10:38 <@Firesong> missä luokassa tavataan? Siinä samassa vai?
+10:44 <@Sundo> haxxor
+11:25 <@jannel> moi, oon töissä ja näyttää siltä etten pääse 12 tänne. mut katon siten jälkeenpäin ja laitan omat puuhailut kans mukaan
+11:26 <@Sundo> ok
+12:48 -!- Geobot [tmtynkky@svm-16.cs.helsinki.fi] has joined #geovision
+12:48 -!- mode/#geovision [+o Geobot] by Dezgeg
+12:49 <@Geobot> Project Geovision build #9: STILL FAILING in 2,8 sec: nulljob/Geovision/9/
+12:50 <@Geobot> Project Geovision build #10: STILL FAILING in 1,6 sec: nulljob/Geovision/10/
+12:51 <@Geobot> Project Geovision build #11: STILL FAILING in 1,1 sec: nulljob/Geovision/11/
+13:08 <@Geobot> Project Geovision build #12: STILL FAILING in 1 sec: nulljob/Geovision/12/
+14:48 -!- Geobot [tmtynkky@svm-16.cs.helsinki.fi] has quit [""]
+14:49 -!- Geobot [tmtynkky@svm-16.cs.helsinki.fi] has joined #geovision
+14:49 <@Dezgeg> !geobot build
+14:49 < Geobot> Dezgeg: Error, syntax is: 'build <job> [now|<delay>[s|m|h]] [<parameterkey>=<value>]*'
+14:50 <@Dezgeg> !geobot build geovision
+14:50 < Geobot> Dezgeg: job geovision build scheduled with a quiet period of 5 seconds
+14:50 < Geobot> Project Geovision build #13: STILL FAILING in 0,89 sec: nulljob/Geovision/13/
+14:50 <@Dezgeg> mwhehehe
+14:52 <@Dezgeg> !geobot build geovision
+14:52 < Geobot> Dezgeg: job geovision build scheduled with a quiet period of 5 seconds
+14:52 < Geobot> Project Geovision build #14: STILL FAILING in 0,77 sec: nulljob/Geovision/14/
+14:52 < Geobot> Project Geovision build #15: STILL FAILING in 0,83 sec: nulljob/Geovision/15/
+14:59 < Geobot> Project Geovision build #16: STILL FAILING in 0,78 sec: nulljob/Geovision/16/
+15:08 <@Dezgeg> !geobot build geovision
+15:08 < Geobot> Dezgeg: job geovision build scheduled with a quiet period of 5 seconds
+15:08 < Geobot> Project Geovision build #17: STILL FAILING in 1,7 sec: nulljob/Geovision/17/
+15:12 < Geobot> Project Geovision build #18: STILL FAILING in 2,4 sec: nulljob/Geovision/18/
+15:15 < Geobot> Project Geovision build #19: STILL FAILING in 2,7 sec: nulljob/Geovision/19/
+15:19 < Geobot> Project Geovision build #20: STILL FAILING in 2,9 sec: nulljob/Geovision/20/
+15:20 < Geobot> Project Geovision build #21: STILL FAILING in 1,8 sec: nulljob/Geovision/21/
+15:29 < Geobot> Yippie, build fixed!
+15:29 < Geobot> Project Geovision build #22: FIXED in 1,9 sec: nulljob/Geovision/22/
+15:29 <@Dezgeg> wuu
+15:33 <@Tattoo> \o/
+16:56 -!- Geobot [tmtynkky@svm-16.cs.helsinki.fi] has quit [""]
+16:57 <@Tattoo> eeeeiii
+16:57 -!- Geobot [tmtynkky@svm-16.cs.helsinki.fi] has joined #geovision
+16:57 <@Dezgeg> muutin vähän konffeja
+16:57 <@Tattoo> jeee!
+16:57 <@Tattoo> nyt on taas vahtikoira <3
+16:57 <@Dezgeg> !geobot runtests
+16:57 < Geobot> Dezgeg did you mean me? Unknown command 'runtests'
+16:57 < Geobot> Use !geobothelp to get help!
+16:58 <@Dezgeg> !geobot runtests
+16:58 < Geobot> Dezgeg did you mean me? Unknown command 'runtests'
+16:58 <@Tattoo> !geobothelp
+16:58 < Geobot> Use !geobothelp to get help!
+16:58 < Geobot> Available commands:
+16:58 < Geobot> abort <job> - specify which job to abort
+16:58 < Geobot> alias [<alias> [<command>]] - defines a new alias, deletes one or lists all existing aliases
+16:58 < Geobot> botsnack [<snack>] - om nom nom
+16:58 < Geobot> build <job> [now|<delay>[s|m|h]] [<parameterkey>=<value>]* - schedule a job build, with standard, custom or no quiet period
+16:58 < Geobot> comment <job> <build-#> <comment> - adds a description to a build
+16:58 < Geobot> h [<job>|-v <view>] - show the health of a specific job, jobs in a view or all jobs
+16:58 < Geobot> health [<job>|-v <view>] - show the health of a specific job, jobs in a view or all jobs
+16:58 < Geobot> jobs [<job>|-v <view>] - show the status of a specific job, jobs in a view or all jobs
+16:58 <@Dezgeg> !geobot alias runtests build geovision now
+16:58 < Geobot> q - show the state of the build queue
+16:58 < Geobot> queue - show the state of the build queue
+16:58 < Geobot> s [<job>|-v <view>] - show the status of a specific job, jobs in a view or all jobs
+16:58 < Geobot> schedule <job> [now|<delay>[s|m|h]] [<parameterkey>=<value>]* - schedule a job build, with standard, custom or no quiet period
+16:58 < Geobot> status [<job>|-v <view>] - show the status of a specific job, jobs in a view or all jobs
+16:58 <@Tattoo> !geobo botsnack
+16:58 < Geobot> testresult [<job>|-v <view>] - show the test results of a specific job, jobs in a view or all jobs
+16:58 < Geobot> userstat <username> - prints information about a Hudson user
+16:58 < Geobot> created alias: runtests - alias for: 'build geovision now'
+16:58 <@Tattoo> !geobot botsnack
+16:58 < Geobot> Tattoo: you're so kind to me!
+16:58 <@Dezgeg> !geobot runtests
+16:58 < Geobot> Dezgeg: job geovision build scheduled now
+16:59 <@Dezgeg> ah. ei ottanut tuota aliasta privasta tänne näkyviin
+16:59 -!- mode/#geovision [+o Geobot] by Tattoo
+20:33 <@Firesong> !geobot botsnack nuudels
+20:33 <@Geobot> Firesong: thanks a lot! om nom nom. how did you know that nuudels is my favorite food?
+20:33 <@Firesong> :D
+20:34 <@Dezgeg> näistä logeista tulee varmasti hienoa dokumentaatiota
+21:28 <@Tattoo> parasta
+22:11 <@jannel> !locate jannel
+--- Day changed Mon May 30 2011
+14:41 <@Firesong> kirjoitan muistiinpanot tänne: databasesissa on 4 fastaa. frnadb/frnadb.fasta (muuten sama formaatti, mut id loppuu puolipisteeseen), silva/ssu/SSURef_104_NR_tax_silva.fasta (datan seassa whitespaceja, ei puolipiste-erottimia id:n jälkeen)
+14:41 <@Firesong> silva/lsu/LSURef_104_tax_silva.fasta sama kuin edellinen
+14:43 <@Firesong> ja vielä uniprot/uniprot_sprot.fasta (täsmälleen sama formaatti kuin sundon käsittelemissä)
+15:27 <@Firesong> laitoin sinne tavan käsitellä ne tiedostot jossa on whitespacea. Jos se ei toimi, niin vaihtoehtoinenkin tapa löytyi:
+15:28 <@Firesong>  >>> import re >>> re.sub(r'\s', '', s)
+15:28 <@Firesong> toi kait poistaa vaan spacet mutta se on helppo muuttaa </vatasuunnitelma>
+15:28 <@Firesong> *vara
+21:33 <@Firesong> Sundo: kuinka pitkään siinä scriptiajossa sit meni?
+23:22 <@Sundo> joku parisenkymmentä minuuttia
+23:23 <@Firesong> okei, eli ei kovin paha sit kuitenkaan
+23:23 <@Sundo> vei muistia 900 megaa lopussa
+23:24 <@Sundo> eli jostain syystä se ei ilmeisesti keränny roskia sieltä vaan kaikki luodut django db-entry-oliot
+23:24 <@Sundo> jäi muistiin
+23:25 <@Dezgeg> tuossa iltapäivällä tuskailin sen kanssa, lopulta päädyin et postgresin COPY TO-lausekkeella tuon saa menemään muutamassa sekunnissa
+23:26 <@Dezgeg> se on tosin vähän enemmän tuskaista puuhaa kun noiden modeliolioiden käpistely, mutta sitä voinee harkita
+23:30 <@Dezgeg> ero noiden välillä on semmoset 1300 riviä/s vs 96000 riviä/s, ihan kiva
+--- Log closed Tue May 31 10:19:25 2011
+--- Log opened Tue May 31 10:19:59 2011
+10:19 -!- Sundo [lassetyr@melkki.cs.helsinki.fi] has joined #geovision
+10:19 -!- Irssi: #geovision: Total of 5 nicks [3 ops, 0 halfops, 0 voices, 2 normal]
+10:20 -!- Irssi: Join to #geovision was synced in 44 secs
+10:21 -!- Dezgeg [tmtynkky@melkki.cs.helsinki.fi] has joined #geovision
+12:01 < Sundo> huomenta
+12:03 <@jannel> huomenta
+12:04 < Firesong> huomenta
+12:09 < Firesong> onko kukaan tehnyt mitään tai kohdannut mitään ongelmia eilisen jälkeen?
+12:10 < Firesong> ite ainakin oon vaan lukenut djangoasioita, että saisin layoutin jotenkin järkevästi sinne
+12:11 < Sundo> en oo tehny mitään laitokselta lähdön jälkeen, tänään on noita skriptien ajoja
+12:11 < Dezgeg> menta
+12:13 < Dezgeg> eilisen väsäsin sitä buildiimporttia ja sit hakkasin päätä seinään niiden skriptien nopeuttamiseksi
+12:14 <@jannel> mä teen sen blast parsetuksen loppuun ja katon sit sitä jsonia
+13:20 < Sundo> Dezgeg: se on vähän ongelma, jos noita ajetaan jotenkin muuten kuin tuolta djangon kautta tietokantaan pitää koodailla erikseen validointi
+13:57 < Dezgeg> tuleeks meillä olemaan jotain validointeja joita ei voi hoitaa kannan puolella?
+14:09 <@Tattoo> tiedätkö, ettei tule olemaan?
+14:10 < Dezgeg> en kyl
+14:10 <@Tattoo> nii, ei voi tietää oikeen kumminkaan päin
+14:11 <@Tattoo> mun mielestä yksi pointti on se, et jos noihin joudutaan joskus palaamaan, niin kumman luokse tulet mielummin? COPY TO-lauseiden vai pitkään kestävien python-slkriptojen
+14:13 < Dezgeg> nojoo, ei kai siinä vielä mitään. mutta jos sitten kun sinne käyttäjät pystyy uploadaamaan juttuja, niin on hieman eroa sillä meneekö tuossa 10 sekkaa vai puol tuntia
+14:13 < Dezgeg> tai siis tässä vaiheessa
+14:14 < Sundo> onhan noissa molemmissa omat ongelmansa
+14:15 <@Tattoo> niin on
+14:15 <@Tattoo> toi on kanssa hyvä pointti
+14:15 < Sundo> periaatteessa meille ei tässä vaiheessa ole mikään suurempi ongelma vaikka noissa ajoissa menee aikaa, niitä voi pistää tonne jonkun hyrräämään eikä ylläpitokaan tule avautumaan jos viedään vähän muistia
+14:16 < Sundo> eli toi olis semmonen johon voi keskittyä enemmän sitten kun päästään vaiheeseen jossa halutaan ottaa käyttäjien sampleja tai jotain muuta
+14:17 < Dezgeg> njoo
+14:24 <@Tattoo> toisaalta, jos toi on selkeä kehityssuunta, niin se et joku osa tehtäs käyttämään tota nopeampaa tapaa, niin meillä olis niinku joku käsitys siitä kun siihen joudutaan palaamaan
+15:29 < Sundo> nyt on samplet ajettu kantaan
+15:29 < Sundo> 1512633 riviä
+15:36 < Sundo> mutta onhan toi sairaan hidasta tuolta djangon ormin kautta
+15:41 < Dezgeg> eikun kyllä se suurin overheadi tulee siitä sql-prosessoinnista; INSERT INTOjen generointi ja putkitus psql:ään oli ihan yhtä hidasta
+16:23 <@Geobot> Project Geovision build #33: FAILURE in 3 sec: nulljob/Geovision/33/
+16:23 < Dezgeg> pöh, typosinko nyt buildikonffit
+16:25 <@Geobot> Yippie, build fixed!
+16:25 <@Geobot> Project Geovision build #34: FIXED in 2,8 sec: nulljob/Geovision/34/
+16:25 < Dezgeg> hih, nyt meillä on myös code coverage http://t-tmtynkky.users.cs.helsinki.fi/coverage/
+18:19 <@Tattoo> awesome ^^
+22:02 < Firesong> miten ihmeen vaikeaa voi olla saada tää systeemi hakemaan css-filuja
+22:02 < Firesong> muuten oon saanut jo ton ulkoasujutun jotenkin handlattua, mutta css:iä se ei vaan suostu hakee mistään vaikka miten konffais
+22:02 < Firesong> Tattoo: onko sulla kokemusta "static_url"-juttujen käytöstä
+22:03 < Firesong> en oikein millään haluaisi yhdistää html ja css-tiedostoja, koska se nyt vaan on kamalaa
+22:07 < Dezgeg> mitä kaikkia konffeja oot kokeillu?
+22:07 <@Tattoo> static_url...
+22:08 <@Tattoo> siis, sun pitää konffata settings.py:hyn media-folder jossa on staattiset resurssit :P
+22:08 <@Tattoo> toi on vähän sillee hankala, kun se voisi, tieksä, olla automaattisesti mut ei 
+22:09 <@Tattoo> eiku hetkonen, onko tääkin muuttunu...
+22:09 <@Tattoo> https://docs.djangoproject.com/en/dev/howto/static-files/
+22:09 <@Tattoo> jaa niin tohon olet viitannut
+22:09 <@Tattoo> jooo ainiin nyt muistan
+22:10 <@Tattoo> kohta 1) sen STATIC_ROOT:in pitää olla absoluuttinen polku
+22:11 <@Tattoo> mikäs tuo collectstatic oikein on
+22:11 < Firesong> absoluuttiset polut tekee siirrettävyydestä paskaa
+22:11 < Firesong> oon jo kokeillut noi jutut tossa sun linkissä
+22:11 < Firesong> ainakin ne ekat
+22:11 <@Tattoo> Firesong: mutta se settings-file on pythonia
+22:11 <@Tattoo> eli sen absoluuttisen polun voi skriptaa :P
+22:11 < Firesong> os.path.join(PROJECT_PATH, 'static-tmp')
+22:11 < Firesong> toi on mun static_root
+22:11 <@Tattoo> jeps
+22:11 < Firesong> tällä hetkellä
+22:11 <@Tattoo> onko se absoluuttinen?
+22:12 <@Tattoo> se polku?
+22:12 < Firesong> joo
+22:12 <@Tattoo> ok
+22:12 < Firesong> (ts. muitten kansioitten kans mitä oon säätäny on toiminut)
+22:12 <@Tattoo> ja sulla on STATIC_ROOT?
+22:12 < Dezgeg> onks myös urlconffiin laitettu?
+22:13 < Firesong> urlconffissahan on vaan se edelleenohjaus, eihän se hae niitä tiedostja
+22:13 < Firesong> jos siis urls.py:tä meinaat
+22:13 < Dezgeg> niin, onko se muistettu sinne, sitä varmistelin :p
+22:13 < Firesong> juu, se puoli pitäis olla kunnossa
+22:14 < Firesong> se pitää aikamoista virheilmokasaa jos se ei ole (on meinaan ton asian suhteen niin kattavat virheilmot, ettei niistä meinaa saada selvää :D )
+22:15 < Firesong> Tattoo: mul on siis toi ylempänä pasteamani polku staticroottina, sit ajoin sen collectmitäliekomennon, joka kopioi ne filut sinne static-url kansioon
+22:15 < Firesong> mutta silti se ei hae niitä css:iä
+22:15 <@Tattoo> ööö, static-tmp ?
+22:15 < Firesong> se ei saanut olla sama kuin static_url
+22:15 < Firesong> mikä on mulla 'static'
+22:15 < Firesong> tai siis '/static/'
+22:16 <@Tattoo> joo mut tossa ylemmässä sanoit "static-tmp", nyt sanot "static-url" kansion nimeksi
+22:16 <@Tattoo> eli kumpi se on?
+22:16 < Firesong> ei kun static_url on se asetus siellä settingssissä, josta se etsii
+22:17 < Firesong> tai josta sen ainakin pitäisi etsiä niitä tiedostoja, ja johon se kopioi ne sillä komennolla minkä ajoin
+22:17 < Firesong> se kyllä toimi
+22:17 <@Tattoo> siis, STATIC_URL on se urli, mihin viittaat templatessa ja se ohjautuu STATIC_ROOT:in osoittamaan kansioon
+22:18 <@Tattoo> ja käsitin, et sulla on STATIC_ROOTISSA os.path.join(PROJECT_PATH, 'static-tmp')
+22:18 < Firesong> joo on
+22:18 <@Tattoo> ja tuossa aikaisemmin sanot, että collect... kopioi ne static-url -kansioon
+22:18 <@Tattoo> eli onko se kansion nimi oikein?
+22:21 < Firesong> ootas hetki, varmistustestaan
+22:21 <@Tattoo> sit ota huomioon myös, että jos haluat käyttää tuota {{STATIC_URL}} -templatekomentoa, niin sun pitää rendaa views.py:ssä se RequestContext-oliolla, ei Context-oliolla
+22:22 < Firesong> toi saattaa selittää jotain
+22:22 <@Tattoo> eli return render_to_response("template.html", {para: metrit}, context_instance=RequestContext(request) )
+22:23 < Firesong> miks missään tutoriaalissa ei mainittu pitää muista contextolioista....
+22:23 <@Tattoo> niin saat RequestContext-olion ja sillo toi {{STATIC_URL}} pitäis toima
+22:23 <@Tattoo> *toimia
+22:23 < Firesong> okei, kokeilen tota sit seuraavaks
+22:23 < Dezgeg> se tulee tutossa siinä formikohdassa. ittekkin hajoilin tuon kaa
+22:23 < Firesong> jospa se tällä kertaa onnistuis
+22:24 <@Tattoo> joo, toi on sillee yleinen sääntö, et kirjottaa vaa suosiolla tuon äskesen rimpsun ainakun rendaa view'tä
+22:24 < Firesong> Dezgeg: ahaa, mä vaan yritin lukee dokumentaatiota sen staticfilesin kohdasta
+22:24 <@Tattoo> toi on tosi vammasta, et siellä passaillaan vakiona Context-olioita mut jos tarviit jotain kuten esimerkiksi STAATTISIA FILEJÄ niin tarviit _RequestContextin_
+22:24 <@Tattoo> niinku "daa"
+22:25 < Dezgeg> joo itteä hajotti kun joissain kohtaa joutuu tajuttomasti boilerplatea verrattuna esim. railssiin
+22:25 <@Tattoo> it's the python way
+22:25 <@Tattoo> Don't Repeat Yourself, eiku...
+22:25 < Firesong> tää koko layoutsysteemi on aika...
+22:25 < Dezgeg> hih
+22:25 < Firesong> mutta noh, ehkä se tästä
+22:25 <@Tattoo> Firesong: mä sanoin :)
+22:26 <@Tattoo> käsittääkseni djangossa saa *jotenkin* käännettyä päälle, että kaikkialla aina pyörii RequestContext-oliot pelkästään, mut en oo ikinä jaksanu kaivautua niin syvälle
+22:26 < Firesong> Tattoo: ylipäätään musta tää tapa millä nää layoutit generoidaan on kokonaisuutena vähän sekava, mutta ehkä siihenkin tottuu
+22:27 < Firesong> Tattoo: mikä toi sun para:metrit merkintä on?
+22:28 <@Tattoo> siis jos haluut passata sille templatelle muuttujia
+22:28 <@Tattoo> niin ne laitetaan dictionaryssä
+22:28 <@Tattoo> tossa toisena parametrina
+22:28 <@Tattoo> esimerkiksi:
+22:28 <@Tattoo> tietokannasta jotain
+22:28 <@Tattoo> Firesong: yksi vinkki tuon karmean template-systeemin kanssa: laita kaikki blokkeihin :)
+22:29 <@Tattoo> tyyliin, yksi template, missä on vaa <html>-, <head>- ja <body-tagit>, sit siihen {% block menu %} {% endblock %}
+22:30 <@Tattoo> ja sit toinen template joka overridettää ton menu-blockin ja oikeasti määrittelee sen menun sisällön
+22:30 < Firesong> juu, silleen aattelinkin tehdä
+22:30 < Firesong> paitsi niiden parin sivun kanssa jotka on omiaan
+22:30 <@Tattoo> joo mut blockeja kantsii käyttää överisti
+22:30 <@Tattoo> sitä koitan sanoa
+22:32 <@Tattoo> noinniinku yleisesti
+22:40 < Firesong> jes, ainakin neljän tunnin tutkiminen asiaan, ja mitä on saatu aikaa: login-sivu jossain ei kyllä oo mitään toimintoi vielä :D
+22:42 < Sundo> :)
+22:43 < Firesong> mut tästä eteenpäin on vähän kivuttomampaa toivottavasti
+22:43 < Firesong> näitten leiskojen tekeminen
+22:43 < Firesong> login sivun leiskan kirjoittamiseen meni ehkä vartti, kaikki loppu meni siihen että sen sai näkyy...
+23:00 <@Tattoo> jepa, kuulostaa normilta
+23:00 <@Tattoo> sitku oppii, mis mikäkin on, nii ei nii paha
+23:00 <@Tattoo> mut alku aina hankalaa
+23:02 < Firesong> hmm, vois kait pikkuhiljaa pushhailla muutokset
+23:32 <@Tattoo> "räjähti"
+23:32 < Firesong> ?
+23:37 < Firesong> Tattoo: mikä räjähti?
+--- Day changed Wed Jun 01 2011
+10:00 <@Tattoo> Firesong: ei mikään :)
+10:00 <@Tattoo> huono vitsi
+12:03 < Dezgeg> durr, vähän kiireinen viikko, en ehdi tänään :/, viimeistelen tänään tuota tietokannan pikaimporttaajaa ja väsätä toimintalogiikkaa sinne loginiin ja rekisteröintiin
+12:06 < Firesong> okei, hei, sovittasko mitä kenttii halutaan siihen rekisteröintiin?
+12:06 < Firesong> Voin laittaa sulle lomakkeet ja ulkoasut sit valmiiks
+12:06 < Firesong> aattelin tehä niitä ulkoasujuttui
+12:07 < Dezgeg> tuossa djangon user-modelissa on username,password,firstname,lastname,email
+12:07 < Dezgeg> kannattaa kattoa tarjoaako nuo djangon formityökaluhässäkät jotain valmista kivaa
+12:08 < Dezgeg> resourceissa on linkki iirc
+12:08 < Firesong> voin vilkasta
+12:08 < Firesong> loginin tein eilen vaan sen perusteella mille sen luulis näyttävän
+12:08 < Dezgeg> joo
+12:10 < Firesong> tuli mieleen, että pitäiskö meidän softalla olla joku logo, vai riittääkö toi että tota nimee tunkee ympärrinsä
+12:10 < Firesong> *riinsä
+12:14 < Dezgeg> heh, mikäs siinä
+12:15 < Firesong> kuka osaa suunnitella, ja millainen se ois? Mä oon kyllä muussa grafiikassa jees, mut logot ei oo mun bravuuri
+12:15 < Firesong> voin kyl yrittää, jos aikaa jää
+19:17 < Sundo> noh, nyt onnistui 300 000 rivin lisäys ~viidessä sekunnissa, mutta siinä oli taas omat kivat ongelmansa :D
+19:19 < Sundo> formatointi shelliscriptillä ja lisäys COPY:llä, mutta en saanut sitä lisättyä niin että taulukossa oli nykynen id-rivi mukana
+19:19 < Sundo> joten siitä tulis omat ongelmansa
+19:42 < Sundo> http://code.google.com/p/geovision/wiki/db_nopeus tuolla on nyt toi sed-putki, tekee niistä muuten copylle sopivia mutta ei lisää tiedoston nimeä joka rivin alkuun
+19:42 < Sundo> ja se copy tosiaan ei oikein taida toimia serial-columnin kanssa
+--- Day changed Thu Jun 02 2011
+17:20 < Firesong> oho, daily vähän unohtu tältä päivältä
+17:21 < Firesong> olin ite sillon uimassa :D
+17:21 < Firesong> hups
+17:23 < Dezgeg> tänäänhän on helatorstai
+17:24 < Firesong> ai, pyhäpäivät pätee :O
+17:24 < Firesong> en osannut ajatella että jollain pyhäpäivällä ois väliä, kun en ite ota niitä ikinä töitten suhteen huomioon :D
+--- Day changed Fri Jun 03 2011
+14:05 <@Geobot> Project Geovision build #41: FAILURE in 3,9 sec: nulljob/Geovision/41/
+14:06 <@Tattoo> D: D: D: D:
+14:18 <@Geobot> Project Geovision build #42: STILL FAILING in 4,8 sec: nulljob/Geovision/42/
+14:27 <@Geobot> Project Geovision build #43: STILL FAILING in 3,3 sec: nulljob/Geovision/43/
+14:32 <@Geobot> Project Geovision build #44: STILL FAILING in 2,7 sec: nulljob/Geovision/44/
+14:40 <@Geobot> Yippie, build fixed!
+14:40 <@Geobot> Project Geovision build #45: FIXED in 3,8 sec: nulljob/Geovision/45/
+15:03 <@Tattoo> jeij
+15:11 < Sundo> muuten menee hyvin, mutta tais mennä oikeudet kotikansioon usersilla :D
+15:12 < Dezgeg> krhm :)
+15:12 < Sundo> Tattoo: op!
+15:12 -!- Irssi: #geovision: Total of 6 nicks [3 ops, 0 halfops, 0 voices, 3 normal]
+15:12 < Sundo> ja repo on ihan solmussa :D
+15:17 <@Tattoo> :D
+15:18 -!- mode/#geovision [+ooo Dezgeg Firesong Sundo] by Tattoo
+15:28 <@Sundo> lähinnä näyttää vähän siltä, että ~kaikki on vahingossa tehneet jotain single file committeja lokaalisti
+15:29 <@Sundo> sitten kehittäneet omalla koneellaan kahta tai useampaa branchia, onnistuneet pushaamaan niistä jotain ja pullaamaan välissä jotain muuta
+15:30 <@Sundo> ja ei saatana mikä solmu
+15:35 <@Tattoo> jjep
+15:35 <@Tattoo> tämän takia kantsii jatkuvasti pullata eikä vasta sitten kun on kaikki tehty
+15:36 <@Tattoo> tämän takia myös kannattaa commitoida atomisesti, eli jos vaikka käy korjaamassa sisennystä jostain filestä, commitoi sen erikseen
+15:36 <@Tattoo> hyvältä toi kyl näyttää
+15:39 <@Firesong> Tattoo: mun django sekos jotenkin oudosti
+15:39 <@Firesong> ootko lähettyvillä?
+16:05 <@Geobot> Project Geovision build #48: FAILURE in 3,8 sec: nulljob/Geovision/48/
+16:30 <@Tattoo> D:D:D:D:D:D:D:
+17:05 <@Geobot> Project Geovision build #49: STILL FAILING in 4 sec: nulljob/Geovision/49/
+17:43 <@Tattoo> D:D:D:D:D:D:D:
+--- Day changed Sun Jun 05 2011
+14:17 <@Tattoo> hei, en pääse huomenna paikalle, ootte siis keskenänne. kyselen tiistaina sit daily meetissä statuksia
+--- Day changed Mon Jun 06 2011
+02:20 <@Sundo> mulla on myös pieniä epäilyksiä huomisesta paikallepääsystä, mutta näkee sitten
+08:33 <@Sundo> melko varmasti en tule tänään paikalle
+12:22 <@Tattoo> Sundo: hyviä uutisia? huomenna olis prosessipalaveri et tarvitaaksme tuuraaja?
+13:05 <@Geobot> Project Geovision build #50: STILL FAILING in 9 sec: nulljob/Geovision/50/
+13:11 <@jannel> jos tarvii nii voin tulla huomenna tuuraa..
+13:35 <@Tattoo> jannel: ok, katotaa mitä Sundo sanoo
+13:44 <@Firesong> Sundo: mites se tietokanta voi?
+13:45 <@Firesong> Sundo: kateltiin jannen kaa backlogia, ja ne ykkössprintin tehtävät alkaa olla aika hyvällä mallilla, mut tietokannasta me ei niin tiietä
+14:05 <@Geobot> Project Geovision build #51: STILL FAILING in 3,3 sec: nulljob/Geovision/51/
+--- Day changed Tue Jun 07 2011
+09:09 <@jannel> Moi, mulle tulikin yllättävä este enkä pääse tulemaan prosessipalaveriin(jos olikaan tarvetta)
+10:30 <@Tattoo> jaa-a, 1) onko Sundo kehissä ja jos ei, 2) ehtiikö Firesong 
+11:17 <@Firesong> mihin aikaan?
+11:18 <@Firesong> just heräsin ja sain töitä :P
+11:18 <@Firesong> ois mulle vähän kivempi jos sundo ehtis, mut tuun jos on pakko
+11:18 <@Firesong> pääsen täältä laitokselle parhaimmillaan vartissa
+11:20 <@Tattoo> klo 13 @D234
+11:21 <@Tattoo> tossa kokouksessa olis hyvä olla joku ku siellä arvotaan kurssinpidollisia asioita -> tiimin mielipide
+11:21 <@Tattoo> Firesong: olisko sulla Sundo numeroa et voitas soitella, mitä se mies meinaa?
+11:21 <@Firesong> 0505217225
+11:22 <@Firesong> kysy siltä samalla että millon se vilkasee irkkiä
+11:22 <@Firesong> ei tarttis ku tietää että missä vaiheessa tietokanta-ajot menee
+11:22 <@Firesong> muuten ollaan aika hyvin kärryillä ja aikataulussa
+11:23 <@Tattoo> no en ehtinyt nähdä tota kun jo soitin :P
+11:23 <@Tattoo> se ei oo tulossa. tulisitko sä, Firesong ?
+11:23 <@Firesong> pakko kait sit
+11:23 <@Firesong> juu, tuun
+11:23 <@Tattoo> thanks
+11:24 <@Tattoo> pistänpä viestiä tosta irkkii ilmentymisestä
+11:25 <@Firesong> eipä silläkään kauheeta kiirettä oo
+11:26 <@Tattoo> joo, laitoinki "sitku kerkeet"
+11:59 <@jannel> moi, oon lisänny jsonin sisältämään tietoa yhteyksistä muihin solmuihin, niin että kun solmun valitsee niin saadaan solmun kaikki vierussolmut lueteltua helposti. sit oon koittanu saada graphviziä lukemaan json suoraan tiedostosta. en vielä onnistunu mutta varmaan tänään saan tehtyä
+12:10 <@Firesong> mä oon saanut sivuston aikalailla toimii. Esim. login ja logout menee nyt ihan nätisti. Tänään pitäis saada vielä se graafikohtaisen valikon peruskoodi kasaab
+12:14 <@Firesong> jannel: ehdotan muuten ettei huomenna tavata koululla, ku ilmeisesti vaan me kaks päästäs ja itestäni en oo niin varma...
+13:20 <@Firesong> yeah, nyt leiska ei enää rumene loginissa jos siihen tulee virheviesti :D
+13:34 <@Tattoo> d-^.~
+14:44 <@Firesong> Pistän resurssisivulle jquery-tutoriaalin, koska layoutin hienoksi saaminen vaatii sen lisäämistä projektiin :)
+14:46 <@Firesong> http://jquery.org/license/ tää näyttäis käyvän ihan hyvin
+14:52 <@Firesong> Tattoo: vilkaise vielä toi ylempi, ettei oo mitään lakiteknistä vikaa ton käyttämisessä
+14:53 <@Tattoo> joo, MIT on aika "ihan sama"-lisenssi
+14:54 <@Tattoo> ja GPL2:han on sama ku meillä?
+14:59 <@Firesong> jep
+14:59 <@Firesong> eli ok
+15:00 <@Firesong> älähtäkää muuten jos häiritsee, että tein ulkoasusta maanvihreän, sitä on helppo muuttaa :)
+15:06 <@Geobot> Project Geovision build #52: STILL FAILING in 20 sec: nulljob/Geovision/52/
+20:46 <@jannel> joo en mäkään pääse huomenna, oon töissä eli ei tapaamista huomenna
+22:49 <@Tattoo> en mäkään :D
+--- Day changed Wed Jun 08 2011
+12:43 <@Sundo> en tosiaan ole tulossa tänäänkään, kotiutuminen sairaalasta todennäköisesti huomenna iltapäivällä
+12:43 <@Sundo> yritän ilmottaa jos joku muuttuu
+12:56 <@Tattoo> Sundo: onneksi olkoon!
+12:56 <@Tattoo> jannel: Firesong: mikä meininki?
+12:56 <@Firesong> koodailen kaverin sohvalta
+12:56 <@Firesong> mikäs tässä
+16:43 <@Firesong> jannel: sä tiiät vähän mua enemmän siitä tietokannasta, niin voisitko sä yrittää ajaa ne loput datat sinne?
+17:10 <@Tattoo> Firesong: jannel: huomenna klo 12 statuspalaveri irkissä, et ollaan varmasti ok perjantaihin
+17:11 <@Tattoo> jannel: Firesong: ilmottakaa, jos ei sovi
+19:23 <@Firesong> sopii
+--- Day changed Thu Jun 09 2011
+00:46 <@Firesong> jannel: vastaa mahd. pian tohon tietokantajuttuunkin
+01:05 <@Geobot> Yippie, build fixed!
+01:05 <@Geobot> Project Geovision build #53: FIXED in 11 sec: nulljob/Geovision/53/
+01:11 <@Firesong> jannel: korjasitko sä ton?
+01:31 <@Tattoo> apparently
+01:31 <@Tattoo> vai?
+11:32 <@Firesong> jannel: ootko siellä jo?
+12:00 <@Firesong> kello on kaksitoista onko täällä ketään?
+12:00 <@jannel> jep just tulin :)
+12:01 <@jannel> siitä tietokannasta, oon kans aika pihalla mutta voin yrittää
+12:01 <@jannel> oli eilen vähä kiire töissä nii en päässy kommentoimaan
+12:02 <@Firesong> ok, loistavaa
+12:02 <@Firesong> ootko pullannut uusimmat muutokset?
+12:02 <@jannel> en yö klo 2 jälkeen
+12:02 <@Firesong> hmmm, mihinköhän aikaan mä pistin ne sinne
+12:02 <@Firesong> no koeta pullata :D
+12:03 <@jannel> ok )
+12:03 <@Firesong> sain vihdoin sen jotensakkin kokoon sen ulkoasun
+12:03 <@Firesong> nyt se näyttää kivalle ja toimii
+12:03 <@Firesong> sen javascriptin kanssa tulee ihan kauheita bugeja :P
+12:05 <@jannel> jep sain pullattua
+12:07 <@jannel> eli meillä on kai muuten ok paitsi se tietokanta?
+12:07 <@Firesong> se ja sit se käyttäjien muodostuksen testaus puuttuu, mut en oo ihan varma että onko se nyt kovin akuutti...
+12:08 <@jannel> nii, ei varmaan
+12:09 <@jannel> hyvältä näyttää sivu :D
+12:10 <@Firesong> hei, muuten, näkyykö se sivupalkki sulla läpinäkyvänä vai ei
+12:11 <@jannel> vihreenä näkyy..
+12:11 <@Firesong> okei, hitto. Sen pitäis olla vähän läpinäkyvä, mut se ei vielä toimi
+12:11 <@Firesong> mut eipä se niin haittaa
+12:11 <@Firesong> kuhan muuten toimii
+12:11 <@jannel> no ei
+12:11 <@jannel> on aikaa säätää
+12:12 <@jannel> mistä -graph muuten tuli?
+12:13 <@Firesong> blockkien järjestys oli vähän buginen
+12:13 <@jannel> ok
+12:13 <@Firesong> aika outo bugi, mutta korjasin ne ja asiat selvis
+12:14 <@jannel> laitoin jitiä koskevaa infoa muuten wikiin :D
+12:15 <@Firesong> ok, hyvä
+12:15 <@jannel> tai linkkejä mut kuitenkin, kunhan vähä paremmin tuntee sen toiminnan ni pitää kirjotella siitä
+12:17 <@Firesong> okei 
+12:18 <@Firesong> noh, jospa poistun irkistä, kun pitää mennä allekirjottaa työsopparit, mut irkkaa jos on jotain ongelmii
+12:18 <@Firesong> en tiiä osaanko auttaa kannan kanssa, mutta voin aina yrittää jos ei meinaa sujuu
+12:20 <@jannel> joo, ja onneks olkoon töistä :D on aika arvotus saanko sen toimimaan mut yritän..
+12:22 <@Firesong> kiitos, onneks tää homma on vaan tän kuun ajan :) ei ees tuu pahasti koulujuttujen päälle
+12:23 <@jannel> jep, mäkin poistun nyt irkistä, palaan myöhemmin ku oon kattonu sitä kantaa
+12:23 <@jannel> moikka!
+--- Day changed Fri Jun 10 2011
+13:55 <@Firesong> Tattoo: sain just tietää että se "onko DOM ladannut asian"-juttu on jqueryssä aikalailla automaattihoidettu
+13:55 <@Tattoo> http://i.imgur.com/IItiH.jpg
+13:56 <@Firesong> siinä koodin alussa on yks kutsu joka hoitaa vissiin just ton yhellä rivillä
+13:56 <@Tattoo> tämä on uuttsa
+13:56 <@Tattoo> links?
+13:57 <@Firesong> jQuery(function($) { <-toi on se rivi
+13:57 <@Firesong> ootas, kaivan dokumentaation
+13:59 <@Firesong> http://api.jquery.com/jQuery/
+13:59 <@Firesong> Description: Binds a function to be executed when the DOM has  finished loading.
+13:59 <@Firesong> eli ongelma hoidossa
+14:02 <@Tattoo> niin siis, pitäähän sun wrapata se silti funktioon
+14:02 <@Tattoo> eli $("#foo").click(); ei toimi suoraan, vaan se pitää olla jQuery(function(){ $("#foo").click(); });
+14:03 <@Tattoo> tai sitten $(document).ready(function(){ $("#foo").click(); });
+14:03 <@Tattoo> niinkuin tuossa sanotaan
+14:05 <@Geobot> Project Geovision build #55: FAILURE in 2,2 sec: nulljob/Geovision/55/
+14:06 <@Tattoo> D: D:
+14:11 <@Firesong> mut toi alkava aaltosulku tossa rivissä vähän niinku symboloi sitä että kaikki muu kirjoitetaan sen sisään
+14:11 <@Firesong> sit se ei lataa mitään niistä jutuista ennenku DOM on valmis
+14:12 <@Tattoo> häh
+14:13 <@Tattoo> "jQuery( callback ) Description: Binds a function to be executed when the DOM has finished loading. his function behaves just like $(document).ready(),"
+14:13 <@Firesong> Varastin ton irkin (Purrrrrr täällä)
+14:13 <@Tattoo> eli kun jquerylle antaa callbackin, niin siin callbackissa dom on ladattu
+14:14 <@Firesong> Siis siellä on nyt jQuery(function($) { /* kaikki koodi tässä suoritetaan sitten kun DOM on alustettu */ }
+14:14 <@Firesong> Siinä on koko js-filu
+14:14 <@Tattoo> eli jQuery(function(){ ... }); on sama kuin $(document).ready( function(){ .. });
+14:14 <@Firesong> Toimii, yes?
+14:14 <@Tattoo> toimii
+14:14 <@Tattoo> mut kyse oli siitä et toi pitää tehdä :)
+14:14 <@Firesong> Noniin, miks me keskustellaantästä yhä?
+14:14 <@Tattoo> muuten se ei toimi
+14:14 <@Firesong> Tehty jo
+14:14 <@Tattoo> sehän oli mitä mä kysyin :)
+14:14 <@Tattoo> et onko
+14:14 <@Firesong> Jeje
+14:15 <@Firesong> (Aurora takas) siis toi oli siellä jo alunperinkin, mut en siellä kokouksessa osannu vastata ku en tajunnut mitä kysyit
+15:29 <@Tattoo> jeps, asia selvisi, hyvä hyvä
+16:05 <@Geobot> Project Geovision build #56: STILL FAILING in 2 sec: nulljob/Geovision/56/
+16:33 <@Tattoo> D:D:D:
+18:05 <@Geobot> Project Geovision build #57: STILL FAILING in 1,7 sec: nulljob/Geovision/57/
+--- Day changed Sun Jun 12 2011
+21:32 <@jannel> Hei, laitan varmuudeksi tännekin: maanantaiksi demo sovittu klo 12.00 asiakkaan kanssa, laitoin asiakkaalle postia perjantaina
+21:39 <@Tattoo> hyvä.
+--- Day changed Mon Jun 13 2011
+11:05 <@Geobot> Project Geovision build #58: STILL FAILING in 3,7 sec: nulljob/Geovision/58/
+12:11 <@Tattoo> D:D:
+12:11 <@Tattoo> ei ole hyvä tämä
+12:12 <@Tattoo> jannel: status?
+--- Day changed Tue Jun 14 2011
+11:51 <@jannel> Tattoo: demo meni hyvin, asiakas oli todella tyytyväinen. sovittiin tämän sprintin asiat, mitään ei oikeastaan lisätty siihen mitä perjantaina kirjattiin. tarkennettiin hakujen kriteereitä ja filtteröintitapoja. sovittiin että asiakas tulee ensi viikon demoon keskiviikkona
+11:52 <@jannel> mulle tuli just hälytys töissä, tuun takas noin tunnin päästä..
+11:53 <@Sundo> juu
+11:53 <@Sundo> huomenta
+12:03 <@Firesong> huomenta
+12:56 <@Firesong> mikäs on päivän koodaussuunnitelmqa kenelläkin?
+15:10 <@jannel> moro, täällä taas..
+15:13 <@jannel> mä tein eilen create_JSONIIN parannuksia, nyt voi hakea readillä ec:llä ja db:llä
+15:13 <@jannel> mites meidän kanta? soitan kohta dezgegille, tuleeko mieleen kysymyksiä?
+15:15 <@Firesong> Sundo varmaan osais vastata tohon paremmin
+15:15 <@jannel> juu
+15:15 <@Firesong> mä en eilen kerennytkään tekee yhtään mitään :P
+15:16 <@Firesong> tänään aattelin tehä sen koodin kommentointihomman ainakin pois, sit sen jälkeen voisin alkaa selvittää niitten kontrollien pistämistä paikalleen
+15:16 <@jannel> ok, vois varmaan ruveta lisää siihen optionsiin niitä hakusysteemeitä
+15:17 <@Firesong> teen varmaan illalla, päivä menee vielä nettikaupassa
+15:17 <@Firesong> pomokin soitteli perään, että "kai sä nyt varmasti osaat tehä tän" :P
+15:17 <@jannel> jep, mä teen create_JSONia toiv valmiiks ja kommentoin kans
+15:17 <@jannel> :P
+15:17 <@jannel> sulla pitää vähä kiirettä
+15:18 <@Firesong> juu, kyllähän tässä
+15:18 <@Firesong> mut noh, ulkona on paska sää, niin ei haittaa koodata täyttä päivää
+15:18 <@jannel> aivan
+15:18 <@jannel> oon töissä ja täällä ois hyvä tehdä, keikat vaan häiritsee :D
+15:19 <@Firesong> keikat? mitä sä teet työkses siis?
+15:19 <@jannel> tarkotan hälytyksiä ku oon palokunnassa, tai ambulanssissa nyt
+15:20 <@Firesong> :O
+18:05 <@Geobot> Project Geovision build #59: STILL FAILING in 6,9 sec: nulljob/Geovision/59/
+18:11 <@Sundo> mmm
+18:12 <@Sundo> db-taulun kentät sitten muuttuu vielä, koska sinne tulee se tiedostossa OS=:n perässä oleva nimi omaksi kentäkseen
+18:13 <@Sundo> mikä myös tarkottaa ettei se ole enää samaa formaattia kuin readit
+19:18 <@jannel> koitin soittaa dezgegille -> ei saa yhteyttä
+19:25 <@Sundo> jooh, eiköhän se ole tänkin viikon vielä lomalla
+19:38 <@Firesong> oletetaan näin
+19:55 <@Sundo> mukavaa parsia tuota uniprot_sprot.fastaa
+19:56 <@Sundo> se haluttu OS= kenttä kyllä alkaa aina sillä, mutta tietenkään se ei aina lopu GN= kentän alkuun vaan tuo puuttuu osasta ja siinä onkin "PE=" seuraavana
+19:56 <@Sundo> noh, nyt kun sen tietää niin menee helposti
+20:05 <@Geobot> Project Geovision build #60: STILL FAILING in 1,9 sec: nulljob/Geovision/60/
+20:30 <@Tattoo> D:D:D:
+--- Day changed Wed Jun 15 2011
+03:05 <@Geobot> Project Geovision build #61: STILL FAILING in 4,8 sec: nulljob/Geovision/61/
+11:05 <@Geobot> Project Geovision build #62: STILL FAILING in 3,2 sec: nulljob/Geovision/62/
+11:44 <@Sundo> oon jonkun kymmenen minuuttia myöhässä
+12:32 <@jannel> jep
+13:05 <@Geobot> Project Geovision build #63: STILL FAILING in 2,2 sec: nulljob/Geovision/63/
+14:05 <@Geobot> Project Geovision build #64: STILL FAILING in 2,2 sec: nulljob/Geovision/64/
+15:05 <@Geobot> Project Geovision build #65: STILL FAILING in 3,1 sec: nulljob/Geovision/65/
+17:05 <@Geobot> Project Geovision build #66: STILL FAILING in 1,7 sec: nulljob/Geovision/66/
+17:56 <@Sundo> http://t-tmtynkky.users.cs.helsinki.fi/hudson/job/Geovision/55/changes#detail0
+17:56 <@Sundo> tossa on se changesetti jonka jälkeen on ollut rikki
+17:56 <@Sundo> siitä vaan miettimään johtuko se muutoksista vai hajottiko joku ulkopuolinen
+20:25 <@Firesong> Sundo: mut, eihän käyttäjänhallinnalle oo vielä mitään testejä?
+20:26 <@Firesong> näyttäiskö toi jostain että mihin testiin se feilaa?
+20:26 <@Firesong> siitä sais vähän enemmän infoa
+22:22 <@Sundo> ei se failaa testiin, se failaa tuon yhden tiedoston oikeuksiin
+22:22 <@Sundo> http://t-tmtynkky.users.cs.helsinki.fi/hudson/job/Geovision/55/console
+22:27 <@Firesong> ahaa, ok, katon tota kohta ja yritän saada tänään korjattuuu...
+22:30 <@Dezgeg> iltaa, nyt oon taas kaupungissa
+22:31 <@Firesong> Dezgeg: ou yeah, korjaahan serveri :D
+22:31 <@Dezgeg> katotaanpas
+22:32 <@Dezgeg> coveragetyökalu itkee jostain. ei taida liittyä projektiin
+22:36 <@Firesong> ei kun lähinnä meinasin sitä että sivustoa ei näy, eikä sitä voi testata userssilla
+22:36 <@Firesong> oon ainakin ite vaan pyöritellyt lokaalikopiota ilman kantaa
+22:37 <@Dezgeg> ahaa
+22:38 <@Geobot> Project Geovision build #67: STILL FAILING in 1,9 sec: nulljob/Geovision/67/
+22:41 <@Dezgeg> taitaapi olla vika jollain tavalla userssissa
+22:44 <@Dezgeg> joo, samaan virheeseen kaatuupi tuo committi mille testit on toiminu onnistuneesti. mitähän tuollekkin nyt sit tekis
+22:45 <@Firesong> pitäisköhän harkita että pystyttäis ton jonnekkin muualle?
+22:54 <@Dezgeg> django_nose kusee jollain tavalla. kommentoin ne pois, toimiiko toi muuten oikein http://tkt_gvis.users.cs.helsinki.fi
+22:55 <@Dezgeg> saan ainakin 404:sta col1.png:stä
+22:56 <@Firesong> okei, se vähän bugaa edelleen, mut ainakin jotain näkyy
+22:57 <@Firesong> nyt voi sit päästä eteenpäin ku voi testaa alustalla missä jossain vaiheesa on jotain dataakin :)
+22:58 <@Dezgeg> että tuon saa näkymään tuonne, niin pitää käynnistää palvelin porttiin 5435, eli python manage.py runserver 5435
+22:59 <@Firesong> jännä, pistähän dokumentaatioon
+23:00 <@Dezgeg> täytyneepi joo, ei vaan koskaan tullut sillon mieleen ennen kun lähdin kun sitä ei vielä tarvinnut :p
+--- Day changed Thu Jun 16 2011
+12:12 <@Sundo> huomenta
+12:14 <@Firesong> huomenta
+12:15 <@Firesong> Dezgeg palasi, sivusto pyörii taas userssilla \o/
+12:26 <@Sundo> missä se vika oli
+12:27 <@Firesong> kun yritin käynnistää sitä pythonia niin en osannut laittaa sitä oikeaan porttiin
+12:27 <@Firesong> siellä on joku häxäys minkä takia se pitää käynnistää porttinumeron kanssa
+12:27 <@Firesong> lisäks joku osa siitä sotkusta oli kaatunut, ja nyt siitä on kommentoitu kait jotain testikamaa pois
+13:00 <@jannel> huomenta vaan, sori myöhästyminen
+13:03 <@Firesong> hei, tehtävienjaosta sellasta, että pystytkö sä jannel selvittelee että miten sen jsonnin sais pyörii oikein siellä userssilla, vai tehäänkö me sitä yhessä?
+13:03 <@Firesong> jos ei tehä, niin voisin siirtyä vaikka selvittelee sitä nimitietokanta-asiaa, jos kukaan ei oo sitä vielä tehnyt
+13:05 <@jannel> joo voin koittaa selvittää
+13:06 <@jannel> mites sundo, missä vaiheessa parserit on?
+13:26 <@Dezgeg> huomenta, univelkaa riitti sitten näin myöhään nukkumiseen :p
+13:27 <@Dezgeg> valaisisiko joku vähäsen että missäs meette ja mihin hommaan mun kantsisi ryhtyä
+13:32 <@jannel> joo, sundo ajaa tekee parsereita kun niihin tuli muutoksia ja ajaa kantaan dataa, ite oon tehny json tiedoston luomista datasta ja se on aika valmis, nyt koitan saada piirtämisen toimii myös usersilla. firesong kai ryhty selvittää nimitietokantaa
+13:33 <@jannel> sä voisit varmaan kattoo sundon kanssa niitä kantoja
+13:33 <@Dezgeg> ok
+13:44 <@Sundo> mmm
+13:44 <@Sundo> jannel: mergesit näköjään vanhan modelin noiden mun db muutosteni päälle :P
+13:44 <@Sundo> ihmettelin kun ei mitään tapahdu
+13:45 <@jannel> just :P
+13:45 <@jannel> sori
+13:47 <@jannel> mites sundo muuten, missä vaiheessa ne kannat on?
+13:49 <@Sundo> suunnilleen valmiita sisään ajeluun, vähän ihmetyttää vaan tuo results
+13:50 <@jannel> hee, huomasin just et ei varmaan piirtely toimi kun usersille ei oo luotu koko json:file.js:ssää
+13:50 <@Sundo> blastissa uniprot id on sp|A0M2E8|KDSB_GRAFK, eli samaa muotoa kuin siellä db .fastassa, mutta sitten resultsissa käytetään vain A0M2E8 osaa
+13:52 <@jannel> ok..
+13:52 <@Firesong> mä varmaan kans jossain vaiheessa muokkailen vähän nätimmiks niitä jsoninsäätövalikoitakin, kuhan ehdin
+13:54 <@Sundo> ai niin, ja .ecs tiedoston data ei vielä ole tuolla tietokantamallissa
+13:55 <@jannel> tarviitko muuten firesong apua siinä nimitietokannan kattomisessa? aattelin vaan et dezgeg vois varmaan auttaa siinäkin jos kanta on kerran kohta valmis
+14:28 <@Firesong> Dezgeg: hyödyllisempää ois jos noista taskeista tekisit esim. ton käyttäjähallinnan testauksen ja docstringit
+14:28 <@Firesong> jos kerran siltä tekeminen loppuu
+14:29 <@Dezgeg> missäs vaiheessa käyttäjänhallinta on? onks siinä muuta kun login/rekisteröinti?
+14:30 <@Dezgeg> en ainakaan huomannu mitään muuta siinä eilen kun vähän kattelin
+14:31 <@Firesong> rekisteröinti ja login joo, ja sit se adminpuoli on aktivoitu
+14:31 <@Firesong> ei siinä vielä muuta oo
+14:32 <@Firesong> mut Tattoo sano että noikin pitäis testata
+14:32 <@Firesong> (vaikka ne kyllä on djangon juttui, mutta että niitä kutsutaan oikein tai jotain..)
+14:33 <@Dezgeg> ok, voin kattella niitä
+14:48 <@Sundo> teen tolle .ecs:lle oman taulun tonne, ei se mitenkään luontevasti mene tuohon muuten
+15:07 <@Sundo> iiiihan kohta valmis... eikun
+15:08 <@Sundo> uniprot-entryistä pitää erotella sp|Q14510|MOO_MOO omiksi kentikseen
+15:08 <@Sundo> joten sama pitää tehdä myös blastiin
+17:05 <@Geobot> Project Geovision build #68: STILL FAILING in 4,4 sec: nulljob/Geovision/68/
+20:05 <@Geobot> Project Geovision build #69: STILL FAILING in 2,6 sec: nulljob/Geovision/69/
+--- Day changed Fri Jun 17 2011
+00:53 <@Firesong> oon hiukan kipeän oloinen, en ole vielä ihan varma että olenko huomenna tulossa. Yritän irkata aamulla... anteeks...
+10:30 <@Firesong> juu, meni näköjään ohi, ja pysynen pystyssä, joten olen tulossa normaaliaikaan laitokselle
+11:05 <@Geobot> Project Geovision build #70: STILL FAILING in 2,3 sec: nulljob/Geovision/70/
+11:13 <@Geobot> Project Geovision build #71: STILL FAILING in 1 sec: nulljob/Geovision/71/
+12:06 <@Sundo> njahas, oon sitten taas hieman myöhässä
+12:06 <@jannel> ok..
+12:06 <@Sundo> herra päätti viimeyönä valvottaa ~kymmeneen aamulla ja meinasin ottaa tunnin torkut ennen kun lähden, meni vähän pitkäks
+12:06 <@Sundo> mutta otan tässä jotain leipää ja möngin sitten sinne
+12:07 <@jannel> jep, ei kiirettä :)
+12:42 <@Geobot> Project Geovision build #72: STILL FAILING in 4,6 sec: nulljob/Geovision/72/
+12:43 <@Dezgeg> hudson-testit olleet rikki ~8 päivää (luultavasti) adminien mokien takia, nyt edes toimivat!
+13:05 <@Geobot> Project Geovision build #73: STILL FAILING in 9,8 sec: nulljob/Geovision/73/
+13:36 <@Geobot> Project Geovision build #74: STILL FAILING in 4,2 sec: nulljob/Geovision/74/
+13:48 <@Geobot> Yippie, build fixed!
+13:48 <@Geobot> Project Geovision build #75: FIXED in 5,1 sec: nulljob/Geovision/75/
+14:05 <@Geobot> Project Geovision build #76: FAILURE in 2,4 sec: nulljob/Geovision/76/
+14:18 <@Geobot> Project Geovision build #77: STILL FAILING in 2,8 sec: nulljob/Geovision/77/
+14:20 <@Geobot> Project Geovision build #78: STILL FAILING in 3,1 sec: nulljob/Geovision/78/
+14:21 <@Geobot> Yippie, build fixed!
+14:21 <@Geobot> Project Geovision build #79: FIXED in 4,2 sec: nulljob/Geovision/79/
+15:17 <@Dezgeg> 6246037
+15:17 <@Dezgeg> GDQ9FB102J2G3D	Q318C3	H	6.1.GDQ9FB102J2LU2	Q5HUY2	H	6.3.1.5	0.021	38.5
+15:17 <@Sundo> <3
+15:18 <@Dezgeg> viallinen tiedosto oli siis /home/group/urenzyme/geoviz/build/results/OLKR49.uniprot.build
+15:18 <@Sundo> 25583510 riviä, joista yksi on viallinen ja räjäyttää skriptin
+15:18 <@Sundo> tunnen suurta rakkautta
+15:58 <@Geobot> Project Geovision build #80: FAILURE in 52 min: nulljob/Geovision/80/
+16:02 <@Geobot> Yippie, build fixed!
+16:02 <@Geobot> Project Geovision build #81: FIXED in 12 sec: nulljob/Geovision/81/
+16:03 <@Sundo> siinä on malliesimerkki kuinka korjata testit
+16:03 <@Sundo> laitetaan perään || true ja kaikki toimii
+23:22 <@Firesong> sori, en viitti tota säätökoodii nyt pushata ennenku ehin sitä vähän testaa, joten multa tulee sit aika iso pushaus su-iltana. Hyvää viikonloppua
+--- Day changed Sun Jun 19 2011
+20:44 -!- Tattoo [tkairi@myntti.helsinki.fi] has quit [Ping timeout]
+20:44 -!- Tattoo [tkairi@myntti.helsinki.fi] has joined #geovision
+--- Day changed Mon Jun 20 2011
+00:11 <@Geobot> Project Geovision build #83: FAILURE in 5 min 55 sec: nulljob/Geovision/83/
+--- Log closed Mon Jun 20 04:36:06 2011
+--- Log opened Mon Jun 20 04:36:43 2011
+04:36 -!- Sundo_ [lassetyr@melkki.cs.helsinki.fi] has joined #geovision
+04:36 -!- Irssi: #geovision: Total of 6 nicks [3 ops, 0 halfops, 0 voices, 3 normal]
+04:37 -!- Irssi: Join to #geovision was synced in 50 secs
+10:48 <@Geobot> Yippie, build fixed!
+10:48 <@Geobot> Project Geovision build #84: FIXED in 17 sec: nulljob/Geovision/84/
+11:33 -!- You're now known as Sundo
+12:55 < Tattoo> :D :D :D :D
+12:55 < Tattoo> Dezgeg: jannel: op
+13:04 -!- mode/#geovision [+ooo Sundo Firesong_ Tattoo] by Dezgeg
+18:13 -!- Firesong_ is now known as Firesong
+--- Day changed Tue Jun 21 2011
+12:02 <@jannel> huomenta
+12:03 <@Sundo> huomenta
+12:07 <@Tattoo> huomenta
+12:08 <@jannel> se tiedon liittäminen edgeen ei onnistu, jitissä ei vielä ole eventtejä määritelty edgeille..
+12:08 <@jannel> tai tooltipin liittäminen siis
+12:10 <@jannel> aion tänään kattoo sitä värityshommaa, nodeille onnistuu helposti mut edgeille joutunee muuttamaan taas jsonin muotoa
+12:10 <@Tattoo> hmm, riippuen miten se edge piirretään, siihen voisi ihan itse määritellä eventin
+12:11 <@Firesong> huomenta
+12:12 <@Firesong> mä aattelin tänään debugata sen formisysteemin niin että se säilyttää niitä arvoja kunnolla
+12:12 <@Firesong> ja jos ehtii niin kattoo sitä keggiä vielä, vaikka mä kyllä epäilen että se nimitaulu pitää ehkä ottaa kuitenkin omaan tietokantaan
+12:13 <@jannel> nii.. aika jännä ettei vielä jittiin oo sitä lisätty jos se onnistus nopeesti ku näyttää siltä että siihen on paljon muuta vähemmän tärkeetäkin ympätty..
+12:15 <@jannel> mut eikö se joutus laskemaan sitä eventtiä varten joka viivalle alueen et jos hiiri on päällä niin näytetään tooltippi. nodeille se on paljon helpompi mut viivat voi mennä päällekkäin
+12:16 <@jannel> mut voishan sitä selvittää..
+12:22 <@jannel> mitäs sundo meinas?
+12:23 <@Tattoo> jannel: eihän ne siinä ympyrässä voi mennä päällekäin? vai voiko?
+12:23 <@Tattoo> se oma eventtien handlaus ei kyl 
+12:23 <@Tattoo> välttämättä ole vaivan arvoinen
+12:26 <@jannel> kyllä ne voi mennä päällekkäin.. mut joo ehkä se ei oo niin tärkeä nyt. se graafin uudelleen piirto jostain valitusta solmusta olis hyvä seuraavaks
+12:30 <@Sundo> katon vähän mitä siinä graafinpiirtopuolella tapahtuu
+12:30 <@Sundo> ja kommentoin
+12:31 <@Sundo> omaa koodiani siis
+12:36 <@jannel> ok
+16:37 <@jannel> dezgeg: voitko koittaa kattoo jos saat tota hakuu taas nopeammaks, lisäsin hakuja Read ja DbEntry objekteille et saan kuvauksen
+16:37 <@jannel> joka solmulle tooltippiin
+16:40 <@Dezgeg> ookkei, vilkasen
+16:45 <@jannel> nii ja tiedoksi kaikille: sitä viivojen väritystä ei ehdi huomiseksi saada kuntoon. se vaatii ihan erilaista JSONin muotoa.. 
+16:45 <@Dezgeg> ok, ajoin yhen indeksin lisää, toimiiko nyt
+16:46 <@jannel> ok, testaan..
+16:46 <@jannel> works!
+16:46 <@jannel> kiitti
+16:46 <@Dezgeg> ja tuo muuten erroraa nyt jos syöttää esim. epäolemassaolevia tietokantatunnisteita
+16:46 <@jannel> ahaa..
+16:47 <@Dezgeg> kestipä muuten ihmeen vähän indeksin luonti tällä kertaa, hassua
+16:48 <@jannel> mm..niin eiks se vaan piirrä keskelle sen tyhjän noden jos haetaan epäolemassaolevaa?
+16:49 <@jannel> joo, tuli errori..
+16:50 <@jannel> mut se tulee vaan readiä tai db:tä haettaessa
+--- Day changed Wed Jun 22 2011
+00:28 <@Sundo> tosta create_JSONista, tehdäänkö siinä jotain mihin http://docs.python.org/release/2.6.7/library/json.html välineistö ei pysty?
+00:28 <@Sundo> näyttää vähän hassulta kun on käsin koodattu kaikki
+00:35 <@Sundo> tai siis vähän huonosti ilmaisin taas itseäni, tehdäänhän siinä paljonkin mihin tuo ei pysty mutta miksei sitä käytetä lainkaan apuna
+02:47 <@Sundo> mikäs on räjähtäny usersilla
+10:46 <@Firesong> onko joku räjähtänyt?
+10:46 <@Firesong> emmä huomaa, musta ne näyttä ihan toimivan
+10:46 <@Firesong> nähdäänkö muuten tänäänkin klo 12 laitoksella?
+11:18 <@Sundo> ah, joo ei ollut mitään vikaa enää
+12:18 <@Sundo> /usr/local/pg_top-3.6.2/bin/pg_top 
+--- Day changed Thu Jun 23 2011
+12:03 <@jannel> huomenta
+12:06 <@Dezgeg> 'menta
+12:11 <@Tattoo> huomenta
+12:13 <@Tattoo> Firesong et al: tommosen venaus-jutun saa generoitua helposti: http://www.ajaxload.info/
+12:17 <@jannel> kattelen tänään sitä erilaisen jsonin tekoa, mitäs muut?
+12:24 <@Dezgeg> voisin vaikka kattella noita linjauksia, ellei Firesong halua niitä välttämättä
+12:24 <@Firesong> Dezgeg: noh, sinänsä ois kiva päästä itekki tekee jotain visualisaatioo...
+12:25 <@Firesong> kukas muuten ottaa sen nimitiedoston parsimisen hommakseen?
+12:25 <@Firesong> sen formaatti ei vaikuttanut mitenkään ihmeelliselle, mutta toivottavasti siinä ei oo virheitä
+12:26 <@Dezgeg> no visuaalista suunnittelua en ainakaan ajatellut itelleni, siitä ei tulisi kaunista :p
+12:27 <@Dezgeg> nimitietokanta sopii kyllä mulle
+12:27 <@Firesong> Dezgeg: ottaen huomioon ettei linjauksista kait ole vielä varsinaisesti dataa saatavilla niin sehän on pelkkää ajaxia ja visualisaatioo se linjaushomma?
+12:28 <@Firesong> mä voisin ottaa about tälle ja huomiselle sekä ton latausscreenin että sen linjauksen aloittamisen, jos kukaan ei vastusta
+12:28 <@Dezgeg> ah. aivan
+12:28 <@Dezgeg> juu mulle sopii
+12:28 <@Firesong> mitäs sundolle jää, jos näin jaetaan?
+12:29 <@Firesong> tehostamista sillekkin?
+12:29 <@Tattoo> Firesong: näitkö ton mun linkin
+12:41 <@Tattoo> hmm, kova sprintti teille tulossa :O
+13:28 <@jannel> sundo varmaan tekee samaa ku minä, niin oli puhe..pitää varoo ettei tuu tehtyy päällekkäin
+13:37 <@Sundo> juu
+13:38 <@Sundo> yritän tänne kertoa mitä puuhaan
+16:45 <@Sundo> a create_JSONin muokkaamista
+16:45 <@Sundo> alotan siis :)
+16:45 <@Sundo> jannel: ootko tehny siihen mitään vielä?
+16:56 <@Tattoo> "tuhonnu"
+17:28 <@jannel> joo vähä kattelin miten ne sais tehtyy, en paljoo
+18:22 <@Sundo> mmm
+19:25 <@jannel> Sundo: pushaan uuden filen mihin tein alkua, se kirjottaa uuteen testifileen. ootko miten pitkällä?
+19:29 <@Sundo> en oo saanu mitään tehtyä, täällä kävi vieraita
+19:31 <@jannel> ok.. sain jotain aikaseks, tulostaa vaan turhia merkkejä väliin..
+19:40 <@Sundo> pushasitko jo, ei näy mitään uutta tuolla
+19:41 <@Sundo> tarkista muuten onko sulla indenttinä tabit, toi parse_JSON.py näyttää olevan välilyönneillä indentoitu nyt
+23:51 <@jannel> aa joo unohdin pushata, lähdin menee, nyt laitan..
+--- Day changed Fri Jun 24 2011
+11:22 <@jannel> huomenta, en tuu tänään koululle, koitan väsätä tota samaa ku eilen
+12:06 <@Dezgeg> onks kukaan jo laitokdella? :p
+12:09 -!- Dezgeg [tmtynkky@melkki.cs.helsinki.fi] has quit [Ping timeout]
+12:11 <@Firesong> mä oon
+12:11 -!- Dezgeg [tmtynkky@melkki.cs.helsinki.fi] has joined #geovision
+12:11 <@Firesong> moi, oon laitoksella 
+12:18 <@Sundo> juu
+12:37 <@Sundo> jannel: olis ehkä ollut hyvä katella tota samassa paikassa vähän, mutta eiköhän näinkin pärjätä
+13:05 <@Geobot> Project Geovision build #97: FAILURE in 6,7 sec: nulljob/Geovision/97/
+13:14 <@Geobot> Yippie, build fixed!
+13:14 <@Geobot> Project Geovision build #98: FIXED in 10 sec: nulljob/Geovision/98/
+13:39 <@jannel> sundo:joo niin se menis parhaiten, en tänään varmaan hirveesti saa aikaan kyllä.. 
+14:05 <@Geobot> Project Geovision build #99: FAILURE in 8 sec: nulljob/Geovision/99/
+14:14 <@Geobot> Project Geovision build #100: STILL FAILING in 2,8 sec: nulljob/Geovision/100/
+14:16 <@Geobot> Yippie, build fixed!
+14:16 <@Geobot> Project Geovision build #101: FIXED in 5,7 sec: nulljob/Geovision/101/
+16:05 <@Geobot> Project Geovision build #103: FAILURE in 7,6 sec: nulljob/Geovision/103/
+20:59 <@Firesong> no niin! nyt se aikakirjurin delete lähti oimii, ei muuta ku korjaa sitä kirjanpitoo jos siellä on jotain virhettä :)
+--- Day changed Sun Jun 26 2011
+14:24 <@Sundo> wheei
+14:24 <@Sundo> meiän uudet blastit linjausdatalla on tullu
+14:24 <@Sundo> kokoa 67G
+14:27 <@Sundo> osa siitä linjausdatasta on aika mielenkiintoisen pitusta
+14:44 <@Firesong> kuin pitkää se sit on?
+14:45 <@Sundo> vilkase vaikka head *.align siellä
+14:45 <@Sundo> aika vaihtelevaa, mutta ne pitkät on todella pitkiä
+14:49 <@Sundo> rivejäkin on tainnu tulla vähän lisää, nyt tuo sanoo että 253 miljoonaa riviä
+14:58 <@Tattoo> hahaha
+17:31 <@Sundo> ja sitten siellä on duplikaatteja
+17:31 <@Sundo> \o/
+17:32 < Dezgeg> millä lailla?
+17:36 <@Sundo> esimerkiksi GW.silva-ssu.align, GW.silva-lsu.align ja GW.silva-all.align sisältää jotain rivejä useampaan kertaan
+17:36 <@Sundo> mutta kuitenkaan GW.silva-all.align ei sisällä yhtä montaa riviä kuin nuo kaksi muuta yhteensä, joten jos se on kokoelma niistä niin noista kahdesta on sitä varten karsittu jotain
+17:37 <@Sundo> lisäksi niiden linjausdatasta näyttäis puuttuvan joillain riveillä whitespace
+17:37 <@Sundo> eli ei ole kuin yksi pitkä rimpsu dataa sen sijaan että olis tabi siellä jossain välissä
+17:39 <@Sundo> ah, mun moka
+17:40 <@Sundo> taisin kattoa väärin
+18:32 <@Sundo> en edes ihan heti keksi millä kriteerillä tuosta silva-all.alignista on karsittu rivejä, kokeilin lisätä ne kahden muun rivit samaan settiin pythonissa ja sen perusteella ei näyttäs ainakaan duplikaatteja olevan
+18:33 < Dezgeg> tuijottelin niitä hetken itekkin ja siellä on eroja mm. e-value-kentissä ainakin. pitääpi varmaan selvittää asiakkaalta
+18:35 <@Sundo> mmm
+18:36 <@Sundo> >>> len(d)
+18:36 <@Sundo> 1114
+18:36 <@Sundo> >>> len(twoset)
+18:36 <@Sundo> 3641
+18:36 <@Sundo> >>> len(allset)
+18:36 <@Sundo> 3054
+18:36 < Dezgeg> ja toinen whihihihii tähän kanssa:
+18:36 < Dezgeg> tkt_gvis=> CREATE INDEX viz_blast__read ON viz_blast (read);
+18:36 < Dezgeg> ERROR:  could not extend relation base/38485/85302: No space left on device
+18:36 <@Sundo> haha
+18:37 <@Sundo> jossa twoset on GW.silva-lsu.align ja ssu.align lisättynä samaan settiin, allset on silva-all ja d on twoset-allset
+18:37 <@Sundo> eli niissä olis ton mukaan 1114 eri riviä...
+18:37 <@Sundo> tai siis, noiden kahden yhdistelmässä 1114 riviä joita ei ole silva-all:ssa
+18:51 < Dezgeg> whihihii, kaikki kannat näyttää olevan tuolla yhdellä 56 GB-isolla levyllä
+19:05 <@Sundo> nyt itkettää
+19:06 <@Sundo> :P
+19:19 <@Sundo> voisin mailata asiakkaalle kysymyksen siitä, miten nuo silva-all.align päätteiset on oikein muodostettu
+19:19 <@Sundo> ei nyt ihan suorilta meinaa tajuta
+19:20 <@Sundo> kaikkea puuhailua hieman häiritsee se, että Lenni ei suostu nukkumaan missään muualla kun mun sylissäni peittoon käärittynä :D
+19:21 <@Sundo> pitää kurotella tommosen mytyn yli
+23:26 <@Tattoo> ei aa sori
+23:26 <@Tattoo> wat
+23:26 <@Tattoo> väärä kanava
+--- Day changed Mon Jun 27 2011
+00:07 <@Geobot> Project Geovision build #104: STILL FAILING in 1 min 34 sec: nulljob/Geovision/104/
+01:00 <@Tattoo> nnnnoooo
+01:05 <@Geobot> Project Geovision build #105: STILL FAILING in 12 sec: nulljob/Geovision/105/
+01:12 <@Tattoo> D:
+13:05 <@Geobot> Project Geovision build #106: STILL FAILING in 10 sec: nulljob/Geovision/106/
+13:11 <@Tattoo> D:
+14:05 <@Geobot> Project Geovision build #107: STILL FAILING in 11 sec: nulljob/Geovision/107/
+14:12 < Dezgeg> git clone https://github.com/robhudson/django-debug-toolbar.git && cd django-debug-toolbar && python setup.py install --user
+14:59 <@Tattoo> mmmmmmmm de buggausta
+15:05 <@Geobot> Project Geovision build #108: STILL FAILING in 4,3 sec: nulljob/Geovision/108/
+15:37 <@Tattoo> D:
+16:05 <@Geobot> Project Geovision build #109: STILL FAILING in 2,9 sec: nulljob/Geovision/109/
+17:05 <@Geobot> Project Geovision build #110: STILL FAILING in 2,9 sec: nulljob/Geovision/110/
+17:23 <@Tattoo> D: D:
+18:32 <@Sundo> njahas
+18:34 <@Sundo> nyt on kannassa jotain rikki
+18:35 <@Sundo> jos käynnistää python manage.py shell tuolla geovision/src/geovision/
+18:35 <@Sundo> import viz.models
+18:37 <@Sundo> a = viz.models.Read.objects.all()[:2]
+18:37 <@Sundo> sitten print a evaluoi tuon ja näyttää että on kaksi readia
+18:37 <@Sundo> mutta jos laittaa esimerkiksi b = viz.models.Blast.objects.all()[:1]
+18:37 <@Sundo> ja tekee jotain joka evaluoi sen queryn
+18:38 <@Sundo> tulee vaan DatabaseErroria
+18:38 <@Sundo> ja sen jälkeen mistä tahansa muustakin tuleepi sitä
+18:40 <@Sundo> olikos siellä nyt sen taulun kentät samat kuin nykyinen models.Blast?
+19:05 <@Geobot> Project Geovision build #111: STILL FAILING in 3,1 sec: nulljob/Geovision/111/
+21:05 <@Geobot> Project Geovision build #112: STILL FAILING in 3,1 sec: nulljob/Geovision/112/
+21:23 <@Tattoo> D:
+21:59 < Dezgeg> optimoin vähäsen vielä importtausskriptoja, nyt pitäisi olla enää levyn kirjoitusnopeus rajoittavana tekijänä
+21:59 < Dezgeg> aloitin just importtaamisen, menisköhän alle kahteen tuntiin
+22:45 <@Sundo> melkosta hurjastelua
+22:47 < Dezgeg> nojaa, eipä siitä paljoa jää jos nuo silva-kantoihin liittyvät ja nuo puuttuvat samplet jättää pois
+22:47 <@Sundo> jeh
+22:47 <@Sundo> ainiin, pitäs pistää se maili asiakkaalle
+--- Day changed Tue Jun 28 2011
+00:05 <@Sundo> menikö ne kaikki ajot ok, blastissa on vaan 30 miljoonaa riviä
+00:08 < Dezgeg> meni ne
+00:10 <@Sundo> ok
+00:10 <@Sundo> niissä ajamatta jätetyissä on ilmeisesti aika paljon sitten
+00:10 < Dezgeg> joo
+00:10 <@Sundo> mailailen niistä nyt
+00:56 -!- mode/#geovision [+o Dezgeg] by Tattoo
+11:59 <@Sundo> huomenta
+12:22 <@jannel> huomenta
+12:26 <@jannel> mitäs meinaatte tehdä tänään?
+12:27 <@Sundo> säätää sitä graph_JSONia lisää
+12:28 <@jannel> joo, jos sulle on ok nii ajattelin ite katto enemmän tänään niitä graafin piirtoon ja tooltippeihin yms liittyviä juttuja. ja yritän selvittää sitä eventtiä niihin edgeihin
+12:28 <@Sundo> sopii
+12:31 <@Firesong> mä aattelin tehä sen linjausyrityksen, jos sen ajaxin sais vaikkapa testidatalla aluks pelaa
+12:49 <@Dezgeg>  mä ainakin ajattelin aloittaa testien korjaamisella
+20:05 <@Geobot> Project Geovision build #113: STILL FAILING in 4,3 sec: nulljob/Geovision/113/
+21:05 <@Geobot> Project Geovision build #114: STILL FAILING in 2,9 sec: nulljob/Geovision/114/
+21:17 <@Sundo> aaargh
+21:17 <@Sundo> http://code.google.com/p/geovision/source/browse/src/geovision/viz/models.py
+21:18 <@Dezgeg> mercurialkämmi vai? :P
+21:21 <@Sundo> tavallaan ehkä, molemmat on muuttanu sitä mutta mergessä on ajettu yli mun muutoksistani :P
+21:22 <@Sundo> meillä on nyt mergetaktiikoissa jotain vikaa kun tämmösiä tulee
+21:22 <@Dezgeg> mitä sieltä on kadonnut?
+21:25 <@Sundo> siinä viimesimmässä diffissä näkyy mitä mun haarastani tuli
+21:25 <@Sundo> mutta aiemmista näkee myös, että ne samat muutokset on menny pariin kertaan edestakas
+21:27 <@Sundo> mutta en tiedä millä tuo tällä hetkellä käytössä oleva blasti on tehty, kun sieltä puuttuu kokonaan database_name kenttä
+21:28 <@Sundo> constraintit näyttää muuten olevan oikein
+21:29 <@Sundo> kaikissa google codessa olevassa versioissa toi database_name löytyy blastista :D
+21:30 <@Sundo> kannassa on myös viz_blastissa db_entry_id joka modelsissa on nimellä db_entry, mistäköhän tuokin tulee
+21:31 <@Dezgeg> se nimetään kantaan tuolleen automaattisesti, koska se on foreign key
+21:31 <@Sundo> ok
+21:31 <@Dezgeg> eikös tuo tietokannan nimi oo blastissa ihan turha
+21:32 <@Sundo> asiakas sanoi jossain vaiheessa, että niitä saatetaan haluta filtteröidä tietokannan mukaan
+21:34 <@Dezgeg> mutta se sama löytyy sieltä DbEntrystä
+21:36 <@Dezgeg> toisaalta se kyllä mahdollisesti säästää tuonne DbEntryyn joinimisesta
+21:36 <@Sundo> niin, se on aika paljon nopeampi
+21:37 <@Sundo> kuin hakea ensin kaikki blastin tulokset, sitten jokaiselle sitä vastaava DbEntry ja sitten sen sample_file kentän mukaan filtteröidä blastin tuloksia
+21:37 <@Sundo> tai joinilla
+21:38 <@Sundo> source_file siis
+21:38 <@Sundo> ja sekään ei ole suoraan kannan nimi, joten pitäis parsia
+21:50 <@Sundo> tai no, taitaa se olla
+23:28 -!- Geobot [tmtynkky@svm-16.cs.helsinki.fi] has quit [""]
+23:35 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has joined #geovision
+23:37 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has quit [""]
+23:38 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has joined #geovision
+23:39 < Geobot> Project Geovision build #115: STILL FAILING in 1,7 sec: nulljob/Geovision/115/
+23:42 <@Firesong> no niin, nyt sit on demo siitä linjauksesta, mutta se on epäaidolla datalla toistaiseksi. Huomisen vois sit käyttää siihen että sais oikeeta dataa siihen
+23:44 < Geobot> Project Geovision build #116: STILL FAILING in 36 sec: nulljob/Geovision/116/
+--- Day changed Wed Jun 29 2011
+00:05 < Geobot> Project Geovision build #117: STILL FAILING in 22 sec: nulljob/Geovision/117/
+00:57 <@Tattoo> D:
+02:05 <@Dezgeg> !build geovision now
+02:05 <@Dezgeg> !geobot build geovision now
+02:05 < Geobot> Dezgeg: job geovision build scheduled now
+02:05 < Geobot> Project Geovision build #118: STILL FAILING in 10 sec: nulljob/Geovision/118/
+02:05 < Geobot> Project Geovision build #119: STILL FAILING in 7,4 sec: nulljob/Geovision/119/
+02:06 <@Tattoo> D:
+02:07 < Geobot> Yippie, build fixed!
+02:07 < Geobot> Project Geovision build #120: FIXED in 8,5 sec: nulljob/Geovision/120/
+02:07 <@Dezgeg> pitiki hajota sen jälkeen ku merges
+02:09 <@Tattoo> testit lokaalisti ennen pushia ;>
+02:10 <@Dezgeg> "se oli vaan yks pikku muutos, ei se voi rikkoa mitään"
+02:12 <@Tattoo> Dezgeg: pistä tää https://github.com/brunobord/tdaemon ajamaan johonkin screeniin, ei tartte muistaa ite ajaa testei
+02:13 <@Tattoo> ja muutki, jotka haluaa v
+02:13 <@Dezgeg> commitin yhteydessä ne tuleekin jo automaattisesti
+02:14 <@Tattoo> niin, commitin jälkeen :)
+02:14 <@Dezgeg> nojoo
+02:14 <@Tattoo> mut toi ku pyörii jossain näkyvällä paikalla, niin ei tartte paljoo 
+02:14 <@Tattoo> muistella
+02:14 <@Tattoo> parashan olis jos se hylkäisi commitin jos testit ei mee läpi
+02:14 <@Tattoo> sen saa ainakin gitiin tuherrettua
+02:18 <@Tattoo> mercurialissa menee ilmeisesti kikkailuksi
+07:42 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has quit [Ping timeout]
+07:43 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has joined #geovision
+11:55 <@jannel> huomenta, oon tänään töissä eli en tuu koululle. kattelen lisää noita edge eventtejä, se ei nyt vielä oikein toimi
+12:23 <@Sundo> ok
+12:23 <@Sundo> eiköhän mekin jatketa niistä mitä eilen tehtiin
+12:26 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has quit [""]
+12:26 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has joined #geovision
+12:48 -!- Tattoo [tkairi@myntti.helsinki.fi] has quit [Ping timeout]
+12:48 -!- Tattoo [tkairi@myntti.helsinki.fi] has joined #geovision
+12:51 <@Firesong> törmäsin muuten tällaiseen: http://lethain.com/using-jquery-django-autocomplete-fields/ siltä varalta linkitän että jos halutaan jossain vaiheessa tehdä mitään tollasta, niin toi tutoriaali on just djangolle
+12:56 <@Dezgeg> siellä on jo tuommoinen autocompletaamassa entsyymien nimiä :P
+13:01 <@Firesong> wat, ku mä pullasin niin oli vaan tyhjä tiedosto :D
+13:41 <@jannel> ok, sain edgelle eventin, ei tosin tee vielä mitään..
+13:55 <@Firesong> jannel: hei oisko mahdollista että pistäisit vaikka sivupalkkiin jonkun "open alignment data" linkin niille solmuille joilla on sitä linjausdataa?
+13:55 <@Firesong> mä oon nimittäin tekemässä sitä linjauksen näyttämistä just
+14:04 <@jannel> joo, kyllä sen pitäs onnistua
+14:06 <@Firesong> loistavaa, kerro jos pushaat jotain tuollasta niin alan sit liittää omaa koodii siihen
+14:09 <@jannel> ok
+16:20 <@Sundo> graph_JSONin ja sen testien muokkaus jäi kesken, ei kannata muutella kumpaakaan nyt
+16:21 <@Sundo> jatkan niistä illalla tai huomenna
+20:33 <@Firesong> nyt vaikuttaa että joudun tekemään melkoisen pätkän etätöitä...
+20:34 <@Firesong> pitää mennä siivoomaan kamoja pois isosta asunnosta minkä perhe pistää vuokralle, joten olen sitten ensiviikon keskiviikosta eteenpäin ja ehkä jopa tiistaihin asti siellä. Joten älkää olettakoo laitokselle saapuvaksi...
+21:51 < Tattoo> pystytkö silti valvomaan sprinttiä?o
+21:55 <@Firesong> kai mä voin irkissä niille huudella vaikka joka päivä että miten menee
+21:55 <@Firesong> mulla on nettiyhteys kyllä joka päivä tarjolla
+21:56 <@Firesong> voi sitä valvojaa mun puolesta vaihtaakkin, jos toi ei riitä
+21:56 <@Firesong> tää reissu tuli vaan vähän yllättäen ku vanhemmat ilmotti että sinne tulee pian vuokralainen...
+21:58 < Tattoo> nsemmiosta tapahtuu. sä tiedät ite parhaiten mitä kantsii tehdä
+21:58 < Tattoo> esim. just huutelemalla
+21:59 < Tattoo> irkissä
+21:59 <@Firesong> onko muilla mitään mielipidettä asiasta? 
+22:56 <@Sundo> eipä tässä
+23:29 -!- jannel [jjlaukka@melkki.cs.helsinki.fi] has quit ["leaving"]
+23:30 -!- jannel [jjlaukka@melkki.cs.helsinki.fi] has joined #geovision
+23:47 < jannel> jep, nyt toimii edgeille eventit ja klikkaukset ja tooltipit :D
+23:47 < jannel> en oo vielä pushannu, parantelen pikkasen..
+23:48 <@Firesong> entäs se linjauslinkki?
+23:48 < jannel> en oo ehtiny sitä katto vielä, menee huomiseen..
+23:48 <@Firesong> mun ois helpompi devata jos tietäisin esim. mihin kohti koodia sellaista kannattas pistää?
+23:50 < jannel> joo, mun pitää sitä vähän miettiä vielä
+23:53 < jannel> jep, eli sen pitäs tulla tonne graphviz.js:ään, kohtaan onBeforeCompute ja innerHtml
+23:55 <@Firesong> okei, mäkin kattelen sitä aamulla. Oon jo vähän pohjustellut mutten oo commitoinut niitä keskeneräisiä muutoksia
+23:55 < jannel> mut oon nyt muokannu sitä tiedostoo aika lailla..
+23:55 <@Firesong> en taida koodaa tänään enää, joten voin sit aamulla pullaa ne sun muutokset
+23:56 < jannel> joo katotaan huomenna
+--- Day changed Thu Jun 30 2011
+12:08 < jannel> huomenta
+12:08 <@Dezgeg> huomenta
+12:09 < jannel> pushasin mun muutokset, nyt jos pullaa usersille noi niin pitäs näkyy yks testi graafi jossa on edged väritetty ja niille eventit
+12:10 < jannel> lisäsin pari uutta tiedostoo vaan sen takia että pystyin testaa niillä, niitä ei tarvita myöhemmin
+12:11 <@Dezgeg> mulla taitaa olla siellä jotain omia muutoksia hieman, committaan eka ne ja sit voin pullata
+12:11 < jannel> ok
+12:12 <@Dezgeg> ok, pullattu
+12:12 < jannel> jep, toimii
+12:13 < jannel> noita värejä pitää tietty miettii vielä
+12:13 < jannel> mut nyt ne on bitscoren mukaan eri värisiä
+12:13 <@Dezgeg> tajusin vasta että olin unohtanut ajaa indeksit blastiin, teen sen nyt, mutta muuten mulla on vähän työt lopussa, keksiikö joku mulle jotain täksi päiväksi
+12:16 < jannel> sundo: sit kun haluut testaa omalla datallas, niin muuta vaan graphviz.html:ään JSON file takasin siihen mitä käytät, muutin sen nyt vaan testin vuoks 
+12:18 < jannel> dezgeg: se graafin uudelleen lataus jostain valitusta nodesta vois olla yks
+12:59 <@Sundo> juu
+13:17 <@Firesong> jos haen sit blastriviä minkä linjauksen haluan näyttää, niin mikä datakenttä olis indeksöinnin ja yksilöinnin kannalta paras tieto käyttää hakuun?
+15:00 < jannel> firesong: saatko näkymään sen keskitetyn noden tiedot vaikka oikeelle puolelle graafia jossa ne aiemmin näky, nyt on johonki kadonnu..
+15:02 < jannel> niiden id on inner-details base.css:ssä
+15:03 <@Firesong> juu, ootas, voin tutkia
+15:10 <@Firesong> eih, nyt se on kyl jotenkin mergennyt väärin noitten leiskafilujen osalta :(
+15:10 <@Firesong> katon että miten saisin korjattuu
+15:11 < jannel> jep
+15:13 <@Firesong> Dezgeg: tossa autocompletessa on muuten ilmeisesti pien bugi. Kun siitä listasta nimittäin ottaa jotain niin se nimi tulee aina mukaan, ja sit se ei osaa hakea mitään. Ainakin sille vaikutti ku testasin
+15:14 <@Firesong> Dezgeg: vai onko tää taas joku "melkein mikään haku ei oo mahdollinen koska tietokannat on sekaisin" juttu
+15:21 <@Firesong> korjasin ainakin leiskafilut nyt suoraan serverille ettei ne enää hajoa (ja varmuudenvuoksi tein samat korjaukset myös omiin kopioihini mitkä kommittaan)
+15:21 <@Firesong> jannel: puuttuuko siellä vielä paljon informaatiota?
+15:25 < jannel> ei puutu enää, teitkö muutoksia?
+15:44 <@Firesong> juu, pushaan ne vielä. leiska oli jostain syystä mergessä hajonnut
+15:53 < jannel> ok
+16:04 <@Firesong> jannel: ootko ehtinyt kattella että mihin niist solmuista tulee se alignlinkki ja miten? Mun koodi alkaa olee melkein testauskunnossa ehkä, mietin että teetkö sä sen linkin mulle valmiiks vai alanko kattoo sitä ite
+17:19 <@Dezgeg> Firesong: serveripuolella se haku osaa parsia noi entsyymihaut tyyliin "asdasdad (1.1.1.1)" melkeen oikein, ssitä miksei haku anna tuloksia entieda
+17:21 <@Dezgeg> kannassa on kyl dataa, mut en oo varma onko userssilla vielä toimivaa json-generointikoodia
+17:26 <@Dezgeg> voin kattoa sitä graafin uudelleenlatausta mikäli siitä jsonin generoijasta on joku toimiva versio repossa (Sundo,janannel ?)
+17:45 <@Sundo> ei ole vielä, tänään pitäs olla jossain vaiheessa
+17:46 <@Sundo> tai en muista onko sen create_JSONin joku hajottanut, jos ei niin se vois toimia
+17:47 <@Sundo> mutta graph_JSON on ihan rikki vielä
+17:47 <@Dezgeg> ok
+18:20 <@Firesong> aa, sen takia se sit ei antanut kait mitään fiksui tuloksii
+20:43 < Tattoo> Firesong: reagoippa tuphon sarin mailiin
+20:43 < Tattoo> *tuohon
+20:46 <@Firesong> Sundo, Dezgeg, jannel: onko meillä sovittuna mitään seuraavaa tapaamista? Mä en ainakaan nyt muista että ois tarkasti sovittuna
+20:47 <@Firesong> eli vastaanko sille että seuraava on sit sprintin loppudemo?
+20:47 <@Firesong> (mistä joudun muuten itse olemaan pois :( )
+20:48 < Tattoo> ainakin demopäivä
+20:48 < Tattoo> ?
+20:48 < Tattoo> senkin vois sopii asiakkaan kanssa
+20:49 < Tattoo> ja kutsuu sarin sinne
+20:50 <@Firesong> ku ei nyt tunnu olevan tarvetta millekkään kunnon palaverille, joten kait se seuraava juttu on se demo. 
+20:50 <@Firesong> jos jutellaan tästä vaan koko ryhmän kaa huomenna
+20:50 <@Dezgeg> juu
+20:52 < Tattoo> Firesong: kuulostaa hyvältä
+20:55 < Tattoo> muistakaa vaan kutsuu sari
+20:55 < Tattoo> sille voisi heittää mailin tyyliin "lisäinfoo huomenna", ehtisitkö Firesong 
+20:55 < Tattoo> ?
+21:31 <@Firesong> ok
+21:38 <@Firesong> jos haen sit blastriviä minkä linjauksen haluan näyttää, niin  mikä datakenttä olis indeksöinnin ja yksilöinnin kannalta  paras tieto käyttää hakuun?
+21:38 <@Firesong> kyselin aikasemmin mutta hautautui login sekaan vissiin
+21:39 <@Dezgeg> varmaankin id
+21:48 <@Firesong> onko se id joku automaattiluotu, koska blastin  modelssissa ei oo sellasta ollenkaan?
+21:49 <@Dezgeg> on
+22:19 <@Firesong> pushasin nyt testiversion siitä linjauksesta, veikkaan et sieltä löytyy joku urpo bugi vielä, mutta huomenna voi sit hioo sitä lisää
+22:20 <@Firesong> nyt vielä kattoo josko sen aikakirjurin poistobugin sais veke...
+22:28 <@Firesong> no niin, nyt poistaminen ihan oikeasti toimii muillekkin kuin sille viimeiselle riville
+22:34 <@Sundo> nyt on toimiva graph_JSON pushattu
+22:35 <@Sundo> olettaen että graafinpiirtotyökalu ei ole kenttien järjestyksen suhteen niuho
+22:36 <@Sundo> ne kommentit siellä on vielä ajastaan jäljessä, pitää korjata
+22:36 <@Firesong> huomasimpa juuri että noi burndowncharttien datat pitää huomenna syöttää uusiks. Ite oon ainakin pistänyt sinne aina vaan työpäivät, kun taas tossa pitäisi viikonloppupäivätkin laskea mukaan...
+22:36 <@Firesong> mut nyt vois mennä pois koneelta ja korjaa ton huomenna.
+22:38 <@Sundo> tuo ei nyt pullauta sitä vielä ulos mihinkään tiedostoon, vaan kun luo tommosen objektin saa siitä suoraan esimerkiksi printillä ulos sen jsonin tekstiesityksen
+22:39 <@Sundo> siitä voi puskea tiedostoon tai ottaa muistiin
+22:39 <@Sundo> mutta aika rumaa koodia toi on, erilailla tekisin taas jos nyt alottasin
+22:55 <@Sundo> mites toi usersilla oleva tarjoaa vaan loadingia nyt
+23:00 <@Firesong> jotain omituista on taas tapahtunut, koska tuolla ei näy sitä graphviz.js tiedostoa
+23:00 <@Firesong> ainakaan kun firebugilla katson
+23:01 <@Firesong> ton loadingin poisfeidauskäsky on siinä tiedostossa, jonka pitäisi aktivoitua heti kun tietokantakyselyt palaa
+23:02 <@Sundo> kyllä se tuolla tiedostolistauksessa näkyy usersilla, ja google codessakin näyttäs olevan
+23:03 <@Firesong> juu, mutta meinasin lähinnä sitä että se ei tunnu linkittyvän tuonne sivulle mikä tarkoittaisi että jostain on ehkä tuhoutunut joku javascrpitiin linkkaava juttu
+23:04 <@Firesong> jos se ei näy firebugissa niin sitä ei luultavasti ladata sivulatauksen yhteydessä
+23:04 <@Sundo> mm, ainakin tuo versio mulla pistää hemmetisti punasta kun netbeansissa avaa
+23:04 <@Sundo> siellä on yksi ylimääräinen i
+23:04 <@Firesong> onkohan merge taas failannu??
+23:05 <@Firesong> mulla kävi aikasemmin leiskan kaa jotain samantyyppistä
+23:07 <@Sundo> no kävin usersilla poistamassa sen yhden ylimääräiseltä näyttävän i:n sieltä ja nyt toimii
+23:07 <@Sundo> pitäs varmaan pistää repoonkin
+--- Day changed Fri Jul 01 2011
+00:28 <@Sundo> http://tkt_gvis.users.cs.helsinki.fi/testgraph kaunis kuin kukkanen
+12:03 <@Sundo> oon vähän myöhässä, tuli nukuttua kun toi yömöngertäjä päätti rauhottua aamua kohden
+12:19 < jannel> huomenta, mäkin tuun myöhässä, oon 1 aikaan koululla
+14:58 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has quit [EOF From client]
+14:58 -!- Geobot [tkt_gvis@svm-16.cs.helsinki.fi] has joined #geovision
+14:58 < Geobot> Project Geovision build #141: STILL FAILING in 8,7 sec: nulljob/Geovision/141/
+15:05 < Geobot> Project Geovision build #142: STILL FAILING in 7,6 sec: nulljob/Geovision/142/
+16:05 < Geobot> Project Geovision build #143: STILL FAILING in 9,4 sec: nulljob/Geovision/143/
+17:05 < Geobot> Project Geovision build #144: STILL FAILING in 8,9 sec: nulljob/Geovision/144/
+18:14 <@Firesong> jes! nyt se javascripti ei enää tilttaa kokoajan!
+18:40 <@Firesong> vihdoin se linjaus toimii, nyt mä alan viikonloppulomalle :D
+19:05 < Geobot> Project Geovision build #145: STILL FAILING in 8,6 sec: nulljob/Geovision/145/
+19:29 < Tattoo> :D
+20:59 -!- mode/#geovision [+ooo jannel Tattoo Geobot] by Firesong
+--- Day changed Sat Jul 02 2011
+15:07 <@Firesong> asiakas ilmoitti että sille käy että meillä on demo perjantaina klo 12
+15:07 <@Firesong> lisäksi ilmoitin tuon ajan sille sarille, joka halusi tulla katsomaan. 
+15:07 <@Firesong> Kummallekkaan ei ole ilmoitettu paikkaa, se pitää vielä tehdä
+18:06 <@Tattoo> hyvä juttu :)
+18:06 <@Sundo> missäs demotaan, haxxorissa?
+--- Day changed Mon Jul 04 2011
+12:56 <@Geobot> Project Geovision build #146: STILL FAILING in 12 sec: nulljob/Geovision/146/
+13:00 <@Tattoo> D:
+13:05 <@Geobot> Project Geovision build #147: STILL FAILING in 8,2 sec: nulljob/Geovision/147/
+13:29 <@Geobot> Project Geovision build #148: STILL FAILING in 9,7 sec: nulljob/Geovision/148/
+13:38 <@Geobot> Project Geovision build #149: STILL FAILING in 11 sec: nulljob/Geovision/149/
+13:45 <@Geobot> Yippie, build fixed!
+13:45 <@Geobot> Project Geovision build #150: FIXED in 8,5 sec: nulljob/Geovision/150/
+13:55 <@Tattoo> :D
+18:41 <@Sundo> heh
+18:41 <@Sundo> pieniä bugeja on viellä tossa, esimerkiksi jos klikkaa kohtaan jossa on useampi node ja teksti päällekkäin se avaa ne kaikki
+18:46 <@Sundo> ja vähän muita pieniä omituisuuksia
+21:52 <@Tattoo> ainiin, en ole muuten helsingissä ti-to
+21:53 <@Tattoo> ja sit meillä on perjantaina prosessipalaveri, tietenkin just klo 12, eli katotaan nyt miten se ja demo sopii yhteen
+22:10 <@Sundo> ah kas
+22:42 <@Firesong> öö, eikös muilta ryhmiltä jo loppunut? miks niitä prosessipalavereja enää on
+22:49 <@Tattoo> post mortem
+22:49 <@Tattoo> Sundo: Firesong: hoitakaa te jos tosta jotain hässäkkää nousee
+22:50 <@Firesong> eli siis pitäisikö ehkä demoa myöhäistää vaikka pari tuntia?
+22:54 <@Tattoo> jaa-a, vai aikaistaa
+22:55 <@Tattoo> täytyy neuvotella, mik
+22:55 <@Tattoo>  mikä käy asiakkaalle, mikä sarille
+22:55 <@Tattoo> vai liikkuuko prosessipalaveri
+23:13 <@Firesong> jos mä lähetän sarille ja asiakkaalle viestit että käviskö niille klo 14 tai klo 10, oisko jompikumpi muille ok, Sundo, jannel, Dezgeg ?
+23:13 <@Dezgeg> sopii
+23:57 <@Sundo> sopii
+23:58 <@Sundo> 14 mielummin, 10 on vähän huonompi
+--- Day changed Tue Jul 05 2011
+12:05 <@jannel> huomenta
+12:16 <@Sundo> huomenta
+12:26 <@Sundo> mitäs kivaa tänään?
+12:32 <@Firesong> mä voisin kirjoitella palautteita ja yrittää laittaa sen lijauksen niin että se näyttää kaikki samalla ilman scrollbaria
+12:36 <@jannel> mäkin kirjottelen palautteita
+12:51 <@jannel> kiva, jitin dokumentaation virheen takia debuggasin pari tuntia turhaan, nyt huomasin virheen: node.adjacentTo(node) funktiolle pitää antaa node eikä noden id niinkun sanotaan dokussa, jos käyttää niin hyvä tietää
+12:55 <@Sundo> jeh
+14:48 <@jannel> tein pari ihan pientä muutosta rgraphiin, nyt toimii eventit kaikille HTML typellä
+18:46 <@Firesong> asiakkaalle käy että demo onkin klo 14
+18:46 <@Firesong> perjantaina
+20:11 <@Sundo> nuolet on kadonnu johonkin ja edget bugaa vähän samaan tapaan kuin ennen korjausta
+20:11 <@Sundo> nodet tekee jotain tuplalaajentumisia välillä 
+20:48 <@jannel> nouolet ei oo kadonnu vaan jos molemmat nodet on toistensa parhaimpien yhteyksien joukossa
+20:49 <@jannel> joo se laajeneminen pitää korjaa, mut nyt toimii labeleille, nodeille ja edgeille eventit
+20:51 <@Sundo> hmm
+20:51 <@jannel> kun aiemminhan toimi vaan joko labeleille tai sit nodeille ja edgeille
+20:53 <@jannel> toi on kyllä vähän hankala ku aina ku jonkun saa korjattua niin  toisesta paikkaa hajoaa..
+20:53 <@Sundo> mun mielestäni labeleiden eventit vois ihan hyvin jättää pois ja käyttää noita nodeja ja edgejä nativena
+20:53 <@Sundo> koska nyt se pissii ihan urakalla
+20:54 <@jannel> nii, se ois yks, ja helppo tehdä
+20:55 <@Sundo> näkymättömiä nuolia on aika paljon, pallukat laajenee ikuisesti jos huitoo vähän kursorilla siinä päällä, yhden syvyisessä haussa ei näy nuolia (vaikka niiden muiden noodien parhaista yhteyksistä ei voi siinä tietää mitään)
+20:55 <@jannel> jep
+20:55 <@jannel> ne nähymättömät oli kyllä ongelma jo aiemminki
+20:56 <@Sundo> oli juu
+20:57 <@Sundo> ja sitten jokaisesta labelin klikkauksesta näyttää alkavan kaksi kyselyä
+20:57 <@Sundo> noden painaminen taas ei oikein tunnu toimivan
+20:58 <@jannel> joo aika hajalla on :D
+21:13 <@jannel> laitoin nyt aika lailla ennalleen ton
+21:14 <@Sundo> jeh, voi olla parempi jatkaa huomenna siitä
+21:16 <@jannel> joo, on vaan hauska kokeilla mitä tapahtuu ku vähä muuttelee heh
+23:00 <@Firesong> hmm, olisi halunnut tehdä ton niin että toi linjauslaatikon javascript jotenkin mystisesti tietäisi että montako kirjainta siihen mahtuu ilman scrolleria, ja sit rivittäisi sen mukaan, mutta kun en saanut sitä onnistumaan niin tyydyin vaan rivittämään merkkimäärän mukaan. Toiminee useimmissa tapauksissa.
+--- Day changed Wed Jul 06 2011
+13:20 <@Tattoo> Firesong: jos sen laatikon leveys on em:nä, niin tietäähän se javascript sen?
+15:05 <@Geobot> Project Geovision build #168: FAILURE in 14 sec: nulljob/Geovision/168/
+15:22 <@Tattoo> D:D:D:
+16:05 <@Geobot> Project Geovision build #169: STILL FAILING in 3,9 sec: nulljob/Geovision/169/
+16:33 <@Firesong> Tattoo: vaikka se on pikseleinä, niin se kyllähän sen leveyden tietää, mutta ongelma on enemmänkin se, että jos käyttäjällä on esim. fontti tavallista isompana, niin ei ole standardilukua sille että kuinka monta kirjainta siihen laatikkoon mahtuu
+16:34 <@Firesong> mutta useimmissa tapauksissa toi nykyinenkin kyl toimii
+16:34 <@Firesong> nyt ku linjaus on aika hyvässä kuosissa, niin siistin vielä leiskaa ja täydennän dokumentaatiota ehkä joltain osin, mutta onko jotain hommaa johon tarttis vielä tekijää/apua?
+--- Day changed Thu Jul 07 2011
+10:20 <@Tattoo> Firesong: 10 em levyinen boksi on 10 kirjaimen kokoinen, oli fontti mikä vain
+11:18 <@Firesong> Tattoo: mut sit em:n kanssa tulee se ongelma, että liian isolla fonttikoolla leiska kärsii. Mut testaan että kuinka tyhmälle se näyttää kun sitä suurentaa ja vaihtan em:ään jos se ei ihan kamala oo.
+--- Day changed Fri Jul 08 2011
+18:05 <@Geobot> Project Geovision build #170: STILL FAILING in 5,7 sec: nulljob/Geovision/170/
+18:07 <@Tattoo> D:
+18:27 <@Geobot> Yippie, build fixed!
+18:27 <@Geobot> Project Geovision build #171: FIXED in 11 sec: nulljob/Geovision/171/
+18:42 <@Tattoo> :D
+--- Day changed Sat Jul 09 2011
+12:14 <@Firesong> hei kaikki, miten demo meni ja onko seuraavasta sprintistä jo keskusteltu?
+12:14 <@Firesong> Mulla on kauhea kaaos täällä, mut jos seuraavaa sprinttii ei oo sovittu niin voisin ees järjestää itteni irkin ääreen maanantai klo 12 että voisin ees jotenkin ottaa johonkin kantaa :P
+12:15 <@Firesong> keskiviikkona oon kyl jo takas varmasti.
+19:13 <@Tattoo> nii Sundo & Dezgeg, mitäs on suunniteltu?
+19:24 <@Sundo> vapaata viikonlopuksi
+--- Day changed Sun Jul 10 2011
+03:59 <@Tattoo> Sundo: kuten Pe sanoin, kantsii nyt kertoa mitä on tulossa, vsrsinkin jos Firesong ei pääse paikalle maanantaina...
+--- Day changed Mon Jul 11 2011
+01:37 <@Sundo> se ilmotteli että se pääsee
+12:05 <@Dezgeg> 'menta
+12:11 <@jannel> moi, mäkään en tänään pääse, oon töissä..
+12:12 <@jannel> oon kyl muuten koko viikon vapaalla
+12:18 <@Tattoo> sit kantsii varmaan tällee irkissä briiffaa
+12:19 <@Dezgeg> ootellaan täällä vielä Sundoa
+12:19 <@Dezgeg> mutta http://code.google.com/p/geovision/wiki/OmanYmparistonPystytys tuo ainakin sitten kun ehdit
+12:20 <@Dezgeg> eli koitetaan tälleen välttää sitä, että tallotaan toistemme muutoksien päälle, samaten nyt jokaista pikkumuutosta ei tarvii pushata tuonne google codeen
+12:22 <@Dezgeg> ja no, backlogissa on listattu asioita, vähän epäselvähkösti toistaiseksi, että mitä pitäisi tehdä. ollaan siis yhden viikon pituista tekemässä
+12:22 <@Dezgeg> http://code.google.com/p/geovision/wiki/Backlog
+12:23 <@Dezgeg> tuolta itse asiassa nuo väritykset taisin fiksata perjantai-iltana, niistä ei tartte välittää
+12:29 <@jannel> joo sori oon nyt pushaillu aika paljon, yritän vähentää
+12:47 <@Dezgeg> http://code.google.com/p/geovision/wiki/Backlog viimeisteltiin nyt backlogi
+12:47 <@Dezgeg> työnjaot on vielä hieman auki
+13:00 <@jannel> voisin yrittää tehdä tota entsyymihakua jos on ok, bähän sitä jo kattelin
+13:08 <@Dezgeg> jannel: työtunteja kuulemma kaivataan
+13:11 <@jannel> joo laitan tänään ne
+13:12 <@Tattoo> jee
+14:56 <@Dezgeg> sinne omaan ympäristöön userssilla voi sitten pushata tyyliin ajamalla hg push ssh://käyttäjätunnus@users.cs.helsinki.fi/geovision
+14:59 <@Dezgeg> ~/.hgrc:hen voi myös laittaa [paths]-tagin alle rivin tyyliin users = ssh://käyttäjätunnus@users.cs.helsinki.fi/geovision, jolloin riittää sanoa hg push users
+15:00 <@Dezgeg> eikun hups, tuo kannattaa laittaa sinne projektin .hg/hgrc:hen
+15:58 <@Sundo> pushasin tuon oman versioni graphviz.js:stä nyt tonne, se on aika kesken ja tekee nyt vähän eri asioita klikkailuista (eli ei keskitä, tekee noodista tai tekstistä contractin vasemmalla ja expandin jos klikkaa contractattua, oikealla noodista klikkaamalla tagaa contractista pois jätettäväksi)
+15:59 <@Sundo> eli jos joku nyt pullaa tuon version usersille, siellä muuttuu noi toiminnot
+15:59 <@Sundo> ei kannata siis ihmetellä jos tuntuu tekevän hassuja asioita
+17:16 <@Firesong> hei, muuten, siitä enzyymin nimen näyttämisestä: halutaanko että se nimi näkyy tooltipissä entsyymin päällä vai siinä noden alla? ja jos noden alla niin tuleeko siihen molemmat (numero ja nimi) vai korvaako nimi numeron?
+17:18 <@Dezgeg> nimi on vähän hankala kun yhdellä entsyymillä voi olla luokkaa 10 nimeä
+17:29 <@Firesong> jeps, mut eikö se "entsyymisolmuihin entsyyminimet" kuitenkin tarkottanut tota?
+17:29 <@Firesong> jos pistän tooltippiin ja toivon että mahtuu?
+22:08 <@Firesong> hei, oliko mihinkään muihin solmuihin tarkoitus tulla linkkiä ulkoiseen tietokantaan kuin entsyymeihin?
+22:08 <@Dezgeg> tietokantaentryihin oli siinä ikivanhassa mailissa
+22:10 <@Firesong> tutkin ->
+22:11 <@Dezgeg> nyt muuten vasta tajusin mitä se värityksen kääntö siellä backlogissa tarkotti: siis linjausdatan näyttämisessä pitäisi värittää vastaavuudet eikä eroavuudet niinkun nyt; hoidatko sä sen kun on tuttu koodi sulle?
+22:11 <@Firesong> juu, voin hoitaa
+22:12 <@Firesong> eli siis vastaavuudet punasiks ja erot värittömiks vai?
+22:12 <@Dezgeg> juu
+22:13 <@Firesong> ok, pistän seuraavaan committiin
+22:25 <@Firesong> oliko asiakkaalla muuten mitään mielipidettä siitä että pitääkö niihin ulkoisten tietokantojen linkkeihin päästä käsiks vaan sen solmun suhteen joka on keskitettynä (jolloin pistäisin ne sivupalkkiin) vai minkä tahansa solmun suhteen?
+22:27 <@Dezgeg> mmh, muistiko joku meistä mainita, että joku right click-valikko tarvitaan :)
+22:28 <@Dezgeg> se sujuis sieltä varmaan kätsysti
+22:28 <@Firesong> tsiisus, siinä on jo vähän hommaa
+22:28 <@Dezgeg> varmaan jotain valmiita lienee olemassa
+22:28 <@Firesong> luultavasti on, mutta eri juttu sit kuin hyvin ne sopii
+22:28 <@Firesong> ehkä mä kokeilen vaikka tota huomenna
+22:29 <@Firesong> mut mitä kaikkee sellaseen valikkoon sit pitäis tulla 
+22:29 <@Firesong> jos se pitää olla oikein valikko
+22:29 <@Dezgeg> onks sulla kokemusta jostain valmiista kirjastosta?
+22:30 <@Firesong> ainoastaan sivunavigaation puolelta ja nekin ikuisuus sitten
+22:30 <@Firesong> mut toisaalta toi ei kuulosta hirveelle ongelmalle jqueryn kans
+22:30 <@Dezgeg> voin mäkin evaluoida jotain valmisjuttuja huomenna
+22:42 <@Dezgeg> jquery-pluginseista löytyy ihan lupaavan näkösiä
+22:47 <@Firesong> juu siellä kyl pitäis olla niitä aika monensorttista
+22:47 <@Firesong> mut tosiaan, mitä siihen valikkoon pitäis tulla? muutakin kuin linkki ulkoiseen tietokantaan?
+22:48 <@Dezgeg> siihen graafin navigointiin liittyviä nappeja
+22:53 <@Firesong> okei, no jos tänään vielä pushaat jotain valikkoa sinne, niin kerro irkissä että mä osaan huomenna siitä jatkaa ja pistellä niitä linkkei sinne
+22:53 <@Firesong> mä lopetan tältä illalata
+22:56 <@Dezgeg> ok
+23:32 <@Dezgeg> http://www.trendskitchens.co.nz/jquery/contextmenu/
+23:33 <@Dezgeg> Firesong: Sundo: lisäsin tuommoisen kontekstimenuvalikon näin alkuun, säädän huomenna sitä lisää
+23:34 <@Dezgeg> btw. hajosiko sivupalkki tuosta mun muutoksesta vai jostain muusta
+23:36 <@Dezgeg> tuo sitten syö kaikki right click-eventit, Sundon ei kannattane vielä pullata :P
+23:58 <@Tattoo> :D
+--- Day changed Tue Jul 12 2011
+00:06 <@Firesong> taisin rikkoo valikon, mut latausscreeniä en kyl rikkonut ja nyt se on kokoajan päällä
+00:06 <@Firesong> korjaan valikon aamulla
+00:12 <@Dezgeg> latausscreeni sit korjaantu samalla kun tein ton valikon, sulla oli joku syntax errori siellä minkä korjasin. mut huomiseen
+12:07 <@jannel> huomenta
+12:08 <@Tattoo> moro
+12:09 <@jannel> laitoin muuten ne tunnit vasta äsken, meni eilen töissä koko yö valvoessa
+12:10 <@Tattoo> auts
+12:10 <@Tattoo> hyvä et jaksoit pistää
+12:50 <@Dezgeg> okei nyt rightclick-valikot toiminnevat pääosin, pushasin sen juuri mutta demoversion saa silti http://tmtynkky.users.cs.helsinki.fi
+12:54 <@Dezgeg> uusia valikkonappuloita saa lisättyä lisäämällä graphviz.html:n <div id="contextMenu"> alle <li> sopivalla id:llä, ja sitten graphviz.js:ään init():ssä sinne bindings-dictiin, missä avaimena se <li>:lle annettu id
+12:55 <@Dezgeg> laittakaa id:eiden alkuun joko e_ tai n_, jolloin kys. entry näkyy joko pelkästään edgelle tai nodelle automaattisesti
+13:15 <@Firesong> just heräsin, voisin varmaan sit laittaa niitä ulkosii linkkejä juttuihin ja ehkä tutkia toimiiko ne mun eiliset muutokset nyt varmasti kunnolla
+13:21 <@Dezgeg> noita entsyyminimiä tuskin kannattaa hakea serveriltä XHR:llä, siinä tulee ikävähkö lagi ja kivoja race condition-mahiksia
+13:22 <@Firesong> muita ehdotuksia?
+13:22 <@Firesong> mut ihan kiinnostuksesta, missä siitä tulee race condition
+13:22 <@Dezgeg> ne voisi heittää sinne jsoniin
+13:23 <@Firesong> okei, muokkailen vaik tänään
+13:23 <@Dezgeg> käyttäjä vetäisee hiirellä nopeasti -> 10 pyyntöä taustalla ennen kun vanhat pyynnöt on käsitelty loppuun
+13:23 <@Firesong> mm, totta
+15:19 <@Sundo> mikä tossa django toolbarissa on kun se ei nykyään näytä noita sql queryjä
+15:20 <@Sundo> niitä olis ihan kiva vilkuilla välillä, esimerkiksi äsken meni minuutti 16 sekuntia yhteen kyselyyn
+15:20 <@Sundo> depth 1, hits 10 eikä mitään muutakaan erikoista
+15:25 <@Dezgeg> mee viz/views  ja poista kommentti siitä missä lukee for testing only
+15:59 <@Dezgeg> laitoin postgresin nyt loggaamaan kaikki yli 500 ms kestävät kyselyt, niitä voi sitten screen -rd:llä tutkiskella
+18:50 <@jannel> entsyymihaku toimii nyt, jos löytyy bugeja ni kertokaa
+18:52 <@jannel> no jaa, näköjään jokin meni just rikki
+19:24 <@jannel> mm, nyt toimii
+23:38 <@Firesong> hmm, tooltipit ja oikeaklikkausmenut konflicktaa vähän ilkeesti
+23:39 <@Firesong> joitain valintoja ei nää, koska tooltip
+23:40 <@Dezgeg> joo, se oli vaan aika alustava toteutus. iirc siinä oli lisääkin bugeja
+23:41 <@Firesong> arvelinkin
+23:41 <@Dezgeg> ajattelin huomenna kattoa mihin kaikkeen on törmäilty ja sit viilailla
+--- Day changed Wed Jul 13 2011
+13:05 <@Geobot> Project Geovision build #190: FAILURE in 19 sec: nulljob/Geovision/190/
+14:10 <@Geobot> Project Geovision build #191: STILL FAILING in 4 min 29 sec: nulljob/Geovision/191/
+14:34 <@Firesong> - tietokantatunnisteen avulla voi linkata tietokantoihin seuraavasti:
+14:34 <@Firesong> -- Uniprot-sekvenssi: sp|A0M2E8|KDSB_GRAFK → http://www.uniprot.org/uniprot/A0M2E8
+14:34 <@Firesong> -- frnadb-sekvenssi: FR354737 → http://www.ncrna.org/frnadb/detail.html?i_name=FR354737
+14:34 <@Firesong> leikkö tarpeellisia?
+14:34 <@Firesong> *liekkö
+14:34 <@Dezgeg> varmaan
+15:09 <@Geobot> Project Geovision build #192: STILL FAILING in 4 min 27 sec: nulljob/Geovision/192/
+16:07 <@Geobot> Project Geovision build #193: STILL FAILING in 2 min 1 sec: nulljob/Geovision/193/
+16:19 <@Tattoo> D:D:D:
+17:05 <@Geobot> Project Geovision build #194: STILL FAILING in 9,7 sec: nulljob/Geovision/194/
+17:06 <@Tattoo> D:D:D:
+21:45 <@Firesong> nyt se toisten nimien näyttäminen toimii aika nätisti. Ja sen pitäis osata pyyhkiä edelliset sit jos valkaa uuden entsyymin jolle näyttää, mut en saanut testattuu ku en saanut millään haulla yli yhtä entsyymii näkyy samaan aikaan :D
+22:05 <@Geobot> Project Geovision build #195: STILL FAILING in 11 sec: nulljob/Geovision/195/
+22:16 <@Dezgeg> mm... tuolla on nyt jotain entsyymi-kaaria joissa on mukana bitscore ja ovat väritettyä, ja sitten jotain joissa ei ole ja on sinisiä
+22:17 <@Dezgeg> kumpikohan logiikka tässä halutaan, onko mielekästä sanoa entsyymi-dbentry-välillä olevan bitscorea?
+23:05 <@Geobot> Project Geovision build #196: STILL FAILING in 8,6 sec: nulljob/Geovision/196/
+23:06 <@Firesong> hmm, ehkä sitä voi kysyä ylihuomenna asiakkaalta
+23:06 <@Firesong> mut hei Dezgeg, minkä sorttisissa nodeissa noi mun aikasemmin pasteemia tietokantatunnisteita esiintyy ja onko ne jsonissa mukana?
+23:06 <@Firesong> tulostelin näitten nodejen infoja huvikseni, enkä noita tunnisteita oo vielä ainakaan löytänyt
+23:09 <@Dezgeg> DbEntryissähän noita
+23:11 <@Firesong> löydän kyl nodeja joitten datassa on typenä dbentry, mutta en oo vielä yhtään löytänyt joilla ois jompi kumpi noista tunnisteita mitä tuolla on mainittu... Oisko se datan kohdassa "entry name"
+23:12 <@Dezgeg> ihan id
+23:12 <@Firesong> okei, sit en vaan oo niihin databaseihin törmännyt verkoissa...
+23:12 <@Firesong> mut jos se on id, niin sit on helppo tarkistaa onko klikattu node noita
+23:13 <@Dezgeg> juu
+23:13 <@Dezgeg> siellä on myös node.data.type == 'dbentry' ja muistaakseni on node.data.database
+23:14 <@Dezgeg> node.data.source jälkimmäinen näemmä
+23:16 <@Firesong> jes, nyt löysin jopa yhden uniprotin :)
+23:17 <@Firesong> tää juttujen consolelogaaminen on ihan jees, ku en tiennyt tietokannan salasanaa tai mitään, ku en oo sitä käyttänyt
+23:17 <@Dezgeg> löytyyhän noilla molemmilla A0M2E8 ja FR354737 hakiessa mitkä oli esimerkkeinä :p
+23:23 <@Firesong> mul on esimerkkinä aina se O05625, sil tulee melkein pelkkii G-alkuisia, muttei sillä väliä
+23:40 <@Firesong> no niin, nyt toimii linkit niihin kahteen muuhun tietokantaan mitkä pdf:ssä oli mainittu
+23:40 <@Firesong> eli kaikki ulkoiset tietokantalinkkaukset on kait sit tehty, koska silvasta tai siitä metaboliitista ei oo tarpeeks tietoja et ne vois tehä
+--- Day changed Thu Jul 14 2011
+00:07 <@Geobot> Project Geovision build #197: STILL FAILING in 1 min 46 sec: nulljob/Geovision/197/
+12:27 <@Sundo> huomenta, mitäs kivaa kukin tänään ajatteli tehdä?
+12:33 <@Tattoo> failing D:
+12:50 <@jannel> huomenta, ajatelin kattoa lisää tota full text searchia, en tiedä vielä mitä muuta
+13:21 <@Dezgeg> en kyl enää tiiä tosta tekstihausta, tuli mieleen pari muuta kikkaa mitkä olisi varmaan helpompi toteuttaa
+13:23 <@Dezgeg> esim. kaikki ec:hen liittyvät blastit voisi esilaskea johonkin tauluun (tyyliin (ec, blast_id, db_id, bitscore, evalue)). laskeskelin että noita yhteyksiä on jotain luokkaa 2 miljoonaa
+13:26 <@Dezgeg> muutenkin tuon nykyisen hitaan kyselyn saa muutettua ihan perusjoiniksi, mutta siellä on silti jotain useita sekuntejä kestäviä hakutapauksia
+13:27 <@Dezgeg> ja mites tuo db-entsyymikaarten epäkonsistenttius, tuleeko niihin blastin mukaan väritykset vai pidetäänkö sinisinä
+14:33 <@Sundo> http://code.google.com/p/geovision/source/diff?spec=svnbebcdac8bb83d7db55190821d6da5bf1ef732e7d&r=bebcdac8bb83d7db55190821d6da5bf1ef732e7d&format=side&path=/src/geovision/templates/graphviz.html
+14:33 <@Sundo> noi mun epäonnistuneessa mergessä vanhoilla korvatut rivit taitaa olla edelleen vanhana versiona tuolla, pistänkö takasin
+14:33 <@Sundo> nuo uudemmat
+14:34 <@Sundo> siis rivit 41, 44 ja 76-77 jotka tossa on punasella oli ne uudemmat
+14:41 <@Sundo> no, pistin ne nyt sinne takas
+14:41 <@Sundo> nyt ei pitäs olla enää mitään kateissa ton failatun mergen jäljiltä
+15:05 <@Geobot> Project Geovision build #198: STILL FAILING in 15 sec: nulljob/Geovision/198/
+15:46 <@Tattoo> D:
+18:34 <@Sundo> mielenkiintosesti toi nyt jymähtelee
+18:37 <@Sundo> se jumittaa contractissa siihen kun se kutsuu viz.fx.animatea
+18:38 <@Sundo> sitten taas kun naksuttelee vähän nodeja niin joku muu saa sen tekemään animaation loppuun
+18:42 <@Sundo> tai siis ei se edes jumita siihen, se vaan ei koskaan tee sitä
+18:42 <@Sundo> on kyllä kutsuvinaan metodia ja jatkaa koodin suoritusta sen jälkeen, mutta animaatio ei missään vaiheessa tule valmiiksi
+20:41 <@Sundo> jooh
+20:42 <@Sundo> Animation-luokka käyttää javascriptin setInterval-metodia, joka jostain syystä välillä vaan päättää olla tekemättä mitään
+21:29 <@Dezgeg> onks nyt joku jotain mieltä noista dbentry <-> enzyme-kaarista? olisi varmaan ihan kiva saada huomiseksi
+22:19 <@Sundo> empäs tiedä
+22:20 <@Sundo> mutta olis myös kiva jos toi toimis huomiseksi, lassetyr.users.cs.helsinki.fi on nyt changeset 702 joka tuntus toimivan mutta siinä ei ole muiden muutoksia
+22:21 <@Sundo> nykyversio taas kosahtaa satunnaisesti kun esimerkiksi tagaa keskinoden ja sen jälkeen contractaa
+22:21 <@Sundo> mulla ei ole mitään hajua miksi
+22:28 <@Dezgeg> ootko kokeillu hg diff -r 702 static/graphviz.js ja kattoa näkyykö jotain epäilyttävää
+22:50 <@Dezgeg> jejee, cachetaulun luovassa kyselyssä meni sittenkin MIN ja MAX väärinpäin, eikun uusiksi *facepalm*
+--- Day changed Fri Jul 15 2011
+00:00 <@Dezgeg> heitin tuonne nyt uuden nopean entsyymihakukoodin, on jo selvästi nopeampi huolimatta nighlty backupista ja ilman indeksejä
+00:06 <@Geobot> Project Geovision build #199: STILL FAILING in 42 sec: nulljob/Geovision/199/
+00:33 <@Dezgeg> Sundo: täh, mulla rev 702 näyttää ihan erilaiselta kun tuo mikä sulla on ylhäällä
+00:34 <@Dezgeg> vai meneekö mercurialissa edes tuo numerointi mitenkään konsistentisti monien käyttäjien kesken...
+00:41 <@Sundo> f07ade23ff98 
+00:41 <@Sundo> pitäs olla
+00:42 <@Dezgeg> joo, huomasin juuri, 722 :)
+00:42 <@Sundo> joh, mulla se tosiaan on 702
+00:57 <@Dezgeg> aah, löytyhän se tuolta kontekstimenukoodista... jQuery ei näemmä anna unbindata one shot-eventtejä, mitä ei tietenkään mainita dokumentaatiossa vaan jossain käyttäjien kommenteissa
+00:58 <@Dezgeg> (ei sillä että olisin dokkaria lukenut sillon kun ton muutoksen tein)
+01:05 <@Geobot> Project Geovision build #200: STILL FAILING in 10 sec: nulljob/Geovision/200/
+02:05 <@Geobot> Project Geovision build #201: STILL FAILING in 7,5 sec: nulljob/Geovision/201/
+12:05 <@Geobot> Project Geovision build #202: STILL FAILING in 10 sec: nulljob/Geovision/202/
+12:08 <@Tattoo> D:
+12:08 <@Tattoo> ASIAKAS TULEE ASIAKAS TULEE TEHKÄÄ JOTAIN DDDD:
+14:45 <@Sundo> Firesong: KORJAA SHOWALIGNMENT YHTEYKSILLE JOILLE SITÄ EI VOI NÄYTTÄÄ
+16:05 <@Geobot> Project Geovision build #203: STILL FAILING in 9,6 sec: nulljob/Geovision/203/
+--- Day changed Sun Jul 17 2011
+17:19 <@Firesong> hoi, kattelin noita taskeja, niin tajusin että jotenkin unohdin mitä toi "bitscoren perusteella filtteröinti"juttu meinas
+17:19 <@Firesong> siis että filtteröidäänkö kun käyttäjä vaatii sitä erikseen vai filtteröidäänkö defaulttina jotenkin?
+17:48 <@Tattoo> krhm, selkeet tehtäväkuvaukset, krhm
+18:40 <@Sundo> annetaan käyttäjälle mahdollisuus filtteröidä bitscoren mukaan jo piirretyssä verkossa
+18:50 <@Firesong> okei, eli siis tuohon pitää tehdä joku juttu mistä se aktivoidaan erikseen? Ei varmaan käytetä sitä hakulomaketta...
+22:58 <@Tattoo> tarviiko sitä tehdä erikseen välttämättä?
+22:59 <@Firesong> tai sit vois laittaa silleen että jos käyttäjä käyttää sitä lomaketta niin että pistää pelkän bitscoren niin se tarkottais filtteröintiä?
+22:59 <@Firesong> mut musta se kyllä kuulostaa tosi epähavainnolliselle tavalle tehdä asia
+22:59 <@Firesong> siitä voinee jutella huomenna että miten se ois kaikista kätevin käyttäjän kannalta
+23:01 <@Firesong> ei sil välii ku en oo sitä vielä aloittanut
+23:04 <@Firesong> hei, millä nimellä ja salasanalla meidän djangon adminpaneeliin muuten pääsee? Pitäis tarkistaa yks juttu
+23:35 <@Tattoo> en nyt tiedä, miten te ootte tehneet, mut mitäs jos se bitscore siinä lomakkeessa olis pelkästään client-puolella se bitscoren filtterointi?
+23:35 <@Tattoo> vai räjäyttääkö se sitten ne tietokanta-queryt?
+23:36 <@Firesong> jospa tästä juttelee huomenna ku on enemmän porukkaa
+23:36 <@Firesong> ei vaan oo järkee ruotii nyt, ku kukaan ei oo irkissä
+23:36 <@Tattoo> mut kantsii huomenna alottaa ehdotuksesta
+23:37 <@Firesong> mm
+23:37 <@Tattoo> et jos vaikka sulla on konkreettinen ehdotus huomenna, niin siitä pääsette paljon nopeemmin hyvään ratkaisuun
+--- Day changed Mon Jul 18 2011
+00:06 <@Geobot> Project Geovision build #204: STILL FAILING in 54 sec: nulljob/Geovision/204/
+13:05 <@Geobot> Yippie, build fixed!
+13:05 <@Geobot> Project Geovision build #205: FIXED in 11 sec: nulljob/Geovision/205/
+15:05 <@Geobot> Project Geovision build #207: FAILURE in 9,3 sec: nulljob/Geovision/207/
+19:42 <@jannel> hei, anteeks, en tänään päässy tulemaan koululle enkä ees ilmottamaan mitään siitä, venähti vkloppu vähä ja tulin vasta nyt helsinkiin
+21:12 <@Firesong> jannel, Sundo: kummalla tavalla toi bitscorefiltteri teidän mielestä kannattaa tehdä: piilottamalla vai tuhoamalla nodeja?
+22:42 <@Firesong> nyt se antaa käyttäjälle tiedon lataamisesta, mutta ei kyllä erityisen kauniilla tavalla... 
+22:42 <@Firesong> jos joku keksii miten tosta sais kivemman näköisen niin ehdottakaa
+22:43 <@Firesong> + jos joku keksii/löytää tapauksen missä se load-teksti jostain syystä ei aktivoidu niin kertokaa, niin debugaan lisää
+23:05 <@Geobot> Project Geovision build #208: STILL FAILING in 9 sec: nulljob/Geovision/208/
+--- Day changed Tue Jul 19 2011
+11:05 <@Geobot> Project Geovision build #209: STILL FAILING in 12 sec: nulljob/Geovision/209/
+12:11 <@jannel> huomenta
+12:15 <@Firesong> huomenta
+12:16 <@Firesong> haluisko joku vastata tohon kysymykseen tosta filtteröinnistä pari riviä ylempänä, että tänään voisin kunnolla alkaa tehä sitä
+12:20 <@jannel> hmm, mun mielestä ne kannattaa piilottaa
+12:21 <@jannel> firesong: muutin hiiren pointterin 'wait'iksi sillon kun lataa nii siitäkin huomaa et lataa
+12:27 <@Firesong> okei, eipä tuon tuplaaminen varmaan haitanne
+12:27 <@Firesong> sit siihen tulee kans teksti "contracting" jos jostain syystä se poistaa nodeja tosi hitaasti
+12:27 <@Firesong> ehkä mä teen filtterin sit piilottaa ne
+12:30 <@jannel> ok
+13:47 <@Sundo> jeh, huomenta
+13:48 <@Sundo> sori, unohdin sanoa että mulla on lääkäri vähän kahdentoista jälkeen
+13:48 <@Sundo> piilotus filtteröinnissä vaikuttaa ihan hyvältä
+13:50 <@Sundo> sain 10 päivän antibioottikuurin
+13:50 <@Sundo> kattelen huomenna aamulla olon mukaan sitten tuunko paikalle
+17:05 <@Geobot> Project Geovision build #210: STILL FAILING in 9,6 sec: nulljob/Geovision/210/
+18:05 <@Geobot> Project Geovision build #211: STILL FAILING in 8,2 sec: nulljob/Geovision/211/
+18:08 <@Tattoo> D:
+19:05 <@Geobot> Project Geovision build #212: STILL FAILING in 8 sec: nulljob/Geovision/212/
+20:01 <@jannel> heip, joo ja mulla on huomenna töitä. oon tänään saanu tehtyy sitä piilotettujen nodejen määrän näyttämistä, tosin pitää vielä kikkailla sen saamiseks toimimaan summauksen kanssa
+20:01 <@Firesong> hmm, mä just pushasin vähän sinnepäin menevän filtterin... 
+20:02 <@Firesong> filtterin kanssa on se ongelma, että se ei oikein tahdo leikkiä nätisti kaikkien muitten toimintojen kanssa
+20:02 <@Firesong> kait se tarkoitus oli vaan että voi sen tämänhetkisen filtteröidä eikä että sitä mitenkään jätettäis "päälle"? näin mäainakin käsitin
+20:05 <@Geobot> Project Geovision build #213: STILL FAILING in 7,9 sec: nulljob/Geovision/213/
+21:05 <@Geobot> Project Geovision build #214: STILL FAILING in 7,9 sec: nulljob/Geovision/214/
+21:14 <@jannel> nii kai se oli tarkotus tehdä, sit voi filtteröidä uudestaan myöhemmin jos haluaa
+22:24 <@Firesong> hei, Sundo ootko tulossa huomenna laitokselle? Jos jannekaan ei oo tulossa niin en sit tiiä että onko mun ja Dezgegin hirveesti järkee mennä kahestaan sinne kökkii=
+22:25 <@Firesong> ja jes, kokonaisen pitkän päivän tappelun jälkeen filtteri toimii muissa tapauksissa paitsi niissä missä nodeja on tägätty
+22:26 <@Firesong> mitä mieltä ootte, jos tägätyllä polulla on kaaria jotka on alle filtterrajan niin karsitaanko vai säästetäänkö ne ihan siksi että ovat tägättyjä?
+23:05 <@Geobot> Project Geovision build #215: STILL FAILING in 8,7 sec: nulljob/Geovision/215/
+--- Day changed Wed Jul 20 2011
+01:33 <@Sundo> Firesong: en ole tulossa
+07:54 <@Firesong> Dezgeg: oisko sit et mekin tehtäis vaan kotoa käsin tänään?
+09:00 <@Dezgeg> juu, sopinee mulle
+09:02 <@Firesong> cool
+09:02 <@Firesong> mä teen filtterin varmaan tänään valmiiks
+09:05 <@Geobot> Project Geovision build #216: STILL FAILING in 14 sec: nulljob/Geovision/216/
+09:55 <@Tattoo> ai tänään ei oo laitospäivä?? ok
+10:10 <@Dezgeg> taas tuli mulla tuommonen 'fuck you mercurial'-committi, pitäisköhän ihan suosiolla joskus vaihtaa gittiin
+10:10 <@Firesong> ei ehkä enää tässä projektissa
+10:11 <@Firesong> mutta myönnettäköön että itse kyllä en enää taida ottaa mercurialia
+10:11 <@Firesong> gitti <3
+10:11 <@Firesong> Dezgeg: mitä kaikkee siellä meni taas sekaisin?
+10:11 <@Dezgeg> ei mitään menny sekaisin, mutta en vaan oo keskiny muuta tapaa peruuttaa mergeä
+10:12 <@Tattoo> kantsii koittaa ymmärtää, miksi se tekee kuten tekee. hyvinkin voi tulla tilanne, et teille määrätään mercurial
+10:12 <@Tattoo> aina ei voi valita gittiä
+10:13 <@Dezgeg> oon yrittänyt, mutta googlekaan ei anna apua
+10:13 <@Tattoo> ottakaa huomioon, et samannimiset komennot ei tee samoja asioita mercurialissa ku gitissä
+10:14 <@Tattoo> et kiitos, linus, kun otit tutut komennot gitiin ja sit muutit niiden semantiikan :)
+10:14 <@Dezgeg> otan huomioon, about ainut mikä mulla on epäselvää, että miten hemmetissä mergeemisen saa peruutettua
+10:14 <@Dezgeg> muuten kun committaa 
+10:14 <@Firesong> mercurial kyllä toimii ihan hyvin niin pitkään ku mergaamisen saa tehdä manuaalisesti ja ns. pakottamalla
+10:14 <@Tattoo> itellä oli aikoinaan vaikea siirtyy gitiin tän takia
+10:15 <@Tattoo> työkalut <3
+10:16 <@Tattoo> "onko kiire vai tehdäänkö tietokoneella"
+10:29 <@Dezgeg> ai katos, hävishän sieltä sittenkin muutoksia. ei kannata pullata nyt
+10:33 <@Dezgeg> nyt lienee ok
+10:36 <@Dezgeg> Firesong: saisko tuota oikeaa palkkia vähän levennettyä, siihen ei oikein mahdu nuo reaktionnimet
+11:05 <@Geobot> Project Geovision build #217: STILL FAILING in 8,6 sec: nulljob/Geovision/217/
+11:07 <@Firesong> Dezgeg: eiköhän saa, mutta sen käytettävyys pienemmillä näytöillä tietty sit kärsii
+11:08 <@Firesong> säädän sen myöhemmin tänään
+11:25 <@Dezgeg> no mun näytöllä siinä oikeessa palkissa kyllä on jo scrollbari
+14:06 <@Firesong> tofupihvit on hankalii
+14:06 <@Firesong> hups, väärä ikkuna :D
+14:06 <@Firesong> on ne kyl silti
+17:05 <@Geobot> Project Geovision build #218: STILL FAILING in 8 sec: nulljob/Geovision/218/
+17:05 <@jannel> heip, pushasin ja pullasin omat muutokset tonne, nodeissa näkyy tooltipeissä piilotettuje nyhteyksien määrä, lehtisolmuille niitä ei luonnollisestikaan lasketa niin on undefined
+18:05 <@Geobot> Project Geovision build #219: STILL FAILING in 7,2 sec: nulljob/Geovision/219/
+--- Day changed Thu Jul 21 2011
+00:00 <@Firesong> Dezgeg: muutin layouttia aika paljon samantien, nyt se on musta vähemmän tasapainoinen, mutta ihan sikana kätevämpi ja kaikki tarpeellinen pitäis mahtuu
+00:00 <@Tattoo> +1
+00:00 <@Tattoo> leiskan muutokset -- melkein aina hyvä asia
+00:01 <@Firesong> toivottavasti nytkin
+00:07 <@Geobot> Project Geovision build #220: STILL FAILING in 1 min 25 sec: nulljob/Geovision/220/
+12:31 <@Tattoo> http://damnyouautocorrect.com/10484/the-top-15-most-popular-dyac-texts-of-all-time/
+12:31 <@Tattoo> huumoria päivään
+18:05 <@Geobot> Project Geovision build #221: STILL FAILING in 9,3 sec: nulljob/Geovision/221/
+18:54 <@Firesong> näköjään silvalinkeistä tuli tieto, mä voin ottaa hommakseni lisätä ne vaikka huomenna, kun oon noi muutkin laittanut
+18:54 <@Tattoo> check
+18:55 <@Tattoo> mahtuukse sprinttiin?
+18:55 <@Tattoo> olisko siellä tärkeempiäkin aioita, vai onks se nopee?
+18:56 <@Firesong> se on ehkä puolentunnin tai tunnin juttu
+18:56 <@Firesong> ei mitään ongelmaa
+18:56 <@Tattoo> ok
+18:56 <@Firesong> pikku lisäys vaan
+18:57 <@Tattoo> ihan vaan että muistatte tsiigaa aina suunnitelmaa ja kattoo, tarviiks sitä muuttaa, ettette vaa käytä xyz aikaa johonkin muuhun
+18:57 <@Tattoo> miettimättä, et kärsiikö suunnitelma tai pitäskö sitä muuttaa
+20:33 <@Firesong> KAI TOLL
+20:33 <@Firesong> hups...
+20:33 <@Firesong> en muuten taida päästä huomenna paikalle, joten nähdään maanantiana
+20:33 <@Firesong> sori
+21:49 <@Tattoo> ok
+--- Day changed Fri Jul 22 2011
+12:00 <@Sundo> mä oon vähän myöhässä taas
+12:01 <@Tattoo> eipä täällä ketään ole D:
+12:01 <@Sundo> vapaa-ajotteinen aamun aloitus
+12:58 <@Dezgeg> tuolla graafisivulla on muuten 2 <body>:a, lieneekö ihan validia
+13:10 <@Tattoo> taitaapi validaattori vähän huutaa...
+15:05 <@Geobot> Project Geovision build #222: STILL FAILING in 10 sec: nulljob/Geovision/222/
+17:05 <@Geobot> Project Geovision build #223: STILL FAILING in 12 sec: nulljob/Geovision/223/
+21:05 <@Geobot> Project Geovision build #224: STILL FAILING in 13 sec: nulljob/Geovision/224/
+22:05 <@Geobot> Project Geovision build #225: STILL FAILING in 12 sec: nulljob/Geovision/225/
+--- Day changed Mon Jul 25 2011
+13:05 <@Geobot> Project Geovision build #226: STILL FAILING in 16 sec: nulljob/Geovision/226/
+13:44 <@Sundo> http://t-tkt_gvis.users.cs.helsinki.fi/hudson/job/Geovision/lastBuild/console
+14:05 <@Geobot> Project Geovision build #227: STILL FAILING in 9,2 sec: nulljob/Geovision/227/
+14:41 <@Firesong> Sundo: listattasko tähän kaikki asiat mitä pitäisi pistää käyttäjän käpisteltäväks siihen dict-muuttujaan, niin sit voi vaan vilkuilla niitä irkistä sitten ku teen tätä kotona?
+15:05 <@Geobot> Project Geovision build #228: STILL FAILING in 8,4 sec: nulljob/Geovision/228/
+16:05 <@Geobot> Project Geovision build #229: STILL FAILING in 8,5 sec: nulljob/Geovision/229/
+--- Day changed Tue Jul 26 2011
+13:01 <@Sundo> hmm
+13:05 <@Tattoo> hmm hmm
+13:05 <@jannel> hmmmmmm
+13:07 <@jannel> katon tänään niitä näyteryhmien ja näytteiden käyttöä 
+13:30 <@Firesong> katon sitä selaintestausta ja sit sitä asetusjuttua
+21:07 <@jannel> logout
+21:07 <@jannel> hee
+21:08 <@Tattoo> :D
+23:05 <@Geobot> Project Geovision build #230: STILL FAILING in 10 sec: nulljob/Geovision/230/
+23:54 <@Firesong> kirjautumisessa on yksi tosi tyhmä bugi mun jäljiltä, korjaan sen heti aamulla, kun nyt meni jo kone kii. että älkää ihmetelköö
+--- Day changed Wed Jul 27 2011
+00:06 <@Geobot> Project Geovision build #231: STILL FAILING in 1 min 1 sec: nulljob/Geovision/231/
+09:09 <@Tattoo> D:
+11:05 <@Geobot> Project Geovision build #232: STILL FAILING in 14 sec: nulljob/Geovision/232/
+11:22 <@Tattoo> :D
+11:22 <@Tattoo> *D:
+13:05 <@Geobot> Project Geovision build #233: STILL FAILING in 9,3 sec: nulljob/Geovision/233/
+13:54 <@Tattoo> D:
+14:05 <@Geobot> Project Geovision build #234: STILL FAILING in 19 sec: nulljob/Geovision/234/
+15:05 <@Geobot> Project Geovision build #235: STILL FAILING in 12 sec: nulljob/Geovision/235/
+16:02 <@Sundo> nyt on ne animaatiomuuttujat mergetty sinne, en edes mielestäni rikkonut mitään
+16:05 <@Geobot> Project Geovision build #236: STILL FAILING in 15 sec: nulljob/Geovision/236/
+16:06 <@Tattoo> D:
+16:06 <@Sundo> perjantain hommia: filtteröinti ja noodien deletointi kuntoon
+16:06 <@Sundo> voi huomennakin tietysti kattoa jos asiakasdemolta jää aikaa
+17:09 <@Firesong> mä en sit pääse perjantaina koska oon ropeconissa töissä, sori
+20:08 <@Firesong> fiksailin ne tyhmännäköisyydet siitä asetusten layoutista, jannel: toimiiko asetukset jo?
+21:05 <@Geobot> Project Geovision build #237: STILL FAILING in 8,1 sec: nulljob/Geovision/237/
+23:19 <@jannel> hmm, ei vielä, oli vähä hommia, rupeen nyt tekee
+23:38 <@Firesong> mä oon tehnyt vähän jotain hienosäätöi sinne vielä, esim sen ettei se kaatuis siihen että crfstokeni puuttuu
+23:40 <@Firesong> hups, lisäsin tokenin mut se ei auttanut :P
+23:49 <@Firesong> noni, nyt se meni :)
+--- Day changed Thu Jul 28 2011
+00:06 <@Geobot> Project Geovision build #238: STILL FAILING in 44 sec: nulljob/Geovision/238/
+00:38 <@Firesong> argh, vihdoin toi outo bugi korjattu
+01:05 <@Geobot> Project Geovision build #239: STILL FAILING in 13 sec: nulljob/Geovision/239/
+01:39 <@Firesong> oli melkoinen debugaaminen että ton sai välittää dataa kunnolla. Nyt meen nukkuu, toivottavasti jannel selviät ajoissa siitä javascriptistä
+02:05 <@Geobot> Project Geovision build #240: STILL FAILING in 8,9 sec: nulljob/Geovision/240/
+10:05 <@Geobot> Project Geovision build #241: STILL FAILING in 15 sec: nulljob/Geovision/241/
+10:11 <@Firesong> tän jutun defaultsettingssit nykyään asetetaan sit configista
+10:46 <@Firesong> onko kukaan hereillä ja testaamassa?
+10:46 <@Firesong> tää tekee jotain outoa
+10:47 <@jannel> logout
+10:48 <@jannel> moro, saitko toimii?
+10:50 <@Firesong> noh, ku huomasin että _kukaan_ muu ei ilmeisesti oo tätä tekemässä
+10:50 <@Firesong> niin oon sit tehnyt viime yön ja tän aamun
+10:51 <@Firesong> en millään halunnut jättää täysin toimimatonta featurea demoon
+10:51 <@Firesong> nyt se vähän niinkuin toimii jo
+10:51 <@Firesong> ei ihan kaikissa mahdollisissa tapauksissa, eikä koodi ole hirveän kaunista, mutta toimii kuitenkin
+10:51 <@Firesong> vitun javascript
+10:52 <@Firesong> esim. yksi bugi on että filtteröintiin se ei vielä osaa tehdä mitään animaatioita, vaikka ne ois valittuna
+10:52 <@jannel> ok, nukahdin illalla ku olin nii väsyny, kattelin sitä nyt aamulla mut sit huomasin et olit jo tehny
+10:53 <@Firesong> javascriptin debugaamiseen meni sellaset kevyet 2,5 tuntia, joten jos nyt vasta heräilit niin tuskin olisit ehtinyt saada sitä valmiiks ennen demoa kuitenkaan
+10:53 <@Firesong> se oli aika kauheeta sotkua nimittäin
+10:53 <@Firesong> nyt on vielä jäljellä se, että metsästää kaikki loputkin paikat missä animaatioasetuksia kutsutaan ja muuttaa nekin
+10:54 <@jannel> ei ku kattelin sitä 9 asti, en tajunnu tulla irciin
+10:54 <@jannel> meni mullaki kyllä hetki ennen ku tajusin mitä pitää tehdä
+10:54 <@Firesong> njaa
+10:54 <@Firesong> mä aattelin et kukaan muu ei oo hereillä
+10:54 <@jannel> mut joo en ois kyl ehtiny varmaa saada toimii
+10:55 <@Firesong> eipä mitään, mä tein nyt kait sit vähän niinku huomisenkin työtunnit tai jotain, ku en kuitenkaan oo pääsemässä huomenna paikalle conin takia
+10:55 <@jannel> jep :)
+10:56 <@jannel> mä lähen nyt koululle..
+10:58 <@Firesong> okei, hei, sit jos joku löytää koodista jotain muita kohtii missä animaatiota kutsutaan niin muuttujat defaultsettings ja settings mergeämällä juuri tossa järjestyksessä ja lisäämällä ne jutut jotka puuttuu kummastakin, saa toimivat animaatioasetukset joissa on käyttäjän prefrenssit
+11:05 <@Geobot> Project Geovision build #242: STILL FAILING in 9 sec: nulljob/Geovision/242/
+12:05 <@Geobot> Project Geovision build #243: STILL FAILING in 8,9 sec: nulljob/Geovision/243/
+12:47 <@Sundo> 833 856 JIT.js 
+13:05 <@Geobot> Project Geovision build #244: STILL FAILING in 9,5 sec: nulljob/Geovision/244/
+15:05 <@Geobot> Project Geovision build #245: STILL FAILING in 8,6 sec: nulljob/Geovision/245/
+23:26 <@jannel> muokkasin tota configii silleen et se mergee optionsit eikä tartte niitä tarkistuksia, en oo vielä pushannu
+--- Day changed Fri Jul 29 2011
+17:19 <@Dezgeg> graafissa eteneminen on rikki, tietääkö joku miksi
+17:23 <@Tattoo> Dezgeg: mitä logit sanoo?
+17:45 <@Dezgeg> *sigh* kannatti kokeilla brancheja... eikö noista helvetti pääse mitenkään eroon
+18:05 <@Geobot> Project Geovision build #246: STILL FAILING in 12 sec: nulljob/Geovision/246/
+18:20 <@Tattoo> Dezgeg: branchit mergataan?
+18:20 <@Dezgeg> se silti haluaa pushata myös sen serverille
+18:21 <@Dezgeg> ilmeisesti eroavaisuus onkin juuri siinä, että hg branch tekee 'globaalin' branchin, mikä on imho aika hölmöä
+18:21 <@Dezgeg> eroavaisuus gittiin
+18:22 <@Dezgeg> enkä keksinyt (enkä löytänyt) mitään muuta keinoa saada sitä pois kuin clonettaa uusiks
+19:41 <@jannel> joo, se eteneminen meni rikki ku pullasin sinne ne muutokset mitkä tehtiin koululla, se liittyy niihin animaatio optioiden mergaamiseen
+19:42 <@jannel> jos laittaa animaatiot pois päältä nii pitäs jollain lailla pelaa
+19:45 <@jannel> paitsi ettei näköjään toimi sillonkaa..
+--- Day changed Mon Aug 01 2011
+00:05 <@Geobot> Project Geovision build #247: STILL FAILING in 10 sec: nulljob/Geovision/247/
+11:59 <@Sundo> oon taas vähän myöhässä
+12:02 <@Sundo> tai riippuen puhelinjonoista vähän enemmänkin
+12:17 <@Sundo> tässä näköjään tosiaan voi kestää
+12:42 <@jannel> moi, optioiden mergeeminen toimis muuten paitsi ton transition osalta. sitä en saanu toimii kunnolla ilman evalia..
+12:45 <@Tattoo> eval D:
+12:51 <@Firesong> jos siitä ei mitään todistettavaa haittaa ole, niin annettaisko evalin nyt tässä yhdessä tapauksessa sit olla jos se sillä toimii
+12:53 <@Tattoo> lähinnä toivoisin, että eval olisi harkittu päätös (aka. mitä siitä voi sattua meidän applikaatiolle) sen sijaan, että syy on "se toimii"
+13:00 <@Firesong> eval on ok, koska: 1) se että se hidastaa ei haittaa tossa yhtään ja 2) se että sen voi "hakkeroida" ei haittaa siks, että jos sinne suljettuun järjestelmään pääsee loginin läpi joku niin se pääsee jo käsiks kaikkiin tietoihin muutenkin, joten miks se käyttäis siihen evalia?
+13:01 <@Tattoo> tuon voisi laittaa wikiin ja sit koodiin kommentoida "ks. tämä wiki-sivu"
+13:01 <@Firesong> tai sitten ton vois laittaa suoraan koodiin kommenttina koska tossa on ehkä jotain kaks lausetta anyway
+13:05 <@Geobot> Project Geovision build #248: STILL FAILING in 12 sec: nulljob/Geovision/248/
+13:10 <@Tattoo> Firesong: jeps, esim.
+14:05 <@Geobot> Project Geovision build #249: STILL FAILING in 9,4 sec: nulljob/Geovision/249/
+14:05 <@Tattoo> D:
+15:05 <@Geobot> Project Geovision build #250: STILL FAILING in 10 sec: nulljob/Geovision/250/
+15:12 <@Dezgeg> http://code.google.com/p/geovision/wiki/TiistainDemo
+15:26 <@Tattoo> Dezgeg: näyttää hyvältä
+16:05 <@Geobot> Project Geovision build #251: STILL FAILING in 8,1 sec: nulljob/Geovision/251/
+16:50 <@Firesong> hei, mihin se info-valinta on hävinnyt valikosta?
+16:50 <@Firesong> tai siis onko joku erityinen syy miks se on poistettu?
+16:52 <@Dezgeg> on se siellä, pelkillä entsyymeillä
+16:53 <@Firesong> ookei
+16:59 <@Firesong> mites ne akuuteimmat debugaukset sujuu?
+17:37 <@Firesong> pistän nyt ite niin että settingssissä näkyy ne sun settingit, koska nykyinen toimimaton versio alko ärsyttää
+19:05 <@Geobot> Project Geovision build #252: STILL FAILING in 8,2 sec: nulljob/Geovision/252/
+21:03 <@Firesong> mä tässä kirjoittelen ohjeita, niin mites teidän mielestä pitäisi kuvailla sitä oikealla puolella olevaa filtteriä?
+21:04 <@Firesong> oon tänään keskittynyt pieniin käytettävyysparauuksiin, koska ei vaan pää kestä isompaa
+21:04 <@Dezgeg> koska nyt contractia ei enää ole, laitoin siihen tilalle lisäyhteyksien hakemisen
+21:04 <@Dezgeg> hmm.
+21:05 <@Firesong> mikäköhän tässä on että mulla tää systeemi jotenkin jumittaa kokoajan, vaikka yrittäis vaan oikeaklikata...
+21:05 <@Geobot> Project Geovision build #253: STILL FAILING in 8,3 sec: nulljob/Geovision/253/
+21:08 <@Firesong> keksiikö kukaan kuvausta filtterille? aiotaako sen logiikkaa muuttaa paljonkin? pitikö sen nimi muuttaa, ja miksikä muutan jos muutan?
+21:09 <@Dezgeg> remove all edges where the bitscore is less than the specified value?
+21:10 <@Dezgeg> en tiedä onko sitä synkattu tulevien hakujen ehtoihin
+21:10 <@Dezgeg> näköjään ei. sen voisi kyllä tehdä
+21:13 <@Tattoo> vai "filter out"
+21:13 <@Tattoo> ettei joku lluule et remove oikeasti poistaa
+21:13 <@Tattoo> sit siihen voisi laittaa sulkuihin mikä se specified value on
+21:14 <@Tattoo> esim "...specified value (100)"
+21:14 <@Tattoo> ellen nyt sitten puhu eri asiasta :)
+21:22 <@Firesong> Dezgeg: pushasin muutokset, se onnistu ja yritin pullaa serverille, ei onnistnu. Ootko koodannu jotain serverille suoraan vai mistä se inisee
+21:22 <@Dezgeg> en kyl minä ainakaan
+21:24 <@Firesong> okei, no se näemmä ratkes
+21:24 <@Firesong> vilkaskaa joku että onko ne ohjeet järkevästi muotoiltuja...
+21:26 <@Dezgeg> mites nyt ton filtterin toimintalogiikan kanssa, tällä hetkellä se taitaa piilottaa ne, mutta niitä ei saa mitenkään näkyviin
+21:27 <@Firesong> saahan
+21:27 <@Firesong> laita pienempi arvo, niin ne tulee mul ainakin takas
+21:27 <@Firesong> tai siis siinä mun alkuperäisessä tuli, en oo testannut jos sitä on muutettu
+21:28 <@Dezgeg> ai tuolleen. hm
+21:28 <@Firesong> musta toi on aika looginen tapa
+21:28 <@Firesong> but thats just me
+21:29 <@Tattoo> huomenna nähdään, jos teette jonku ovelan skenaarion
+21:34 <@Dezgeg> mitenhän tuo piilotus toimii yhteen tuon Sundon 'poista ei-tägätyt noodit'-jutun kanssa, poistaakohan se nyt sit piilossa oleviakin
+21:35 <@Firesong> hmm, totta
+21:35 <@Firesong> riippuu poistajan logiikasta
+22:05 <@Geobot> Project Geovision build #254: STILL FAILING in 8,3 sec: nulljob/Geovision/254/
+22:37 <@Firesong> mitäs käyttötapauksia me nyt sitten demotaan huomenna?
+22:40 <@Firesong> + miksi jos hakee entsyymiä 1.1.1.1 niin vaikka depth ois yhdessä, niin tokallekkin ympyrälle tulee viivoja
+22:42 <@Dezgeg> koska dbentryyn liittyvät entsyymit piirretään aina
+22:42 <@Dezgeg> tai haetaan
+22:43 <@Firesong> k.
+22:43 <@Firesong> eli se oli feature, ei bugi
+22:43 <@Dezgeg> juu
+22:45 <@Firesong> vaikuttaa myös jostain syystä siltä että kun noita asetusjuttuja on muutettu niin ne on mennyt rikki
+22:45 <@Firesong> nimittäin ainakin durationissa on bugi
+22:45 <@Dezgeg> hmm
+22:46 <@Dezgeg> en mä huomaa mitään
+22:47 <@Firesong> mä testailen userssilla ja en huomaa mitään eroa esim. 1 ja 9000 välillä
+22:47 <@Firesong> eli siis ilmeisesti se ei muutu niinku pitäis
+22:48 <@Dezgeg> onks tuolla kuinka moderni versio
+22:48 <@Firesong> oon pullannut tänään sinne
+22:53 <@Dezgeg> mites nyt
+22:53 <@Firesong> ok, nyt näyttäis toimivan
+22:54 <@Firesong> mä lisäilin käytettävyyden nimissä kans vähän selitetekstejä
+23:02 <@Firesong> kuinkakohan tarkkoi niitten käyttötapausten pitäs olla?
+23:04 <@Dezgeg> vaikee kyllä sanoa. meille tää kuitenkin on vaan viivoja ja palloja ruudulla, mutta niille tutkijoille pitäisi varmaan jotenkin saada välitettyä mitä tuo informaatio on
+23:04 <@Dezgeg> tai siis sen biologinen merkitys
+23:05 <@Firesong> ois ehkä sittenkin pitänyt soittaa asiakkaalle
+23:05 <@Firesong> :P
+23:05 <@Geobot> Project Geovision build #255: STILL FAILING in 10 sec: nulljob/Geovision/255/
+23:05 <@Dezgeg> oon edelleen sillä kannalla että laitetaan esa selittämään ;)
+23:06 <@Tattoo> se on periaatteessa hyvä idea
+23:06 <@Tattoo> esa puhuu teitä ja biologia
+23:06 <@Firesong> niin mutta ongelma on että tästä ei ole puhuttu sen kanssa
+23:07 <@Firesong> joten se saattaa olettaa että me vaan puhutaan
+23:07 <@Firesong> joten ehkä parempi ees puolivillaisesti varautua siihen, ja sit improvisoida loput
+23:08 <@Firesong> kirjasin sinne yhden käyttötapauksen mitä sillä vois esim tehdä mutten kyl tiiä onko se järkevä
+23:10 <@Dezgeg> toi kuulostaa ihan hyvältä
+23:10 <@Firesong> autas keksii näitä :D
+23:11 <@Firesong> nyt ainakin pitää vielä read idllä hakee, millä tulee nopeet tulokset
+23:11 <@Dezgeg> yks vois olla tietty kaivaa semmonen kasa entsyymejä, joista saa juttuja niihin metaboliapolkuihin
+23:13 <@Firesong> mä sain vaan näköjään 3 sinistä ja se just sillä 1.1.1.1llä
+23:14 <@Dezgeg> tietty joutuu vähäsen klikkailemaan
+23:15 <@Firesong> tietty joo, mut mä en klikkailemallakaan oo saanu kolmee enempää. Ehkä en oo ollu hyvässä aloitusmestassa
+23:15 <@Firesong> kirjottele sä sille tapaus jos tiiät joku hyvän
+23:15 <@Dezgeg> joo
+23:22 <@Dezgeg> dih, siinä on yksi
+23:23 <@Firesong> mäkin laitoin yhden lisää
+23:23 <@Firesong> pärjätäänkö noilla?
+23:26 <@Firesong> on tos nyt ainakin ne perusominaisuudet
+23:27 <@Firesong> mä voisin nukahtaa jo, omituista kyllä
+23:27 <@Firesong> nähdään huomenna demossa, pushaan vielä viimeset minimuutokset
+23:27 <@Dezgeg> ok, kattelen vielä jotain
+23:28 <@Firesong> cool
+23:28 <@Firesong> öitä
+--- Day changed Tue Aug 02 2011
+00:05 <@Geobot> Project Geovision build #256: STILL FAILING in 8 sec: nulljob/Geovision/256/
+10:05 <@Geobot> Project Geovision build #257: STILL FAILING in 13 sec: nulljob/Geovision/257/
+11:37 <@Tattoo> aijai
+--- Day changed Wed Aug 03 2011
+01:06 <@Geobot> Project Geovision build #258: STILL FAILING in 41 sec: nulljob/Geovision/258/
+11:20 <@Tattoo> D:
+12:00 <@Sundo> mä en pääse paikalle tänään, reli on kipeenä niin jään auttamaan lapsenhoidossa
+12:05 <@Geobot> Project Geovision build #259: STILL FAILING in 16 sec: nulljob/Geovision/259/
+13:05 <@Geobot> Project Geovision build #260: STILL FAILING in 7,6 sec: nulljob/Geovision/260/
+13:47 <@Dezgeg> http://code.google.com/p/geovision/wiki/LastFeatures tarvinneeko tuonne lisätä vielä jotain
+14:05 <@Geobot> Project Geovision build #261: STILL FAILING in 7,5 sec: nulljob/Geovision/261/
+14:36 <@Tattoo> Dezgeg: tuon hudsonin (jenkinsin?) voisi fiksaa :)
+14:39 <@Dezgeg> kai sen joskus
+15:03 <@Dezgeg> note: unsynced remote changes! kun pushasin. hajoskohan nyt joku
+15:05 <@Geobot> Project Geovision build #262: STILL FAILING in 7,3 sec: nulljob/Geovision/262/
+16:05 <@Geobot> Project Geovision build #263: STILL FAILING in 8,6 sec: nulljob/Geovision/263/
+--- Day changed Thu Aug 04 2011
+12:19 <@jannel> huomenta
+12:20 <@jannel> oon tehny sitä samplehomma lisää, muutama bugi vielä pitää korjaa
+12:21 <@Tattoo> Dezgeg: jos tapaatte vielä asiakasta, niin Sari Laaksoa (kurssin vastuuhenkilö) pitää infota
+12:22 <@Tattoo> Sundo: ton vikan tapaamisen ajankohta muuttuu, ks. maili
+12:23 <@Dezgeg> ok, kattelen kohta kun oon koneella
+12:25 <@Dezgeg> teen tänään sitä loaf-save-hommaa, tein siinä sen verran samalla siivousta, että tulee varmaan käsimerge
+12:33 <@jannel> jep, en oo siis vielä pushannu, mullaki voi mergeeminen kestää
+16:02 <@Sundo> Tattoo: joo
+16:03 <@Sundo> mihin meiltä on login-sivu muuten kadonnut?
+16:04 <@Dezgeg> :P niinpä onkin
+16:04 <@Dezgeg> ei tietoa kyl
+16:05 <@Geobot> Project Geovision build #264: STILL FAILING in 16 sec: nulljob/Geovision/264/
+16:06 <@Dezgeg> mutta nyt tallennus/lataus ja json-export on gui-viimeistelyjä vaille valmis, pushaan sen sitten kun jannel saa muutoksensa pushattua jotta voin mergetä ne ite
+16:07 <@Sundo> http://t-tkt_gvis.users.cs.helsinki.fi/hudson/job/Geovision/262/ tuossa vielä näyttäs login sivu löytyvän
+16:07 <@Sundo> seuraavassa changesetissä on hukassa
+16:08 <@Dezgeg> tuossa kohtaa mercurial rähjähti mulla, liittyisköhän
+16:10 <@Dezgeg> näin perstuntumalta vaihtamalla loginista 'block allcontent' -> 'block content' saisi sen toimimaan
+16:11 <@Dezgeg> ja ite en uskalla lähteä tekemään mercurialilla committejä tuosta serverillä olevasta kun on omia muutoksia :>
+16:12 <@Firesong> oho, toi login-juttu on mun moka, unohdin siivoilla kun korjasin sitä templatesysteemiä
+16:12 <@Firesong> tosiaan, hoituu tolla Dezgegin ehdotuksella
+16:13 <@Firesong> lisäks, mä voin esim tehä niitä gui-viimeiselyjä ihan mielelläni jos jotain sellasta tarttee
+16:18 <@Geobot> Project Geovision build #265: STILL FAILING in 7,1 sec: nulljob/Geovision/265/
+16:19 <@Sundo> tuokin oli semmonen virhe jonka olis huomannut heti jos muuten olis testit kunnossa ;)
+16:20 <@Dezgeg> :P
+16:26 <@Geobot> Project Geovision build #266: STILL FAILING in 6,9 sec: nulljob/Geovision/266/
+16:30 <@Geobot> Project Geovision build #267: STILL FAILING in 7,2 sec: nulljob/Geovision/267/
+16:35 <@Sundo> hmm
+16:36 <@Sundo> onko nuo entzyme/kegg parserit tarkotuksella hukattu tuolta
+16:37 <@Dezgeg> se on meta.kegg_parserissa näemmä
+16:38 <@Tattoo> :D
+16:39 <@Tattoo> Firesong: kysyitsä sitä assylippua? dogolla on kuulemma ylim. ranneke
+16:44 <@Geobot> Yippie, build fixed!
+16:44 <@Geobot> Project Geovision build #268: FIXED in 7,6 sec: nulljob/Geovision/268/
+16:44 <@Sundo> noniin
+16:44 <@Dezgeg> jees, hienoa
+16:45 <@Sundo> nyt siellä on yksi pois kommentoitu testi userdb/tests/registration_tests.py joka ei taida toimia nykymuodossa adminin tekemän käyttäjäaktivaation kanssa
+16:46 <@Sundo> muut valittavat testit on korjattu
+17:26 <@Tattoo> build fixed!! \:D/
+17:27 <@Tattoo> <--- ohjaaja kehrää tyytyväisyyttään
+17:27 <@Tattoo> Sundo++
+20:48 <@jannel> hmm, joo sori en oo vieläkää saanu pushattuu, töissä ollu kiirettä mut jos nyt ois aikaa :)
+20:59 <@Dezgeg> ei se mitään, onhan tässä assyt ja kaikkea :p
+21:00 <@Dezgeg> btw. seminaarialueella on sit tappokuuma
+23:33 <@jannel> jaaha, pääseeks sinne vielä millään jos ei oo lippua?
+23:34 <@jannel> ja sain samplet toimii, pitää vaan lisää ne vielä sinne sample kantaan
+--- Day changed Fri Aug 05 2011
+00:12 <@jannel> pushasin ja pullasin nyt serverille omat muutokset, näyttäs toimivan :)
+00:13 <@jannel> noita checkboxien paikkoja pitää kyllä säätää
+12:06 <@Sundo> mm
+12:06 <@Sundo> sori että tulee taas näin myöhään ilmoitus, mutta en pääse tänäänkään sinne
+12:07 <@Sundo> ja on hyvin mahdollista että en alkuviikostakaan, kävely sattuu tällä hetkellä reippaammanpuoleisesti
+12:38 <@jannel> ok, onko ketään menossa koululle? olin ite menossa mut jos aurorakaan ei tuu ni ehkä parempi perua
+12:39 <@Tattoo> eilisestä päätellen Dezgeg on assyilla :D
+12:39 <@jannel> okka, taidan itekin sit suunnata sinne
+12:39 <@Tattoo> oikein :D
+12:40 <@Tattoo> siellä kivasti nurkassa, ohtuprojektia koodailette
+12:40 <@Tattoo> menee assyt mukavasti
+12:40 <@jannel> aivan :D
+13:14 <@Sundo> :)
+20:09 <@Dezgeg> mergesin nyt load-save-koodin ja pushasin, oli kyllä hemmetinmoinen käsimergeeminen, toivottavasti mikään ei nyt hajonnu
+20:39 <@Tattoo> hudson ainakin iloisesti hyrrää
+20:40 <@Tattoo> ...vai hyrrääkö?
+21:13 <@Dezgeg> tuo samplevalinta näyttää toimivan oikeen mukavasti, paitsi että entsyymihaku voi nyt antaa semmosia db-entryjä mistä ei oo mitään kaaria readeihin, katon voiko tuolle tehdä jotain
+21:21 <@Dezgeg> djuuh, tietokanta onki sitte hetken alhaalla, importtaan blastit uudelleen samplenimillä varustettuina -_-
+21:44 <@Tattoo> :D
+21:44 <@Tattoo> siinä se viikonloppu sit menikin?
+21:45 <@Tattoo> kivasti katsot eteenpäin rullaavaa possua assyjen lomassa ^^
+22:30 <@Dezgeg> hm. äsken meni 10 sekuntia ennen kuin sain edes salasanakyselyä userssilla ssh:llä yhdistettäessä :P
+22:31 <@Tattoo> gotta love that users
+--- Day changed Sun Aug 07 2011
+15:08 <@Firesong> hmm, onko haku jotenkin pahasti rikki userssilla kun en meinaa millään saada mitään graafia näkymään
+15:08 <@Tattoo> onkohan toi Dezgeg jo ajanu sen kannan pystyyn
+15:09 <@Firesong> tjaa. No samapa tuo, aattelin muutenkin vaan fiksailla ulkoasua vähän käyttäjäystävällisemmäks, joten en ees välttämättä tartte graafeja
+15:10 <@Firesong> :)
+16:15 <@Firesong> jos se samplejen valinta sekoaa, niin se sit saatttaa johtua siitä että vaihdan checkboxit htmln select-elementtiin, ja en ole ihan satavarma että toimiiko djangon getlist siihen samalla tavalla. Luulisin että toimii
+16:15 <@Firesong> mutt jos jotain hajoaa, niin tossa on sit yks potentiaalinen virhelähde. En voi nyt testaa koska en saamitään haettua
+16:16 <@Dezgeg> juu tuolla on jotain rikki liittyen tietokantahakuihin toistaiseksi
+16:16 <@Dezgeg> imho html:n select on kyllä useimmissa selaimissa käytettävyydeltään aika paska
+16:16 <@Dezgeg> select multiple siis
+16:18 <@Firesong> sen käytettävyys ei musta oo sen pahempi kuin monen checkboxinkaan (eli siis omasta mielestä kummatkin on perseestä)
+16:19 <@Dezgeg> :p
+16:19 <@Firesong> ja kahdesta paskasta suosisin ihan tilankäytön takia select multiplea
+16:19 <@Dezgeg> se, että pitää ctrl+klikata että saa monta valittua on ehkä epäintuitiivisin ratkaisu ikinä
+16:19 <@Firesong> koska jos siihen naviin halutaan laittaa vielä se tallennetun näkymän valinta, niin mä pelkään että siitä loppuu herkästi tila ja sitten se katkoo juttuja pois
+16:19 <@Dezgeg> totta kyllä
+16:20 <@Firesong> ctrl+klikkiin laitoin jo ohjetekstin, koska tiedän ettei kaikki tiiä sitä
+16:20 <@Dezgeg> itse asiassa ne tallennetut näkymän on jo siellä, ne vaan tosiaan ei näy :P
+16:20 <@Dezgeg> mutta nyt heitin tuonne keskeneräisen, mutta entsyymihakuja lukuunottamatta toimivan
+16:21 <@Firesong> mistä ne tulee? mä voin vaikka pistää näkymään ja kattoo josko saisin ne sellaseks listaks että toi navi ei varmasti katkeis
+16:21 <@Dezgeg> js/loadsave.js
+16:22 <@Firesong> ok, voin kattoo sen vaikka seuraavaks
+16:23 <@Firesong> mä en meinaan saanut assyjen aikana tehtyy yhtään mitään. Ei oo kovin hyvä paikka koodata se :D
+16:23 <@Dezgeg> njoo
+16:25 <@Dezgeg> ja joo, alignment on tuossa pushatussa sitten toistaiseksi rikki. korjaan kohta
+21:19 <@Firesong> äyh, en nyt sit saanutkaan paljoo tänään aikaan...
+21:21 <@Firesong> en nimittäin pääse tutkimaan tuota tallennussysteemiä mitenkään, kun siellä ei ole mitään dataa, enkä saa graafeja tehtyä että voisin niitä tallentaa...
+21:21 <@Firesong> noh, ehkä vaan yritän sit olla huomenna tosi ahkera 
+21:21 <@Dezgeg> tääh
+21:21 <@Firesong> siis, tallennettuja näkymiä ei ole, enkä saa niitä tehtyä koska en saa graafeja
+21:22 <@Dezgeg> eipä kyllä tosiaan tuu näkyviin. pushasin kyllä mielestäni toimivan version
+21:22 <@Firesong> mä jäljitin kutsua sen verran että se listaus sun muu näyttäis koodin puolesta järkevälle
+21:23 <@Firesong> en sit tiiä oisko tallennuksessa bugi?
+21:23 <@Firesong> toimiiko sun lokaalissa?
+21:23 <@Dezgeg> siellä on nyt juttuja kesken
+21:28 <@Dezgeg> taas tuli toi unsynced local changes mercurialista
+21:29 <@Dezgeg> eikun plääh, remote changes
+21:29 <@Firesong> juu, se on taas ollut vähän outo
+21:30 <@Dezgeg> no, nyt pitäisi toimia edes joku. entsyymeillä ei kannata hakea
+21:32 <@Firesong> no niin, nyt ne tallennetut näkymätkin lähti tekee jotain
+21:32 <@Firesong> taidanpa samantien sitten vähän tyylitellä tota nätimmäks
+21:32 <@Dezgeg> juu
+--- Day changed Mon Aug 08 2011
+13:05 <@Geobot> Project Geovision build #273: FAILURE in 11 sec: nulljob/Geovision/273/
+14:05 <@Geobot> Project Geovision build #274: STILL FAILING in 8,9 sec: nulljob/Geovision/274/
+14:59 <@Tattoo> D:
+15:05 <@Geobot> Project Geovision build #275: STILL FAILING in 9,1 sec: nulljob/Geovision/275/
+15:57 <@Geobot> Project Geovision build #276: STILL FAILING in 8 sec: nulljob/Geovision/276/
+15:57 <@Geobot> Project Geovision build #277: STILL FAILING in 1 sec: nulljob/Geovision/277/
+15:59 <@Geobot> Project Geovision build #278: STILL FAILING in 7 sec: nulljob/Geovision/278/
+16:00 <@Geobot> Yippie, build fixed!
+16:00 <@Geobot> Project Geovision build #279: FIXED in 8,1 sec: nulljob/Geovision/279/
+16:01 <@Sundo> \o/
+17:23 <@Tattoo> \:D/
+--- Day changed Tue Aug 09 2011
+16:51 <@Firesong> noni, helppi kirjoitettu, hitto että meni aikaa ja oli tylsää
+16:58 <@Tattoo> :D
+18:56 <@Sundo> meillä on depth 3 haussa muutakin vikaa kuin se, ettei entsyymit aukea oikein samalla tavalla kun läpikäydessä
+18:56 <@Sundo> se avaa eri solmutkin
+18:56 <@Sundo> tai ylipäätään jos haku on enemmän kuin depth 1
+18:59 <@Dezgeg> hmm... heitäs esimerkkiä
+19:00 <@Sundo> 1.1.1.1, depth 1, limit 5
+19:00 <@Sundo> jos avaat kaikki ensimmäisen tason solmut, sitten teet saman haun depth 2
+19:00 <@Sundo> toisella tasolla on eri solmut
+19:01 <@Sundo> yksi syy siihen ettei depth 3 haulla löydy entsyymiyhteyttä on se, ettei sitä toisen tason solmua josta se yhteys tulee avata lainkaan
+19:02 <@Sundo> toinen syy tietysti on, ettei se avaisi sitä vaikka oikeat solmut aukeisikin :)
+19:04 <@Dezgeg> joo tuo lisäkaarien hakeminen hakee niitä vähän simppelillä logiikalla bitscorejärjestyksessä
+19:04 <@Dezgeg> taidanpa ihan suosiolla vaan laittaa urlissa arrayn jo löydettyjä solmuja
+19:18 <@Dezgeg> nyt se on nähdäkseni korjattu
+19:19 <@Dezgeg> tuo uusi väritys on kyllä tosiaan kivempi
+19:20 <@Dezgeg> tulos ei kyllä siltikään ole ihan sama, hm.
+19:21 <@Dezgeg> eikun taisin vaan feilata ja avata jonkun kahesti ^-^
+19:21 <@Sundo> uhum
+19:22 <@Sundo> nyt sama solmu josta aiemmin aukesi yhteydet bitscoreilla 66.6-64.7 antaa ihan eri solmut bitscoreilla 540-180
+19:23 <@Sundo> 1.1.1.1 -> Q0TKS7
+19:23 <@Sundo> joko se oli aiemmin ihan rikki tai se on nyt ihan rikki :D
+19:23 <@Dezgeg> eikös me tää bongattu jo eilen
+19:24 <@Dezgeg> eikun tuo on varmaan joku toinen bugi. no selvisi sekin
+19:25 <@Dezgeg> eikun mitä
+19:28 <@Dezgeg> eikun ihan oikein tuo taitaa mennä
+20:05 <@Geobot> Project Geovision build #281: FAILURE in 9 sec: nulljob/Geovision/281/
+20:09 <@Geobot> Yippie, build fixed!
+20:09 <@Geobot> Project Geovision build #282: FIXED in 9,4 sec: nulljob/Geovision/282/
+22:06 <@Sundo> olis kiva jos kaikki merkkais tuonne lastfeaturesiin ja backlogiin mitä on tehty, etenkin kun noita taskeja ei ole jaettu etukäteen kovin tarkasti
+22:06 <@Sundo> ja työn alla olevia voi myös merkata
+22:07 <@Dezgeg> varsin totta
+22:14 <@Dezgeg> päivittelin LastFeaturesin, backlogia en jaksanut, kumminkin jäljellä on enää bugit, testaus & dokumentointi
+22:16 <@Dezgeg> ja sitten tuolla on kyllä jotain mistä en oo ihan varma, kuten toi 'hakee aina samalla e-valuella', oon nyt vähän pihalla tuosta
+22:18 <@Dezgeg> jaa 'evalue' oli tosiaan typottu tuolla hakuformissa, johtuneekohan siitä :p
+22:19 <@Sundo> :D
+22:24 <@jannel> jep, sain vihdoin toimimaan ympyröiden lisäyksen taustalle dynaamisesti..ei ole heleppoa ku on nii hyvin dokumentoitu jit
+22:35 <@Firesong> juu, ja nyt featuret on jo yhdellä tasolla dokumentoitu (käyttöohje)
+22:36 <@Firesong> voisko joku muuten vilkaista siitä ohjeesta kohdan tagging (että onko sen logiikka nyt varmasti selitetty oikein &ymmärrettävästi)
+22:38 <@Sundo> missä se ohje on?
+22:40 <@Dezgeg> itte teen täällä tuota settingsiä siten, että ei tartte sivunlatausta, jquery tekeekin sen varsin helposti
+22:47 <@Firesong> Sundo: jos oot pullannut, niin se on templates/help.html
+23:16 <@Dezgeg> huh. tein jotain ja nyt jquery ei enää lataudu. 
+--- Day changed Wed Aug 10 2011
+11:24 <@jannel> huomenta, tuun tänään myöhässä, voi mennä yhteen
+13:03 <@Firesong> http://www.swift-lizard.com/2009/11/24/test-driven-development-with-jquery-qunit/
+13:48 <@Firesong> http://docs.jquery.com/Qunit <- dokumentaatio asiasta
+13:54 <@Tattoo> Dezgeg: asiakas ei varmaan ole tulossa perjantaina?
+13:54 <@Tattoo> ku sprintti loppuu?
+13:55 <@Firesong> Tattoo: ei ole
+13:55 <@Firesong> Tattoo: saattaa olla ettei koko projektin aikana enää saada sitä kii ku sähköpostilla
+13:55 <@Firesong> nimittäin seon lomalla
+13:57 <@Tattoo> joo näin mäkin muistelisin
+13:57 <@Tattoo> Dezgeg: mä tulisin mielelläni perjantaina kattoo, mitä on tapahtunut
+13:58 <@Tattoo> et voitasko nähdä sillo kaikki? :D
+14:00 <@Dezgeg> juu eiköhän se onnaa
+14:32 <@Firesong> Tattoo: tehtiin laatuvaatimusjuttuu wikiin, käytkö vilkasee että ollaanko otettu kaikki tarpeelliset asiat käsittelyyn
+14:34 <@Tattoo> miksi ei ole code coverage requirement D:
+14:35 <@Tattoo> "95% of the queries done in less than 5 seconds " <-- varmistatteko tuon jotenkin objektiivisesti?
+14:35 <@Tattoo> "Graphics run smoothly with 100 nodes on modern hardware and browsers " <-- vois määritellä mitä on "modern"
+14:36 <@Tattoo> "Cannot do proper speed testing on users, so no guarantees " <-- voisi kuitenkin kirjottaa vähän auki
+14:36 <@Tattoo> onko roadmap prio-järjestyksessä?
+14:36 <@Tattoo> tässä mun inputti :)
+14:37 <@Tattoo> ainiin
+14:37 <@Tattoo> kohtaan Usability voisi lisätä tyyliin "käyttöohje" ellei se oli sitten toi "Comprehensive help"
+14:52 <@Dezgeg> tarkoitus olisi juu tutkia noita dbentryjä ja readeja joista on eniten yhteyksiä ja sit kattoa kuinka hitaita ne on
+14:54 <@Tattoo> Dezgeg: niin mutta siitä tulee jotain, mitä esim. asiakas voi painaa nappia ja nähdä samat tulokset?
+14:54 <@Tattoo> vai tuleeko siitä läjä staattisia kuvia?
+14:54 <@Tattoo> vai mitä
+14:54 <@Tattoo> koitan hahmottaa, mikä on end result
+14:56 <@Dezgeg> ajattelin kattoa simppelillä (mutta hitaalla) queryllä että kuinka pahoja noodeja mahtuu tuonne 5%:aan ja ihan käsin käydä kattomassa muutamaa
+15:01 <@Tattoo> ok
+15:01 <@Tattoo> dokumentoi vaan se sitten :)
+15:02 <@Sundo> otin sen pois tuolta, tosin onhan se kiva silti testata
+15:03 <@Sundo> toki jotain nopeusvaatimuksia vois usersillekin katsoa, mutta kun siitä nopeudesta uudella serverillä ei uskalla sanoa mitään
+15:03 <@Sundo> niin onko sillä paljoakaan arvoa
+15:03 <@Sundo> lisäsin sinne nyt vähän selitystä aiheesta
+15:16 <@Tattoo> hyvä :)
+15:16 <@Firesong> testaus vielä ehkä vähän tarkentuu kunhan saadaan selvitettyä että millä työkalulla saa minkäkin testattua
+15:16 <@Firesong> tällä hetkellä näyttää sille että seleniumilla käyttöliittymä ja qunitilla canvas
+15:16 <@Firesong> koska kumpikaan noista ei taivu kumpaankin :P
+17:38 <@Tattoo> tervetuloa testaamisen ihmeelliseen maailmaan :D
+--- Day changed Thu Aug 11 2011
+11:58 <@Tattoo> vaikka tää: http://haineault.com/home/ on nyt mahdollista, niin en suosittele hotfixien tekemistä D:
+13:41 <@jannel> kirjottelin docstringejä vieweihin, nyt on ne siis tehty python koodiin
+13:54 <@jannel> rupeen kirjottelee niitä noihin javascripteihin
+16:07 <@Firesong> onko settingssien defaulttien resetöintiä muutettu?
+16:07 <@Firesong> en tunnu toimivan
+16:09 <@Dezgeg> ahh joo muokkasin sitä, vilkaisempa
+16:12 <@Firesong> lisäks: IndentationError at /save_view
+16:12 <@Firesong> kivasti löytää bugeja kun seleniumittaa
+16:13 <@Dezgeg> joo userssille pääty nyt jotenkin merge conflikti
+16:13 <@Firesong> :(
+16:15 <@Dezgeg> mutta nyt toiminee
+16:46 <@Sundo> njahas, filteristä saa edelleen nätisti pihalle epäyhtenäistä graafia
+16:46 <@Sundo> pitänee korjata
+17:03 <@Sundo> hienoa miten tuolla on vaihtelevasti funktioden nimissä adjacence ja adjacency
+17:24 <@Sundo> pitäsköhän tän mukaan liittää lista siitä, mistä eri js-funktiot löytyy
+17:25 <@Sundo> kun en itsekään tahdo löytää noita meidän tekemiä nykyään kun ne on levitelty ympäriinsä
+17:25 <@Dezgeg> varmaan voisi tosiaan lyhyesti dokumentoida ja listata jokaisen js-tiedoston tarkoituksen
+17:28 <@Sundo> normaaleissa kielissä sen yleensä näkee esimerkiksi import määreistä
+17:28 <@Sundo> tässä tuosta ristiinkäytöstä tulee karmeeta sontaa
+17:29 <@Dezgeg> varsin totta
+18:28 <@Sundo> pistin sen korjatun deleteUntaggedin tonne, nyt se säästää bitscorefiltteröinnissä jokaisesta jäljelle jäävästä solmusta polun roottiin
+18:29 <@Sundo> muutin samalla sen roottiin johtavan polun hakua niin, että se ottaa parhaat bitscoret lähtönoodista alkaen
+18:30 <@Tattoo> nii kaikki on tulossa huomenna 12?
+18:31 <@Dezgeg> ju
+18:31 <@Tattoo> ok :)
+18:36 <@Sundo> Warning: file_put_contents(people/Sundo.txt): failed to open stream: Permission denied in /var/www/serveri.tulilaulu.net/aikakirjuri/ProjectFile.php on line 77
+18:36 <@Sundo> sanoo aikakirjuri
+18:59 <@Firesong> Sundo: ohoh, sotkin vissiin serverin oikeuksia, korjaan ihan just
+--- Day changed Fri Aug 12 2011
+10:45 <@Sundo> Dezgeg: muista tällä kertaa sadekamat :D
+10:47 <@Sundo> tosin voihan se olla että tuo sade menee ohi ennen 
+12:28 -!- rania_drm [~rania_drm@93.215.37.62] has joined #geovision
+12:28 -!- rania_drm [~rania_drm@93.215.37.62] has left #geovision []
+14:39 <@Firesong> http://www.rbt.ca/autodoc/index.html
+14:40 <@Firesong> täällä sivuttiin asiaa: http://archives.postgresql.org/pgsql-admin/2004-01/msg00148.php
+15:10 <@Tattoo> mmmmmm dia
+15:10 <@Dezgeg> eih
+15:30 <@Tattoo> MMMMMMMMMMMMMMMMMMMMM DIA
+15:48 <@Dezgeg> kaikki uml-softat mitä oon kokeillu on jokseenkin hanurista
+16:28 <@Tattoo> paitsi dia
+16:29 <@Tattoo> dia on kaavioeditorien MS Paint. And that's all you ever really need
+18:04 <@jannel> hmm, alignment on hajonnu, ei näy?
+18:07 <@jannel> tulee vaan internal server error
+19:21 <@Dezgeg> taas ilmeisesti merge conflict
+19:23 <@Dezgeg> eipäs ollutkaan, joltakulta menny importteja siivotessa vähän liikaa pois
+--- Day changed Mon Aug 15 2011
+11:17 <@Dezgeg> heips, en ehdi tänään paikalle, koitanpa illemmalla saada jotain tehtyä
+12:15 <@Sundo> ok
+13:43 <@Firesong> Dezgeg: sit ku ehdit niin täydennä navigation.js:n rivi 124 ja rivi 137
+22:10 <@Firesong> huomasimpa tässä just että perjantaina mulla on vähän kahdentoista jälkeen hammaslääkäri :( 
+22:10 <@Firesong> eli ei kyl graafikakkua varmaan sillon
+22:10 <@Firesong> juhlistettaisko joskus toiste
+22:42 <@Firesong> lisäksi, esalta tuli setti korjauksia käyttöohjeeseen, laitan ne vaik sinne huomenna
+22:43 <@Firesong> plus se kirjoitti: "Tarkistaisitteko vielä, kummin päin e-value-haku toimii - pitäisi olla niin, että annettua arvoa pienemmät arvot näytetään, eli toisinpäin kuin bitscoren tapauksessa." miks näin?
+22:45 <@Dezgeg> e-value taisi merkitä p-arvoa jolla kyseinen readi ei matchaakaan tietokantaentryä, millon pienempi on parempi
+22:46 <@Dezgeg> muistelisin, että koodissa haetaan ihan oikein pienempiä kuin raja-arvo
+22:49 <@Firesong> okei, sit veikkaisin että oon vaan kirjoittanut ohjeen pieleen
+22:49 <@Firesong> korjaan huomenna
+--- Day changed Tue Aug 16 2011
+14:40 <@Firesong> ootteko kaikki huomenna tulossa laitokselle? Mites jos toisin vaikka graafikakkua sillon ja juhlistettas vähän etukäteen ku perjantai ei käy :)
+15:37 <@Sundo> Dezgeg: ootko tietokantakaaviota katellut?
+16:16 <@Sundo> http://www.cs.helsinki.fi/u/lassetyr/graph.png
+16:44 <@Dezgeg> ohoh :P
+16:45 <@Dezgeg> tuolla lienee aika reilusti turhia tauluja
+16:48 <@Dezgeg> melkeen kaikki noista meta_-tauluja vastaavista modeleista on jo kommentoitu pois, mutta djangolla vaan ei ole mitään tapaa pitää kirjaa tuommosista turhista tauluista toisin kuin esim. railssin migrationit
+20:35 <@Tattoo> :D
+21:30 <@Firesong> pitänee sit dokumentaatiossa mainita että siellä on turhaa dataa
+21:30 <@Firesong> edellene kysyn: onko kaikki tulossa huomenna
+21:30 <@Firesong> *een
+21:30 <@Dezgeg> kai tuo työkalu osaa tuottaa kuvan vaan halutuista tauluista
+21:31 <@Dezgeg> oon ainakin tulossa
+21:31 <@Firesong> noh siinä tapauksessa pitänee silti mainita jossian että hei, tääl on näitä turhii tauluja
+21:31 <@Firesong> mut tosiaan tulee ehkä parempi kuva jos on vähemmän sälää
+21:31 <@Dezgeg> ei niitä enää generoidakaan kun ne modelit on tosiaan kommentoitu pois
+21:32 <@Firesong> ok
+21:32 <@Firesong> voisin muuten generoida jsdocit uusiks
+21:33 <@Firesong> tuleeko javascripteihin vielä muutoksia
+21:48 <@Sundo> en usko että enää tässä vaiheessa
+21:48 <@Sundo> kaikki loput kommentoidaan sitten roadmappiin ominaisuuksina tai tunnettuina bugeina
+21:48 <@Firesong> juu, sit voisin tehdä lopulliset jsdocit
+22:50 <@Tattoo> Dezgeg et al: en tiedä vielä, antaako mun aikataulut myöten, mutta olisi vielä kiva nähdä koko porukka perjantaina, jos vain mahdollista
+22:50 <@Tattoo> olisiko tämä mahdollista, vai onko kaikki jo karanneet uusiin maisemiin?
+22:50 <@Firesong> mä en kyl varmaan perjantaina tuu jos ei oo pakko, ku hammaslääkäri :(
+22:50 <@Firesong> Tattoo: tuu huomenna
+22:51 <@Dezgeg> perjantaina hommia vaan hätätapauksessa muistaakseni sovittiin
+22:51 <@Tattoo> ok
+22:51 <@Tattoo> en tiedä myöskää ehinkö huomenna :D
+22:52 <@Tattoo> mutta olisin vaa halunnu vetää yhden jutun teille
+22:52 <@Tattoo> but no biggie, ei tartte tulla perjantaina. en muistanut että Firesongilla oli se hampulääkäri
+22:52 <@Tattoo> mut saatan pärähtää huomenna paikalle ehkä
+22:53 <@Firesong> mä voisin tehdä sit huomiseks sen graafikakun mitä lupailin, ku en pääse perjantain
+22:58 <@jannel> moi, joo oon tulossa huomenna mut pe on töitä
+23:33 <@Dezgeg> näkyypi asennusskriptat toimivan ukollakin, paitsi että siellä taitaa olla vielä hitaampaa kun kotihakemisto nfs:llä...
+--- Day changed Wed Aug 17 2011
+12:07 <@Firesong> Tattoo: keneltä piti kysellä että pitääkö niitä cd:itä polttaa?
+12:07 <@Firesong> Tattoo: asiakkaaltako?
+12:07 <@Firesong> Tattoo: ja mistä ne piti hakee
+12:37 <@Dezgeg> http://www.cs.helsinki.fi/u/tmtynkky/dbgraph.png
+17:20 <@Firesong> tuli muuten mieleen, että joku vois ehkä kääntää sit lopuks sen djangon debugasetuksen pois päältä?
+17:42 <@Firesong> niin ja muuten ku tästä sanoin niin: serveri.tulilaulu.net/nyan.jpg
+--- Day changed Thu Aug 18 2011
+10:27 <@jannel> kaikki kuvat on nyt wikissä
+11:04 <@Firesong> mitäs on sit vielä jäljellä?
+11:08 <@jannel> onko siitä arkkitehtuurista piirretty kaaviota muualle kun taululle?
+11:08 <@jannel> tosin se on kyllä kuvana saatavilla wikissä
+11:22 <@Firesong> ei mut se taulukuvahan oli editoinnin jälkeen ihan selkee
+11:45 <@jannel> joo sori huomasin sen ku katoin postia äsken, sekin on nyt wikissä :D
+17:33 <@Sundo> oliko tosta tietokantakaaviosta mitään nättiä siivottua kuvaa?
+18:48 <@jannel> sundo: onko mitään mitä tarviis vielä kirjottaa/siistiä/yms?
+19:23 <@Sundo> niitä wikissä olevaa paria ylintä
+19:36 <@jannel> ok
+21:55 <@Firesong> jääkö mulle mitään? tänään on kuorojen kierros ni en ole ehtinyt ollenkaan koneen äärelle. sori siitä 
+21:56 <@Firesong> nytki irkkaa kännykältä ja joudun ihan just antaa tän taka :(
+--- Day changed Fri Aug 19 2011
+10:50 <@Firesong> vissiin kaikki sit kunnossa ja hyvin?
+11:00 <@Tattoo> :D
+12:32 <@Sundo> toivotaan
+12:59 <@Sundo> toki joku vois huolestua siitä, että viimeinen commitmessage google codessa on "about fixed" :D
+12:59 <@Sundo> tarkoittanee about-sivua ;)
+13:03 <@jannel> :D
+13:04 <@jannel> laitoin muuten jitin tekijälle postia tästä projektista ja se vastas eilen, oli kovin kiinnostunut 
+13:05 <@Sundo> joop, sääli sinänsä ettei meillä ole mitään kivaa mockup-dataa jolla vois yleisesti esitellä tätä
+13:08 <@jannel> aivan, vaan jotain screenshotteja
+13:08 <@jannel> jos jaksas ni kävi mielessä et tekis dataa ihan vaan esittelymielessä

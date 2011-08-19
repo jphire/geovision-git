@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Geovision Documentation</title>
+		<link rel="stylesheet" type="text/css" href="treeni.css" />
+	</head>
+	<body>
+		<h1>Architecture documentation</h1>
+		<p>Program architecture is somewhat based on Django&#x27;s Model-View-Template structure. Unfortunately this 
+			can cause some confusion as things that would be controller part in MCV architecture are now in view files. </p>
+		<p><img src="tapaaminen17_8.jpg" /> </p>
+			
+		<h2>Parsers</h2>
+
+		<p>Parsers are used for parsing data from text files to database. They are currently for command line use only. 
+			Scripts for using parsers are located in /scripts/, python code is in /src/geovision/text_to_db/ </p>
+		<p>More information about scripts can be found in <a href="ScriptDocumentation.html">Script Documentation</a>. </p>
+
+		<h2>Database</h2>
+
+		<p>Database is essentially divided into two parts. Tables beginning with viz contain the actual data to be shown in the visualization. 
+			Tables beginning with user, auth and userdb contain django authentication and user specific data. </p>
+		<p>More information about database can be found in <a href="DatabaseDocumentation.html">Database documentation</a>. </p>
+			
+		<h2>View</h2>
+		<p>This part of the program also maintains some separation between things controlled by Django (user authentication, user-specific data and sessions) and graph data. </p>
+		<p>Most data drawn to canvas and the information areas outside it are queried from database in graph_JSON.py in /src/geovision/text_to_db/. 
+			Directory /src/geovision/viz/ contains the Django database model for graph data and some additional queries for database information, such as enzyme name autocompletion. </p>
+		<p>User specific data is requested through Django&#x27;s system for automatic session control and authentication. </p>
+
+		<h2>Template/Canvas</h2>
+		<p>This part of the program contains the actual pages as Django templates. More information about structure of the 
+			pages shown can be found in <a href="HttpUrlsDocumentation.html">HttpUrlsDocumentation</a> </p>
+		<p>Django template files can be found in /src/geovision/templates/, and the graph visualization JavaScript files are located in /src/geovision/static/<br/> 
+			There is also a <a href="../jsdoc/index.html">JSDoc</a> for JavaScript code.</p>
+
+		<p>
+		<h2>More information:</h2>
+			<ul>
+				<li><a href="http://thejit.org" rel="nofollow">http://thejit.org</a> </li>
+				<li><a href="https://docs.djangoproject.com/en/1.3/" rel="nofollow">https://docs.djangoproject.com/en/1.3/</a> </li>
+			</ul>
+		</p>
+	</body>
+</html>
+ 

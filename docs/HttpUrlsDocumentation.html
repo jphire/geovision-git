@@ -1,0 +1,15 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>geovision documentation</title>
+		<link rel="stylesheet" type="text/css" href="treeni.css" />
+	</head>
+	<body>
+	<h2><a name="user_management_-_userdb/views.py"></a>user management - userdb/views.py<a href="#user_management_-_userdb/views.py" class="section_anchor"></a></h2><ul><li>/ - Login page. Redirects directly to /graphrefresh once logged in, login form POSTs to /logging_out. Templates used: login.html </li><li>/register - registration page. Registration form POSTs to /registering. Templates used: register.html </li><li>/registering - Creates the account based on POST parameters. Renders register.html again on error, renders login.html on success. </li><li>/logging_in - authenticates the user. Redirects to /graphrefresh on success, renders login.html with an error message on error. </li><li>/logging_out - logs the user out. Redirects to / </li></ul>
+	<h2><a name="help/info_pages_-_userdb/views.py"></a>help/info pages - userdb/views.py<a href="#help/info_pages_-_userdb/views.py" class="section_anchor"></a></h2><ul><li>/about - the about page. Templates used: about.html </li><li>/show_help - the help/user manual page. Templates used: help.html </li></ul>
+	<h2><a name="graph_visualization_-_viz/views.py_-_REQUIRES_LOGIN"></a>graph visualization - viz/views.py - REQUIRES LOGIN<a href="#graph_visualization_-_viz/views.py_-_REQUIRES_LOGIN" class="section_anchor"></a></h2><ul><li>/graphrefresh - show the graph. The main page of the whole program. Renders graphviz.html, includes all the javascript files. Communicates with the server using a bunch of interfaces </li></ul>
+	<h2><a name="graph_visualization_-_graph_JSON_data_interface_-_viz/views.py_R"></a>graph visualization - graph JSON data interface - viz/views.py REQUIRES LOGIN<a href="#graph_visualization_-_graph_JSON_data_interface_-_viz/views.py_R" class="section_anchor"></a></h2><ul><li>/graphjson - generates the graph JSON. Calls to the graph_JSON module to perform the graph drawing. </li><li>/autocomplete - serverside query service for the enzyme autocompletion </li><li>/enzyme_data - fetch enzyme extra data (pathways, all names) </li><li>/show_alignment - fetch alignment information for a blast. </li></ul>
+	<h2><a name="admin/dev_interface_-_django_internal,_qunit.html"></a>admin/dev interface - django internal, qunit.html<a href="#admin/dev_interface_-_django_internal,_qunit.html" class="section_anchor"></a></h2><ul><li>/admin/ - The django admin panel </li><li>/qunit - qunit unit tests. Templates used: qunit.html </li></ul>
+	</body>
+</html>
+

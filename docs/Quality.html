@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Geovision Documentation</title>
+		<link rel="stylesheet" type="text/css" href="treeni.css" />
+	</head>
+	<body>
+		<h1><a name="Quality_requirements"></a>Quality requirements<a href="#Quality_requirements" class="section_anchor"></a></h1><ul>
+		<li>Documentation </li><ul>
+		<li>Docstring for every method and function </li>
+		<li>Documentation for all interfaces </li><ul>
+		<li>HTTP (export urls, alignment, json generation) </li>
+		<li>Javascript </li></ul>
+		<li>Database documentation </li>
+		<li>Comprehensive help </li>
+		<li>Architecture documentation </li></ul>
+		<li>Code </li><ul>
+		<li>No unused code left in program files </li>
+		<li>Potentially useful code moved to different location </li>
+		<li>Self-documenting code, comments in non-obvious places </li></ul>
+		<li>Tests </li><ul>
+		<li>Comprehensive tests for all functions and methods </li>
+		<li>No code coverage requirement </li></ul>
+		<li>Speed </li><ul>
+		<li>Graphics run smoothly with 100 nodes on year 2011 browsers and consumer-range hardware </li>
+		<li>Cannot do proper speed testing on users, so no guarantees about queries </li><ul>
+		<li>Disk-io on users is apparently quite poor, so server-side code spends most of it&#x27;s time waiting for data. PostgreSQL estimated query costs seem reasonable, but queries doing lot of disk accessing are extremely slow. </li></ul></ul>
+		<li>Usability </li><ul>
+		<li>Comprehensive help </li>
+		<li>Usability test with end-users </li><ul>
+		<li>Basic usability ok </li>
+		<li>Requested features and fixes implemented or described in roadmap </li>
+		<li>Graph operations need to be comprehensively documented as they are not immediately obvious </li></ul></ul></ul><h3><a name="The_tests"></a>The tests<a href="#The_tests" class="section_anchor"></a></h3><ul>
+		<li>All css and html files written by us pass the <a href="http://validator.w3.org/" rel="nofollow">http://validator.w3.org/</a> validation. </li>
+		<li>Qunit-test results for javascript can be checked at URL+/qunit </li>
+		<li>Selenium-tests are included in the the project. See project root/Selenium/README.txt for info </li>
+		<li>Python test? </li></ul>
+	</body>
+</html>
+

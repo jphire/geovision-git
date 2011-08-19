@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Geovision Documentation</title>
+		<link rel="stylesheet" type="text/css" href="treeni.css" />
+	</head>
+		<h1><a name="Testing"></a>Testing<a href="#Testing" class="section_anchor"></a></h1><h2><a name="General_Info"></a>General Info<a href="#General_Info" class="section_anchor"></a></h2><h3><a name="Coverage"></a>Coverage<a href="#Coverage" class="section_anchor"></a></h3><ul>
+		<li>There are no absolute code coverage requirement due the nature of the project </li>
+		<li>All public functions and methods should be tested as well as possible </li></ul><h3><a name="Speed"></a>Speed<a href="#Speed" class="section_anchor"></a></h3><ul>
+		<li>There is no formal speed testing at the moment </li>
+		<li>Speed optimization has been done based on PostgreSQL query cost estimates, since the disk IO performance of current server is extremely poor </li>
+		<li>Graphic speed testing has been done by hand and no problems have been noticed </li><ul>
+		<li>On year 2011 consumer-level hardware at least several hundred nodes can be shown before there is any significant performance hit, and graph usually becomes hard to read long before that </li></ul>
+		<li>For more complex graph operations formal speed test are necessary, but they were not within the scope of this project </li></ul><h3><a name="Usability"></a>Usability<a href="#Usability" class="section_anchor"></a></h3><ul>
+		<li>One usability test with end users has been done, no formal usability testing procedures have been defined </li></ul><h2><a name="Python_tests"></a>Python tests<a href="#Python_tests" class="section_anchor"></a></h2><ul>
+		<li>Testing uses Nose test framework </li>
+		<li>Unit tests for all self-made public functions and methods </li>
+		<li>Tests can be run by hand by typing &quot;python manage.py test&quot; in root<a href="/p/geovision/w/edit/project">?</a>/src/geovision/ </li>
+		<li>More information about testing framework </li><ul>
+		<li><a href="http://somethingaboutorange.com/mrl/projects/nose/1.0.0/" rel="nofollow">Nose</a> </li>
+		<li><a href="http://pypi.python.org/pypi/django-nose" rel="nofollow">Nose-Django</a> </li></ul>
+		<li>We recommend <a href="http://hudson-ci.org" rel="nofollow">Hudson</a> for automated python unittesting </li></ul><h2><a name="Unit_tests_for"></a>Unit tests for JavaScript<a href="/p/geovision/w/edit/JavaScript">?</a><a href="#Unit_tests_for" class="section_anchor"></a></h2><ul>
+		<li>Unit tests are implemented using Qunit </li>
+		<li>Qunit tests are located at <a href="http://tkt_gvis.users.cs.helsinki.fi/qunit" rel="nofollow">http://tkt_gvis.users.cs.helsinki.fi/qunit</a> </li>
+		<li>Code located in files &#x27;qunit.html&#x27; and &#x27;js_tests.js&#x27; </li>
+		<li>Testing a bit tricky because of the use of many asynchronous functions (e.g. jQuery&#x27;s getJSON) </li><ul>
+		<li>So tests must also be implemented asynchronously by using asyncTest and setTimeout </li>
+		<li>HTML needed in testing is put inside the qunit-fixture div element in qunit.html </li>
+		<li>The DOM inside qunit-fixture will be reset after each test, so no need to do it manually </li>
+		<li>More info on asynchronous testing can be found from links below </li></ul>
+		<li>JavaScript<a href="/p/geovision/w/edit/JavaScript">?</a> code coverage for code written by team is about 75% </li><ul>
+		<li>Graph initialization and traversal is tested </li>
+		<li>All mouse events written by the team are tested </li></ul>
+		<li>Qunit tests are not implemented for the library code </li>
+		<li>Qunit testing information: </li><ul>
+		<li><a href="http://docs.jquery.com/Qunit/" rel="nofollow">http://docs.jquery.com/Qunit/</a> </li>
+		<li><a href="http://msdn.microsoft.com/en-us/scriptjunkie/gg749824" rel="nofollow">http://msdn.microsoft.com/en-us/scriptjunkie/gg749824</a> </li></ul></ul><h2><a name="User_Interface"></a>User Interface<a href="#User_Interface" class="section_anchor"></a></h2><ul>
+		<li>Javascript testing described above </li>
+		<li>All css and html files written by us pass the <a href="http://validator.w3.org/" rel="nofollow">http://validator.w3.org/</a> validation. </li>
+		<li>Selenium-tests are included in the the project. See project root/Selenium/README.txt for info </li></ul>
+	</body>
+</html>
+ 

@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Geovision Documentation</title>
+		<link rel="stylesheet" type="text/css" href="treeni.css" />
+	</head>
+	<body>
+		<ul>
+		<li>Show more sample metadata, for example depth and location </li><ul>
+		<li>Current sample .fasta files do not contain this data, so there is no db field/table for it </li></ul>
+		<li>Selection of specific hits (worst, upwards from specified bitscore...) </li>
+		<li>Multiple graphs (and canvases) on the screen at the same time </li><ul>
+		<li>Propably requires large amount of refactoring on JavaScript<a href="/p/geovision/w/edit/JavaScript">?</a> side, as things are not encapsulated properly </li></ul>
+		<li>Graph-search for the best connections between two nodes </li><ul>
+		<li>Metrics could be length, bitscores </li>
+		<li>Department propably has some ongoing research about the subject, check that out </li>
+		<li>Should not be done on database/webserver, or at least care must be taken that such operations do not hoard resources. </li>
+		<li>Doing operation client-side is also problematic, amount of data sent would be large </li></ul>
+		<li>Connections </li><ul>
+		<li>Show information about multiple connections between nodes </li>
+		<li>Show more connection data, such as match start- and endpoint </li><ul>
+		<li>Necessary data is already in the database, but is not added to JSONs. Modifications to graph_JSON should be simple, bigger problem is visualization of the data without making the screen too crowded. </li></ul></ul>
+		<li>Make more efficient undo, current implementation is a quick hack </li><ul>
+		<li>Current version saves the entire graph on each undo level, operation based undo would be more efficient </li></ul>
+		<li>Make graphical indicator to show which nodes have not been opened yet </li><ul>
+		<li>On complex graphs it is not obvious which nodes have not been opened </li>
+		<li>Should be easily noticeable without interfering with tag visualization </li></ul>
+		<li>Replacing PostgreSQL with something else. </li><ul>
+		<li>Modify BulkInserter<a href="/p/geovision/w/edit/BulkInserter">?</a> to handle the new database system OR use the generic django code (not recommended, it would be unacceptably slow) </li><ul>
+		<li>Use the new database system&#x27;s backup/bulk importing feature similar to Postgres&#x27; COPY FROM </li>
+		<li>Change the primary key assignment logic from Postgres&#x27;s sequences </li></ul>
+		<li>Change the run-psql script to use the new database system. </li>
+		<li>Change all the PostgreSQL-specific inline SQL in the scripts. </li></ul>
+		<li>Adding test data for qunit tests  </li><ul>
+		<li>A method for adding this data is already available in file &#x27;add_and_remove_test_data&#x27;, but the data it creates is probably not sufficient for extensive testing. </li>
+		<li>Currently qunit tests use data that may change when new data is inserted to the database. </li></ul></ul><h3><a name="Known_bugs"></a>Known bugs<a href="#Known_bugs" class="section_anchor"></a></h3><ul>
+		<li>Using refresh function (or function that calls refresh()) after centering graph causes the graph to flip around a bit </li><ul>
+		<li>Modify the library centering function onClick or create new better function for it </li></ul>
+		<li>Making a query with multiple parameters(e.g. read and dbentry), the side menu is not shown right </li>
+		<li>If graph right-click menu is closed by clicking elsewhere, next click does not register correctly </li>
+		<li>The graph menu opens when clicking on the dropdownmenus in settings </li></ul><h3><a name="Other_notes"></a>Other notes<a href="#Other_notes" class="section_anchor"></a></h3><ul>
+		<li>If needeed, data can be retrieved straight from  KEGG with this tool: <a href="http://pywebsvcs.sourceforge.net/" rel="nofollow">http://pywebsvcs.sourceforge.net/</a> This has been tested to work, but is not installed in the project at the moment. </li>
+		<li>dokumentation on the subject can be found here <a href="http://www.genome.jp/kegg/soap/doc/keggapi_manual.html" rel="nofollow">http://www.genome.jp/kegg/soap/doc/keggapi_manual.html</a> </li></ul>
+	</body>
+</html>
+ 
