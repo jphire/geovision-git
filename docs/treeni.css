@@ -1,0 +1,30 @@
+body {
+	background-color: #dfdfaa;
+}
+
+a.menu {
+    display:block;
+    border:1px solid #dfdfaa; 
+}
+
+a:link {
+    color: #787878;
+}
+
+a:visited {
+    color: #787878;
+}
+
+a:hover {
+    color: #0000dd;
+}
+
+div#header h1 {
+	color: #0f0f0f;
+    padding:0;
+}
+
+p {
+	color: #131313;
+    padding:1ex;
+}

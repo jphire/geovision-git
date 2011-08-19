@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Geovision Documentation</title>
+		<link rel="stylesheet" type="text/css" href="treeni.css" />
+	</head>
+	<body>
+		<p>Note: some of these scripts warn about invalidating blast-enzyme cache. If you have run one of those commands, be sure to run the rebuild-cache command. Symptoms of a forgotten rebuild-cache include getting no results from enzyme searches at all. </p>
+		<h1><a name="Geovision_utility_scripts"></a>Geovision utility scripts<a href="#Geovision_utility_scripts" class="section_anchor"></a></h1><h2><a name="Data_importing"></a>Data importing<a href="#Data_importing" class="section_anchor"></a></h2><h3><a name="&#x27;Actual&#x27;_data"></a>&#x27;Actual&#x27; data<a href="#&#x27;Actual&#x27;_data" class="section_anchor"></a></h3><ul><li><strong>import-sample</strong> <i>/path/to/sample.fasta</i> </li><blockquote>Import a sample file in fasta format. The name of the sample is simply the filename minus the extension. 
+		</blockquote><li><strong>import-database</strong> <i>/path/to/database.fasta</i> <i>databasename</i> </li><blockquote>Import a database file in fasta format. The name of the database is the second command line argument. 
+
+		</blockquote><li><strong>import-blast</strong> <i>/path/to/blast/samplename.databasename.align</i> </li><blockquote>Import a blast file. The blast file must be named <i>samplename</i>.<i>databasename</i>.align. You must import the database and the sample before all the blasts. If the blast is related to the UniProt<a href="/p/geovision/w/edit/UniProt">?</a> database, invalidates the blast-enzyme cache. 
+		</blockquote></ul><h3><a name="Utility_databases"></a>Utility databases<a href="#Utility_databases" class="section_anchor"></a></h3><ul><li><strong>import-kegg</strong> <i>/path/to/kegg/enzyme</i> </li><blockquote>(Re)import the KEGG enzyme database. 
+
+		</blockquote><li><strong>import-uniprotecs</strong> <i>/path/to/uniprot_sprot.ecs</i> </li><blockquote>Reimport the UniProt<a href="/p/geovision/w/edit/UniProt">?</a> ECS database. Invalidates the blast-enzyme cache. 
+		</blockquote></ul><h3><a name="Service_maintenance"></a>Service maintenance<a href="#Service_maintenance" class="section_anchor"></a></h3><ul><li><strong>start-lighttpd</strong>, <strong>stop-lighttpd</strong> </li><blockquote>Start/stop the Geovision lighttpd HTTP server. The default lighttpd configuration is in $HOME/geovision-lighttpd/ and listens on port 25892. 
+		</blockquote><li><strong>start-localpostgres</strong>, <strong>stop-localpostgres</strong> </li><blockquote>Start/stop the local Geovision PostgreSQL instance. By default the configuration and data files are located in $HOME/geovision-postgres and listens on port 4394. 
+
+		</blockquote></ul><h3><a name="Installation"></a>Installation<a href="#Installation" class="section_anchor"></a></h3><ul><li><strong>install-deps</strong> </li><blockquote>Install all the library dependencies for Geovision. 
+		</blockquote><li><strong>setup-lighttpd</strong> </li><blockquote>Set up a local lighttpd configuration for Geovision. See above for configuration defaults. 
+		</blockquote><li><strong>setup-localpostgres</strong> </li><blockquote>Set up a local PostgreSQL configuration for Geovision. See above for configuration defaults. 
+		</blockquote><li><strong>initial-import</strong> </li><blockquote>Perform the initial database creation &amp; importation. See the installation manual for defaults. 
+		</blockquote></ul><h3><a name="Utilities"></a>Utilities<a href="#Utilities" class="section_anchor"></a></h3><ul><li><strong>run-psql</strong> <i>args</i> </li><blockquote>Run psql (the PostgreSQL command line client utility) with the same connection parameters as specified in dbconfig.py 
+
+		</blockquote><li><strong>create-superuser</strong> </li><blockquote>Create a superuser account. Superusers can log in to the admin panel (<a href="http://server/admin/" rel="nofollow">http://server/admin/</a>) 
+		</blockquote><li><strong>rebuild-cache</strong> </li><blockquote>Rebuild the blast-enzyme cache and analyze the tables. Run this after all data importing sessions if you have done anything that invalidates the blast-enzyme cache. 
+</blockquote></ul>
+	</body>
+</html>
+

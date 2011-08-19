@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Geovision Documentation</title>
+		<link rel="stylesheet" type="text/css" href="treeni.css" />
+	</head>
+	<body>
+		<h1>Database Structure</h1>
+		<p>Database is split into two parts, with viz tables containing the actual graph data and other tables containing other data, mostly related to django user authentication, administration and user-specific information. </p>
+		<h2><a name="Viz"></a>Viz<a href="#Viz" class="section_anchor"></a></h2>
+		<p><img src="db_viz.png" />Database diagram, Viz-tables</p><ul><li>viz_reads contains the sample data, one read per row. </li><li>viz_dbentry contains data from outside databases to which sample data is compared </li><li>viz_blast contains the blast data, essentially connections between read and dbentry data along with information about it </li><li>viz_blastextra contains additional information for blast data </li><li>viz_blastecs and viz_uniprotecs contain enzyme-related data </li></ul>
+		<h2><a name="Django"></a>Django<a href="#Django" class="section_anchor"></a></h2>
+		<p><img src="db_django.png"/>Database diagram, other tables</p><ul><li>userdb_savedview contains graphs views saved by user </li><li>userdb_userprofile contains user specific settings for visualization </li><li>userdb_sample is for limiting the samples (and related blast entries) that certain user can view </li></ul>
+		<p>For more information about other tables, see <a href="https://docs.djangoproject.com/en/1.3/" rel="nofollow">https://docs.djangoproject.com/en/1.3/</a> </p>
+	</body>
+</html>
